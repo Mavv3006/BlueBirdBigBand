@@ -1,4 +1,15 @@
 {
+    "name": "blue-bird-big-band",
+    "description": "Fullstack Laravel+Vue.js project for the website of the Blue Bird Big Band from the music school of Speyer, Germany.",
+    "author": {
+        "name": "Marvin Deuschle"
+    },
+    "homepage": "https://www.bluebirdbigband.de",
+    "bugs": {
+        "url": "https://github.com/Mavv3006/BlueBirdBigBand/issues",
+        "email": "bbbb-maintainers@googlegroups.com"
+    },
+    "repository": "github:Mavv3006/BlueBirdBigBand",
     "private": true,
     "scripts": {
         "dev": "vite",
