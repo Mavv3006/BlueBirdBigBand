@@ -25,6 +25,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/kontakt', function () {
+    return Inertia::render('Contact/Contact');
+});
+Route::get('/impressum', function () {
+    return Inertia::render('Contact/Imprint');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
