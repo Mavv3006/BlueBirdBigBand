@@ -25,6 +25,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/musiker', function () {
+    return Inertia::render('Band/MusiciansPage');
+});
 Route::get('/anfahrt', function () {
     return Inertia::render('Band/ArrivalPage');
 });
