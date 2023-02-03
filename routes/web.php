@@ -25,6 +25,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/anfahrt', function () {
+    return Inertia::render('Band/ArrivalPage');
+});
+Route::get('/about-us', function () {
+    return Inertia::render('Band/AboutPage');
+});
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/Contact');
 });
@@ -42,4 +48,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
