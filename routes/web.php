@@ -25,20 +25,26 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
+Route::get('/about-us', function () {
+    return Inertia::render('Band/AboutPage');
 });
 Route::get('/anfahrt', function () {
     return Inertia::render('Band/ArrivalPage');
 });
-Route::get('/about-us', function () {
-    return Inertia::render('Band/AboutPage');
+Route::get('/buchung', function () {
+    return Inertia::render('LatestInfos/BookingPage');
+});
+Route::get('/impressum', function () {
+    return Inertia::render('Contact/Imprint');
 });
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/Contact');
 });
-Route::get('/impressum', function () {
-    return Inertia::render('Contact/Imprint');
+Route::get('/musiker', function () {
+    return Inertia::render('Band/MusiciansPage');
+});
+Route::get('/presse', function () {
+    return Inertia::render('LatestInfos/PressInfoPage');
 });
 
 Route::get('/dashboard', function () {

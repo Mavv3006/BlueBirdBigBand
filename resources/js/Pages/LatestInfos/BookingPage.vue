@@ -40,7 +40,7 @@ import ContactManagement from "@/Components/Contact/ContactManagement.vue";</scr
 
 <style scoped>
 p {
-    @apply font-smibold;
+    @apply font-semibold;
 }
 
 ul {
