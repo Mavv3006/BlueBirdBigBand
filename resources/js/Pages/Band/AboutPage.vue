@@ -4,7 +4,7 @@
 
         <img
             class="block mx-auto md:float-right md:m-0 md:w-[60%] md:max-w-[430px]"
-            src="storage/images/bbband.jpg"
+            src="assets/grouppictures/bbband.jpg"
             alt="Gruppenbild der Blue Bird Big Band"
         />
 

@@ -9,14 +9,11 @@
                     <p>der Städtischen Musikschule Speyer</p>
                 </div>
 
-                <h2 class="font-bold text-lg">Let\'s swing again!</h2>
+                <h2 class="font-bold text-lg">Let's swing again!</h2>
                 <h2 class="font-bold text-lg">Bigband-Jazz vom Feinsten</h2>
             </div>
 
-            <div>
-                <!-- TODO: Add link to picture -->
-                <img src="" alt="Blue Bird Big Band Vogel"/>
-            </div>
+            <img alt="Blue Bird Big Band Vogel" src="assets/logos/logo-bird.gif"/>
         </div>
 
         <p class="mb-3 text-justify">
@@ -75,8 +72,12 @@
 
         <footer
             class="border-t border-gray-400 flex flex-col justify-center gap-2 pt-2 md:justify-around md:flex-row md:gap-0">
-            <NavLink class="text-center md:w-1/2">Diese Seite als Word-Dokument</NavLink>
-            <NavLink class="text-center md:w-1/2">Diese Seite als PDF-Datei</NavLink>
+            <div class="text-center md:w-1/2">
+                <NavLink href="">Diese Seite als Word-Dokument</NavLink>
+            </div>
+            <div class="text-center md:w-1/2">
+                <NavLink href="">Diese Seite als PDF-Datei</NavLink>
+            </div>
         </footer>
     </public-layout>
 </template>
