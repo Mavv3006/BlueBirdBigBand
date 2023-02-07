@@ -16,7 +16,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -25,20 +25,29 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
-});
-Route::get('/anfahrt', function () {
-    return Inertia::render('Band/ArrivalPage');
+Route::get('/', function() {
+    return Inertia::render('Index');
 });
 Route::get('/about-us', function () {
     return Inertia::render('Band/AboutPage');
 });
-Route::get('/kontakt', function () {
-    return Inertia::render('Contact/Contact');
+Route::get('/anfahrt', function () {
+    return Inertia::render('Band/ArrivalPage');
+});
+Route::get('/buchung', function () {
+    return Inertia::render('LatestInfos/BookingPage');
 });
 Route::get('/impressum', function () {
     return Inertia::render('Contact/Imprint');
+});
+Route::get('/kontakt', function () {
+    return Inertia::render('Contact/Contact');
+});
+Route::get('/musiker', function () {
+    return Inertia::render('Band/MusiciansPage');
+});
+Route::get('/presse', function () {
+    return Inertia::render('LatestInfos/PressInfoPage');
 });
 
 Route::get('/dashboard', function () {

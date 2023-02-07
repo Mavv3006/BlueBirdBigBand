@@ -4,7 +4,7 @@
 
         <img
             class="block mx-auto md:float-right md:m-0 md:w-[60%] md:max-w-[430px]"
-            src="storage/images/bbband.jpg"
+            src="assets/grouppictures/bbband.jpg"
             alt="Gruppenbild der Blue Bird Big Band"
         />
 
@@ -40,7 +40,7 @@
             Die Band gibt Konzerte, auch im Ausland (Frankreich, Kroatien), wird von Gemeindeverwaltungen, Vereinen,
             Firmen und sonstigen Organisationen engagiert für Feste, Weihnachtsmärkte und diverse Veranstaltungen, war
             schon mehrmals beim Rheinland-Pfalz-Tag, bei der Landesgartenschau und Open-Sound in
-            Manheim/Ludwigshafen/Heidelberg. Die Stadtverwaltung Speyer braucht die Band immer wieder zu hoch
+            Mannheim/Ludwigshafen/Heidelberg. Die Stadtverwaltung Speyer braucht die Band immer wieder zu hoch
             offiziellen Veranstaltungen.
         </p>
 
