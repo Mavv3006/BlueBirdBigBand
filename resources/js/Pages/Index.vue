@@ -1,6 +1,6 @@
 <template>
     <public-layout>
-        <h1 class="text-center text-xl md:text-3xl lg:text-4xl xl:text-5xl">
+        <h1 class="text-center font-bold text-[#3d4449] text-xl md:text-3xl lg:text-4xl xl:text-5xl">
             Willkommen bei der
             <br>
             Blue Bird Big Band
@@ -8,16 +8,18 @@
             der Städtischen Musikschule Speyer
         </h1>
 
-        <img alt="Gruppenbild der Blue Bird Big Band" class="w-[80%] block mx-auto my-2"
+        <img alt="Gruppenbild der Blue Bird Big Band" class="w-[80%] block mx-auto my-4"
              src="assets/grouppictures/group-picture.jpg">
 
         <div class="scroll overflow-hidden relative">
-            <span class="absolute h-full m-0 text-left text-red-700 font-bold w-[100vw] tracking-[2px]">+++ Musiker/in gesucht +++</span>
+            <span class="absolute text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
+                +++ Schlagzeuger/in und Posaunist/innen gesucht +++
+            </span>
         </div>
     </public-layout>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 <style scoped>
@@ -28,7 +30,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 .scroll span {
     line-height: var(--height);
-    animation: scroll-left 12.5s linear infinite;
+    animation: scroll-left 14.5s linear infinite;
 }
 
 @keyframes scroll-left {
@@ -42,13 +44,13 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 @media (min-width: 640px) {
     .scroll span {
-        animation-duration: 14s;
+        animation-duration: 16s;
     }
 }
 
 @media (min-width: 768px) {
     .scroll span {
-        animation-duration: 16s;
+        animation-duration: 18s;
     }
 
     @keyframes scroll-left {
@@ -63,7 +65,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 @media (min-width: 1024px) {
     .scroll span {
-        animation-duration: 18s;
+        animation-duration: 20s;
     }
 
     @keyframes scroll-left {
@@ -78,7 +80,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 @media (min-width: 1280px) {
     .scroll span {
-        animation-duration: 20s;
+        animation-duration: 22s;
     }
 
     @keyframes scroll-left {
@@ -94,7 +96,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
 
 @media (min-width: 1536px) {
     .scroll span {
-        animation-duration: 22s;
+        animation-duration: 24s;
     }
 
     @keyframes scroll-left {
