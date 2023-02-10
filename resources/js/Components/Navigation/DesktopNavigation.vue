@@ -40,20 +40,12 @@
                 </li>
             </ul>
         </li>
-        <li class="">Login</li>
+        <li>Login</li>
     </ul>
 </template>
 
 <script setup>
-import {Link} from '@inertiajs/vue3';
-
-/*
-* Info about dropdown:
-* https://www.w3schools.com/Css/css_dropdowns.asp
-* https://codyhouse.co/demo/mega-dropdown/index.html
-* https://codyhouse.co/ds/components/app/language-picker
-* */
-</script>
+import {Link} from '@inertiajs/vue3';</script>
 
 <style scoped>
 .nav-container {
