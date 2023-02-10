@@ -1,14 +1,52 @@
 <template>
     <ul class="text-white mt-3 gap-9 justify-center content-center">
-        <li>Home</li>
-        <li class="nav-container ">Aktuelles</li>
-        <li class="nav-container ">Band</li>
-        <li class="nav-container ">Kontakt</li>
+        <li>
+            <Link href="/">Home</Link>
+        </li>
+        <li class="nav-container">
+            <span>Aktuelles</span>
+            <ul class="dropdown-content min-w-[112px]">
+                <li>Auftritte</li>
+                <li>
+                    <Link href="presse">Presseinfos</Link>
+                </li>
+                <li>
+                    <Link href="buchung">Buchungsinsfos</Link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-container">
+            <span>Band</span>
+            <ul class="dropdown-content min-w-[112px]">
+                <li>
+                    <Link href="about-us">Über uns</Link>
+                </li>
+                <li>
+                    <Link href="musiker">Musiker</Link>
+                </li>
+                <li>
+                    <Link href="anfahrt">Anfahrt</Link>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-container">
+            <span>Kontakt</span>
+            <ul class="dropdown-content min-w-[112px]">
+                <li>
+                    <Link href="kontakt">Kontakt</Link>
+                </li>
+                <li>
+                    <Link href="impressum">Impressum</Link>
+                </li>
+            </ul>
+        </li>
         <li class="">Login</li>
     </ul>
 </template>
 
 <script setup>
+import {Link} from '@inertiajs/vue3';
+
 /*
 * Info about dropdown:
 * https://www.w3schools.com/Css/css_dropdowns.asp
@@ -19,8 +57,17 @@
 
 <style scoped>
 .nav-container {
-    @apply pr-7;
+    @apply pr-7 relative inline-block;
 }
+
+.dropdown-content {
+    @apply hidden absolute bg-red-600 py-2 z-10 shadow-md -ml-4 rounded-md;
+}
+
+.nav-container:hover .dropdown-content {
+    @apply block;
+}
+
 .nav-container:after {
     content: "";
     position: absolute;
@@ -41,8 +88,5 @@ ul > li {
 
 ul > li:hover {
     background-color: rgba(255, 255, 255, 0.2);
-}
-ul > li:active {
-    background-color: rgba(255, 255, 255, 0.15);
 }
 </style>
