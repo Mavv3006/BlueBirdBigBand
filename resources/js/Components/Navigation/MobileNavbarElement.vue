@@ -32,7 +32,7 @@ const propDefaults: Props = {
 
 const props = withDefaults(defineProps<Props>(), propDefaults);
 const emits = defineEmits<{
-    (e: 'isOpenChange', isOpen: boolean): void
+    (e: 'update:isOpen', isOpen: boolean): void
 }>();
 
 const isOpenRef = ref<boolean>(props.is_open);
@@ -48,7 +48,7 @@ const has_children = computed<boolean>(() => submenu_children_count > 0);
 
 const toggle_submenu = computed<void>(() => {
     isOpenRef.value = !isOpenRef.value;
-    emits('isOpenChange', isOpenRef.value)
+    emits('update:isOpen', isOpenRef.value)
 });
 </script>
 
