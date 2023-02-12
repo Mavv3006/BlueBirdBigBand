@@ -1,6 +1,7 @@
 <template>
     <Head>
         <link href="favicon.png" rel="icon">
+        <title></title>
     </Head>
 
     <header class="md:flex md:relative md:flex-col md:justify-center">
@@ -14,7 +15,7 @@
         </div>
 
         <DesktopNavigation class="hidden md:flex md:w-full"/>
-        <MobileNavigation class="md:hidden"/>
+        <MobileNavigation class="md:hidden" :is-open="mobileNavIsOpen"/>
     </header>
 
     <main
@@ -23,11 +24,13 @@
     </main>
 </template>
 
-<script setup>
-import {Head} from '@inertiajs/vue3';
-import {Link} from '@inertiajs/vue3';
+<script setup lang="ts">
+import {Head, Link} from '@inertiajs/vue3';
+import {ref} from 'vue';
 import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
 import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
+
+const mobileNavIsOpen = ref<boolean>(false);
 </script>
 
 <style>

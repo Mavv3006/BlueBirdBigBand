@@ -11,7 +11,7 @@
         <img alt="Gruppenbild der Blue Bird Big Band" class="w-[80%] block mx-auto my-4"
              src="assets/grouppictures/group-picture.jpg">
 
-        <div class="scroll overflow-hidden relative">
+        <div class="scroll overflow-hidden relative z-0">
             <span class="absolute text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
                 +++ Schlagzeuger/in und Posaunist/innen gesucht +++
             </span>
