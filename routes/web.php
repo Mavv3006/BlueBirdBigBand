@@ -38,10 +38,10 @@ Route::get('/buchung', function () {
     return Inertia::render('LatestInfos/BookingPage');
 });
 Route::get('/impressum', function () {
-    return Inertia::render('Contact/Imprint');
+    return Inertia::render('Contact/ImprintPage');
 });
 Route::get('/kontakt', function () {
-    return Inertia::render('Contact/Contact');
+    return Inertia::render('Contact/ContactPage');
 });
 Route::get('/musiker', function () {
     return Inertia::render('Band/MusiciansPage');

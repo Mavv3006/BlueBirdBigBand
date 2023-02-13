@@ -40,7 +40,7 @@
 <script setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import NavLink from "@/Components/NavLink.vue";</script>
+import NavLink from "@/Components/Link/NavLink.vue";</script>
 
 <style scoped>
 p {
