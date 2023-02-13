@@ -2,9 +2,6 @@
 import {Link} from '@inertiajs/vue3';
 
 const props = defineProps(['href']);
-
-console.log(props.href)
-
 </script>
 
 <template>

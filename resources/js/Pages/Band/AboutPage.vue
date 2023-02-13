@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head title="Über uns"/>
+
         <Heading>Big Band Jazz</Heading>
 
         <img
@@ -75,7 +77,8 @@
 <script setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import NavLink from "@/Components/Link/NavLink.vue";</script>
+import NavLink from "@/Components/Link/NavLink.vue";
+import {Head} from '@inertiajs/vue3';</script>
 
 <style scoped>
 p {

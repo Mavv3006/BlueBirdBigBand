@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head title="Impressum"/>
+
         <Heading>Impressum</Heading>
 
         <div class="flex flex-col gap-2 mb-4 md:flex-row md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
@@ -56,4 +58,5 @@
 
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import NavLink from "@/Components/Link/NavLink.vue";</script>
+import NavLink from "@/Components/Link/NavLink.vue";
+import {Head} from '@inertiajs/vue3';</script>
