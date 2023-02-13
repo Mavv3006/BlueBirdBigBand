@@ -82,10 +82,6 @@ const bandIsOpen = ref<boolean>(false);
 const contactIsOpen = ref<boolean>(false);
 const loginIsOpen = ref<boolean>(false);
 
-const close = () => {
-    localIsOpen.value = false;
-    emits("update:isOpen", localIsOpen.value);
-}
 </script>
 
 <style scoped>

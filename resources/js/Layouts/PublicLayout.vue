@@ -16,9 +16,9 @@
             </div>
 
             <button
-                @click="toggleMobileMenu()"
                 :class="{'open-mobile-toggle':mobileNavIsOpen}"
                 class="h-[48px] w-[60px] absolute top-0 right-0 text-white md:hidden"
+                @click="toggleMobileMenu()"
             >
                 <font-awesome-icon
                     v-if="mobileNavIsOpen"
@@ -37,7 +37,7 @@
         <div class="relative">
             <MobileNavigation
                 v-model:is-open="mobileNavIsOpen"
-                :class="{'opacity-100': mobileNavIsOpen}"
+                :class="{'opacity-100': mobileNavIsOpen, 'z-0': mobileNavIsOpen, 'z-[-1]': !mobileNavIsOpen}"
                 class="absolute w-full opacity-0 md:hidden"
             />
         </div>
@@ -50,9 +50,9 @@
     </main>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {Head, Link} from '@inertiajs/vue3';
-import {ref} from 'vue';
+import {computed, reactive, ref} from 'vue';
 import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
 import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";

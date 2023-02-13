@@ -46,9 +46,7 @@ const submenu_children_count = () => {
 const hasChildren = computed<boolean>(() => submenu_children_count() > 0);
 
 const toggle_submenu = () => {
-    console.debug('toggle ' + props.container_title, {vorher: isOpenRef.value,})
     isOpenRef.value = !isOpenRef.value;
-    console.debug('toggle ' + props.container_title, {nachher: isOpenRef.value,})
     emits('update:isOpen', isOpenRef.value)
 };
 </script>
