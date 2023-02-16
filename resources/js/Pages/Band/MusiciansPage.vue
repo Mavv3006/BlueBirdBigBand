@@ -16,10 +16,10 @@
         </p>
 
         <div class="flex flex-col md:flex-row">
-            <div class="w-1/2">
+            <div class="md:w-1/2">
                 <MusicianInstrument :musicians="bandleader" instrument="Bandleader"/>
             </div>
-            <div class="w-1/2">
+            <div class="md:w-1/2">
                 <MusicianInstrument :musicians="vocals" instrument="Gesang"/>
             </div>
         </div>
