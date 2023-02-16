@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head title="Kontakt"></Head>
+
         <Heading>
             Kontakt
         </Heading>
@@ -27,4 +29,5 @@
 <script setup>
 import Heading from "@/Components/Heading.vue";
 import Contact from "@/Components/Contact.vue";
-import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
+import PublicLayout from "@/Layouts/PublicLayout.vue";
+import {Head} from '@inertiajs/vue3';</script>

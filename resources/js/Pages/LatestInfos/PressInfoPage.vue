@@ -1,5 +1,10 @@
 <template>
     <public-layout>
+        <Head>
+            <title>Pressestimmen</title>
+            <meta content="Your page description" name="description">
+        </Head>
+
         <Heading>Presseinfos</Heading>
 
         <div class="mb-3 flex justify-between">
@@ -64,7 +69,9 @@
                     <p>Tel. 0621 409497</p>
                     <p>Fax: 0621 3197488</p>
                     <p> E-Mail:
-                        <MailtoLink mail-adress="bandleiter@bluebirdbigband.de">bandleiter@bluebirdbigband.de</MailtoLink>
+                        <MailtoLink mail-adress="bandleiter@bluebirdbigband.de">
+                            bandleiter@bluebirdbigband.de
+                        </MailtoLink>
                     </p>
                 </div>
             </div>
@@ -86,4 +93,5 @@
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
-import MailtoLink from "@/Components/Link/MailtoLink.vue";</script>
+import MailtoLink from "@/Components/Link/MailtoLink.vue";
+import {Head} from '@inertiajs/vue3';</script>

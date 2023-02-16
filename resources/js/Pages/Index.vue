@@ -1,5 +1,8 @@
 <template>
     <public-layout>
+
+        <Head title="Willkommen"/>
+
         <h1 class="text-center font-bold text-[#3d4449] text-xl md:text-3xl lg:text-4xl xl:text-5xl">
             Willkommen bei der
             <br>
@@ -20,7 +23,8 @@
 </template>
 
 <script setup>
-import PublicLayout from "@/Layouts/PublicLayout.vue";</script>
+import PublicLayout from "@/Layouts/PublicLayout.vue";
+import {Head} from '@inertiajs/vue3';</script>
 
 <style scoped>
 .scroll {
