@@ -15,7 +15,7 @@
              src="assets/grouppictures/group-picture.jpg">
 
         <div class="scroll overflow-hidden relative z-0">
-            <span class="absolute text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
+            <span class="absolute w-max text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
                 +++ Schlagzeuger/in und Posaunist/innen gesucht +++
             </span>
         </div>
