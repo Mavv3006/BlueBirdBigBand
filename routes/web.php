@@ -25,7 +25,7 @@ Route::get('/welcome', function () {
     ]);
 });
 
-Route::get('/', function() {
+Route::get('/', function () {
     return Inertia::render('Index');
 });
 Route::get('/about-us', function () {
@@ -33,6 +33,9 @@ Route::get('/about-us', function () {
 });
 Route::get('/anfahrt', function () {
     return Inertia::render('Band/ArrivalPage');
+});
+Route::get('/auftritte', function () {
+    return Inertia::render('LatestInfos/ConcertsPage', ['concerts' => []]);
 });
 Route::get('/buchung', function () {
     return Inertia::render('LatestInfos/BookingPage');
