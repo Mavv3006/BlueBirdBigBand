@@ -11,9 +11,12 @@ jobs:
       - name: get code
         uses: actions/checkout@v3
 
-      - name: install dependencies
+      - name: install frontend dependencies
         run: |
           npm install
+
+      - name: install backend dependencies
+        run: |
           composer install --optimize-autoloader --no-dev
 
       - name: setup frontend
@@ -24,11 +27,7 @@ jobs:
         run: |
           php artisan route:cache
 
-      - name: list local files
-        run: |
-          ls
-
-      - name: push files
+      - name: push files to server
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.ftp_server }}
