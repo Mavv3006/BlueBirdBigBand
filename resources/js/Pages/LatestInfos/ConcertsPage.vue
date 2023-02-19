@@ -5,7 +5,7 @@
         <Heading>Auftritte</Heading>
 
         <div v-if="hasConcerts" class="flex flex-col gap-4">
-            <Concert v-for="concert in displayList" :concert="concert"/>
+            <Concert v-for="concert in concerts" :concert="concert"/>
         </div>
 
         <p v-if="!hasConcerts" class="text-justify">
@@ -21,29 +21,11 @@ import Heading from "@/Components/Heading.vue";
 import {computed} from 'vue';
 import Concert, {ConcertType} from "@/Components/Concert.vue";
 
-const concert: ConcertType = {
-    band: "Blue Bird Big Band",
-    date: '2023-12-01',
-    description: {
-        place: 'bla bla bla?',
-        organizer: 'hi hi hi'
-    },
-    end_time: '16:11:15',
-    start_time: '14:10:23',
-    address: {
-        city: 'Sprockhövel',
-        plz: 12345,
-        number: '12a',
-        street: 'Schusterweg'
-    }
-};
+const props = defineProps<{
+    concerts: ConcertType[]
+}>();
 
-const emptyConcertList: ConcertType[] = [];
-const concertList: ConcertType[] = [concert, concert, concert];
-
-const displayList: ConcertType[] = emptyConcertList;
-
-const hasConcerts = computed<boolean>(() => displayList.length > 0)
+const hasConcerts = computed<boolean>(() => props.concerts.length > 0)
 
 </script>
 

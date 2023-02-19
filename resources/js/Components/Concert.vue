@@ -20,25 +20,23 @@ export type ConcertType = {
         plz: number,
         number: string
     },
-    band: "Blue Bird Big Band" | "Dometown Band",
+    band: string,
     description: {
-        organizer: string,
-        place: string
+        event: string,
+        venue: string
     }
 };
 
 const props = defineProps<{ concert: ConcertType }>();
 
 const playTime = computed<string>(() => {
-    return props.concert.start_time.substring(0, 5)
-        + ' Uhr - '
-        + props.concert.end_time.substring(0, 5)
-        + ' Uhr | '
-        + props.concert.description.organizer
+    return props.concert.start_time + ' Uhr - '
+        + props.concert.end_time + ' Uhr | '
+        + props.concert.description.event
 });
 
 const address = computed<string>(() => {
-    return props.concert.description.place + ', '
+    return props.concert.description.venue + ', '
         + props.concert.address.street + ' '
         + props.concert.address.number + ', '
         + props.concert.address.plz + ' '
