@@ -41,6 +41,7 @@ jobs:
             .github/**
             .idea/**
             database/**
+            **/node_modules/**
             tests/**
             .env**
             phpunit*
