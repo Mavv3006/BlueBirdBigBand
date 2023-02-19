@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -16,13 +17,39 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
+});
+
+Route::get('/', function () {
+    return Inertia::render('Index');
+});
+Route::get('/about-us', function () {
+    return Inertia::render('Band/AboutPage');
+});
+Route::get('/anfahrt', function () {
+    return Inertia::render('Band/ArrivalPage');
+});
+Route::get('/auftritte', [ConcertsController::class, 'index']);
+Route::get('/buchung', function () {
+    return Inertia::render('LatestInfos/BookingPage');
+});
+Route::get('/impressum', function () {
+    return Inertia::render('Contact/ImprintPage');
+});
+Route::get('/kontakt', function () {
+    return Inertia::render('Contact/ContactPage');
+});
+Route::get('/musiker', function () {
+    return Inertia::render('Band/MusiciansPage');
+});
+Route::get('/presse', function () {
+    return Inertia::render('LatestInfos/PressInfoPage');
 });
 
 Route::get('/dashboard', function () {
@@ -35,4 +62,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

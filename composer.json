@@ -1,9 +1,19 @@
 {
-    "name": "laravel/laravel",
+    "name": "mavv3006/blue-bird-big-band",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "description": "Fullstack Laravel+Vue.js project for the website of the Blue Bird Big Band from the music school of Speyer, Germany.",
+    "homepage": "https://www.bluebirdbigband.de",
+    "authors": [
+        {
+            "name": "Marvin Deuschle",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "email": "bbbb-maintainers@googlegroups.com",
+        "issues": "https://github.com/Mavv3006/BlueBirdBigBand/issues",
+        "source": "https://github.com/Mavv3006/BlueBirdBigBand"
+    },
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
@@ -14,6 +24,7 @@
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
+        "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.18",
         "laravel/pint": "^1.0",
