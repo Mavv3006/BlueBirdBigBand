@@ -11,14 +11,17 @@ jobs:
       - name: get code
         uses: actions/checkout@v3
 
-      - name: setup frontend
+      - name: install dependencies
         run: |
           npm install
+          composer install --optimize-autoloader --no-dev
+
+      - name: setup frontend
+        run: |
           npm run build
 
       - name: setup backend
         run: |
-          composer install --optimize-autoloader --no-dev
           php artisan route:cache
 
       - name: push files
