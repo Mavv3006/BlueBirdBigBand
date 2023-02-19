@@ -24,6 +24,10 @@ jobs:
         run: |
           php artisan route:cache
 
+      - name: list local files
+        run: |
+          ls
+
       - name: push files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
