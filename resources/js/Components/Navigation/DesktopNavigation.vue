@@ -6,7 +6,9 @@
         <li class="nav-container">
             <span>Aktuelles</span>
             <ul class="dropdown-content min-w-[112px]">
-                <li>Auftritte</li>
+                <li>
+                    <Link href="auftritte">Auftritte</Link>
+                </li>
                 <li>
                     <Link href="presse">Presseinfos</Link>
                 </li>

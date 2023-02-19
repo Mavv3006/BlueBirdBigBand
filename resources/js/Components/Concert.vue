@@ -1,11 +1,13 @@
 <template>
-    <div class="text-underline">{{ concert.band }}</div>
-    <div class="font-semibold">{{ day }}</div>
-    <div>{{ playTime }}</div>
-    <div>{{ address }}</div>
+    <div>
+        <div class="font-semibold underline">{{ concert.band }}</div>
+        <div class="font-semibold">{{ day }}</div>
+        <div>{{ playTime }}</div>
+        <div>{{ address }}</div>
+    </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {computed, defineProps} from 'vue';
 
 export type ConcertType = {
@@ -50,7 +52,7 @@ const day = computed<string>(() => {
             weekday: 'long',
             year: 'numeric',
             month: '2-digit',
-            day: 'numeric'
+            day: '2-digit'
         }
     )
 });
