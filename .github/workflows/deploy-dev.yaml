@@ -22,7 +22,7 @@ jobs:
           php artisan route:cache
 
       - name: push files
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_username }}
