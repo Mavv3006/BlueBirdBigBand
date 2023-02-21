@@ -1,9 +1,4 @@
 <template>
-    <Head>
-        <link href="favicon.png" rel="icon">
-        <title></title>
-    </Head>
-
     <header class="md:flex md:relative md:flex-col md:justify-center">
         <div class="relative bg-[#d61000] h-12 mt-2 md:h-[calc(10.125vw-29.5px)] md:min-h-12 max-h-24">
             <div class="h-full md:w-full">
@@ -41,7 +36,6 @@
                 class="absolute w-full opacity-0 md:hidden"
             />
         </div>
-
     </header>
 
     <main
@@ -51,8 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-import {Head, Link} from '@inertiajs/vue3';
-import {computed, reactive, ref} from 'vue';
+import {Link} from '@inertiajs/vue3';
+import {ref} from 'vue';
 import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
 import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
