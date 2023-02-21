@@ -1,0 +1,47 @@
+name: Deployment Development
+
+on:
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: Deploy Fullstack Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+
+      - name: install frontend dependencies
+        run: |
+          npm install
+
+      - name: install backend dependencies
+        run: |
+          composer install --optimize-autoloader --no-dev
+
+      - name: setup frontend
+        run: |
+          npm run build
+
+      - name: setup backend
+        run: |
+          php artisan route:cache
+
+      - name: push files to server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: ${{ secrets.ftp_server }}
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ${{ secrets.dev_dir }}
+          dry-run: ${{ vars.DEPLOY_DEV_DRY_RUN }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            .idea/**
+            database/**
+            **/node_modules/**
+            tests/**
+            .env**
+            phpunit*

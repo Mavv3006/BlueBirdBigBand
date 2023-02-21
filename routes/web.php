@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::get('/welcome', function () {
     ]);
 });
 
-Route::get('/', function() {
+Route::get('/', function () {
     return Inertia::render('Index');
 });
 Route::get('/about-us', function () {
@@ -34,6 +35,7 @@ Route::get('/about-us', function () {
 Route::get('/anfahrt', function () {
     return Inertia::render('Band/ArrivalPage');
 });
+Route::get('/auftritte', [ConcertsController::class, 'index']);
 Route::get('/buchung', function () {
     return Inertia::render('LatestInfos/BookingPage');
 });
