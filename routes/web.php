@@ -28,7 +28,7 @@ Route::get('/welcome', function () {
 
 Route::get('/', function () {
     return Inertia::render('Index');
-});
+})->name('home');
 Route::get('/about-us', function () {
     return Inertia::render('Band/AboutPage');
 });
@@ -54,7 +54,10 @@ Route::get('/presse', function () {
 
 Route::middleware('auth')->prefix('intern')->group(function () {
     Route::get('/', function () {
-        return Inertia::render('Intern/Index');
+        return redirect(route('home'), 301);
+    });
+    Route::get('/emails', function () {
+        return Inertia::render('Intern/Emails');
     });
 });
 

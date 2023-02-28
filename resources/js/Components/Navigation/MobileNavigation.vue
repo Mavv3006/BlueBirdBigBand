@@ -56,9 +56,6 @@
                     z-index="5"
                 >
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="intern">Startseite</Link>
-                    </p>
-                    <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
                         <Link href="intern/emails">E-Mail Verteiler</Link>
                     </p>
                 </MobileNavbarElement>

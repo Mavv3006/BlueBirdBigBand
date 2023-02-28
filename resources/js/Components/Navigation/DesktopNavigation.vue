@@ -46,9 +46,6 @@
             <span>Intern</span>
             <ul class="dropdown-content min-w-[112px]">
                 <li>
-                    <Link href="intern">Startseite</Link>
-                </li>
-                <li>
                     <Link href="intern/emails">E-Mail Verteiler</Link>
                 </li>
             </ul>
