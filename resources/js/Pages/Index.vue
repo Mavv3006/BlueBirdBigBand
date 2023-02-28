@@ -1,5 +1,5 @@
 <template>
-    <public-layout>
+    <PublicLayout>
 
         <Head title="Willkommen"/>
 
@@ -19,7 +19,7 @@
                 +++ Schlagzeuger/in und Posaunist/innen gesucht +++
             </span>
         </div>
-    </public-layout>
+    </PublicLayout>
 </template>
 
 <script setup>

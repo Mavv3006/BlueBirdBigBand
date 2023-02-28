@@ -42,7 +42,9 @@
                 </li>
             </ul>
         </li>
-        <li>Login</li>
+        <li>
+            <Link href="login">Login</Link>
+        </li>
     </ul>
 </template>
 

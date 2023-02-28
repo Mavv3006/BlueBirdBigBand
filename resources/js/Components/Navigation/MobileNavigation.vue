@@ -57,7 +57,7 @@
                 <MobileNavbarElement
                     v-model:is_open="loginIsOpen"
                     container_title="Login"
-                    link="/"
+                    link="login"
                     z-index="6"
                 />
             </ul>
