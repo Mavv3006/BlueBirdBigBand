@@ -51,7 +51,7 @@
             </ul>
         </li>
         <li>
-            <Link method="POST" as="button" v-if="isLoggedIn" href="logout">Logout</Link>
+            <Link method="POST" as="button" v-if="isLoggedIn" :href="route('logout')">Logout</Link>
             <Link v-if="!isLoggedIn" href="login">Login</Link>
         </li>
     </ul>

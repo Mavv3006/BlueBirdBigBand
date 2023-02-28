@@ -71,7 +71,7 @@
                     v-if="isLoggedIn"
                     as="button"
                     container_title="Logout"
-                    link="logout"
+                    :link="route('logout')"
                     method="POST"
                     z-index="6"
                 />
