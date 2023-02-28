@@ -13,7 +13,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    name: '',
     password: '',
     remember: false, // TODO:remove remember
 });
@@ -41,7 +41,7 @@ const submit = () => {
 
                 <TextInput
                     id="username"
-                    v-model="form.email"
+                    v-model="form.name"
                     autocomplete="username"
                     autofocus
                     class="mt-1 block w-full"
