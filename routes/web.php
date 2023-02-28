@@ -52,6 +52,12 @@ Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
 
+Route::middleware('auth')->prefix('intern')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('Intern/Index');
+    });
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

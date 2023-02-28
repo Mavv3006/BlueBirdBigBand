@@ -42,14 +42,30 @@
                 </li>
             </ul>
         </li>
+        <li v-if="isLoggedIn" class="nav-container">
+            <span>Intern</span>
+            <ul class="dropdown-content min-w-[112px]">
+                <li>
+                    <Link href="intern">Startseite</Link>
+                </li>
+                <li>
+                    <Link href="intern/emails">E-Mail Verteiler</Link>
+                </li>
+            </ul>
+        </li>
         <li>
-            <Link href="login">Login</Link>
+            <Link method="POST" as="button" v-if="isLoggedIn" href="logout">Logout</Link>
+            <Link v-if="!isLoggedIn" href="login">Login</Link>
         </li>
     </ul>
 </template>
 
-<script setup>
-import {Link} from '@inertiajs/vue3';</script>
+<script lang="ts" setup>
+import {Link, usePage} from '@inertiajs/vue3';
+import {computed} from "vue";
+
+const isLoggedIn = computed<boolean>(() => usePage().props.auth.user !== null);
+</script>
 
 <style scoped>
 .nav-container {
@@ -79,7 +95,7 @@ import {Link} from '@inertiajs/vue3';</script>
 }
 
 ul > li {
-    @apply relative px-4 leading-[3em] cursor-pointer font-semibold tracking-[1px] rounded-md;
+    @apply relative px-4 leading-[3em] cursor-pointer font-semibold tracking-[1px] rounded-md whitespace-nowrap;
 }
 
 ul > li:hover {

@@ -17,7 +17,7 @@
             >
                 <font-awesome-icon
                     v-if="mobileNavIsOpen"
-                    class="text-2xl"
+                    class="text-2xl translate-y-[2px]"
                     icon="fa-solid fa-close"
                 />
                 <font-awesome-icon
