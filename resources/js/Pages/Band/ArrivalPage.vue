@@ -1,6 +1,6 @@
 <template>
     <public-layout>
-        <Head title="Anfahrt"/>
+        <Head><title>Anfahrt</title></Head>
         <Heading>Wegbeschreibung zur Probe</Heading>
 
         <div class="flex flex-col gap-8">
@@ -25,14 +25,6 @@
                 <iframe allowfullscreen class="w-full h-full" height="600"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2600.3175892804056!2d8.432908116445535!3d49.32720577933624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797b69c0432edc1%3A0xa304f0208640358c!2sMusikschule+der+Stadt+Speyer!5e0!3m2!1sde!2sde!4v1475013688535">
                 </iframe>
-            </div>
-
-            <div class="text-center">
-                <NavLink
-                    href="https://www.google.de/maps/place/Musikschule+der+Stadt+Speyer/@49.3272058,8.4329081,17z/data=!3m1!4b1!4m5!3m4!1s0x4797b69c0432edc1:0xa304f0208640358c!8m2!3d49.3272058!4d8.4350968?hl=de"
-                    target="_blank">
-                    Größere Kartenansicht
-                </NavLink>
             </div>
         </div>
     </public-layout>
