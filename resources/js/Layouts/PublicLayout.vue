@@ -1,16 +1,11 @@
 <template>
-    <Head>
-        <link href="favicon.png" rel="icon">
-        <title></title>
-    </Head>
-
     <header class="md:flex md:relative md:flex-col md:justify-center">
         <div class="relative bg-[#d61000] h-12 mt-2 md:h-[calc(10.125vw-29.5px)] md:min-h-12 max-h-24">
             <div class="h-full md:w-full">
                 <Link class="flex justify-center items-center h-full p-0" href="/">
-                    <img alt="Logo der Blue Bird Big Band"
+                    <img :src="logoURL"
+                         alt="Logo der Blue Bird Big Band"
                          class="max-h-12 pr-11 md:pr-0 md:h-full"
-                         src="assets/logos/logo-header.gif"
                     >
                 </Link>
             </div>
@@ -22,7 +17,7 @@
             >
                 <font-awesome-icon
                     v-if="mobileNavIsOpen"
-                    class="text-2xl"
+                    class="text-2xl translate-y-[2px]"
                     icon="fa-solid fa-close"
                 />
                 <font-awesome-icon
@@ -41,7 +36,6 @@
                 class="absolute w-full opacity-0 md:hidden"
             />
         </div>
-
     </header>
 
     <main
@@ -51,13 +45,15 @@
 </template>
 
 <script lang="ts" setup>
-import {Head, Link} from '@inertiajs/vue3';
-import {computed, reactive, ref} from 'vue';
+import {Link} from '@inertiajs/vue3';
+import {computed, ref} from 'vue';
 import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
 import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const mobileNavIsOpen = ref<boolean>(false);
+
+const logoURL = computed<string>(() => `${window.location.protocol}//${window.location.host}/assets/logos/logo-header.gif`);
 
 const toggleMobileMenu = () => {
     mobileNavIsOpen.value = !mobileNavIsOpen.value;

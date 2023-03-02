@@ -28,7 +28,7 @@ Route::get('/welcome', function () {
 
 Route::get('/', function () {
     return Inertia::render('Index');
-});
+})->name('home');
 Route::get('/about-us', function () {
     return Inertia::render('Band/AboutPage');
 });
@@ -50,6 +50,15 @@ Route::get('/musiker', function () {
 });
 Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
+});
+
+Route::middleware('auth')->prefix('intern')->group(function () {
+    Route::get('/', function () {
+        return redirect(route('home'), 301);
+    });
+    Route::get('/emails', function () {
+        return Inertia::render('Intern/Emails');
+    });
 });
 
 Route::get('/dashboard', function () {

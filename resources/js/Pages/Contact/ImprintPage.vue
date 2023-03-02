@@ -17,9 +17,9 @@
                 <p>Telefax: 0621 3197488</p>
                 <p>Mobil: 0171 5808481</p>
                 <p>E-Mail:
-                    <NavLink href="mailto:bandleiter@bluebirdbigband.de">
+                    <MailtoLink mail-adress="bandleiter@bluebirdbigband.de">
                         bandleiter@bluebirdbigband.de
-                    </NavLink>
+                    </MailtoLink>
                 </p>
             </div>
         </div>
@@ -58,5 +58,5 @@
 
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import NavLink from "@/Components/Link/NavLink.vue";
-import {Head} from '@inertiajs/vue3';</script>
+import {Head} from '@inertiajs/vue3';
+import MailtoLink from "@/Components/Link/MailtoLink.vue";</script>

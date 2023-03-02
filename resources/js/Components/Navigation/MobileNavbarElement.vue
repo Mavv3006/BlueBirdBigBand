@@ -2,7 +2,7 @@
     <li ref="container" :style="{'z-index': zIndex ?? 'unset'}" class="text-white">
         <div v-if="link === undefined" class="container">{{ container_title }}</div>
         <div v-if="link !== undefined" class="container">
-            <Link :href="link">{{ container_title }}</Link>
+            <Link :as="as" :href="link" :method="method">{{ container_title }}</Link>
         </div>
         <button v-if="hasChildren" :class="{'open-submenu-bg-color': isOpenRef}"
                 @click="toggle_submenu">
@@ -22,20 +22,22 @@ import {Link} from '@inertiajs/vue3';
 
 interface Props {
     container_title: string,
-    is_open: boolean,
     link?: string,
-    zIndex?: string
+    zIndex?: string,
+    method?: string,
+    as?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     container_title: '',
-    is_open: false
+    method: undefined,
+    as: undefined
 });
 const emits = defineEmits<{
     (e: 'update:isOpen', isOpen: boolean): void
 }>();
 
-const isOpenRef = ref<boolean>(props.is_open);
+const isOpenRef = ref<boolean>(false);
 const container = ref<HTMLLIElement | null>(null);
 const submenu = ref<HTMLLIElement | null>(null);
 
@@ -47,7 +49,6 @@ const hasChildren = computed<boolean>(() => submenu_children_count() > 0);
 
 const toggle_submenu = () => {
     isOpenRef.value = !isOpenRef.value;
-    emits('update:isOpen', isOpenRef.value)
 };
 </script>
 
@@ -77,14 +78,13 @@ li:not(.submenu) {
     line-height: 1;
     display: flex;
     position: relative;
-    text-transform: uppercase;
     height: 49px;
     justify-content: space-between;
     background-color: #041286;
     transition: all ease 0.3s;
 }
 
-li:not(.submenu) button {
+li:not(.submenu) > button {
     color: white;
     padding-right: 17px;
     padding-left: 17px;
