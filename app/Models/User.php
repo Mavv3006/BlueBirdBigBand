@@ -19,6 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
+        'activated'
     ];
 
     /**
@@ -30,4 +31,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function activate(): void
+    {
+        $this->activated = true;
+    }
+
+    public function deactivate(): void
+    {
+        $this->activated = false;
+    }
 }

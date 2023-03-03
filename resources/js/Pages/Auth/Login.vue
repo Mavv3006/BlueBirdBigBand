@@ -27,7 +27,7 @@ const submit = () => {
 
 <template>
     <PublicLayout>
-        <Head title="Log in"/>
+        <Head><title>Log in</title></Head>
 
         <Heading>Login</Heading>
 
