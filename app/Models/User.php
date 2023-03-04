@@ -19,6 +19,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
+        'activated'
+    ];
+
+    protected $casts = [
+        'activated' => 'boolean'
     ];
 
     /**
@@ -30,4 +35,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function activate(): void
+    {
+        $this->activated = true;
+    }
+
+    public function deactivate(): void
+    {
+        $this->activated = false;
+    }
 }
