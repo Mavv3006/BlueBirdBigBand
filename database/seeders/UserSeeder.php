@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
+            'activated' => true
         ]);
     }
 }

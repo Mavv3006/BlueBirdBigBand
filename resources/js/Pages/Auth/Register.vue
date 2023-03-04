@@ -14,89 +14,83 @@ const form = useForm({
     terms: false,
 });
 
+defineProps({
+    status: String
+})
+
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onSuccess: () => form.reset('name', 'password', 'password_confirmation'),
+        onError: () => form.reset('password', 'password_confirmation'),
     });
 };
 </script>
 
 <template>
     <PublicLayout>
-        <Head><title>Register</title></Head>
-        <Heading>Register</Heading>
+        <Head><title>Registrieren</title></Head>
+        <Heading>Registrieren</Heading>
 
         <p>
             Nach dem erfolgreichen Registrieren, muss Ihr Account erst noch von einem Administrator freigeschaltet
             werden, bevor Sie sich mit ihrem Benutzernamen und Passwort einloggen können.
         </p>
 
-        <form @submit.prevent="submit">
+        <form class="mx-auto sm:w-7/12 md:w-6/12 lg:w-5/12 xl:w-4/12" @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Benutzername"/>
 
                 <TextInput
                     id="name"
-                    type="text"
-                    class="mt-1 block w-full"
                     v-model="form.name"
-                    required
+                    autocomplete="username"
                     autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name"/>
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email"/>
-
-                <TextInput
-                    id="email"
-                    type="email"
                     class="mt-1 block w-full"
-                    v-model="form.email"
                     required
-                    autocomplete="username"
+                    type="text"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email"/>
+                <InputError :message="form.errors.name" class="mt-2"/>
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password"/>
+                <InputLabel for="password" value="Passwort"/>
 
                 <TextInput
                     id="password"
-                    type="password"
-                    class="mt-1 block w-full"
                     v-model="form.password"
-                    required
                     autocomplete="new-password"
+                    class="mt-1 block w-full"
+                    required
+                    type="password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password"/>
+                <InputError :message="form.errors.password" class="mt-2"/>
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password"/>
+                <InputLabel for="password_confirmation" value="Passwort bestätigen"/>
 
                 <TextInput
                     id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
                     v-model="form.password_confirmation"
-                    required
                     autocomplete="new-password"
+                    class="mt-1 block w-full"
+                    required
+                    type="password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password_confirmation"/>
+                <InputError :message="form.errors.password_confirmation" class="mt-2"/>
             </div>
 
-            <div class="flex items-center justify-center mt-4">
+            <div class="flex flex-col items-center justify-center mt-4">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Registrieren
                 </PrimaryButton>
+
+                <div v-if="status" class="mt-4 font-medium text-sm text-green-600">
+                    {{ status }}
+                </div>
             </div>
         </form>
     </PublicLayout>
