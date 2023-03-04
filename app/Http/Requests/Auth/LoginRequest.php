@@ -18,9 +18,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = User::where('name', $this->only('name'))->first();
-
-        return $user->activated;
+        return true;
     }
 
     /**
@@ -45,7 +43,17 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('name', 'password'), $this->boolean('remember'))) {
+        $user = User::where('name', $this->only('name'))->first();
+
+        if (!$user->activated) {
+            throw ValidationException::withMessages([
+                'name' => trans('auth.activated')
+            ]);
+        }
+
+        $isAuthenticated = Auth::attempt($this->only('name', 'password'), $this->boolean('remember'));
+
+        if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

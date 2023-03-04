@@ -49,7 +49,7 @@ const submit = () => {
                     type="text"
                 />
 
-                <InputError :message="form.errors.email" class="mt-2"/>
+                <InputError :message="form.errors.name" class="mt-2"/>
             </div>
 
             <div class="mt-4">
