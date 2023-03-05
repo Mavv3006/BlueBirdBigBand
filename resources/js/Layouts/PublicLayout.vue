@@ -47,9 +47,9 @@
 <script lang="ts" setup>
 import {Link} from '@inertiajs/vue3';
 import {computed, ref} from 'vue';
-import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
-import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import MobileNavigation from "../Components/Navigation/MobileNavigation.vue";
+import DesktopNavigation from "../Components/Navigation/DesktopNavigation.vue";
 
 const mobileNavIsOpen = ref<boolean>(false);
 
