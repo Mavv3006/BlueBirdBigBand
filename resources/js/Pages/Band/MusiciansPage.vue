@@ -32,12 +32,28 @@
     </public-layout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
 import MusicianInstrument, {Musician} from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
+
+const props = defineProps<{
+    data: {
+        instrument: {
+            name: string,
+            default_picture_filepath: string
+        },
+        musicians: {
+            firstname: string,
+            lastname: string,
+            picture_filepath?: string,
+        }[],
+    }[]
+}>();
+
+console.log(props);
 
 const picture_prefix = 'assets/musician_pictures/';
 const default_tux = picture_prefix + 'default/tux.png';

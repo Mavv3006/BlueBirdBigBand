@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Instrument;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class InstrumentSeeder extends Seeder
@@ -16,17 +15,24 @@ class InstrumentSeeder extends Seeder
     public function run(): void
     {
         $instrumentNames = [
-            'Bandleader',
-            'Gesang',
-            'Saxophone',
-            'Posaunen',
-            'Trompeten',
-            'Rhythmusgruppe'
+            ['name' => 'Bandleader', 'path' => 'assets/musician_pictures/default/tux-dirigent.png'],
+            ['name' => 'Gesang', 'path' => null],
+            ['name' => 'Saxophone', 'path' => 'assets/musician_pictures/default/tux-sax.jpg'],
+            ['name' => 'Posaunen', 'path' => null],
+            ['name' => 'Trompeten', 'path' => 'assets/musician_pictures/default/tux-trompeter.png'],
+            ['name' => 'Rhythmusgruppe', 'path' => null],
         ];
 
-        Instrument::factory()
-            ->count(sizeof($instrumentNames))
-            ->sequence(fn(Sequence $sequence) => ['name' => $instrumentNames[$sequence->index]])
-            ->create();
+        foreach ($instrumentNames as $instrumentName) {
+            $this->createInstrument($instrumentName['name'], $instrumentName['path']);
+        }
+    }
+
+    private function createInstrument(string $name, string|null $path)
+    {
+        Instrument::factory()->create([
+            'name' => $name,
+            'default_picture_filepath' => $path ?? 'assets/musician_pictures/default/tux.png'
+        ]);
     }
 }
