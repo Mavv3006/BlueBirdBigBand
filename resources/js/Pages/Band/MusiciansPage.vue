@@ -1,6 +1,6 @@
 <template>
     <public-layout>
-        <Head title="Musiker"/>
+        <Head><title>Musiker</title></Head>
 
         <Heading>Musiker</Heading>
 
@@ -17,18 +17,38 @@
             finden Sie noch einmal die Zeiten und die genaue Adresse, um zu unseren Proben zu finden.
         </p>
 
+        <!--        <div class="flex flex-col md:flex-row">-->
+        <!--            <div class="md:w-1/2">-->
+        <!--                <MusicianInstrument :musicians="bandleader" instrument="Bandleader"/>-->
+        <!--            </div>-->
+        <!--            <div class="md:w-1/2">-->
+        <!--                <MusicianInstrument :musicians="vocals" instrument="Gesang"/>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <MusicianInstrument :musicians="saxophones" instrument="Saxophone"/>-->
+        <!--        <MusicianInstrument :musicians="trombones" instrument="Posaunen"/>-->
+        <!--        <MusicianInstrument :musicians="trumpets" instrument="Trompeten"/>-->
+        <!--        <MusicianInstrument :musicians="rhythms" instrument="Rhythmusgruppe"/>-->
+
         <div class="flex flex-col md:flex-row">
-            <div class="md:w-1/2">
-                <MusicianInstrument :musicians="bandleader" instrument="Bandleader"/>
-            </div>
-            <div class="md:w-1/2">
-                <MusicianInstrument :musicians="vocals" instrument="Gesang"/>
+            <div
+                class="md:w-1/2"
+                v-for="musician in bandleaderPlusVocals"
+            >
+                <MusicianInstrument
+                    :musicians="musician.musicians"
+                    :instrument="musician.instrument"
+                />
             </div>
         </div>
-        <MusicianInstrument :musicians="saxophones" instrument="Saxophone"/>
-        <MusicianInstrument :musicians="trombones" instrument="Posaunen"/>
-        <MusicianInstrument :musicians="trumpets" instrument="Trompeten"/>
-        <MusicianInstrument :musicians="rhythms" instrument="Rhythmusgruppe"/>
+
+        <div>
+            <MusicianInstrument
+                :musicians="musician.musicians"
+                :instrument="musician.instrument"
+                v-for="musician in instrumentalists"
+            />
+        </div>
     </public-layout>
 </template>
 
@@ -39,21 +59,49 @@ import NavLink from "@/Components/Link/NavLink.vue";
 import MusicianInstrument, {Musician} from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
 
-const props = defineProps<{
-    data: {
-        instrument: {
-            name: string,
-            default_picture_filepath: string
-        },
-        musicians: {
-            firstname: string,
-            lastname: string,
-            picture_filepath?: string,
-        }[],
-    }[]
-}>();
+type MusicianBackendDto = { firstname: string, lastname: string, picture_filepath?: string };
 
-console.log(props);
+type MusicianProp = {
+    instrument: {
+        name: string,
+        default_picture_filepath: string
+    },
+    musicians: MusicianBackendDto[],
+};
+
+type MusiciansWithInstrument = {
+    instrument: string,
+    musicians: Musician[]
+}
+
+const props = defineProps<{ data: MusicianProp[] }>();
+
+const instrumentFilter = (instrument: string) =>
+    (value: MusicianProp): boolean =>
+        value.instrument.name === instrument;
+const musicianMapping = (value: MusicianProp): Musician[] => {
+    let musicianList = [];
+    value.musicians.forEach((musician: MusicianBackendDto) => {
+        musicianList.push({
+            name: `${musician.firstname} ${musician.lastname}`,
+            picture: musician.picture_filepath ?? value.instrument.default_picture_filepath
+        })
+    })
+    return musicianList;
+};
+const instrumentMapping = (instrument: string): MusiciansWithInstrument => {
+    return {
+        instrument: instrument,
+        musicians: props.data
+            .filter(instrumentFilter(instrument))
+            .map(musicianMapping)[0]
+    };
+}
+const musiciansWithInstrument = props.data
+    .map((value: MusicianProp) => instrumentMapping(value.instrument.name));
+
+const bandleaderPlusVocals = musiciansWithInstrument.filter((value, index) => index < 2)
+const instrumentalists = musiciansWithInstrument.filter((value, index) => index >= 2)
 
 const picture_prefix = 'assets/musician_pictures/';
 const default_tux = picture_prefix + 'default/tux.png';
