@@ -15,6 +15,12 @@ class Instrument extends Model
         'default_picture_filepath'
     ];
 
+    protected $hidden = [
+        'updated_at',
+        'created_at',
+        'id'
+    ];
+
     public function musicians(): HasMany
     {
         return $this->hasMany(Musician::class, 'instrument_id', 'id');

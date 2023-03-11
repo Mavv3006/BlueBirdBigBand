@@ -21,6 +21,12 @@ class Musician extends Model
         'isActive' => 'boolean'
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id',
+    ];
+
     public function instrument(): BelongsTo
     {
         return $this->belongsTo(Instrument::class, 'instrument_id', 'id');
