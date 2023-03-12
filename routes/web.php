@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -45,9 +46,7 @@ Route::get('/impressum', function () {
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/ContactPage');
 });
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
-});
+Route::get('/musiker', [ActiveMusicianController::class, 'show']);
 Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });

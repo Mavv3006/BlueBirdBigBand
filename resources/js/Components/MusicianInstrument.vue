@@ -10,13 +10,12 @@
 </template>
 
 <script setup lang="ts">
-export type Instrument = "Bandleader" | "Gesang" | "Saxophone" | "Posaunen" | "Trompeten" | "Rhythmusgruppe";
 export type Musician = { picture: String, name: String };
 
 import {defineProps} from 'vue';
 
 const props = defineProps<{
-    instrument: Instrument,
+    instrument: string,
     musicians: Musician[]
 }>()
 </script>
