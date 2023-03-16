@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivateUsersController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -59,6 +60,11 @@ Route::middleware('auth')->prefix('intern')->group(function () {
     Route::get('/emails', function () {
         return Inertia::render('Intern/Emails');
     });
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('activate-users', [ActivateUsersController::class, 'show']);
+    Route::get('activate-users/{user}', [ActivateUsersController::class, 'update']);
 });
 
 Route::get('/dashboard', function () {
