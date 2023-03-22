@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class NonActiveUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,11 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'activated' => true
-        ]);
+        User::factory()->count(10)->create(['activated' => false]);
     }
 }
