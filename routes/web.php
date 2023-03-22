@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActivateUsersController;
+use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -45,9 +47,7 @@ Route::get('/impressum', function () {
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/ContactPage');
 });
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
-});
+Route::get('/musiker', [ActiveMusicianController::class, 'show']);
 Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
@@ -59,6 +59,11 @@ Route::middleware('auth')->prefix('intern')->group(function () {
     Route::get('/emails', function () {
         return Inertia::render('Intern/Emails');
     });
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('activate-users', [ActivateUsersController::class, 'show']);
+    Route::get('activate-users/{user}', [ActivateUsersController::class, 'update']);
 });
 
 Route::get('/dashboard', function () {
