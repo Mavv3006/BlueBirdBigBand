@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivateUsersController;
+use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
