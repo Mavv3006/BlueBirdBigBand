@@ -18,14 +18,10 @@
         </p>
 
         <div class="flex flex-col md:flex-row">
-            <div
-                class="md:w-1/2"
-                v-for="musician in bandleaderPlusVocals"
-            >
+            <div class="md:w-1/2" v-for="musician in bandleaderPlusVocals">
                 <MusicianInstrument
                     :musicians="musician.musicians"
-                    :instrument="musician.instrument"
-                />
+                    :instrument="musician.instrument"/>
             </div>
         </div>
 
@@ -33,30 +29,35 @@
             <MusicianInstrument
                 :musicians="musician.musicians"
                 :instrument="musician.instrument"
-                v-for="musician in instrumentalists"
-            />
+                v-for="musician in instrumentalists"/>
+
         </div>
+
     </public-layout>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
 import MusicianInstrument, {Musician} from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
 
-type MusicianBackendDto = { firstname: string, lastname: string, picture_filepath?: string };
+type MusicianBackendDto = {
+    firstname: string,
+    lastname: string,
+    picture_filepath?: string
+}
 
 type MusicianProp = {
     instrument: {
         name: string,
         default_picture_filepath: string
     },
-    musicians: MusicianBackendDto[],
-};
+    musicians: MusicianBackendDto[]
+}
 
-type MusiciansWithInstrument = {
+type MusicianWithInstrument = {
     instrument: string,
     musicians: Musician[]
 }
@@ -64,17 +65,20 @@ type MusiciansWithInstrument = {
 const props = defineProps<{ data: MusicianProp[] }>();
 
 const instrumentFilter = (instrument: string) => (value: MusicianProp): boolean => value.instrument.name === instrument;
-const musicianMapping = (value: MusicianProp): Musician[] =>
-    value.musicians.map((musician: MusicianBackendDto) => ({
-        name: `${musician.firstname} ${musician.lastname}`,
-        picture: musician.picture_filepath ?? value.instrument.default_picture_filepath
-    }));
-const instrumentMapping = (instrument: string): MusiciansWithInstrument => ({
+
+const musicianMapping = (value: MusicianProp): Musician[] => value.musicians.map((musician: MusicianBackendDto) => ({
+    name: `${musician.firstname} ${musician.lastname}`,
+    picture: musician.picture_filepath ?? value.instrument.default_picture_filepath
+}));
+
+const instrumentMapping = (instrument: string): MusicianWithInstrument => ({
     instrument: instrument,
     musicians: props.data.filter(instrumentFilter(instrument)).map(musicianMapping)[0]
 });
-const musiciansWithInstrument = props.data.map((value: MusicianProp) => instrumentMapping(value.instrument.name));
 
-const bandleaderPlusVocals = musiciansWithInstrument.filter((value, index) => index < 2)
-const instrumentalists = musiciansWithInstrument.filter((value, index) => index >= 2)
+const musicianWithInstrument = props.data.map((value: MusicianProp) => instrumentMapping(value.instrument.name));
+
+const bandleaderPlusVocals = musicianWithInstrument.filter((value, index) => index < 2);
+
+const instrumentalists = musicianWithInstrument.filter((value, index) => index >= 2);
 </script>

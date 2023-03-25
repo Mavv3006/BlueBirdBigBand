@@ -52,7 +52,7 @@ Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
 
-Route::middleware('auth')->prefix('intern')->group(function () {
+Route::middleware(['auth', 'role:musician'])->prefix('intern')->group(function () {
     Route::get('/', function () {
         return redirect(route('home'), 301);
     });
@@ -61,14 +61,10 @@ Route::middleware('auth')->prefix('intern')->group(function () {
     });
 });
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('activate-users', [ActivateUsersController::class, 'show']);
     Route::get('activate-users/{user}', [ActivateUsersController::class, 'update']);
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

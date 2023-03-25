@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ->call(BandSeeder::class)
             ->call(ConcertSeeder::class)
             ->call(InstrumentSeeder::class)
-            ->call(MusicianSeeder::class);
+            ->call(MusicianSeeder::class)
+            ->call(DefaultAuthorizationSeeder::class);
     }
 }
