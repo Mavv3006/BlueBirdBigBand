@@ -18,5 +18,3 @@ class ActiveMusicianController extends Controller
         ]);
     }
 }
-
-

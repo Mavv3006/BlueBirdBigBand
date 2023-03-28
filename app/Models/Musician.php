@@ -31,5 +31,4 @@ class Musician extends Model
     {
         return $this->belongsTo(Instrument::class, 'instrument_id', 'id');
     }
-
 }
