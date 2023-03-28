@@ -18,5 +18,3 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/tools/php-cs-fixer/vendor/
-/.php-cs-fixer.cache
