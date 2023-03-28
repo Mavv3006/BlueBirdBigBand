@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\ActivateUsersController;
+use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -45,30 +46,34 @@ Route::get('/impressum', function () {
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/ContactPage');
 });
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
-});
+Route::get('/musiker', [ActiveMusicianController::class, 'show']);
 Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
 
-Route::middleware('auth')->prefix('intern')->group(function () {
-    Route::get('/', function () {
-        return redirect(route('home'), 301);
+Route::middleware(['auth', 'permission:access intern routes'])
+    ->prefix('intern')
+    ->group(function () {
+        Route::get('/', function () {
+            return redirect(route('home'), 301);
+        });
+        Route::get('/emails', function () {
+            return Inertia::render('Intern/Emails');
+        });
     });
-    Route::get('/emails', function () {
-        return Inertia::render('Intern/Emails');
+
+Route::prefix('admin')
+    ->middleware(['auth', 'permission:access admin routes'])
+    ->group(function () {
+        Route::redirect('/', 'activate-users', 301);
+        Route::get('activate-users', [ActivateUsersController::class, 'show']);
+        Route::get('activate-users/{user}', [ActivateUsersController::class, 'update']);
     });
-});
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+//Route::middleware('auth')->group(function () {
+//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//});
 
 require __DIR__ . '/auth.php';

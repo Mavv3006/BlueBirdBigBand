@@ -12,9 +12,17 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('bands', function (Blueprint $table) {
+        Schema::create('musicians', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstname', 100);
+            $table->string('lastname', 100);
+            $table->string('picture_filepath')
+                ->nullable();
+            $table->boolean('isActive')
+                ->default(true);
+            $table->foreignId('instrument_id')
+                ->constrained('instruments')
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -26,6 +34,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('bands');
+        Schema::dropIfExists('musicians');
     }
 };
