@@ -7,13 +7,13 @@
             <span>Aktuelles</span>
             <ul class="dropdown-content min-w-[112px]">
                 <li>
-                    <Link href="auftritte">Auftritte</Link>
+                    <Link href="/auftritte">Auftritte</Link>
                 </li>
                 <li>
-                    <Link href="presse">Presseinfos</Link>
+                    <Link href="/presse">Presseinfos</Link>
                 </li>
                 <li>
-                    <Link href="buchung">Buchungsinsfos</Link>
+                    <Link href="/buchung">Buchungsinsfos</Link>
                 </li>
             </ul>
         </li>
@@ -21,13 +21,13 @@
             <span>Band</span>
             <ul class="dropdown-content min-w-[112px]">
                 <li>
-                    <Link href="about-us">Über uns</Link>
+                    <Link href="/about-us">Über uns</Link>
                 </li>
                 <li>
-                    <Link href="musiker">Musiker</Link>
+                    <Link href="/musiker">Musiker</Link>
                 </li>
                 <li>
-                    <Link href="anfahrt">Anfahrt</Link>
+                    <Link href="/anfahrt">Anfahrt</Link>
                 </li>
             </ul>
         </li>
@@ -35,10 +35,10 @@
             <span>Kontakt</span>
             <ul class="dropdown-content min-w-[112px]">
                 <li>
-                    <Link href="kontakt">Kontakt</Link>
+                    <Link href="/kontakt">Kontakt</Link>
                 </li>
                 <li>
-                    <Link href="impressum">Impressum</Link>
+                    <Link href="/impressum">Impressum</Link>
                 </li>
             </ul>
         </li>
@@ -46,7 +46,7 @@
             <span>Intern</span>
             <ul class="dropdown-content min-w-[112px]">
                 <li>
-                    <Link href="intern/emails">E-Mail Verteiler</Link>
+                    <Link href="/intern/emails">E-Mail Verteiler</Link>
                 </li>
             </ul>
         </li>

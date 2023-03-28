@@ -13,13 +13,13 @@
                     z-index="2"
                 >
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white submenu-element">
-                        <Link href="auftritte">Auftritte</Link>
+                        <Link href="/auftritte">Auftritte</Link>
                     </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="presse">Presseinfos</Link>
+                        <Link href="/presse">Presseinfos</Link>
                     </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="buchung">Buchungsinfos</Link>
+                        <Link href="/buchung">Buchungsinfos</Link>
                     </p>
                 </MobileNavbarElement>
 
@@ -28,13 +28,13 @@
                     z-index="3"
                 >
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="about-us">Über uns</Link>
+                        <Link href="/about-us">Über uns</Link>
                     </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="musiker">Musiker</Link>
+                        <Link href="/musiker">Musiker</Link>
                     </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="anfahrt">Anfahrt</Link>
+                        <Link href="/anfahrt">Anfahrt</Link>
                     </p>
                 </MobileNavbarElement>
 
@@ -43,10 +43,10 @@
                     z-index="4"
                 >
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="kontakt">Kontakt</Link>
+                        <Link href="/kontakt">Kontakt</Link>
                     </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="impressum">Impressum</Link>
+                        <Link href="/impressum">Impressum</Link>
                     </p>
                 </MobileNavbarElement>
 
@@ -56,7 +56,7 @@
                     z-index="5"
                 >
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
-                        <Link href="intern/emails">E-Mail Verteiler</Link>
+                        <Link href="/intern/emails">E-Mail Verteiler</Link>
                     </p>
                 </MobileNavbarElement>
 

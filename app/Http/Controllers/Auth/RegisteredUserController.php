@@ -45,12 +45,4 @@ class RegisteredUserController extends Controller
             'status' => __('messages.register-success', ['username' => $request->name])
         ]);
     }
-
-    /**
-     * Handle an incoming user activation request.
-     */
-    public function update(Request $request, User $user)
-    {
-        $user->activate();
-    }
 }
