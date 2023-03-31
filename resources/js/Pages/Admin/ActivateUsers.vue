@@ -18,7 +18,7 @@
                 <td class="w-1/5">{{ user.id }}</td>
                 <td class="w-2/5">{{ user.name }}</td>
                 <td class="w-2/5">
-                    <Link :href="'/admin/activate-users/'+user.id">Aktivieren</Link>
+                    <Link method="patch" :href="'/admin/activate-users/'+user.id"> Aktivieren</Link>
                 </td>
             </tr>
             </tbody>
