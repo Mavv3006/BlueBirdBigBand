@@ -3,7 +3,6 @@
 use App\Http\Controllers\ActivateUsersController;
 use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,15 +16,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/welcome', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::get('/', function () {
     return Inertia::render('Index');
@@ -65,15 +55,8 @@ Route::middleware(['auth', 'permission:access intern routes'])
 Route::prefix('admin')
     ->middleware(['auth', 'permission:access admin routes'])
     ->group(function () {
-        Route::redirect('/', 'activate-users', 301);
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
-        Route::get('activate-users/{user}', [ActivateUsersController::class, 'update']);
+        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
     });
-
-//Route::middleware('auth')->group(function () {
-//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-//});
 
 require __DIR__ . '/auth.php';
