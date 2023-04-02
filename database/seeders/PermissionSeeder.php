@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         Permission::create(['name' => 'manage users']);
-        Permission::create(['name' => 'access intern routes']);
-        Permission::create(['name' => 'access admin routes']);
+        Permission::create(['name' => 'route.access-intern']);
+        Permission::create(['name' => 'route.access-admin']);
     }
 }

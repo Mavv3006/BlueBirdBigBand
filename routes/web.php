@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivateUsersController;
 use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
+use App\Http\Controllers\InternController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -41,19 +42,15 @@ Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
 
-Route::middleware(['auth', 'permission:access intern routes'])
-    ->prefix('intern')
+Route::prefix('intern')
+    ->middleware(['auth'])
     ->group(function () {
-        Route::get('/', function () {
-            return redirect(route('home'), 301);
-        });
-        Route::get('/emails', function () {
-            return Inertia::render('Intern/Emails');
-        });
+        Route::get('/', [InternController::class, 'index']);
+        Route::get('/emails', [InternController::class, 'emails']);
     });
 
 Route::prefix('admin')
-    ->middleware(['auth', 'permission:access admin routes'])
+    ->middleware(['auth'])
     ->group(function () {
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);

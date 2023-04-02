@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
@@ -32,6 +34,13 @@ class AuthServiceProvider extends ServiceProvider
             return $this->app->isProduction()
                 ? $rule->mixedCase()->numbers()->symbols()
                 : $rule;
+        });
+
+        Gate::define('route.access-admin', function (User $user) {
+            return $user->hasPermissionTo('route.access-admin');
+        });
+        Gate::define('route.access-intern', function (User $user) {
+            return $user->hasPermissionTo('route.access-intern');
         });
     }
 }
