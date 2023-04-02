@@ -20,11 +20,11 @@ class DefaultAuthorizationSeeder extends Seeder
 
         Role::where('name', 'admin')->first()->syncPermissions([
             'manage users',
-            'access admin routes'
+            'route.access-admin'
         ]);
 
         Role::where('name', 'musician')->first()->syncPermissions([
-            'access intern routes'
+            'route.access-intern'
         ]);
 
         User::factory()->create(['name' => 'admin', 'activated' => true])->assignRole('admin');
