@@ -25,6 +25,7 @@ class ActivateUsersController extends Controller
     public function update(User $user): RedirectResponse
     {
         $this->checkAccessPermission();
+        Gate::authorize('manage users');
 
         $user->update(['activated' => true]);
         Log::debug('Updated user ' . $user->id);
