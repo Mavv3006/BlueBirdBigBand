@@ -42,5 +42,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('route.access-intern', function (User $user) {
             return $user->hasPermissionTo('route.access-intern');
         });
+        Gate::define('manage users', function (User $user) {
+            return $user->hasPermissionTo('manage users');
+        });
     }
 }
