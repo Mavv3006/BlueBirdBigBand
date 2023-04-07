@@ -55,7 +55,24 @@ class RolesController extends Controller
      */
     public function show(int $id): \Inertia\Response
     {
-
+        $role = Role::where('id', $id)
+            ->select('id', 'name')
+            ->first();
+        $role_permissions = $role
+            ->permissions()
+            ->select('id', 'name')
+            ->get();
+        $users = $role
+            ->users()
+            ->select('id', 'name', 'activated')
+            ->get();
+        $data = [
+            'role' => $role,
+            'role_permissions' => $role_permissions,
+            'users' => $users
+        ];
+        Log::debug("RolesController::show", $data);
+        return Inertia::render('Admin/RolesManagement/RolesShow', $data);
     }
 
     /**
