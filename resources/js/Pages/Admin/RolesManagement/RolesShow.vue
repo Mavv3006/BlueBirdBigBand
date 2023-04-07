@@ -5,7 +5,8 @@
 
         <div class="flex gap-6 justify-center">
             <div class="w-1/3 h-[250px]">
-                <select ref="left_list" name="list left" id="1" multiple class="w-full h-full">
+                <div class="text-sm text-gray-600 text-center w-full">Verfügbare Permissions</div>
+                <select ref="left_list" name="list left" id="1" multiple class="w-full h-[230px]">
                     <option v-for="element in l1" :value="element">{{ permissionName(element) }}</option>
                 </select>
             </div>
@@ -22,10 +23,15 @@
                 </div>
             </div>
             <div class="w-1/3 h-[250px]">
-                <select ref="right_list" name="list right" id="2" multiple class="w-full h-full">
+                <div class="text-sm text-gray-600 text-center w-full">Zugewiesene Permissions</div>
+                <select ref="right_list" name="list right" id="2" multiple class="w-full h-[230px]">
                     <option v-for="element in l2" :value="element">{{ permissionName(element) }}</option>
                 </select>
             </div>
+        </div>
+
+        <div class="flex mt-4 justify-center">
+            <PrimaryButton>Speichern</PrimaryButton>
         </div>
     </PublicLayout>
 </template>
@@ -35,6 +41,8 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import {Head} from "@inertiajs/vue3";
 import {ref} from "vue";
+import PrimaryButton
+    from "../../../../../vendor/laravel/breeze/stubs/inertia-vue/resources/js/Components/PrimaryButton.vue";
 
 const props = defineProps<{
     role: { id: number, name: string },
