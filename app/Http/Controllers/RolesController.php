@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
@@ -18,7 +19,6 @@ class RolesController extends Controller
     public function index(): \Inertia\Response
     {
         $roles = Role::select('id', 'name')->orderBy('id')->get();
-        Log::debug($roles);
         return Inertia::render('Admin/RolesManagement/RolesIndex', ['roles' => $roles]);
     }
 
@@ -52,10 +52,29 @@ class RolesController extends Controller
      */
     public function show(int $id): \Inertia\Response
     {
-        Log::debug('test', ['id' => $id]);
-        $role = Role::where('id', $id)->select('id', 'name')->first();
-        Log::debug($role);
-        return Inertia::render('Admin/RolesManagement/RolesShow', ['role' => $role]);
+        $all_permissions = Permission::select('id', 'name')
+            ->get();
+        $role = Role::where('id', $id)
+            ->select('id', 'name')
+            ->first();
+        $role_permissions = $role
+            ->permissions()
+            ->select('id')
+            ->get();
+        $not_used_permissions = Permission::select('id')
+            ->get()
+            ->diff($role
+                ->permissions()
+                ->select('id')
+                ->get());
+        $data = [
+            'role' => $role,
+            'role_permissions' => $role_permissions,
+            'not_used_permissions' => $not_used_permissions,
+            'all_permissions' => $all_permissions
+        ];
+        Log::debug("RolesController::show", $data);
+        return Inertia::render('Admin/RolesManagement/RolesShow', $data);
     }
 
     /**
