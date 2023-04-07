@@ -31,7 +31,9 @@
         </div>
 
         <div class="flex mt-4 justify-center">
-            <PrimaryButton>Speichern</PrimaryButton>
+            <Link class="border border-slate-700 px-3 py-1 rounded-md hover:bg-gray-100 active:bg-gray-200"
+                  method="put" :href="savePath" :data="saveData">Speichern
+            </Link>
         </div>
     </PublicLayout>
 </template>
@@ -39,10 +41,8 @@
 <script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {Head} from "@inertiajs/vue3";
-import {ref} from "vue";
-import PrimaryButton
-    from "../../../../../vendor/laravel/breeze/stubs/inertia-vue/resources/js/Components/PrimaryButton.vue";
+import {Head, Link} from "@inertiajs/vue3";
+import {computed, ref} from "vue";
 
 const props = defineProps<{
     role: { id: number, name: string },
@@ -54,10 +54,11 @@ const props = defineProps<{
 const left_list = ref<HTMLSelectElement | null>(null);
 const right_list = ref<HTMLSelectElement | null>(null);
 
-let l1 = ref<any>(props.not_used_permissions.map(value => value.id));
-let l2 = ref<any>(props.role_permissions.map(value => value.id));
+let l1 = ref(props.not_used_permissions.map(value => value.id));
+let l2 = ref(props.role_permissions.map(value => value.id));
 
-// console.debug(props);
+const savePath = computed<string>(() => `/admin/roles/${props.role.id}`);
+const saveData = computed(() => ({permissions: l2.value}));
 
 const permissionName = (id: number | string): string => {
     return props.all_permissions.filter((value) => value.id === +id)[0].name

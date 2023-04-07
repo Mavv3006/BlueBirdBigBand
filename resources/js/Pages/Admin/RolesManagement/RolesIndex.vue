@@ -16,7 +16,7 @@
                 <td>{{ role.id }}</td>
                 <td>{{ role.name }}</td>
                 <td>
-                    <Link :href="`roles/${role.id}`" class="mr-1">Bearbeiten</Link>
+                    <Link :href="`roles/${role.id}/edit`" class="mr-1">Bearbeiten</Link>
                     <Link class="text-red-600">Löschen</Link>
                 </td>
             </tr>

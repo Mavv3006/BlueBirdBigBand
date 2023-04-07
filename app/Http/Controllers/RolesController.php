@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
@@ -52,6 +55,17 @@ class RolesController extends Controller
      */
     public function show(int $id): \Inertia\Response
     {
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Inertia\Response
+     */
+    public function edit(int $id): \Inertia\Response
+    {
         $all_permissions = Permission::select('id', 'name')
             ->get();
         $role = Role::where('id', $id)
@@ -73,19 +87,8 @@ class RolesController extends Controller
             'not_used_permissions' => $not_used_permissions,
             'all_permissions' => $all_permissions
         ];
-        Log::debug("RolesController::show", $data);
-        return Inertia::render('Admin/RolesManagement/RolesShow', $data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit(int $id)
-    {
-        //
+        Log::debug("RolesController::edit", $data);
+        return Inertia::render('Admin/RolesManagement/RolesEdit', $data);
     }
 
     /**
@@ -93,11 +96,13 @@ class RolesController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return Redirector|RedirectResponse|Application
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, int $id): Redirector|RedirectResponse|Application
     {
-        //
+        $data = $request->validate(['permissions' => 'array|required']);
+        Role::where('id', $id)->first()->syncPermissions($data["permissions"]);
+        return redirect(route('roles.index'));
     }
 
     /**
