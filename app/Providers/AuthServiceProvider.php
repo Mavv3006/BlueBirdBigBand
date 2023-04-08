@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -44,6 +43,9 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('manage users', function (User $user) {
             return $user->hasPermissionTo('manage users');
+        });
+        Gate::define('manage roles', function (User $user) {
+            return $user->hasPermissionTo('manage roles');
         });
     }
 }

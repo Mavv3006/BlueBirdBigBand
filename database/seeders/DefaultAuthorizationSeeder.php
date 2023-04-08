@@ -20,6 +20,7 @@ class DefaultAuthorizationSeeder extends Seeder
 
         Role::where('name', 'admin')->first()->syncPermissions([
             'manage users',
+            'manage roles',
             'route.access-admin'
         ]);
 
