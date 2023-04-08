@@ -22,6 +22,13 @@
             </tr>
             </tbody>
         </table>
+
+        <div class="flex justify-end mt-4">
+            <Link href="roles/create"
+                  class="border border-slate-700 shadow-md hover:shadow-xl rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-200 active:bg-gray-300">
+                <font-awesome-icon :icon="['fas', 'plus']"/>
+            </Link>
+        </div>
     </PublicLayout>
 </template>
 
@@ -32,8 +39,6 @@ import {defineProps} from 'vue';
 import {Head, Link} from '@inertiajs/vue3';
 
 const props = defineProps<{ roles: { id: number, name: string }[] }>();
-
-console.debug(props);
 </script>
 
 <style scoped>
