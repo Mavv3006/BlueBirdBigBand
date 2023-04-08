@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -28,23 +27,24 @@ class RolesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return \Inertia\Response
      */
-    public function create()
+    public function create(): \Inertia\Response
     {
-        //
+        return Inertia::render('Admin/RolesManagement/RolesCreate');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @param int $id
-     * @return Response
+     * @return Application|Redirector|RedirectResponse
      */
-    public function store(Request $request, int $id)
+    public function store(Request $request): Redirector|RedirectResponse|Application
     {
-        //
+        $data = $request->validate(['name' => 'string|required|max:255']);
+        $role = Role::create($data);
+        return redirect(route('roles.show', $role->id));
     }
 
     /**
@@ -126,10 +126,15 @@ class RolesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Redirector|RedirectResponse
      */
-    public function destroy(int $id)
+    public function destroy(int $id): Redirector|RedirectResponse|Application
     {
-        //
+        $role = Role::where('id', $id)->first();
+        Log::debug('delete role ' . $role->name);
+        $role
+            ->syncPermissions([])
+            ->delete();
+        return redirect(route('roles.index'));
     }
 }
