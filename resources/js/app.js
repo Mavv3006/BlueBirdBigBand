@@ -7,9 +7,9 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faBars, faClose, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faChevronLeft, faChevronRight, faClose, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faMinus, faPlus, faClose, faBars);
+library.add(faMinus, faPlus, faClose, faBars, faChevronRight, faChevronLeft);
 
 createInertiaApp({
     title: (title) => `${title} - Blue Bird Big Band`,
