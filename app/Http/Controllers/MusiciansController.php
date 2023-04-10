@@ -16,7 +16,15 @@ class MusiciansController extends Controller
      */
     public function index()
     {
-        //
+        $musicians = Musician::with('instrument')
+            ->orderBy('instrument_id')
+            ->orderBy('part')
+            ->get();
+        Log::debug('all musicians', [$musicians]);
+        return Inertia::render(
+            'Admin/MusicianManagement/MusiciansIndex',
+            ['data' => $musicians]
+        );
     }
 
     /**
@@ -42,10 +50,10 @@ class MusiciansController extends Controller
     {
         $instrument = $musician->instrument()->first();
         Log::debug('showing musician', [$musician, $instrument]);
-        return Inertia::render('Admin/MusicianManagement/MusiciansShow', [
-            'musician' => $musician,
-            'instrument' => $instrument
-        ]);
+        return Inertia::render(
+            'Admin/MusicianManagement/MusiciansShow',
+            ['musician' => $musician, 'instrument' => $instrument]
+        );
     }
 
     /**
