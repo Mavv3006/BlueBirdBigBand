@@ -66,7 +66,10 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
     if (gates["route.access-admin"]) {
         routes.push({
             linkName: 'Admin',
-            submenu: [{link: '/admin/activate-users', linkName: 'Aktiviere User'}]
+            submenu: [
+                {link: '/admin/activate-users', linkName: 'Aktiviere User'},
+                {link: '/admin/roles', linkName: 'Rollen Management'},
+            ]
         })
     }
     return routes;
