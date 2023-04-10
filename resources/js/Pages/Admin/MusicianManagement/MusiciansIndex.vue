@@ -1,5 +1,7 @@
 <template>
     <PublicLayout>
+        <Heading>Musiker Management</Heading>
+
         <table>
             <thead>
             <tr>
@@ -35,6 +37,7 @@
 <script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import {Link} from "@inertiajs/vue3";
+import Heading from "@/Components/Heading.vue";
 
 const props = defineProps<{
     data: {

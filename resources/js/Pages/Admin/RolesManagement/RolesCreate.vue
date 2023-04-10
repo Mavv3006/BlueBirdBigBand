@@ -19,7 +19,7 @@
 
             <div class="flex items-center justify-center mt-4">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Login
+                    Speichern
                 </PrimaryButton>
             </div>
         </form>

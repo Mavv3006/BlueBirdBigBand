@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMusicianRequest;
 use App\Http\Requests\UpdateMusicianRequest;
+use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
@@ -33,17 +34,27 @@ class MusiciansController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        $instruments = Instrument::all();
+        Log::info('Showing create musician form');
+        return Inertia::render(
+            'Admin/MusicianManagement/MusiciansCreate',
+            ['instruments' => $instruments]
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMusicianRequest $request)
+    public function store(StoreMusicianRequest $request): Redirector|RedirectResponse|Application
     {
-        //
+        $data = $request->validated();
+        $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
+        Log::debug('validated data', [$data]);
+        $musician = Musician::create($data);
+        Log::info('Created a new musician', [$musician]);
+        return redirect(route('musicians.show', $musician->id));
     }
 
     /**

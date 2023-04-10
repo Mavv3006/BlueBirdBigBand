@@ -18,7 +18,6 @@ class Instrument extends Model
     protected $hidden = [
         'updated_at',
         'created_at',
-        'id'
     ];
 
     public function musicians(): HasMany
