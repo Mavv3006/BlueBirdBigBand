@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivateUsersController;
 use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\InternController;
+use App\Http\Controllers\MusiciansController;
 use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -57,6 +58,7 @@ Route::prefix('admin')
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
 
         Route::resource('roles', RolesController::class);
+        Route::resource('musicians', MusiciansController::class);
     });
 
 require __DIR__ . '/auth.php';

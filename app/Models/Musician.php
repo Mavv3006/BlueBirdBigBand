@@ -24,7 +24,6 @@ class Musician extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'id',
     ];
 
     public function instrument(): BelongsTo

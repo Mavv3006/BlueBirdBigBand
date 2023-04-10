@@ -12,7 +12,7 @@ import {faBars, faChevronLeft, faChevronRight, faClose, faMinus, faPlus} from "@
 library.add(faMinus, faPlus, faClose, faBars, faChevronRight, faChevronLeft);
 
 createInertiaApp({
-    title: (title) => `${title} - Blue Bird Big Band`,
+    title: (title) => `${title} | Blue Bird Big Band`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
     setup({el, App, props, plugin}) {
         return createApp({render: () => h(App, props)})
