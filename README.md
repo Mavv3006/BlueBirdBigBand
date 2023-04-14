@@ -20,6 +20,10 @@ After taking care of the prerequisites, you can proceed to run the following com
 
 - Install all the Composer dependencies with `composer install`.
 - Now all Node.js packages/dependencies need to be installed with `npm install`.
+- At this point all dependencies have been installed. To use the database, we need to create it. Run the following
+  commands to set up the application to be used:
+    - `composer run-script post-root-package-install`
+    - `composer run-script post-create-project-cmd`
 - After that the database can be prepared to be used. Run `php artisan migrate` to create all database tables
 - Optionally with `php artisan db:seed` the database can be filled with some dummy data
 
