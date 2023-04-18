@@ -76,18 +76,27 @@ class MusiciansController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Musician $musician): Redirector|RedirectResponse|Application
+    public function edit(Musician $musician): Response
     {
-        Log::info('Editing musician', [$musician]);
-        return redirect(route('musicians.show', $musician->id));
+        $instruments = Instrument::all();
+        Log::info('Editing musician', [$musician, $instruments]);
+        return Inertia::render(
+            'Admin/MusicianManagement/MusiciansEdit',
+            ['musician' => $musician, 'instruments' => $instruments]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMusicianRequest $request, Musician $musician)
+    public function update(UpdateMusicianRequest $request, Musician $musician): Redirector|RedirectResponse|Application
     {
-        //
+        $data = $request->validated();
+        $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
+        Log::debug('validated data', [$data]);
+        $musician->update($data);
+        Log::info('Updated musician', [$musician]);
+        return redirect(route('musicians.show', $musician->id));
     }
 
     /**

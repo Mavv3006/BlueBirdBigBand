@@ -1,6 +1,7 @@
 <template>
     <PublicLayout>
-        <Heading>Neuen Musiker anlegen</Heading>
+        <Heading>Musiker bearbeiten</Heading>
+        <Head><title>Musiker bearbeiten</title></Head>
 
         <form @submit.prevent="submit">
             <div class="grid grid-rows-2 gap-4">
@@ -78,28 +79,31 @@
 <script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-const props = defineProps<{ instruments: { name: string, id: number }[] }>();
+const props = defineProps<{
+    musician: {
+        id: number,
+        firstname: string,
+        part?: number,
+        lastname: string,
+        picture_filepath?: string,
+        isActive: boolean,
+        instrument_id: number
+    },
+    instruments: { name: string, id: number }[]
+}>();
 
 const form = useForm({
-    firstname: '',
-    lastname: '',
-    instrument_id: props
-        .instruments
-        .reduce((previousValue, currentValue) => {
-            if (currentValue.id < previousValue.id) {
-                return currentValue;
-            }
-            return previousValue;
-        })
-        .id,
-    part: '0',
+    firstname: props.musician.firstname,
+    lastname: props.musician.lastname,
+    instrument_id: props.musician.instrument_id,
+    part: props.musician.part ?? 'n/a',
 });
 
 const part_list = [
@@ -116,10 +120,10 @@ const cancelForm = () => {
 
 const submit = () => {
     console.debug(form.data());
-    form.post(route('musicians.store'))
+    form.put(route('musicians.update', {'musician': props.musician.id}))
 };
-</script>
 
+</script>
 <style scoped>
 
 </style>
