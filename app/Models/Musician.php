@@ -14,7 +14,9 @@ class Musician extends Model
         'isActive',
         'firstname',
         'lastname',
-        'picture_filepath'
+        'instrument_id',
+        'picture_filepath',
+        'part'
     ];
 
     protected $casts = [
@@ -24,7 +26,6 @@ class Musician extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'id',
     ];
 
     public function instrument(): BelongsTo

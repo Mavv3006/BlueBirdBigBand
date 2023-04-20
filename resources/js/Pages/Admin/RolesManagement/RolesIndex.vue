@@ -14,10 +14,18 @@
             <tbody>
             <tr v-for="role in roles">
                 <td>{{ role.id }}</td>
-                <td>{{ role.name }}</td>
                 <td>
-                    <Link :href="`roles/${role.id}/edit`" class="mr-1">Bearbeiten</Link>
-                    <Link :href="`roles/${role.id}`" method="delete" class="text-red-600">Löschen</Link>
+                    <Link :href="`roles/${role.id}`" class="text-blue-600 mr-1 hover:underline">
+                        {{ role.name }}
+                    </Link>
+                </td>
+                <td class="flex flex-wrap gap-4">
+                    <Link :href="`roles/${role.id}/edit`" class="mr-1">
+                        <font-awesome-icon icon="fa-solid fa-pen"/>
+                    </Link>
+                    <Link :href="`roles/${role.id}`" method="delete" class="text-red-600">
+                        <font-awesome-icon icon="fa-solid fa-trash"/>
+                    </Link>
                 </td>
             </tr>
             </tbody>
