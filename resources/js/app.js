@@ -7,9 +7,18 @@ import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy/dist/vue.m';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {faBars, faChevronLeft, faChevronRight, faClose, faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {
+    faBars,
+    faChevronLeft,
+    faChevronRight,
+    faClose,
+    faMinus,
+    faPen,
+    faPlus,
+    faTrash
+} from "@fortawesome/free-solid-svg-icons";
 
-library.add(faMinus, faPlus, faClose, faBars, faChevronRight, faChevronLeft);
+library.add(faMinus, faPlus, faClose, faBars, faChevronRight, faChevronLeft, faPen, faTrash);
 
 createInertiaApp({
     title: (title) => `${title} | Blue Bird Big Band`,
@@ -22,6 +31,6 @@ createInertiaApp({
             .mount(el);
     },
     progress: {
-        color: '#4B5563',
+        color: '#48D621',
     },
 });

@@ -66,7 +66,6 @@
             </div>
 
             <div class="flex items-center justify-center mt-4 gap-8">
-                <SecondaryButton @click="cancelForm()">Abbrechen</SecondaryButton>
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Speichern
                 </PrimaryButton>
@@ -83,7 +82,6 @@ import TextInput from "@/Components/TextInput.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps<{ instruments: { name: string, id: number }[] }>();
 
@@ -109,10 +107,6 @@ const part_list = [
     {text: '3', value: 3},
     {text: '4', value: 4},
 ];
-
-
-const cancelForm = () => {
-};
 
 const submit = () => {
     console.debug(form.data());

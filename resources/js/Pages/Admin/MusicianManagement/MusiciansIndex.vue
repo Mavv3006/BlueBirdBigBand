@@ -1,6 +1,7 @@
 <template>
     <PublicLayout>
         <Heading>Musiker Management</Heading>
+        <Head><title>Musiker Management</title></Head>
 
         <table>
             <thead>
@@ -17,26 +18,39 @@
             <tbody>
             <tr v-for="musician in data">
                 <td>{{ musician.id }}</td>
-                <td>{{ musician.firstname }}</td>
+                <td>
+                    <Link :href="`musicians/${musician.id}`" class="text-blue-600 mr-1 hover:underline">
+                        {{ musician.firstname }}
+                    </Link>
+                </td>
                 <td>{{ musician.lastname }}</td>
                 <td>{{ musician.instrument.name }}</td>
                 <td>{{ musician.part ?? 'n/a' }}</td>
                 <td>{{ musician.isActive ? 'Ja' : 'Nein' }}</td>
-                <td class="flex flex-wrap">
-                    <Link :href="`musicians/${musician.id}`" class="mr-1">Anschauen</Link>
-                    <Link :href="`musicians/${musician.id}/edit`" class="mr-1">Bearbeiten</Link>
-                    <Link as=button :href="`musicians/${musician.id}`" method="delete" class="text-red-600">Löschen
+                <td class="flex flex-wrap gap-4">
+                    <Link :href="`musicians/${musician.id}/edit`" class="mr-1">
+                        <font-awesome-icon icon="fa-solid fa-pen"/>
+                    </Link>
+                    <Link :href="`musicians/${musician.id}`" as=button class="text-red-600" method="delete">
+                        <font-awesome-icon icon="fa-solid fa-trash"/>
                     </Link>
                 </td>
             </tr>
             </tbody>
         </table>
+
+        <div class="flex justify-end mt-4">
+            <Link href="musicians/create"
+                  class="border border-slate-700 shadow-md hover:shadow-xl rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-200 active:bg-gray-300">
+                <font-awesome-icon :icon="['fas', 'plus']"/>
+            </Link>
+        </div>
     </PublicLayout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
-import {Link} from "@inertiajs/vue3";
+import {Link, Head} from "@inertiajs/vue3";
 import Heading from "@/Components/Heading.vue";
 
 const props = defineProps<{
