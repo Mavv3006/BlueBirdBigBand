@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 
@@ -32,12 +31,5 @@ class DefaultAuthorizationSeeder extends Seeder
             ->syncPermissions([
                 'route.access-intern'
             ]);
-
-        User::factory()
-            ->create(['name' => 'admin', 'activated' => true])
-            ->assignRole('admin');
-        User::factory()
-            ->create(['name' => 'musician', 'activated' => true])
-            ->assignRole('musician');
     }
 }
