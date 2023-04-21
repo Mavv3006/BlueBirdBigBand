@@ -9,6 +9,7 @@ use App\Models\Musician;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -20,6 +21,8 @@ class MusiciansController extends Controller
      */
     public function index(): Response
     {
+        Gate::authorize('manage musicians');
+
         $musicians = Musician::with('instrument')
             ->orderBy('instrument_id')
             ->orderBy('part')
@@ -36,6 +39,8 @@ class MusiciansController extends Controller
      */
     public function create(): Response
     {
+        Gate::authorize('manage musicians');
+
         $instruments = Instrument::all();
         Log::info('Showing create musician form');
         return Inertia::render(
@@ -49,6 +54,8 @@ class MusiciansController extends Controller
      */
     public function store(StoreMusicianRequest $request): Redirector|RedirectResponse|Application
     {
+        Gate::authorize('manage musicians');
+
         $data = $request->validated();
         $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
         Log::debug('validated data', [$data]);
@@ -62,6 +69,8 @@ class MusiciansController extends Controller
      */
     public function show(Musician $musician): Response
     {
+        Gate::authorize('manage musicians');
+
         $instrument = $musician->instrument()->first();
         Log::info('Showing musician', [$musician]);
         $musician_name = $musician->firstname . " " . $musician->lastname;
@@ -78,6 +87,8 @@ class MusiciansController extends Controller
      */
     public function edit(Musician $musician): Response
     {
+        Gate::authorize('manage musicians');
+
         $instruments = Instrument::all();
         Log::info('Editing musician', [$musician, $instruments]);
         return Inertia::render(
@@ -91,6 +102,8 @@ class MusiciansController extends Controller
      */
     public function update(UpdateMusicianRequest $request, Musician $musician): Redirector|RedirectResponse|Application
     {
+        Gate::authorize('manage musicians');
+
         $data = $request->validated();
         $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
         Log::debug('validated data', [$data]);
@@ -104,6 +117,8 @@ class MusiciansController extends Controller
      */
     public function destroy(Musician $musician): Redirector|RedirectResponse|Application
     {
+        Gate::authorize('manage musicians');
+
         Log::info('Deleting musician', [$musician]);
         $musician->delete();
         return redirect(route('musicians.index'));
