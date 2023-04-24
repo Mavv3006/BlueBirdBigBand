@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,10 +23,30 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->registerPolicies();
+        Password::defaults(function () {
+            $rule = Password::min(8);
 
-        //
+            return $this->app->isProduction()
+                ? $rule->mixedCase()->numbers()->symbols()
+                : $rule;
+        });
+
+        Gate::define('route.access-admin', function (User $user) {
+            return $user->hasPermissionTo('route.access-admin');
+        });
+        Gate::define('route.access-intern', function (User $user) {
+            return $user->hasPermissionTo('route.access-intern');
+        });
+        Gate::define('manage users', function (User $user) {
+            return $user->hasPermissionTo('manage users');
+        });
+        Gate::define('manage roles', function (User $user) {
+            return $user->hasPermissionTo('manage roles');
+        });
+        Gate::define('manage musicians', function (User $user) {
+            return $user->hasPermissionTo('manage musicians');
+        });
     }
 }

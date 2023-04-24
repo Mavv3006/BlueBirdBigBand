@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\ActivateUsersController;
+use App\Http\Controllers\ActiveMusicianController;
 use App\Http\Controllers\ConcertsController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\InternController;
+use App\Http\Controllers\MusiciansController;
+use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -16,15 +19,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/welcome', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::get('/', function () {
     return Inertia::render('Index');
@@ -45,30 +39,26 @@ Route::get('/impressum', function () {
 Route::get('/kontakt', function () {
     return Inertia::render('Contact/ContactPage');
 });
-Route::get('/musiker', function () {
-    return Inertia::render('Band/MusiciansPage');
-});
+Route::get('/musiker', [ActiveMusicianController::class, 'show']);
 Route::get('/presse', function () {
     return Inertia::render('LatestInfos/PressInfoPage');
 });
 
-Route::middleware('auth')->prefix('intern')->group(function () {
-    Route::get('/', function () {
-        return redirect(route('home'), 301);
+Route::prefix('intern')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/', [InternController::class, 'index']);
+        Route::get('/emails', [InternController::class, 'emails']);
     });
-    Route::get('/emails', function () {
-        return Inertia::render('Intern/Emails');
+
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('activate-users', [ActivateUsersController::class, 'show']);
+        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
+
+        Route::resource('roles', RolesController::class);
+        Route::resource('musicians', MusiciansController::class);
     });
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';

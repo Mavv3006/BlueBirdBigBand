@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,7 +43,17 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (!Auth::attempt($this->only('name', 'password'), $this->boolean('remember'))) {
+        $user = User::where('name', $this->only('name'))->first();
+
+        if (!$user->activated) {
+            throw ValidationException::withMessages([
+                'name' => trans('auth.activated')
+            ]);
+        }
+
+        $isAuthenticated = Auth::attempt($this->only('name', 'password'), $this->boolean('remember'));
+
+        if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -60,7 +71,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
