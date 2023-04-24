@@ -16,7 +16,6 @@ class Musician extends Model
         'lastname',
         'instrument_id',
         'picture_filepath',
-        'part'
     ];
 
     protected $casts = [

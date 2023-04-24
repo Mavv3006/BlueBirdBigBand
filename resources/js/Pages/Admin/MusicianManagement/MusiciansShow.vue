@@ -8,7 +8,6 @@
                 <div class="flex flex-col gap-2">
                     <p> Name: {{ musician.firstname }} {{ musician.lastname }} </p>
                     <p>Instrument: {{ instrument.name }}</p>
-                    <p>Stimme: {{ musician.part ?? 'n/a' }}</p>
                     <p>Aktiv: {{ musician.isActive ? 'Ja' : 'Nein' }}</p>
                 </div>
                 <div class="flex gap-4">
@@ -40,7 +39,6 @@ const props = defineProps<{
     musician: {
         id: number,
         firstname: string,
-        part?: number,
         lastname: string,
         picture_filepath?: string,
         isActive: boolean,
