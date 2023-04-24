@@ -57,7 +57,6 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $data = $request->validated();
-        $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
         Log::debug('validated data', [$data]);
         $musician = Musician::create($data);
         Log::info('Created a new musician', [$musician]);
@@ -105,7 +104,6 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $data = $request->validated();
-        $data['part'] = $data['part'] == 'n/a' ? null : (int)$data['part'];
         Log::debug('validated data', [$data]);
         $musician->update($data);
         Log::info('Updated musician', [$musician]);

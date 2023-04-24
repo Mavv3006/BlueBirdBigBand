@@ -33,19 +33,6 @@
 
                 <div class="grid grid-cols-2 gap-16 w-full">
                     <div>
-                        <InputLabel for="part" value="Stimme"/>
-                        <select
-                            id="part"
-                            v-model="form.part"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                            name="part"
-                            required>
-                            >
-                            <option v-for="part in part_list" :value="part.value">{{ part.text }}</option>
-                        </select>
-                        <InputError :message="form.errors.part" class="mt-2"/>
-                    </div>
-                    <div>
                         <InputLabel for="instrument" value="Instrument"/>
                         <select
                             id="instrument"
@@ -88,7 +75,6 @@ const props = defineProps<{
     musician: {
         id: number,
         firstname: string,
-        part?: number,
         lastname: string,
         picture_filepath?: string,
         isActive: boolean,
@@ -101,17 +87,7 @@ const form = useForm({
     firstname: props.musician.firstname,
     lastname: props.musician.lastname,
     instrument_id: props.musician.instrument_id,
-    part: props.musician.part ?? 'n/a',
 });
-
-const part_list = [
-    {text: 'n/a', value: 0},
-    {text: '1', value: 1},
-    {text: '2', value: 2},
-    {text: '3', value: 3},
-    {text: '4', value: 4},
-];
-
 
 const submit = () => {
     console.debug(form.data());

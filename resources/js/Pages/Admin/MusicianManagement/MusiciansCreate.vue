@@ -32,19 +32,6 @@
 
                 <div class="grid grid-cols-2 gap-16 w-full">
                     <div>
-                        <InputLabel for="part" value="Stimme"/>
-                        <select
-                            id="part"
-                            v-model="form.part"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                            name="part"
-                            required>
-                            >
-                            <option v-for="part in part_list" :value="part.value">{{ part.text }}</option>
-                        </select>
-                        <InputError :message="form.errors.part" class="mt-2"/>
-                    </div>
-                    <div>
                         <InputLabel for="instrument" value="Instrument"/>
                         <select
                             id="instrument"
@@ -97,7 +84,6 @@ const form = useForm({
             return previousValue;
         })
         .id,
-    part: '0',
 });
 
 const part_list = [
