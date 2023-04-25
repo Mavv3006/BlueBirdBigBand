@@ -25,7 +25,6 @@ class MusiciansController extends Controller
 
         $musicians = Musician::with('instrument')
             ->orderBy('instrument_id')
-            ->orderBy('part')
             ->get();
         Log::info('Showing all musicians', [$musicians]);
         return Inertia::render(
