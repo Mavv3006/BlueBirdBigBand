@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivateUsersController;
 use App\Http\Controllers\ActiveMusicianController;
+use App\Http\Controllers\AssignRolesToUserController;
 use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\MusiciansController;
@@ -59,6 +60,11 @@ Route::prefix('admin')
 
         Route::resource('roles', RolesController::class);
         Route::resource('musicians', MusiciansController::class);
+
+        Route::prefix('assign-roles')->group(function () {
+            Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
+            Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
+        });
     });
 
 require __DIR__ . '/auth.php';
