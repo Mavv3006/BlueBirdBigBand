@@ -50,6 +50,12 @@
                         </select>
                         <InputError :message="form.errors.instrument_id" class="mt-2"/>
                     </div>
+
+                    <div>
+                        <InputLabel for="picture" value="Bild"/>
+                        <input name="picture" type="file" @input="form.picture = $event.target.files[0]"/>
+                        <InputError :message="form.errors.picture" class="mt-2"/>
+                    </div>
                 </div>
             </div>
 
@@ -84,14 +90,16 @@ const props = defineProps<{
 }>();
 
 const form = useForm({
+    _method: 'put',
     firstname: props.musician.firstname,
     lastname: props.musician.lastname,
     instrument_id: props.musician.instrument_id,
+    picture: null
 });
 
 const submit = () => {
     console.debug(form.data());
-    form.put(route('musicians.update', {'musician': props.musician.id}))
+    form.post(`/admin/musicians/${props.musician.id}`);
 };
 
 </script>
