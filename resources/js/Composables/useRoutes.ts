@@ -60,7 +60,10 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
     if (gates["route.access-intern"]) {
         routes.push({
             linkName: 'Intern',
-            submenu: [{link: '/intern/emails', linkName: 'E-Mail Verteiler'}]
+            submenu: [
+                {link: '/intern/emails', linkName: 'E-Mail Verteiler'},
+                {link: '/intern/songs', linkName: 'Songs'}
+            ],
         })
     }
     if (gates["route.access-admin"]) {

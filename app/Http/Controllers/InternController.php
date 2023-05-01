@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Song;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -21,6 +22,15 @@ class InternController extends Controller
     {
         $this->checkAccessPermission();
         return Inertia::render('Intern/Emails');
+    }
+
+    public function songs(): Response
+    {
+        $this->checkAccessPermission();
+
+        $songs = Song::select(['song_name', 'arranger', 'genre', 'author'])
+            ->get();
+        return Inertia::render('Intern/Songs', ['songs' => $songs]);
     }
 
     private function checkAccessPermission()

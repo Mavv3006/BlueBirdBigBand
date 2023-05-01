@@ -7,6 +7,7 @@ use App\Http\Controllers\ConcertsController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\MusiciansController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SongsController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -50,6 +51,7 @@ Route::prefix('intern')
     ->group(function () {
         Route::get('/', [InternController::class, 'index']);
         Route::get('/emails', [InternController::class, 'emails']);
+        Route::get('/songs', [InternController::class, 'songs']);
     });
 
 Route::prefix('admin')
@@ -60,6 +62,7 @@ Route::prefix('admin')
 
         Route::resource('roles', RolesController::class);
         Route::resource('musicians', MusiciansController::class);
+        Route::resource('songs', SongsController::class);
 
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
