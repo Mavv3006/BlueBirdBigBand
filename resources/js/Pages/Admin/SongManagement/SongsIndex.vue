@@ -1,7 +1,7 @@
 <template>
     <PublicLayout>
-        <Heading>Songs</Heading>
-        <Head><title>Songs</title></Head>
+        <Heading>Song Management</Heading>
+        <Head><title>Song Management</title></Head>
 
         <SongList :songs="songs"/>
     </PublicLayout>

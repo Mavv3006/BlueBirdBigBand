@@ -73,6 +73,7 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
                 {link: '/admin/activate-users', linkName: 'Aktiviere User'},
                 {link: '/admin/roles', linkName: 'Rollen Management'},
                 {link: '/admin/musicians', linkName: 'Musiker Management'},
+                {link: '/admin/songs', linkName: 'Song Management'},
             ]
         })
     }

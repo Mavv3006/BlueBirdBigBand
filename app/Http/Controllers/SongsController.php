@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Song;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class SongsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        Gate::authorize('manage songs');
+        $songs = Song::select(['song_name', 'arranger', 'genre', 'author'])
+            ->get();
+        return Inertia::render('Intern/Songs', ['songs' => $songs]);
     }
 
     /**

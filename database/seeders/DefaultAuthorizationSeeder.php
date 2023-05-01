@@ -23,6 +23,7 @@ class DefaultAuthorizationSeeder extends Seeder
                 'manage users',
                 'manage roles',
                 'manage musicians',
+                'manage songs',
                 'route.access-admin'
             ]);
 
