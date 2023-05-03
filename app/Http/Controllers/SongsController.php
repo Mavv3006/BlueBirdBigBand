@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Song;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\File;
@@ -18,9 +21,9 @@ class SongsController extends Controller
     public function index(): Response
     {
         Gate::authorize('manage songs');
-        $songs = Song::select(['title', 'arranger', 'genre', 'author'])
+        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author'])
             ->get();
-        return Inertia::render('Intern/Songs', ['songs' => $songs]);
+        return Inertia::render('Admin/SongManagement/SongsIndex', ['songs' => $songs]);
     }
 
     /**
@@ -34,7 +37,7 @@ class SongsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
         $data = $request->validate([
             'title' => 'string|required',
@@ -86,8 +89,10 @@ class SongsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Song $song)
+    public function destroy(Song $song): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
-        //
+        Log::info('deleting song', [$song]);
+        $song->delete();
+        return redirect('admin/songs');
     }
 }

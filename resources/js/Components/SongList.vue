@@ -3,18 +3,26 @@
         <table>
             <thead>
             <tr>
-                <td>Titel</td>
-                <td>Arrangeur</td>
-                <td>Autor</td>
-                <td>Genre</td>
+                <th v-if="showId">#</th>
+                <th>Titel</th>
+                <th>Arrangeur</th>
+                <th>Autor</th>
+                <th>Genre</th>
+                <th v-if="showActions">Aktionen</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="song in songs">
+                <td v-if="showId">{{ song.id }}</td>
                 <td>{{ song.title }}</td>
                 <td>{{ song.arranger }}</td>
                 <td>{{ song.author }}</td>
                 <td>{{ song.genre }}</td>
+                <td v-if="showActions">
+                    <Link :href="`songs/${song.id}`" as=button class="text-red-600" method="delete">
+                        <font-awesome-icon icon="fa-solid fa-trash"/>
+                    </Link>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -22,15 +30,19 @@
 </template>
 
 <script setup lang="ts">
+import {Link} from "@inertiajs/vue3";
+
 const props = defineProps<{
     songs: {
+        id: number,
         title: string,
         arranger: string,
         author: string,
         genre: string
-    }[]
+    }[],
+    showActions?: boolean,
+    showId?: boolean,
 }>();
-console.debug('props songs', props.songs)
 </script>
 
 <style scoped>

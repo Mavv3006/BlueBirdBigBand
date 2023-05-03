@@ -15,6 +15,7 @@ import SongList from "@/Components/SongList.vue";
 
 const props = defineProps<{
     songs: {
+        id: number,
         title: string,
         arranger: string,
         author: string,

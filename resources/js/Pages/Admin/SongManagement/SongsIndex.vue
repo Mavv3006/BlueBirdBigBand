@@ -3,7 +3,7 @@
         <Heading>Song Management</Heading>
         <Head><title>Song Management</title></Head>
 
-        <SongList :songs="songs"/>
+        <SongList :songs="songs" show-actions show-id/>
     </PublicLayout>
 </template>
 
@@ -15,6 +15,7 @@ import SongList from "@/Components/SongList.vue";
 
 const props = defineProps<{
     songs: {
+        id: number,
         song_name: string,
         arranger: string,
         author: string,
