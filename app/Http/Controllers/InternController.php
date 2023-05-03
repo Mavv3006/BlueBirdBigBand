@@ -28,7 +28,7 @@ class InternController extends Controller
     {
         $this->checkAccessPermission();
 
-        $songs = Song::select(['song_name', 'arranger', 'genre', 'author'])
+        $songs = Song::select(['title', 'arranger', 'genre', 'author'])
             ->get();
         return Inertia::render('Intern/Songs', ['songs' => $songs]);
     }
