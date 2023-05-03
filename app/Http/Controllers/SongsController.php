@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rules\File;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,7 +18,7 @@ class SongsController extends Controller
     public function index(): Response
     {
         Gate::authorize('manage songs');
-        $songs = Song::select(['song_name', 'arranger', 'genre', 'author'])
+        $songs = Song::select(['title', 'arranger', 'genre', 'author'])
             ->get();
         return Inertia::render('Intern/Songs', ['songs' => $songs]);
     }
@@ -24,9 +26,9 @@ class SongsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('Admin/SongManagement/SongsCreate');
     }
 
     /**
@@ -34,7 +36,27 @@ class SongsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'string|required',
+            'author' => 'string|required',
+            'arranger' => 'string|required',
+            'genre' => 'string|required',
+            'file' => ['required', File::types(['audio/mpeg'])]
+        ]);
+
+        $file_path = $request->file('file')->store('songs', 'public');
+        $data['file_path'] = $file_path;
+
+        $song = Song::create([
+            'title' => $data['title'],
+            'author' => $data['author'],
+            'arranger' => $data['arranger'],
+            'genre' => $data['genre'],
+            'file_path' => $data['file_path'],
+            'size' => $request->file('file')->getSize()
+        ]);
+        Log::info('Created a new song', [$song]);
+        return redirect('admin/songs');
     }
 
     /**

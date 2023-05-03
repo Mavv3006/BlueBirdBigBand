@@ -11,7 +11,7 @@
             </thead>
             <tbody>
             <tr v-for="song in songs">
-                <td>{{ song.song_name }}</td>
+                <td>{{ song.title }}</td>
                 <td>{{ song.arranger }}</td>
                 <td>{{ song.author }}</td>
                 <td>{{ song.genre }}</td>
@@ -24,7 +24,7 @@
 <script setup lang="ts">
 const props = defineProps<{
     songs: {
-        song_name: string,
+        title: string,
         arranger: string,
         author: string,
         genre: string

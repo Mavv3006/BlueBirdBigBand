@@ -12,8 +12,9 @@ class Song extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'file_name',
-        'song_name',
+        'file_path',
+        'title',
+        'author',
         'genre',
         'arranger',
         'size'

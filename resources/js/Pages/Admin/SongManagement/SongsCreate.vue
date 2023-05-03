@@ -4,7 +4,7 @@
         <Head><title>Song erstellen</title></Head>
 
         <form @submit.prevent="submitForm">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 <div>
                     <InputLabel for="title" value="Titel des Songs"/>
                     <TextInput class="w-full mt-1" v-model="form.title" name="title" required type="text"/>
@@ -31,12 +31,12 @@
 
                 <div>
                     <InputLabel for="file" value="Song-Datei"/>
-                    <input name="file" type="file" @input="form.file = $event.target.files[0]"/>
+                    <input name="file" class="mt-1" type="file" @input="form.file = $event.target.files[0]"/>
                     <InputError :message="form.errors.file" class="mt-2"/>
                 </div>
             </div>
 
-            <div>
+            <div class="mt-2 flex justify-center">
                 <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Speichern
                 </PrimaryButton>
@@ -64,7 +64,7 @@ const form = useForm({
 });
 
 const submitForm = () => {
-    form.post(`admin/songs/`);
+    form.post(`/admin/songs/`);
 }
 </script>
 

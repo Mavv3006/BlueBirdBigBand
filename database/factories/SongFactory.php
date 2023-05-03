@@ -18,8 +18,8 @@ class SongFactory extends Factory
     public function definition(): array
     {
         return [
-            'file_name' => 'fever.mp3',
-            'song_name' => 'Fever',
+            'file_path' => 'fever.mp3',
+            'title' => 'Fever',
             'genre' => 'Swing',
             'arranger' => 'Roger Holmes',
             'author' => 'J. Davenport, E. Cooley',

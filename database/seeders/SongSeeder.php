@@ -14,8 +14,8 @@ class SongSeeder extends Seeder
     {
         Song::factory()->create();
         Song::factory()->create([
-            'song_name' => 'Frosty the Snow Man',
-            'file_name' => 'frosty.mp3',
+            'title' => 'Frosty the Snow Man',
+            'file_path' => 'frosty.mp3',
             'genre' => 'Swing',
             'arranger' => 'Jerry Nowak',
             'author' => 'S. Nelson, J. Rollins',
