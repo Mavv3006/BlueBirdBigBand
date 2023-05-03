@@ -32,10 +32,7 @@
         </table>
 
         <div class="flex justify-end mt-4">
-            <Link href="roles/create"
-                  class="border border-slate-700 shadow-md hover:shadow-xl rounded-full w-12 h-12 flex justify-center items-center hover:bg-gray-200 active:bg-gray-300">
-                <font-awesome-icon :icon="['fas', 'plus']"/>
-            </Link>
+            <FloatingActionButton link="roles/create"/>
         </div>
     </PublicLayout>
 </template>
@@ -45,6 +42,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import {defineProps} from 'vue';
 import {Head, Link} from '@inertiajs/vue3';
+import FloatingActionButton from "@/Components/FloatingActionButton.vue";
 
 const props = defineProps<{ roles: { id: number, name: string }[] }>();
 </script>
