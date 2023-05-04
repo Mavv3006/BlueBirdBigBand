@@ -47,7 +47,7 @@ class SongsController extends Controller
             'file' => ['required', File::types(['audio/mpeg'])]
         ]);
 
-        $file_path = $request->file('file')->store('songs', 'public');
+        $file_path = $request->file('file')->store('songs');
         $data['file_path'] = $file_path;
 
         $song = Song::create([
@@ -60,14 +60,6 @@ class SongsController extends Controller
         ]);
         Log::info('Created a new song', [$song]);
         return redirect('admin/songs');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Song $song)
-    {
-        //
     }
 
     /**
