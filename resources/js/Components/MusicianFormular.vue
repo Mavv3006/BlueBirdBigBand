@@ -50,7 +50,7 @@
 
                     <div>
                         <InputLabel for="picture" value="Bild"/>
-                        <input name="picture" required type="file" @input="form.picture = $event.target.files[0]"/>
+                        <input name="picture" type="file" @input="form.picture = $event.target.files[0]"/>
                         <InputError :message="form.errors.picture" class="mt-2"/>
                     </div>
                 </div>

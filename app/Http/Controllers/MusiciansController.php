@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMusicianRequest;
+use App\Http\Requests\UpdateMusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rules\File;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -58,6 +58,13 @@ class MusiciansController extends Controller
 
         $data = $request->validated();
         Log::debug('validated data', [$data]);
+        if ($request->file('picture') != null) {
+            $picture_path = $request
+                ->file('picture')
+                ->store('musician_pictures', 'public');
+            Log::debug('picture path: ' . $picture_path);
+            $data['picture_filepath'] = $picture_path;
+        }
         $musician = Musician::create($data);
         Log::info('Created a new musician', [$musician]);
         return redirect(route('musicians.show', $musician->id));
@@ -99,20 +106,19 @@ class MusiciansController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Musician $musician): Redirector|RedirectResponse|Application
+    public function update(UpdateMusicianRequest $request, Musician $musician): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage musicians');
 
-        $data = $request->validate([
-            'firstname' => 'string|required',
-            'lastname' => 'string|required',
-            'instrument_id' => 'integer|required|min:0',
-            'picture' => ['required', File::image()]
-        ]);
+        $data = $request->validated();
         Log::debug('validated data', [$data]);
-        $picture_path = $request->file('picture')->store('musician_pictures', 'public');
-        Log::debug('picture path: ' . $picture_path);
-        $data['picture_filepath'] = $picture_path;
+        if ($request->file('picture') != null) {
+            $picture_path = $request
+                ->file('picture')
+                ->store('musician_pictures', 'public');
+            Log::debug('picture path: ' . $picture_path);
+            $data['picture_filepath'] = $picture_path;
+        }
         $musician->update($data);
         Log::info('Updated musician', [$musician]);
         return redirect(route('musicians.show', $musician->id));
@@ -125,8 +131,14 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
+        if ($musician->picture_filepath != null) {
+            Log::info('Deleting picture of musician', [$musician]);
+            Storage::delete($musician->picture_filepath);
+        }
+
         Log::info('Deleting musician', [$musician]);
         $musician->delete();
+
         return redirect(route('musicians.index'));
     }
 }

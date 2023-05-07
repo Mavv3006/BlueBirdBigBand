@@ -27,7 +27,7 @@ class UpdateMusicianRequest extends FormRequest
             'firstname' => 'string|required',
             'lastname' => 'string|required',
             'instrument_id' => 'integer|required|min:0',
-            'picture' => ['nullable', File::image()]
+            'picture' => [File::image()]
         ];
     }
 }
