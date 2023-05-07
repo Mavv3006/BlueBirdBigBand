@@ -2,9 +2,15 @@
     <PublicLayout>
         <Heading>Musiker anzeigen</Heading>
 
-        <div class="flex gap-8">
-            <img :alt="`Bild von ${musician.firstname} ${musician.lastname}`" :src="`/storage/${picture}`">
-            <div class="flex flex-col gap-2">
+        <div class="flex flex-col sm:flex-row gap-8">
+            <div class="mx-auto">
+                <img
+                    :alt="`Bild von ${musician.firstname} ${musician.lastname}`"
+                    :src="`/storage/${props.musician.picture_filepath ?? props.instrument.default_picture_filepath}`"
+                    class="max-h-36"
+                >
+            </div>
+            <div class="flex grow flex-col gap-2">
                 <div class="flex flex-col gap-2">
                     <p> Name: {{ musician.firstname }} {{ musician.lastname }} </p>
                     <p>Instrument: {{ instrument.name }}</p>
@@ -32,7 +38,6 @@
 <script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {computed} from "vue";
 import {Link} from '@inertiajs/vue3';
 
 const props = defineProps<{
@@ -49,10 +54,6 @@ const props = defineProps<{
         default_picture_filepath: string
     }
 }>();
-
-const picture = computed<string>(() => {
-    return '/' + (props.musician.picture_filepath ?? props.instrument.default_picture_filepath);
-});
 </script>
 
 <style scoped>

@@ -29,7 +29,7 @@
                     <Link :href="`musicians/${musician.id}/edit`" class="mr-1">
                         <font-awesome-icon icon="fa-solid fa-pen"/>
                     </Link>
-                    <Link :href="`musicians/${musician.id}`" as=button class="text-red-600" method="delete">
+                    <Link :href="`musicians/${musician.id}`" class="text-red-600" method="delete">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </Link>
                 </td>
@@ -65,7 +65,6 @@ const props = defineProps<{
         }
     }[],
 }>();
-console.debug(props.data);
 </script>
 
 <style scoped>
