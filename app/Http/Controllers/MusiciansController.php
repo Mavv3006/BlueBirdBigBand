@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateMusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -56,16 +58,7 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $data = $request->validated();
-        Log::debug('validated data', [$data]);
-        if ($request->file('picture') != null) {
-            $picture_path = $request
-                ->file('picture')
-                ->store('musician_pictures', 'public');
-            Log::debug('picture path: ' . $picture_path);
-            $data['picture_filepath'] = $picture_path;
-        }
-        $musician = Musician::create($data);
+        $musician = Musician::create($this->getMusicianData($request));
         Log::info('Created a new musician', [$musician]);
         return redirect(route('musicians.show', $musician->id));
     }
@@ -110,16 +103,7 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $data = $request->validated();
-        Log::debug('validated data', [$data]);
-        if ($request->file('picture') != null) {
-            $picture_path = $request
-                ->file('picture')
-                ->store('musician_pictures', 'public');
-            Log::debug('picture path: ' . $picture_path);
-            $data['picture_filepath'] = $picture_path;
-        }
-        $musician->update($data);
+        $musician->update($this->getMusicianData($request));
         Log::info('Updated musician', [$musician]);
         return redirect(route('musicians.show', $musician->id));
     }
@@ -140,5 +124,19 @@ class MusiciansController extends Controller
         $musician->delete();
 
         return redirect(route('musicians.index'));
+    }
+
+    private function getMusicianData(FormRequest $request): mixed
+    {
+        $data = $request->validated();
+        Log::debug('validated data', [$data]);
+        if ($request->file('picture') != null) {
+            $picture_path = $request
+                ->file('picture')
+                ->store('musician_pictures', 'public');
+            Log::debug('picture path: ' . $picture_path);
+            $data['picture_filepath'] = $picture_path;
+        }
+        return $data;
     }
 }

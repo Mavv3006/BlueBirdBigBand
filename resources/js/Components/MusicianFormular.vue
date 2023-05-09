@@ -49,9 +49,26 @@
                     </div>
 
                     <div>
-                        <InputLabel for="picture" value="Bild"/>
-                        <input name="picture" type="file" @input="form.picture = $event.target.files[0]"/>
-                        <InputError :message="form.errors.picture" class="mt-2"/>
+                        <div v-if="hasPicture">
+                            <div class="font-medium text-sm">Bild</div>
+                            <div class="flex gap-2">
+                                <MusicianPicture
+                                    :alt="`Bild von Musiker ${musician.firstname} ${musician.lastname}`"
+                                    :src="`/storage/${musician.picture_filepath}`"
+                                />
+                                <div class="flex flex-col justify-center gap-2">
+                                    <Button @click="!hasPicture">Bild löschen</Button>
+                                    <Button>Bild ändern</Button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else>
+                            <InputLabel for="picture" value="Bild"/>
+                            <input name="picture" type="file" @input="form.picture = $event.target.files[0]"/>
+                            <InputError :message="form.errors.picture" class="mt-2"/>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -71,12 +88,14 @@ import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
+import {computed} from "vue";
+import MusicianPicture from "@/Components/MusicianPicture.vue";
 
 const props = defineProps<{
     method: string,
     submit_url: string,
     instruments: { name: string, id: number }[],
-    musician?: { firstname: string, lastname: string, instrument_id: number, file_name?: string }
+    musician?: { firstname: string, lastname: string, instrument_id: number, picture_filepath?: string }
 }>();
 
 const form = useForm({
@@ -96,4 +115,18 @@ const form = useForm({
 });
 
 const submit = () => form.post(props.submit_url)
+
+const hasPicture = computed<boolean>(() => {
+    if (props.musician === undefined) return false;
+    if (props.musician.picture_filepath === undefined) return false;
+    return props.musician.picture_filepath !== null;
+
+});
 </script>
+
+<style scoped>
+img {
+    @apply h-36;
+    max-width: 100%;
+}
+</style>
