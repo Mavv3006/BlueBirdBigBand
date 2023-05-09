@@ -20,5 +20,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'route.access-admin']);
         Permission::create(['name' => 'manage musicians']);
         Permission::create(['name' => 'manage songs']);
+        Permission::create(['name' => 'download songs']);
     }
 }

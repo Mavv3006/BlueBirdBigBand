@@ -14,27 +14,24 @@ class InternController extends Controller
 {
     public function index(): Redirector|RedirectResponse|Application
     {
-        $this->checkAccessPermission();
+        Gate::authorize('route.access-intern');
+
         return redirect(route('home'), 301);
     }
 
     public function emails(): Response
     {
-        $this->checkAccessPermission();
+        Gate::authorize('route.access-intern');
+
         return Inertia::render('Intern/Emails');
     }
 
     public function songs(): Response
     {
-        $this->checkAccessPermission();
+        Gate::authorize('route.access-intern');
 
         $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author'])
             ->get();
         return Inertia::render('Intern/Songs', ['songs' => $songs]);
-    }
-
-    private function checkAccessPermission()
-    {
-        Gate::authorize('route.access-intern');
     }
 }

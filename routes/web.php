@@ -8,6 +8,7 @@ use App\Http\Controllers\InternController;
 use App\Http\Controllers\MusiciansController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SongsController;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -62,13 +63,25 @@ Route::prefix('admin')
 
         Route::resource('roles', RolesController::class);
         Route::resource('musicians', MusiciansController::class);
-        Route::resource('songs', SongsController::class);
-
-        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
+        Route::resource('songs', SongsController::class)
+            ->except('show');
 
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
             Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
+        });
+
+        /// returns infos about the maximum allowed sizes of files to upload and the size of post requests.
+        Route::get('upload_info', function () {
+            Gate::authorize('route.access-admin');
+
+            $upload_max_filesize = ini_get('upload_max_filesize');
+            $post_max_size = ini_get('post_max_size');
+
+            return response()->json([
+                'upload_max_filesize' => $upload_max_filesize,
+                'post_max_size' => $post_max_size
+            ]);
         });
     });
 

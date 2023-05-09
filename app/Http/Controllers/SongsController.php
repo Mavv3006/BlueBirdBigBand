@@ -31,6 +31,7 @@ class SongsController extends Controller
      */
     public function create(): Response
     {
+        Gate::authorize('manage songs');
         return Inertia::render('Admin/SongManagement/SongsCreate');
     }
 
@@ -39,6 +40,8 @@ class SongsController extends Controller
      */
     public function store(Request $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
+        Gate::authorize('manage songs');
+
         $data = $request->validate([
             'title' => 'string|required',
             'author' => 'string|required',
@@ -47,7 +50,7 @@ class SongsController extends Controller
             'file' => ['required', File::types(['audio/mpeg'])]
         ]);
 
-        $file_path = $request->file('file')->store('songs', 'public');
+        $file_path = $request->file('file')->store('songs');
         $data['file_path'] = $file_path;
 
         $song = Song::create([
@@ -63,18 +66,11 @@ class SongsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Song $song)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Song $song)
     {
+        Gate::authorize('manage songs');
         //
     }
 
@@ -83,6 +79,7 @@ class SongsController extends Controller
      */
     public function update(Request $request, Song $song)
     {
+        Gate::authorize('manage songs');
         //
     }
 
@@ -91,6 +88,8 @@ class SongsController extends Controller
      */
     public function destroy(Song $song): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
+        Gate::authorize('manage songs');
+
         Log::info('deleting song', [$song]);
         $song->delete();
         return redirect('admin/songs');

@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\File;
 
 class StoreMusicianRequest extends FormRequest
 {
@@ -27,7 +26,7 @@ class StoreMusicianRequest extends FormRequest
             'firstname' => 'string|required',
             'lastname' => 'string|required',
             'instrument_id' => 'integer|required|min:0',
-            'picture' => ['nullable', File::image()]
+            'part' => 'integer|required|min:0|max:4',
         ];
     }
 }

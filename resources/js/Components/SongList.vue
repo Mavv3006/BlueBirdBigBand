@@ -14,7 +14,7 @@
             <tbody>
             <tr v-for="song in songs">
                 <td v-if="showId">{{ song.id }}</td>
-                <td>{{ song.title }}</td>
+                <td class="text-blue-600 mr-1 hover:underline" @click="songTitleClicked(song)"> {{ song.title }}</td>
                 <td>{{ song.arranger }}</td>
                 <td>{{ song.author }}</td>
                 <td>{{ song.genre }}</td>
@@ -26,23 +26,55 @@
             </tr>
             </tbody>
         </table>
+
+        <Modal :show="showModal" @close="closeModal">
+            <div class="p-4">
+                <h1>{{ selectedSong.title }}</h1>
+                <audio controls class="mt-4" :src="downloadUrl"></audio>
+                <PrimaryButton class="mt-4" @click="closeModal">Schließen</PrimaryButton>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script setup lang="ts">
 import {Link} from "@inertiajs/vue3";
+import Modal from "@/Components/Modal.vue";
+import {computed, ref} from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+
+type Song = {
+    id: number,
+    title: string,
+    arranger: string,
+    author: string,
+    genre: string
+};
+
+const showModal = ref<boolean>(false);
+const selectedSong = ref<Song | null>(null);
+
+const downloadUrl = computed<string>(() => {
+    let url = `/api/download/song/${selectedSong.value.id}`;
+    console.debug(`trying to download song ${selectedSong.value.title} from '${url}'`)
+    return url;
+});
 
 const props = defineProps<{
-    songs: {
-        id: number,
-        title: string,
-        arranger: string,
-        author: string,
-        genre: string
-    }[],
+    songs: Song[],
     showActions?: boolean,
     showId?: boolean,
 }>();
+
+const songTitleClicked = (song: Song) => {
+    selectedSong.value = song;
+    openModal();
+}
+
+const openModal = () => showModal.value = true;
+const closeModal = () => showModal.value = false;
+
+
 </script>
 
 <style scoped>

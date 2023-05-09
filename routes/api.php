@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DownloadSongController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -10,3 +13,6 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::middleware('auth:sanctum')
+    ->get('download/song/{song}', [DownloadSongController::class, '__invoke']);

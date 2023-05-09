@@ -38,6 +38,9 @@ const props = defineProps<{
         name: String,
     }[],
 }>();
+
+console.debug(props.users);
+
 </script>
 
 <style scoped>
