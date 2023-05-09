@@ -23,13 +23,16 @@ class DefaultAuthorizationSeeder extends Seeder
                 'manage users',
                 'manage roles',
                 'manage musicians',
-                'route.access-admin'
+                'manage songs',
+                'route.access-admin',
+                'download songs'
             ]);
 
         Role::where('name', 'musician')
             ->first()
             ->syncPermissions([
-                'route.access-intern'
+                'route.access-intern',
+                'download songs'
             ]);
     }
 }

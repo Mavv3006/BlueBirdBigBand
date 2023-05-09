@@ -1,6 +1,6 @@
 <template>
     <PublicLayout>
-        <Head title="E-Mail Verteiler"></Head>
+        <Head><title>E-Mail Verteiler</title></Head>
         <Heading>E-Mail Verteiler</Heading>
 
         <div v-for="group in emails" class="email-group">
