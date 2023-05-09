@@ -8,8 +8,8 @@ use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -124,6 +124,17 @@ class MusiciansController extends Controller
         $musician->delete();
 
         return redirect(route('musicians.index'));
+    }
+
+    public function deletePicture(Musician $musician): RedirectResponse
+    {
+        Log::info('Deleting picture of musician after API call', [$musician]);
+        if ($musician->picture_filepath != null) {
+            Storage::delete($musician->picture_filepath);
+        }
+        $musician->update(['picture_filepath' => null]);
+
+        return redirect(route('musicians.show', $musician->id));
     }
 
     private function getMusicianData(FormRequest $request): mixed

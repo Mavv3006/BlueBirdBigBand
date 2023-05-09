@@ -57,8 +57,7 @@
                                     :src="`/storage/${musician.picture_filepath}`"
                                 />
                                 <div class="flex flex-col justify-center gap-2">
-                                    <Button @click="!hasPicture">Bild löschen</Button>
-                                    <Button>Bild ändern</Button>
+                                    <Button @click="deletePicture">Bild löschen</Button>
                                 </div>
                             </div>
                         </div>
@@ -88,14 +87,16 @@ import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import MusicianPicture from "@/Components/MusicianPicture.vue";
+
+const deletingPicture = ref(false);
 
 const props = defineProps<{
     method: string,
     submit_url: string,
     instruments: { name: string, id: number }[],
-    musician?: { firstname: string, lastname: string, instrument_id: number, picture_filepath?: string }
+    musician?: { id: number, firstname: string, lastname: string, instrument_id: number, picture_filepath?: string }
 }>();
 
 const form = useForm({
@@ -114,13 +115,29 @@ const form = useForm({
     picture: null
 });
 
-const submit = () => form.post(props.submit_url)
+const submit = () => {
+    if (deletingPicture.value) return;
+    form.post(props.submit_url)
+}
+
+const deletePicture = () => {
+    useForm({_method: 'delete'}).post(
+        `/admin/musicians/${props.musician.id}/picture`,
+        {
+            onStart: () => {
+                deletingPicture.value = true;
+            },
+            onFinish: () => {
+                deletingPicture.value = false;
+            }
+        }
+    );
+}
 
 const hasPicture = computed<boolean>(() => {
     if (props.musician === undefined) return false;
     if (props.musician.picture_filepath === undefined) return false;
     return props.musician.picture_filepath !== null;
-
 });
 </script>
 

@@ -61,6 +61,8 @@ Route::prefix('admin')
         Route::resource('roles', RolesController::class);
         Route::resource('musicians', MusiciansController::class);
 
+        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
+
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
             Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
