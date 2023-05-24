@@ -19,7 +19,8 @@ const props = defineProps<{
         title: string,
         arranger: string,
         author: string,
-        genre: string
+        genre: string,
+        file_path?: string
     }[]
 }>();
 </script>
