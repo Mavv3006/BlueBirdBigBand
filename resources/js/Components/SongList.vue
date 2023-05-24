@@ -14,7 +14,12 @@
             <tbody>
             <tr v-for="song in songs">
                 <td v-if="showId">{{ song.id }}</td>
-                <td class="text-blue-600 mr-1 hover:underline" @click="songTitleClicked(song)"> {{ song.title }}</td>
+                <td
+                    :class="{'play-song': song.file_path !== null}"
+                    @click="songTitleClicked(song)"
+                >
+                    {{ song.title }}
+                </td>
                 <td>{{ song.arranger }}</td>
                 <td>{{ song.author }}</td>
                 <td>{{ song.genre }}</td>
@@ -30,14 +35,14 @@
         <Modal :show="showModal" @close="closeModal">
             <div class="p-4">
                 <h1>{{ selectedSong.title }}</h1>
-                <audio controls class="mt-4" :src="downloadUrl"></audio>
+                <audio :src="downloadUrl" class="mt-4" controls></audio>
                 <PrimaryButton class="mt-4" @click="closeModal">Schließen</PrimaryButton>
             </div>
         </Modal>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {Link} from "@inertiajs/vue3";
 import Modal from "@/Components/Modal.vue";
 import {computed, ref} from "vue";
@@ -48,7 +53,8 @@ type Song = {
     title: string,
     arranger: string,
     author: string,
-    genre: string
+    genre: string,
+    file_path?: string,
 };
 
 const showModal = ref<boolean>(false);
@@ -67,6 +73,8 @@ const props = defineProps<{
 }>();
 
 const songTitleClicked = (song: Song) => {
+    if (song.file_path === null) return;
+
     selectedSong.value = song;
     openModal();
 }
@@ -99,5 +107,9 @@ tr:hover {
 th {
     background-color: #04AA6D;
     @apply text-white py-2 text-left;
+}
+
+.play-song {
+    @apply text-blue-600 mr-1 hover:cursor-pointer;
 }
 </style>

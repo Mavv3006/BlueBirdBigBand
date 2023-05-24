@@ -21,7 +21,7 @@ class SongsController extends Controller
     public function index(): Response
     {
         Gate::authorize('manage songs');
-        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author'])
+        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
             ->get();
         return Inertia::render('Admin/SongManagement/SongsIndex', ['songs' => $songs]);
     }

@@ -21,6 +21,7 @@ import FloatingActionButton from "@/Components/FloatingActionButton.vue";
 const props = defineProps<{
     songs: {
         id: number,
+        file_path?: string,
         song_name: string,
         arranger: string,
         author: string,
