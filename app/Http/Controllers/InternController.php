@@ -30,7 +30,7 @@ class InternController extends Controller
     {
         Gate::authorize('route.access-intern');
 
-        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author'])
+        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
             ->get();
         return Inertia::render('Intern/Songs', ['songs' => $songs]);
     }
