@@ -54,19 +54,6 @@ Route::prefix('admin')
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
             Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
         });
-
-        /// returns infos about the maximum allowed sizes of files to upload and the size of post requests.
-        Route::get('upload_info', function () {
-            Gate::authorize('route.access-admin');
-
-            $upload_max_filesize = ini_get('upload_max_filesize');
-            $post_max_size = ini_get('post_max_size');
-
-            return response()->json([
-                'upload_max_filesize' => $upload_max_filesize,
-                'post_max_size' => $post_max_size
-            ]);
-        });
     });
 
 require __DIR__ . '/auth.php';
