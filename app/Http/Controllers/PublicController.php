@@ -3,14 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Concert;
+use App\Models\Instrument;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ConcertsController extends Controller
+class PublicController extends Controller
 {
-    public function index(): Response
+    public function home(): Response
+    {
+        return Inertia::render('Index');
+    }
+
+    public function aboutUs(): Response
+    {
+        return Inertia::render('Band/AboutPage');
+    }
+
+    public function arrival(): Response
+    {
+        return Inertia::render('Band/ArrivalPage');
+    }
+
+    public function concerts(): Response
     {
         $concerts = Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
@@ -35,5 +51,35 @@ class ConcertsController extends Controller
             });
         Log::debug($concerts);
         return Inertia::render('LatestInfos/ConcertsPage', ['concerts' => $concerts]);
+    }
+
+    public function booking(): Response
+    {
+        return Inertia::render('LatestInfos/BookingPage');
+    }
+
+    public function imprint(): Response
+    {
+        return Inertia::render('Contact/ImprintPage');
+    }
+
+    public function contact(): Response
+    {
+        return Inertia::render('Contact/ContactPage');
+    }
+
+    public function pressInfo(): Response
+    {
+        return Inertia::render('LatestInfos/PressInfoPage');
+    }
+
+    public function musicians(): Response
+    {
+        return Inertia::render('Band/MusiciansPage', [
+            'data' => Instrument::all()->map(fn(Instrument $instrument) => [
+                'instrument' => $instrument,
+                'musicians' => $instrument->musicians()->get()
+            ])
+        ]);
     }
 }
