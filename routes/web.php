@@ -9,7 +9,6 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SongsController;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
