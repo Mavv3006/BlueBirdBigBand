@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\MusicianManagement;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMusicianRequest;
 use App\Http\Requests\UpdateMusicianRequest;
 use App\Models\Instrument;

@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\ActivateUsersController;
-use App\Http\Controllers\AssignRolesToUserController;
-use App\Http\Controllers\InternController;
-use App\Http\Controllers\MusiciansController;
+use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
+use App\Http\Controllers\Admin\RolesManagement\RolesController;
+use App\Http\Controllers\Admin\SongManagement\SongsController;
+use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
+use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
+use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\SongsController;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*

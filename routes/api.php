@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DownloadSongController;
+use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
 use Illuminate\Support\Facades\Route;
 
 /*

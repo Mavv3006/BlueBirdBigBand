@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\UserManagement;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Rules\AvailableUser;
 use Illuminate\Http\RedirectResponse;
