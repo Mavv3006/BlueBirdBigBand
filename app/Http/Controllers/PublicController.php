@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Concert;
 use App\Models\Instrument;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
+use App\Services\Concert\ConcertService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PublicController extends Controller
 {
+    public function __construct(
+        public ConcertService $concertService
+    )
+    {
+    }
+
     public function home(): Response
     {
         return Inertia::render('Index');
@@ -28,29 +32,9 @@ class PublicController extends Controller
 
     public function concerts(): Response
     {
-        $concerts = Concert::with('band', 'venue')
-            ->whereDate('date', '>=', Carbon::today()->toDateString())
-            ->get()
-            ->map(function ($item, $key) {
-                return [
-                    'date' => $item->date->format('Y-m-d'),
-                    'start_time' => $item->start_time->format('H:i'),
-                    'end_time' => $item->end_time->format('H:i'),
-                    'band' => $item->band->name,
-                    'description' => [
-                        'venue' => $item->venue_description,
-                        'event' => $item->event_description
-                    ],
-                    'address' => [
-                        'street' => $item->venue_street,
-                        'number' => $item->venue_street_number,
-                        'plz' => $item->venue_plz,
-                        'city' => $item->venue->name
-                    ]
-                ];
-            });
-        Log::debug($concerts);
-        return Inertia::render('LatestInfos/ConcertsPage', ['concerts' => $concerts]);
+        return Inertia::render('LatestInfos/ConcertsPage', [
+            'concerts' => $this->concertService->upcoming()
+        ]);
     }
 
     public function booking(): Response
