@@ -17,4 +17,11 @@ abstract class TestCase extends BaseTestCase
             ->create(['activated' => true])
             ->assignRole('musician');
     }
+
+    protected function createUserForAdminRoutes()
+    {
+        return User::factory()
+            ->create(['activated' => true])
+            ->assignRole('admin');
+    }
 }
