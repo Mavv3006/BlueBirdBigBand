@@ -71,7 +71,7 @@ class MusiciansController extends Controller
             'Admin/MusicianManagement/MusiciansShow',
             [
                 'musician' => $musician,
-                'instrument' => $this->musicianService->instrumentOfMusician($musician)
+                'instrument' => $this->instrumentService->fromMusician($musician)
             ]
         );
     }
@@ -99,7 +99,7 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $this->musicianService->update($request);
+        $this->musicianService->update($request, $musician);
         return redirect(route('musicians.show', $musician->id));
     }
 
