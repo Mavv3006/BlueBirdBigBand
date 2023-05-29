@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\SongManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SongRequest;
 use App\Models\Song;
+use App\Services\Song\SongService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,6 +18,11 @@ use Inertia\Response;
 
 class SongsController extends Controller
 {
+    public function __construct(
+        public SongService $service,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -72,16 +79,23 @@ class SongsController extends Controller
     public function edit(Song $song)
     {
         Gate::authorize('manage songs');
-        //
+
+        return Inertia::render(
+            'Admin/SongManagement/SongsEdit',
+            ['song' => $song]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Song $song)
+    public function update(SongRequest $request, Song $song)
     {
         Gate::authorize('manage songs');
-        //
+
+        $this->service->update($request, $song);
+
+        return redirect(route('songs.index'));
     }
 
     /**
