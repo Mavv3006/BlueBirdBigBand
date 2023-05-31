@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin\RolesManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
+use App\Services\Permission\PermissionService;
+use App\Services\Role\RoleService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -11,11 +15,18 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
+
+    public function __construct(
+        public RoleService       $roleService,
+        public PermissionService $permissionService
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,12 +36,10 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $roles = Role::select('id', 'name')
-            ->orderBy('id')
-            ->get();
-
-        Log::info('showing index view for all roles.');
-        return Inertia::render('Admin/RolesManagement/RolesIndex', ['roles' => $roles]);
+        return Inertia::render(
+            'Admin/RolesManagement/RolesIndex',
+            ['roles' => $this->roleService->getAll()]
+        );
     }
 
     /**
@@ -42,22 +51,20 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        Log::info('showing create view for a new role.');
         return Inertia::render('Admin/RolesManagement/RolesCreate');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreRoleRequest $request
      * @return Application|Redirector|RedirectResponse
      */
-    public function store(Request $request): Redirector|RedirectResponse|Application
+    public function store(StoreRoleRequest $request): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage roles');
 
-        $data = $request->validate(['name' => 'string|required|max:255']);
-        $role = Role::create($data);
+        $role = $this->roleService->create($request);
 
         Log::info('creating new role (id: ' . $role->id . ', name: ' . $role->name . ').');
         return redirect(route('roles.show', $role->id));
@@ -73,28 +80,16 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $role = Role::where('id', $id)
-            ->select('id', 'name')
-            ->first();
-        $role_permissions = $role
-            ->permissions()
-            ->select('id', 'name')
-            ->orderBy('id')
-            ->get();
-        $users = $role
-            ->users()
-            ->select('id', 'name', 'activated')
-            ->orderBy('id')
-            ->get();
-        $data = [
-            'role' => $role,
-            'role_permissions' => $role_permissions,
-            'users' => $users
-        ];
+        $role = $this->roleService->getById($id);
 
-        Log::info('showing role (id: ' . $role->id . ', name: ' . $role->name . ').');
-        Log::debug("RolesController::show", $data);
-        return Inertia::render('Admin/RolesManagement/RolesShow', $data);
+        return Inertia::render(
+            'Admin/RolesManagement/RolesShow',
+            [
+                'role' => $role,
+                'role_permissions' => $this->roleService->getPermissionsOfRole($role),
+                'users' => $this->roleService->getUsersOfRole($role)
+            ]
+        );
     }
 
     /**
@@ -107,31 +102,17 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $all_permissions = Permission::select('id', 'name')
-            ->get();
-        $role = Role::where('id', $id)
-            ->select('id', 'name')
-            ->first();
-        $role_permissions = $role
-            ->permissions()
-            ->select('id')
-            ->get();
-        $not_used_permissions = Permission::select('id')
-            ->get()
-            ->diff($role
-                ->permissions()
-                ->select('id')
-                ->get());
-        $data = [
-            'role' => $role,
-            'role_permissions' => $role_permissions,
-            'not_used_permissions' => $not_used_permissions,
-            'all_permissions' => $all_permissions
-        ];
+        $role = $this->roleService->getById($id);
 
-        Log::info('showing edit view for role (id: ' . $role->id . ', name: ' . $role->name . ').');
-        Log::debug("RolesController::edit", $data);
-        return Inertia::render('Admin/RolesManagement/RolesEdit', $data);
+        return Inertia::render(
+            'Admin/RolesManagement/RolesEdit',
+            [
+                'role' => $role,
+                'role_permissions' => $this->roleService->getPermissionsOfRole($role),
+                'not_used_permissions' => $this->roleService->getPermissionsNotInRole($role),
+                'all_permissions' => $this->permissionService->getAll()
+            ]
+        );
     }
 
     /**
@@ -141,15 +122,11 @@ class RolesController extends Controller
      * @param int $id
      * @return Redirector|RedirectResponse|Application
      */
-    public function update(Request $request, int $id): Redirector|RedirectResponse|Application
+    public function update(UpdateRoleRequest $request, int $id): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage roles');
 
-        $data = $request->validate(['permissions' => 'array|required']);
-        $role = Role::where('id', $id)
-            ->first();
-        $role
-            ->syncPermissions($data["permissions"]);
+        $role = $this->roleService->update($request, $id);
 
         Log::info('updating role (id: ' . $id . ', name: ' . $role->name . ').');
         return redirect(route('roles.show', $id));
