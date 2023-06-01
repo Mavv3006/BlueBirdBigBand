@@ -166,8 +166,8 @@ class MusicianTest extends TestCase
         $this->assertEquals('1', $musician->firstname);
         $this->assertEquals('2', $musician->lastname);
         $this->assertEquals(1, $musician->instrument_id);
-        $this->assertEquals(true, $musician->isActive);
-        $this->assertEquals(null, $musician->picture_filepath);
+        $this->assertTrue($musician->isActive);
+        $this->assertNull(null, $musician->picture_filepath);
     }
 
     public function test_destroy_route()
