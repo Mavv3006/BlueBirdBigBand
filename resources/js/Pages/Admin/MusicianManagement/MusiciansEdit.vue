@@ -7,6 +7,7 @@
             :instruments="instruments"
             :submit_url="`/admin/musicians/${musician.id}`"
             method="put"
+            :musician="musician"
         />
     </PublicLayout>
 </template>
@@ -28,4 +29,6 @@ const props = defineProps<{
     },
     instruments: { name: string, id: number }[]
 }>();
+
+console.debug({'musician': props.musician, 'instruments': props.instruments});
 </script>
