@@ -18,25 +18,25 @@
         </p>
 
         <div class="flex flex-col md:flex-row">
-            <div class="md:w-1/2" v-for="musician in bandleaderPlusVocals">
+            <div v-for="musician in bandleaderPlusVocals" class="md:w-1/2">
                 <MusicianInstrument
-                    :musicians="musician.musicians"
-                    :instrument="musician.instrument"/>
+                    :instrument="musician.instrument"
+                    :musicians="musician.musicians"/>
             </div>
         </div>
 
         <div>
             <MusicianInstrument
-                :musicians="musician.musicians"
+                v-for="musician in instrumentalists"
                 :instrument="musician.instrument"
-                v-for="musician in instrumentalists"/>
+                :musicians="musician.musicians"/>
 
         </div>
 
     </public-layout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
@@ -68,7 +68,7 @@ const instrumentFilter = (instrument: string) => (value: MusicianProp): boolean 
 
 const musicianMapping = (value: MusicianProp): Musician[] => value.musicians.map((musician: MusicianBackendDto) => ({
     name: `${musician.firstname} ${musician.lastname}`,
-    picture: musician.picture_filepath ?? value.instrument.default_picture_filepath
+    picture: musician.picture_filepath === null ? value.instrument.default_picture_filepath : `storage/${musician.picture_filepath}`
 }));
 
 const instrumentMapping = (instrument: string): MusicianWithInstrument => ({
