@@ -48,6 +48,7 @@ Route::prefix('admin')
         Route::resource('musicians', MusiciansController::class);
         Route::resource('songs', SongsController::class)
             ->except('show');
+        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
 
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
