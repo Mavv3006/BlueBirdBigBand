@@ -50,7 +50,7 @@ class SongsController extends Controller
             'file' => ['required', File::types(['audio/mpeg'])]
         ]);
 
-        $file_path = $request->file('file')->store('songs');
+        $file_path = $request->file('file')->store('songs', 'public');
         $data['file_path'] = $file_path;
 
         $song = Song::create([
