@@ -1,21 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services\Concert;
 
 use App\Models\Concert;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
-use Inertia\Response;
 
-class ConcertsController extends Controller
+class ConcertService
 {
-    public function index(): Response
+    public function upcoming()
     {
-        $concerts = Concert::with('band', 'venue')
+        return Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
             ->get()
-            ->map(function ($item, $key) {
+            ->map(function ($item) {
                 return [
                     'date' => $item->date->format('Y-m-d'),
                     'start_time' => $item->start_time->format('H:i'),
@@ -33,7 +30,5 @@ class ConcertsController extends Controller
                     ]
                 ];
             });
-        Log::debug($concerts);
-        return Inertia::render('LatestInfos/ConcertsPage', ['concerts' => $concerts]);
     }
 }

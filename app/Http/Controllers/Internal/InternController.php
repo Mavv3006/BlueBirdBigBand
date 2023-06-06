@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Internal;
 
-use App\Models\Song;
+use App\Http\Controllers\Controller;
+use App\Services\Song\SongService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -12,6 +13,12 @@ use Inertia\Response;
 
 class InternController extends Controller
 {
+    public function __construct(
+        public SongService $songService,
+    )
+    {
+    }
+
     public function index(): Redirector|RedirectResponse|Application
     {
         Gate::authorize('route.access-intern');
@@ -30,8 +37,8 @@ class InternController extends Controller
     {
         Gate::authorize('route.access-intern');
 
-        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
-            ->get();
-        return Inertia::render('Intern/Songs', ['songs' => $songs]);
+        return Inertia::render('Intern/Songs', [
+            'songs' => $this->songService->all()
+        ]);
     }
 }

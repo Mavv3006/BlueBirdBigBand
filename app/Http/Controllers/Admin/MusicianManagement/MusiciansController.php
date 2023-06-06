@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\MusicianManagement;
 
-use App\Http\Requests\StoreMusicianRequest;
-use App\Http\Requests\UpdateMusicianRequest;
-use App\Models\Instrument;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\MusicianRequest;
 use App\Models\Musician;
+use App\Services\Instrument\InstrumentService;
+use App\Services\Musician\MusicianService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
@@ -18,6 +19,13 @@ use Inertia\Response;
 
 class MusiciansController extends Controller
 {
+    public function __construct(
+        public MusicianService   $musicianService,
+        public InstrumentService $instrumentService,
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -25,13 +33,9 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $musicians = Musician::with('instrument')
-            ->orderBy('instrument_id')
-            ->get();
-        Log::info('Showing all musicians', [$musicians]);
         return Inertia::render(
             'Admin/MusicianManagement/MusiciansIndex',
-            ['data' => $musicians]
+            ['data' => $this->musicianService->all()]
         );
     }
 
@@ -42,21 +46,19 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $instruments = Instrument::all();
-        Log::info('Showing create musician form');
         return Inertia::render(
             'Admin/MusicianManagement/MusiciansCreate',
-            ['instruments' => $instruments]
+            ['instruments' => $this->instrumentService->all()]
         );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMusicianRequest $request): Redirector|RedirectResponse|Application
+    public function store(MusicianRequest $request): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage musicians');
-
+        // $musician = $this->musicianService->create($request);
         $musician = Musician::create($this->getMusicianData($request));
         Log::info('Created a new musician', [$musician]);
         return redirect(route('musicians.show', $musician->id));
@@ -69,14 +71,12 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $instrument = $musician->instrument()->first();
-        Log::info('Showing musician', [$musician]);
-        $musician_name = $musician->firstname . " " . $musician->lastname;
-        $debug_message = 'The instrument of musician ' . $musician_name . ' (' . $musician->id . ')';
-        Log::debug($debug_message, [$instrument]);
         return Inertia::render(
             'Admin/MusicianManagement/MusiciansShow',
-            ['musician' => $musician, 'instrument' => $instrument]
+            [
+                'musician' => $musician,
+                'instrument' => $this->instrumentService->fromMusician($musician)
+            ]
         );
     }
 
@@ -87,21 +87,22 @@ class MusiciansController extends Controller
     {
         Gate::authorize('manage musicians');
 
-        $instruments = Instrument::all();
-        Log::info('Editing musician', [$musician, $instruments]);
         return Inertia::render(
             'Admin/MusicianManagement/MusiciansEdit',
-            ['musician' => $musician, 'instruments' => $instruments]
+            [
+                'musician' => $musician,
+                'instruments' => $this->instrumentService->all()
+            ]
         );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMusicianRequest $request, Musician $musician): Redirector|RedirectResponse|Application
+    public function update(MusicianRequest $request, Musician $musician): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage musicians');
-
+        // $this->musicianService->update($request, $musician);
         $musician->update($this->getMusicianData($request));
         Log::info('Updated musician', [$musician]);
 
@@ -120,7 +121,7 @@ class MusiciansController extends Controller
             Storage::delete($musician->picture_filepath);
         }
         Log::info('Deleting musician', [$musician]);
-        $musician->delete();
+        $this->musicianService->delete($musician);
 
         return redirect(route('musicians.index'));
     }
