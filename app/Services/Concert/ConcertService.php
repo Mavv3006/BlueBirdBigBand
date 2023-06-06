@@ -11,6 +11,7 @@ class ConcertService
     {
         return Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
+            ->orderBy('date')
             ->get()
             ->map(function ($item) {
                 return [

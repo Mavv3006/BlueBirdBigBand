@@ -23,10 +23,10 @@ class ConcertTest extends TestCase
             ->state(
                 new Sequence(
                     ['date' => Carbon::today()->addDays()],
-                    ['date' => Carbon::today()->addDays(2)],
                     ['date' => Carbon::today()->addDays(3)],
-                    ['date' => Carbon::today()->addDays(4)],
+                    ['date' => Carbon::today()->addDays(2)],
                     ['date' => Carbon::today()->addDays(5)],
+                    ['date' => Carbon::today()->addDays(4)],
                 )
             )
             ->create();
@@ -71,6 +71,21 @@ class ConcertTest extends TestCase
                             ->has('address.plz')
                             ->has('address.city')
                     )
+            );
+    }
+
+    public function test_order_of_concerts()
+    {
+        $this->get('/auftritte')
+            ->assertInertia(
+                function (AssertableInertia $page) {
+                    $props = $page->toArray()['props']['concerts'];
+                    $this->assertEquals(5, sizeof($props));
+                    $this->assertTrue(Carbon::parse($props[0]['date']) <= Carbon::parse($props[1]['date']));
+                    $this->assertTrue(Carbon::parse($props[1]['date']) <= Carbon::parse($props[2]['date']));
+                    $this->assertTrue(Carbon::parse($props[2]['date']) <= Carbon::parse($props[3]['date']));
+                    $this->assertTrue(Carbon::parse($props[3]['date']) <= Carbon::parse($props[4]['date']));
+                }
             );
     }
 }
