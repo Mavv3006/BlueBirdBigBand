@@ -24,6 +24,9 @@
                 <td>{{ song.author }}</td>
                 <td>{{ song.genre }}</td>
                 <td v-if="showActions">
+                    <Link :href="`songs/${song.id}/edit`" class="mr-4">
+                        <font-awesome-icon icon="fa-solid fa-pen"/>
+                    </Link>
                     <Link :href="`songs/${song.id}`" as=button class="text-red-600" method="delete">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </Link>

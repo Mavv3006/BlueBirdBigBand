@@ -20,10 +20,9 @@ use Inertia\Response;
 class MusiciansController extends Controller
 {
     public function __construct(
-        public MusicianService   $musicianService,
+        public MusicianService $musicianService,
         public InstrumentService $instrumentService,
-    )
-    {
+    ) {
     }
 
     /**
