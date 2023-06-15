@@ -22,19 +22,31 @@
             </div>
 
             <div class="w-[85%] h-[400px] m-auto lg:w-[800px] lg:h-[600px]">
-                <iframe allowfullscreen class="w-full h-full" height="600"
+                <iframe allowfullscreen v-if="showMap" class="w-full h-full" height="600"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2600.3175892804056!2d8.432908116445535!3d49.32720577933624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797b69c0432edc1%3A0xa304f0208640358c!2sMusikschule+der+Stadt+Speyer!5e0!3m2!1sde!2sde!4v1475013688535">
                 </iframe>
+                <div class="w-full h-full bg-red-600" v-else>
+                    <button @click="allowShowingMap()">Karte anzeigen</button>
+                </div>
             </div>
         </div>
     </public-layout>
 </template>
 
-<script setup>
-import PublicLayout from "@/Layouts/PublicLayout.vue";
+<script setup lang="ts">
 import Heading from "@/Components/Heading.vue";
+import PublicLayout from "@/Layouts/PublicLayout.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
-import {Head} from '@inertiajs/vue3';</script>
+import {useLocalStorage} from "@vueuse/core";
+
+const showMap = useLocalStorage("google-maps-key", false, {
+    listenToStorageChanges: true,
+    writeDefaults: false
+});
+
+const allowShowingMap = () => showMap.value = true;
+
+</script>
 
 <style scoped>
 p {
