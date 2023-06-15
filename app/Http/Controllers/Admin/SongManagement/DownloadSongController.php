@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin\SongManagement;
 
+use App\Http\Controllers\Controller;
 use App\Models\Song;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

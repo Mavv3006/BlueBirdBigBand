@@ -2,8 +2,11 @@
     <PublicLayout>
         <Heading>Musiker anzeigen</Heading>
 
-        <div class="flex gap-8">
-            <img :src="picture" :alt="`Bild von ${musician.firstname} ${musician.lastname}`">
+        <div class="flex flex-col sm:flex-row gap-8">
+            <div class="mx-auto">
+                <img :alt="`Bild von ${musician.firstname} ${musician.lastname}`" :src="picture"
+                     class="max-h-36">
+            </div>
             <div class="flex flex-col gap-2">
                 <div class="flex flex-col gap-2">
                     <p> Name: {{ musician.firstname }} {{ musician.lastname }} </p>
@@ -18,8 +21,8 @@
                         Bearbeiten
                     </Link>
                     <Link
-                        method="delete"
                         class="text-red-600 border-red-600 border rounded-md hover:bg-gray-100 active:bg-gray-200 px-2 py-1"
+                        method="delete"
                     >
                         Löschen
                     </Link>
@@ -29,11 +32,11 @@
     </PublicLayout>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {computed} from "vue";
 import {Link} from '@inertiajs/vue3';
+import {computed} from "vue";
 
 const props = defineProps<{
     musician: {
@@ -51,7 +54,10 @@ const props = defineProps<{
 }>();
 
 const picture = computed<string>(() => {
-    return '/' + (props.musician.picture_filepath ?? props.instrument.default_picture_filepath);
+    if (props.musician.picture_filepath === undefined || props.musician.picture_filepath === null) {
+        return `/${props.instrument.default_picture_filepath}`;
+    }
+    return `/storage/${props.musician.picture_filepath}`;
 });
 </script>
 
