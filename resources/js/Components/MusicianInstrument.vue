@@ -10,9 +10,8 @@
 </template>
 
 <script setup lang="ts">
-export type Musician = { picture: String, name: String };
-
 import {defineProps} from 'vue';
+import {Musician} from "@/types/musician";
 
 const props = defineProps<{
     instrument: string,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
+use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
 use App\Http\Controllers\Admin\RolesManagement\RolesController;
 use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
@@ -44,11 +45,20 @@ Route::prefix('admin')
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
 
-        Route::resource('roles', RolesController::class);
-        Route::resource('musicians', MusiciansController::class);
+        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show']);
+        Route::match(
+            ['put', 'patch'],
+            'musicians/seating-position',
+            [MusicianSeatingPositionController::class, 'update']
+        );
+        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
+        Route::resources([
+            'roles' => RolesController::class,
+            'musicians' => MusiciansController::class
+        ]);
+
         Route::resource('songs', SongsController::class)
             ->except('show');
-        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
 
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
