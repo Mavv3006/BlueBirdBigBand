@@ -1,6 +1,7 @@
 export type MusicianBackendDto = {
     firstname: string,
     lastname: string,
+    seating_position?: number,
     picture_filepath?: string
 }
 

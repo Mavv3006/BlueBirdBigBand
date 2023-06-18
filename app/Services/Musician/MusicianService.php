@@ -14,7 +14,10 @@ class MusicianService
     {
         return Instrument::all()->map(fn(Instrument $instrument) => [
             'instrument' => $instrument,
-            'musicians' => $instrument->musicians()->get()
+            'musicians' => $instrument
+                ->musicians()
+                ->orderBy('seating_position')
+                ->get()
         ]);
     }
 
