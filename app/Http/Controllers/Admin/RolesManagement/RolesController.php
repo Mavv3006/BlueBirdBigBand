@@ -9,7 +9,6 @@ use App\Services\Permission\PermissionService;
 use App\Services\Role\RoleService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -118,7 +117,7 @@ class RolesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param UpdateRoleRequest $request
      * @param int $id
      * @return Redirector|RedirectResponse|Application
      */

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\User;
+use Database\Seeders\DefaultAuthorizationSeeder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -23,5 +24,11 @@ abstract class TestCase extends BaseTestCase
         return User::factory()
             ->create(['activated' => true])
             ->assignRole('admin');
+    }
+
+    protected function setupAdmin(): void
+    {
+        $this->seed(DefaultAuthorizationSeeder::class);
+        $this->actingAs($this->createUserForAdminRoutes());
     }
 }
