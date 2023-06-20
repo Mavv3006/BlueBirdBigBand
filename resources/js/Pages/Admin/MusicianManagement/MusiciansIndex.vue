@@ -10,6 +10,7 @@
                 <th>Vorname</th>
                 <th>Nachname</th>
                 <th>Instrument</th>
+                <th>Sitzposition</th>
                 <th>Aktiv</th>
                 <th>Aktion</th>
             </tr>
@@ -24,6 +25,7 @@
                 </td>
                 <td>{{ musician.lastname }}</td>
                 <td>{{ musician.instrument.name }}</td>
+                <td>{{ musician.seating_position }}</td>
                 <td>{{ musician.isActive ? 'Ja' : 'Nein' }}</td>
                 <td class="flex flex-wrap gap-4">
                     <Link :href="`musicians/${musician.id}/edit`" class="mr-1">
@@ -54,6 +56,7 @@ const props = defineProps<{
         id: number,
         firstname: string,
         lastname: string,
+        seating_position: number,
         picture_filepath?: string,
         isActive: boolean,
         instrument_id: number,

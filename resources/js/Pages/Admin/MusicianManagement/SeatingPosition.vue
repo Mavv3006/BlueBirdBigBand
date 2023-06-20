@@ -33,7 +33,7 @@
         </div>
 
         <div class="flex justify-center">
-            <PrimaryButton>Speichern</PrimaryButton>
+            <PrimaryButton @click="save()">Speichern</PrimaryButton>
         </div>
     </public-layout>
 </template>
@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {Head} from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
 import {MusicianBackendDto, MusicianProp} from "@/types/musician";
 import {ref} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -92,12 +92,32 @@ const isFirstMusician = (musician: MusicianBackendDto): boolean => {
     let index = musicianArray.indexOf(musician);
     return index === 0;
 }
+
 const isLastMusician = (musician: MusicianBackendDto): boolean => {
     let musicianArray = getMusicianArray(musician);
     let index = musicianArray.indexOf(musician);
     return index === musicianArray.length - 1;
 }
 
+const save = () => {
+    let data = seatingPosition
+        .value
+        .map((value) => {
+            let musicians = value.musicians.map((value) => {
+                return {id: value.id};
+            });
+            let instrument_id = value.instrument.id;
+            return {musicians: musicians, instrument_id: instrument_id};
+        });
+    router.visit(
+        '/admin/musicians/seating-position',
+        {
+            data: {data: data},
+            method: 'put',
+            onStart: console.debug,
+        }
+    );
+}
 </script>
 
 <style scoped>
