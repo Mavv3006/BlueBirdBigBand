@@ -12,13 +12,17 @@
                 <li v-for="musician in data.musicians"
                     class="flex justify-between border rounded-md border-slate-400 py-2 px-4 mx-2 hover:shadow-md hover:border-slate-700">
                     <div>{{ musician.firstname }} {{ musician.lastname }}</div>
-                    <div class="flex gap-6 text-slate-400">
-                        <div @click="moveUp(musician)">
+                    <div class="flex gap-6">
+                        <div v-if="!isFirstMusician(musician)"
+                             @click="moveUp(musician)"
+                             class="hover:cursor-pointer">
                             <font-awesome-icon class="mr-1" icon="fa-solid fa-chevron-up"/>
                             <span class="hidden sm:inline md:hidden">vor</span>
                             <span class="hidden md:inline">Nach vorne</span>
                         </div>
-                        <div @click="moveDown(musician)">
+                        <div v-if="!isLastMusician(musician)"
+                             @click="moveDown(musician)"
+                             class="hover:cursor-pointer">
                             <font-awesome-icon class="mr-1" icon="fa-solid fa-chevron-down"/>
                             <span class="hidden sm:inline md:hidden">zurück</span>
                             <span class="hidden md:inline">Nach hinten</span>
@@ -26,6 +30,10 @@
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div class="flex justify-center">
+            <PrimaryButton>Speichern</PrimaryButton>
         </div>
     </public-layout>
 </template>
@@ -36,15 +44,59 @@ import Heading from "@/Components/Heading.vue";
 import {Head} from '@inertiajs/vue3';
 import {MusicianBackendDto, MusicianProp} from "@/types/musician";
 import {ref} from "vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 
 const props = defineProps<{ data: MusicianProp[] }>();
-
 const seatingPosition = ref(props.data);
 
-const moveUp = (musician: MusicianBackendDto) => {
+const moveUp = (musicianToMove: MusicianBackendDto) => {
+    moveMusician(musicianToMove, MovingDirection.UP);
 };
-const moveDown = (musician: MusicianBackendDto) => {
+
+const moveDown = (musicianToMove: MusicianBackendDto) => {
+    moveMusician(musicianToMove, MovingDirection.DOWN);
 };
+
+const getMusicianArray = (musicianToMove: MusicianBackendDto) => seatingPosition
+    .value
+    .filter((value) => value.instrument.id === musicianToMove.instrument_id)[0]
+    .musicians;
+
+function moveMusician(musicianToMove: MusicianBackendDto, direction: MovingDirection) {
+    let musicianArray = getMusicianArray(musicianToMove);
+    let indexOfMusicianToMove = musicianArray.indexOf(musicianToMove);
+    let musicianToReplace;
+    switch (direction) {
+        case MovingDirection.UP:
+            musicianToReplace = musicianArray[indexOfMusicianToMove - 1];
+            break;
+        case MovingDirection.DOWN:
+            musicianToReplace = musicianArray[indexOfMusicianToMove + 1];
+            break;
+    }
+    let indexOfMusicianToReplace = musicianArray.indexOf(musicianToReplace);
+    swap(musicianArray, indexOfMusicianToMove, indexOfMusicianToReplace);
+}
+
+const swap = (array: object[], index1: number, index2: number) => {
+    array[index1] = array.splice(index2, 1, array[index1])[0];
+}
+
+enum MovingDirection {
+    UP = 1,
+    DOWN = 2,
+}
+
+const isFirstMusician = (musician: MusicianBackendDto): boolean => {
+    let musicianArray = getMusicianArray(musician);
+    let index = musicianArray.indexOf(musician);
+    return index === 0;
+}
+const isLastMusician = (musician: MusicianBackendDto): boolean => {
+    let musicianArray = getMusicianArray(musician);
+    let index = musicianArray.indexOf(musician);
+    return index === musicianArray.length - 1;
+}
 
 </script>
 

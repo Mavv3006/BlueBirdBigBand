@@ -1,4 +1,6 @@
 export type MusicianBackendDto = {
+    id: number,
+    instrument_id: number,
     firstname: string,
     lastname: string,
     seating_position?: number,
@@ -7,6 +9,7 @@ export type MusicianBackendDto = {
 
 export type MusicianProp = {
     instrument: {
+        id: number,
         name: string,
         default_picture_filepath: string
     },
