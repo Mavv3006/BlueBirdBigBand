@@ -11,10 +11,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
@@ -64,8 +62,6 @@ class RolesController extends Controller
         Gate::authorize('manage roles');
 
         $role = $this->roleService->create($request);
-
-        Log::info('creating new role (id: ' . $role->id . ', name: ' . $role->name . ').');
         return redirect(route('roles.show', $role->id));
     }
 
@@ -125,9 +121,7 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $role = $this->roleService->update($request, $id);
-
-        Log::info('updating role (id: ' . $id . ', name: ' . $role->name . ').');
+        $this->roleService->update($request, $id);
         return redirect(route('roles.show', $id));
     }
 
@@ -141,12 +135,7 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $role = Role::where('id', $id)->first();
-        Log::info('deleting role (id: ' . $role->id . ', name: ' . $role->name . ').');
-        $role
-            ->syncPermissions([])
-            ->delete();
-
+        $this->roleService->delete($id);
         return redirect(route('roles.index'));
     }
 }
