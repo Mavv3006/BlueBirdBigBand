@@ -1,16 +1,14 @@
 <?php
 
-use App\Http\Controllers\ActivateUsersController;
-use App\Http\Controllers\ActiveMusicianController;
-use App\Http\Controllers\AssignRolesToUserController;
-use App\Http\Controllers\ConcertsController;
-use App\Http\Controllers\InternController;
-use App\Http\Controllers\MusiciansController;
-use App\Http\Controllers\RolesController;
-use App\Http\Controllers\SongsController;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
+use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
+use App\Http\Controllers\Admin\RolesManagement\RolesController;
+use App\Http\Controllers\Admin\SongManagement\SongsController;
+use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
+use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
+use App\Http\Controllers\Internal\InternController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,29 +21,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Index');
-})->name('home');
-Route::get('/about-us', function () {
-    return Inertia::render('Band/AboutPage');
-});
-Route::get('/anfahrt', function () {
-    return Inertia::render('Band/ArrivalPage');
-});
-Route::get('/auftritte', [ConcertsController::class, 'index']);
-Route::get('/buchung', function () {
-    return Inertia::render('LatestInfos/BookingPage');
-});
-Route::get('/impressum', function () {
-    return Inertia::render('Contact/ImprintPage');
-});
-Route::get('/kontakt', function () {
-    return Inertia::render('Contact/ContactPage');
-});
-Route::get('/musiker', [ActiveMusicianController::class, 'show']);
-Route::get('/presse', function () {
-    return Inertia::render('LatestInfos/PressInfoPage');
-});
+Route::get('/', [PublicController::class, 'home'])->name('home');
+Route::get('/about-us', [PublicController::class, 'aboutUs']);
+Route::get('/anfahrt', [PublicController::class, 'arrival']);
+Route::get('/auftritte', [PublicController::class, 'concerts']);
+Route::get('/buchung', [PublicController::class, 'booking']);
+Route::get('/impressum', [PublicController::class, 'imprint']);
+Route::get('/kontakt', [PublicController::class, 'contact']);
+Route::get('/musiker', [PublicController::class, 'musicians']);
+Route::get('/presse', [PublicController::class, 'pressInfo']);
 
 Route::prefix('intern')
     ->middleware(['auth'])
@@ -61,27 +45,25 @@ Route::prefix('admin')
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
 
-        Route::resource('roles', RolesController::class);
-        Route::resource('musicians', MusiciansController::class);
+        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
+            ->name('musicians.seating-position');
+        Route::match(
+            ['put', 'patch'],
+            'musicians/seating-position',
+            [MusicianSeatingPositionController::class, 'update']
+        );
+        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
+        Route::resources([
+            'roles' => RolesController::class,
+            'musicians' => MusiciansController::class
+        ]);
+
         Route::resource('songs', SongsController::class)
             ->except('show');
 
         Route::prefix('assign-roles')->group(function () {
             Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
             Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
-        });
-
-        /// returns infos about the maximum allowed sizes of files to upload and the size of post requests.
-        Route::get('upload_info', function () {
-            Gate::authorize('route.access-admin');
-
-            $upload_max_filesize = ini_get('upload_max_filesize');
-            $post_max_size = ini_get('post_max_size');
-
-            return response()->json([
-                'upload_max_filesize' => $upload_max_filesize,
-                'post_max_size' => $post_max_size
-            ]);
         });
     });
 

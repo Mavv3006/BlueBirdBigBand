@@ -13,4 +13,7 @@ $finder = PhpCsFixer\Finder::create()
 
 return (new PhpCsFixer\Config())
     ->setFinder($finder)
-    ->setRules(['@PSR12' => true]);
+    ->setRules([
+        '@PSR12' => true,
+        'closure_function_spacing' => 'none'
+    ]);

@@ -3,6 +3,14 @@
         <Heading>Musiker Management</Heading>
         <Head><title>Musiker Management</title></Head>
 
+        <div class="mb-6">
+            <Link
+                href="/admin/musicians/seating-position"
+                class="border border-slate-400 px-4 py-2 rounded-md hover:border-slate-700 hover:shadow-md hover:bg-gray-100 active:bg-gray-200">
+                Sitzposition bearbeiten
+            </Link>
+        </div>
+
         <table>
             <thead>
             <tr>
@@ -10,6 +18,7 @@
                 <th>Vorname</th>
                 <th>Nachname</th>
                 <th>Instrument</th>
+                <th>Sitzposition</th>
                 <th>Aktiv</th>
                 <th>Aktion</th>
             </tr>
@@ -24,12 +33,13 @@
                 </td>
                 <td>{{ musician.lastname }}</td>
                 <td>{{ musician.instrument.name }}</td>
+                <td>{{ musician.seating_position }}</td>
                 <td>{{ musician.isActive ? 'Ja' : 'Nein' }}</td>
                 <td class="flex flex-wrap gap-4">
                     <Link :href="`musicians/${musician.id}/edit`" class="mr-1">
                         <font-awesome-icon icon="fa-solid fa-pen"/>
                     </Link>
-                    <Link :href="`musicians/${musician.id}`" as=button class="text-red-600" method="delete">
+                    <Link :href="`musicians/${musician.id}`" class="text-red-600" method="delete">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </Link>
                 </td>
@@ -54,6 +64,7 @@ const props = defineProps<{
         id: number,
         firstname: string,
         lastname: string,
+        seating_position: number,
         picture_filepath?: string,
         isActive: boolean,
         instrument_id: number,

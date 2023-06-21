@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DownloadSongController;
+use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')
-    ->get('download/song/{song}', [DownloadSongController::class, '__invoke']);
+    ->get('download/song/{song}', DownloadSongController::class);

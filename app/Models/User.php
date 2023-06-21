@@ -39,4 +39,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected array $guard_name = ['api', 'web'];
 }
