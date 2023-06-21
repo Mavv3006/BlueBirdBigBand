@@ -14,7 +14,7 @@ class ActivateUsersController extends Controller
 {
     public function show(): Response
     {
-        $this->checkAccessPermission();
+        Gate::authorize('manage users');
 
         $users = User::where('activated', false)
             ->select('id', 'name')
@@ -25,16 +25,10 @@ class ActivateUsersController extends Controller
 
     public function update(User $user): RedirectResponse
     {
-        $this->checkAccessPermission();
         Gate::authorize('manage users');
 
         $user->update(['activated' => true]);
         Log::debug('Updated user ' . $user->id);
         return back();
-    }
-
-    private function checkAccessPermission()
-    {
-        Gate::authorize('route.access-admin');
     }
 }

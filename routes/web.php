@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
+use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +34,7 @@ Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
 
 Route::prefix('intern')
-    ->middleware(['auth'])
+    ->middleware(['auth', HasPermissionToAccessInternalRoutes::class])
     ->group(function () {
         Route::get('/', [InternController::class, 'index']);
         Route::get('/emails', [InternController::class, 'emails']);
@@ -40,7 +42,7 @@ Route::prefix('intern')
     });
 
 Route::prefix('admin')
-    ->middleware(['auth'])
+    ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
     ->group(function () {
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
