@@ -50,4 +50,18 @@ class SongService
         }
         return $song->delete();
     }
+
+    public function download(Song $song): string
+    {
+        Log::info("[SongService] Requesting to download song file", [$song]);
+        $file_path = $song->file_path ?? "";
+        Log::debug($file_path);
+        if (!\Illuminate\Support\Facades\Storage::exists($file_path)) {
+            Log::warning("[SongService] The file does not exist");
+            return response()->json(['error' => "File not found"], status: 404);
+        }
+
+        Log::info('[SongService] The file does exist');
+        return $file_path;
+    }
 }
