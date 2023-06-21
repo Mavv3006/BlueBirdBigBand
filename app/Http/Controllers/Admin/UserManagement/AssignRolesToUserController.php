@@ -3,62 +3,47 @@
 namespace App\Http\Controllers\Admin\UserManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SearchUserRequest;
+use App\Http\Requests\UserRoleRequest;
 use App\Models\User;
-use App\Rules\AvailableUser;
+use App\Services\User\UserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
-use Spatie\Permission\Models\Role;
 
 class AssignRolesToUserController extends Controller
 {
-    /**
-     * @throws ValidationException
-     */
-    public function showSearchForm(Request $request): Response
+
+    public function __construct(protected UserService $userService)
     {
-        $data = $request->validate([
-            'username' => ['string', new AvailableUser()]
-        ]);
+    }
+
+    public function showSearchForm(SearchUserRequest $request): Response
+    {
+        Gate::authorize('manage users');
+
+        $data = $request->validated();
 
         if (!$request->has('username')) {
             return Inertia::render('Admin/UserManagement/SearchUser');
         }
 
-        $user = User::firstWhere('name', $data['username']);
-        $userRoles = $user->getRoleNames();
-
-        $roleMap = Role::all()->map(function ($item) use ($userRoles) {
-            $isRoleAssigned = $userRoles->contains($item->name);
-            return ['id' => $item->id, 'name' => $item->name, 'assigned' => $isRoleAssigned];
-        });
-
-        Log::debug(json_encode($roleMap));
+        $user = $this->userService->findByUsername($data['username']);
         return Inertia::render(
             'Admin/UserManagement/AssignRoles',
             [
-                'roleMap' => $roleMap,
+                'roleMap' => $this->userService->getRolesOfUser($user),
                 'user' => ['name' => $user->name, 'id' => $user->id]
             ]
         );
     }
 
-    public function syncRoles(User $user, Request $request): RedirectResponse
+    public function syncRoles(User $user, UserRoleRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'roles' => 'array|required',
-        ]);
+        Gate::authorize('manage users');
 
-        Log::debug(json_encode($data));
-        $user->syncRoles($data['roles']);
-        Log::info('Updating the role assignment for a user', [
-            'user' => ['id' => $user->id, 'name' => $user->name],
-            'roles' => $data['roles']
-        ]);
-
+        $this->userService->syncRoles($user, $request);
         return response()->redirectTo('admin/assign-roles');
     }
 }
