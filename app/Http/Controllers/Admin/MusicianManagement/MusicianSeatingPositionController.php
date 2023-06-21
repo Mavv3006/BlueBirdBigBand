@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin\MusicianManagement;
 
-use App\DataTransferObjects\UpdateMusicianSeatingPositionDto;
+use App\DataTransferObjects\Musicians\UpdateMusicianSeatingPositionDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MusicianSeatingPositionRequest;
 use App\Services\Musician\MusicianService;

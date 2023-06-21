@@ -70,6 +70,17 @@
 
                     </div>
                 </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 w-full">
+                    <div class="flex gap-4">
+                        <input
+                            type="checkbox"
+                            name="isActive" v-model="form.isActive"
+                            class="rounded
+                               dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm
+                               focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"/>
+                        <InputLabel for="isActive" value="Aktiv?"/>
+                    </div>
+                </div>
             </div>
 
             <div class="flex items-center justify-center mt-4 gap-8">
@@ -96,7 +107,14 @@ const props = defineProps<{
     method: string,
     submit_url: string,
     instruments: { name: string, id: number }[],
-    musician?: { id: number, firstname: string, lastname: string, instrument_id: number, picture_filepath?: string }
+    musician?: {
+        id: number,
+        firstname: string,
+        lastname: string,
+        instrument_id: number,
+        picture_filepath?: string,
+        isActive: boolean
+    }
 }>();
 
 const form = useForm({
@@ -112,12 +130,13 @@ const form = useForm({
             return previousValue
         })
         .id : props.musician.instrument_id,
-    picture: null
+    picture: null,
+    isActive: props.musician === undefined ? true : props.musician.isActive
 });
 
 const submit = () => {
     if (deletingPicture.value) return;
-    form.post(props.submit_url)
+    form.post(props.submit_url, {onStart: console.debug})
 }
 
 const deletePicture = () => {
