@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('musicians', function (Blueprint $table) {
-            $table->integer('seating_position')->nullable();
+            $table->integer('seating_position')->default('0');
         });
     }
 
