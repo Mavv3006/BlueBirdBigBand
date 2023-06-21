@@ -3,6 +3,14 @@
         <Heading>Musiker Management</Heading>
         <Head><title>Musiker Management</title></Head>
 
+        <div class="mb-6">
+            <Link
+                href="/admin/musicians/seating-position"
+                class="border border-slate-400 px-4 py-2 rounded-md hover:border-slate-700 hover:shadow-md hover:bg-gray-100 active:bg-gray-200">
+                Sitzposition bearbeiten
+            </Link>
+        </div>
+
         <table>
             <thead>
             <tr>
@@ -31,7 +39,7 @@
                     <Link :href="`musicians/${musician.id}/edit`" class="mr-1">
                         <font-awesome-icon icon="fa-solid fa-pen"/>
                     </Link>
-                    <Link :href="`musicians/${musician.id}`" as=button class="text-red-600" method="delete">
+                    <Link :href="`musicians/${musician.id}`" class="text-red-600" method="delete">
                         <font-awesome-icon icon="fa-solid fa-trash"/>
                     </Link>
                 </td>

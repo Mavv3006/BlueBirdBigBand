@@ -30,6 +30,9 @@
                     </div>
                 </li>
             </ul>
+            <p v-if="data.musicians.length === 0" class="text-sm ml-6">
+                Keine Musiker vorhanden.
+            </p>
         </div>
 
         <div class="flex justify-center">

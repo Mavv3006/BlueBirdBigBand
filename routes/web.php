@@ -45,7 +45,8 @@ Route::prefix('admin')
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
 
-        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show']);
+        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
+            ->name('musicians.seating-position');
         Route::match(
             ['put', 'patch'],
             'musicians/seating-position',
