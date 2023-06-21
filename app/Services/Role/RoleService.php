@@ -5,6 +5,7 @@ namespace App\Services\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -19,7 +20,9 @@ class RoleService
 
     public function create(StoreRoleRequest $request): Role
     {
-        return Role::create($request->validated());
+        $role = Role::create($request->validated());
+        Log::info('creating new role (id: ' . $role->id . ', name: ' . $role->name . ').');
+        return $role;
     }
 
     public function getById(int $id): Role
@@ -57,11 +60,20 @@ class RoleService
                 ->get());
     }
 
-    public function update(UpdateRoleRequest $request, int $id): Role
+    public function update(UpdateRoleRequest $request, int $id): void
     {
         $role = $this->getById($id);
         $data = $request->validated(["permissions"]);
         $role->syncPermissions($data);
-        return $role;
+        Log::info('updating role (id: ' . $id . ', name: ' . $role->name . ').');
+    }
+
+    public function delete(int $id): void
+    {
+        $role = $this->getById($id);
+        Log::info('deleting role (id: ' . $role->id . ', name: ' . $role->name . ').');
+        $role
+            ->syncPermissions([])
+            ->delete();
     }
 }
