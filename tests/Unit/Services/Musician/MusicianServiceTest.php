@@ -33,6 +33,22 @@ class MusicianServiceTest extends TestCase
         $this->assertInstanceOf(Musician::class, $result[0]['musicians'][0]);
     }
 
+    public function testActiveMusiciansDontShowInactiveMusicians()
+    {
+        $instrument = Instrument::factory()->create(['name' => 'test']);
+        Musician::factory()
+            ->count(3)
+            ->for($instrument)
+            ->state(['isActive' => false])
+            ->create();
+
+
+        $result = $this->service->activeMusicians()->toArray();
+
+        $this->assertCount(1, $result);
+        $this->assertCount(0, $result[0]['musicians']);
+    }
+
     public function test_all_order_by()
     {
         $firstInstrument = Instrument::factory()->create(['name' => 'test1']);
