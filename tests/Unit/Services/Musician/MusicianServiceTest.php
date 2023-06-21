@@ -42,6 +42,7 @@ class MusicianServiceTest extends TestCase
             ->state(['isActive' => false])
             ->create();
 
+
         $result = $this->service->activeMusicians()->toArray();
 
         $this->assertCount(1, $result);
