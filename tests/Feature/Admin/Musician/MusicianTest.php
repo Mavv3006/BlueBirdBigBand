@@ -4,7 +4,6 @@ namespace Admin\Musician;
 
 use App\Models\Instrument;
 use App\Models\Musician;
-use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
@@ -14,8 +13,7 @@ class MusicianTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->seed(DefaultAuthorizationSeeder::class);
-        $this->actingAs($this->createUserForAdminRoutes());
+        $this->setupAdmin();
     }
 
     public function test_index_route()
@@ -37,6 +35,7 @@ class MusicianTest extends TestCase
                         ->has('firstname')
                         ->has('lastname')
                         ->has('isActive')
+                        ->has('seating_position')
                         ->has('instrument_id')
                         ->has('picture_filepath')
                         ->has('instrument', fn(AssertableInertia $page) => $page
@@ -105,6 +104,7 @@ class MusicianTest extends TestCase
                         ->has('id')
                         ->has('firstname')
                         ->has('lastname')
+                        ->has('seating_position')
                         ->has('isActive')
                         ->has('instrument_id')
                         ->has('picture_filepath')
@@ -135,6 +135,7 @@ class MusicianTest extends TestCase
                         ->has('firstname')
                         ->has('lastname')
                         ->has('isActive')
+                        ->has('seating_position')
                         ->has('instrument_id')
                         ->has('picture_filepath')
                     )
@@ -167,7 +168,7 @@ class MusicianTest extends TestCase
         $this->assertEquals('2', $musician->lastname);
         $this->assertEquals(1, $musician->instrument_id);
         $this->assertTrue($musician->isActive);
-        $this->assertNull(null, $musician->picture_filepath);
+        $this->assertNull($musician->picture_filepath);
     }
 
     public function test_destroy_route()

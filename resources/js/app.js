@@ -9,8 +9,10 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {
     faBars,
+    faChevronDown,
     faChevronLeft,
     faChevronRight,
+    faChevronUp,
     faClose,
     faMinus,
     faPen,
@@ -18,7 +20,18 @@ import {
     faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faMinus, faPlus, faClose, faBars, faChevronRight, faChevronLeft, faPen, faTrash);
+library.add(
+    faMinus,
+    faPlus,
+    faClose,
+    faBars,
+    faChevronRight,
+    faChevronLeft,
+    faChevronUp,
+    faChevronDown,
+    faPen,
+    faTrash
+);
 
 createInertiaApp({
     title: (title) => `${title} | Blue Bird Big Band`,

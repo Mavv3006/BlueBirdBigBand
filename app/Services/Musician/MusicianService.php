@@ -2,7 +2,7 @@
 
 namespace App\Services\Musician;
 
-use App\Http\Requests\MusicianRequest;
+use App\DataTransferObjects\UpdateMusicianSeatingPositionDto;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Database\Eloquent\Collection;
@@ -14,7 +14,10 @@ class MusicianService
     {
         return Instrument::all()->map(fn(Instrument $instrument) => [
             'instrument' => $instrument,
-            'musicians' => $instrument->musicians()->get()
+            'musicians' => $instrument
+                ->musicians()
+                ->orderBy('seating_position')
+                ->get()
         ]);
     }
 
@@ -25,22 +28,20 @@ class MusicianService
             ->get();
     }
 
-    public function create(MusicianRequest $request): Musician
-    {
-        return Musician::create(
-            $request->validated()
-        );
-    }
-
-    public function update(MusicianRequest $request, Musician $musician): bool
-    {
-        return $musician->update(
-            $request->validated()
-        );
-    }
-
     public function delete(Musician $musician): bool|null
     {
         return $musician->delete();
+    }
+
+    public function updateSeatingPosition(UpdateMusicianSeatingPositionDto $dto): void
+    {
+        foreach ($dto->data as $instrument) {
+            $musicians = $instrument['musicians'];
+            for ($i = 0; $i < sizeof($musicians); $i++) {
+                $musician = Musician::find($musicians[$i]['id']);
+                if ($musician->seating_position == $i) continue;
+                $musician->update(['seating_position' => $i]);
+            }
+        }
     }
 }
