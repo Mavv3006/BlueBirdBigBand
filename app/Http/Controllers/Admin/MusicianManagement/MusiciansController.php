@@ -55,6 +55,7 @@ class MusiciansController extends Controller
     public function store(MusicianRequest $request): Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage musicians');
+
         $musician = $this->musicianService->store($request);
         return redirect(route('musicians.show', $musician->id));
     }
