@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin\SongManagement;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SongRequest;
+use App\Http\Requests\SongStoreRequest;
+use App\Http\Requests\SongUpdateRequest;
 use App\Models\Song;
 use App\Services\Song\SongService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rules\File;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,7 +18,8 @@ class SongsController extends Controller
 {
     public function __construct(
         public SongService $service,
-    ) {
+    )
+    {
     }
 
     /**
@@ -29,9 +28,11 @@ class SongsController extends Controller
     public function index(): Response
     {
         Gate::authorize('manage songs');
-        $songs = Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
-            ->get();
-        return Inertia::render('Admin/SongManagement/SongsIndex', ['songs' => $songs]);
+
+        return Inertia::render(
+            'Admin/SongManagement/SongsIndex',
+            ['songs' => $this->service->all()]
+        );
     }
 
     /**
@@ -40,37 +41,19 @@ class SongsController extends Controller
     public function create(): Response
     {
         Gate::authorize('manage songs');
+
         return Inertia::render('Admin/SongManagement/SongsCreate');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
+    public function store(SongStoreRequest $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
         Gate::authorize('manage songs');
 
-        $data = $request->validate([
-            'title' => 'string|required',
-            'author' => 'string|required',
-            'arranger' => 'string|required',
-            'genre' => 'string|required',
-            'file' => ['required', File::types(['audio/mpeg'])]
-        ]);
-
-        $file_path = $request->file('file')->store('songs', 'public');
-        $data['file_path'] = $file_path;
-
-        $song = Song::create([
-            'title' => $data['title'],
-            'author' => $data['author'],
-            'arranger' => $data['arranger'],
-            'genre' => $data['genre'],
-            'file_path' => $data['file_path'],
-            'size' => $request->file('file')->getSize()
-        ]);
-        Log::info('Created a new song', [$song]);
-        return redirect('admin/songs');
+        $this->service->store($request);
+        return redirect(route('songs.index'));
     }
 
     /**
@@ -89,12 +72,11 @@ class SongsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(SongRequest $request, Song $song)
+    public function update(SongUpdateRequest $request, Song $song)
     {
         Gate::authorize('manage songs');
 
         $this->service->update($request, $song);
-
         return redirect(route('songs.index'));
     }
 
@@ -105,8 +87,7 @@ class SongsController extends Controller
     {
         Gate::authorize('manage songs');
 
-        Log::info('deleting song', [$song]);
-        $song->delete();
+        $this->service->destroy($song);
         return redirect('admin/songs');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class SongRequest extends FormRequest
+class SongUpdateRequest extends FormRequest
 {
     public function rules(): array
     {
