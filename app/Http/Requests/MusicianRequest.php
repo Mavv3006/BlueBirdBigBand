@@ -11,6 +11,7 @@ class MusicianRequest extends FormRequest
         return [
             'firstname' => 'string|required',
             'lastname' => 'string|required',
+            'isActive' => 'required|bool',
             'instrument_id' => 'integer|required|min:0',
         ];
     }

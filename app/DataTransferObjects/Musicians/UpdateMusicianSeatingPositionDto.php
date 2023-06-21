@@ -1,17 +1,15 @@
 <?php
 
-namespace App\DataTransferObjects;
+namespace App\DataTransferObjects\Musicians;
 
 use App\Http\Requests\MusicianSeatingPositionRequest;
-use JetBrains\PhpStorm\ArrayShape;
 
 class UpdateMusicianSeatingPositionDto
 {
+    /**
+     * @param MusicianSeatingPositionDto[] $data
+     */
     public function __construct(
-        #[ArrayShape([
-            'instrument_id' => 'integer',
-            'musicians' => ['id' => 'integer']
-        ])]
         public readonly array $data,
     )
     {
