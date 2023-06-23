@@ -22,7 +22,6 @@ const props = defineProps<{
 <style scoped>
 img {
     @apply h-36;
-    aspect-ratio: 0.75;
     max-width: 100%;
 }
 </style>
