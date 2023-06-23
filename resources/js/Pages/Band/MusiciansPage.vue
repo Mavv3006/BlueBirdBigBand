@@ -40,8 +40,9 @@
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
-import MusicianInstrument, {Musician} from "@/Components/MusicianInstrument.vue";
+import MusicianInstrument from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
+import {Musician} from "@/types/musician";
 
 type MusicianBackendDto = {
     firstname: string,
