@@ -7,7 +7,7 @@ use App\Http\Requests\SongUpdateRequest;
 use App\Models\Song;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 class SongService
 {
@@ -56,7 +56,7 @@ class SongService
         Log::info("[SongService] Requesting to download song file", [$song]);
         $file_path = $song->file_path ?? "";
         Log::debug($file_path);
-        if (!\Illuminate\Support\Facades\Storage::exists($file_path)) {
+        if (!Storage::exists($file_path)) {
             Log::warning("[SongService] The file does not exist");
             return response()->json(['error' => "File not found"], status: 404);
         }

@@ -1,7 +1,7 @@
 <template>
     <PublicLayout>
 
-        <Head title="Willkommen"/>
+        <Head><title>Willkommen</title></Head>
 
         <h1 class="text-center font-bold text-[#3d4449] text-xl md:text-3xl lg:text-4xl xl:text-5xl">
             Willkommen bei der
@@ -16,7 +16,7 @@
 
         <div class="scroll overflow-hidden relative z-0">
             <span class="absolute w-max text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
-                +++ Schlagzeuger/in und Posaunist/innen gesucht +++
+                +++ Schlagzeuger/in, Posaunist/innen und Keyboarder/in gesucht +++
             </span>
         </div>
     </PublicLayout>
@@ -34,7 +34,7 @@ import {Head} from '@inertiajs/vue3';</script>
 
 .scroll span {
     line-height: var(--height);
-    animation: scroll-left 14.5s linear infinite;
+    animation: scroll-left 16.5s linear infinite;
 }
 
 @keyframes scroll-left {
@@ -42,13 +42,13 @@ import {Head} from '@inertiajs/vue3';</script>
         transform: translateX(calc(85vw - 2em + 5px));
     }
     100% {
-        transform: translateX(calc(-267px - 5px));
+        transform: translateX(calc(-423px - 5px));
     }
 }
 
 @media (min-width: 640px) {
     .scroll span {
-        animation-duration: 16s;
+        animation-duration: 17s;
     }
 }
 
@@ -62,7 +62,7 @@ import {Head} from '@inertiajs/vue3';</script>
             transform: translateX(calc(88vw - 2em + 5px));
         }
         100% {
-            transform: translateX(calc(-267px - 5px));
+            transform: translateX(calc(-423px - 5px));
         }
     }
 }
@@ -77,7 +77,7 @@ import {Head} from '@inertiajs/vue3';</script>
             transform: translateX(calc(85vw - 2em + 5px));
         }
         100% {
-            transform: translateX(calc(-267px - 5px));
+            transform: translateX(calc(-423px - 5px));
         }
     }
 }
@@ -92,7 +92,7 @@ import {Head} from '@inertiajs/vue3';</script>
             transform: translateX(calc(80vw - 2em + 5px));
         }
         100% {
-            transform: translateX(calc(-267px - 5px));
+            transform: translateX(calc(-423px - 5px));
         }
     }
 }
@@ -108,7 +108,7 @@ import {Head} from '@inertiajs/vue3';</script>
             transform: translateX(calc(75vw - 2em + 5px));
         }
         100% {
-            transform: translateX(calc(-267px - 5px));
+            transform: translateX(calc(-423px - 5px));
         }
     }
 }
