@@ -69,6 +69,7 @@ class MusicianTest extends TestCase
         $response = $this->post('admin/musicians', [
             'firstname' => 'test',
             'lastname' => 'test',
+            'isActive' => true,
             'instrument_id' => Instrument::factory()->create(['name' => 'test'])->id,
         ]);
         $musician = Musician::first();
@@ -78,8 +79,8 @@ class MusicianTest extends TestCase
         $this->assertEquals('test', $musician->firstname);
         $this->assertEquals('test', $musician->lastname);
         $this->assertEquals(1, $musician->instrument_id);
-        $this->assertEquals(true, $musician->isActive);
-        $this->assertEquals(null, $musician->picture_filepath);
+        $this->assertTrue($musician->isActive);
+        $this->assertNull($musician->picture_filepath);
     }
 
     public function test_show_route()
