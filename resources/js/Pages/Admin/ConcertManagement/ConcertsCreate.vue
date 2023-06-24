@@ -150,7 +150,7 @@ const props = defineProps<{
 }>();
 
 const custom_bands: Band[] = [
-    {id: 0, name: 'Neuen Ort anlegen'},
+    {id: 0, name: '--- bitte wählen ---'},
     ...props.bands
 ];
 

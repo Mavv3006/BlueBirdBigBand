@@ -44,8 +44,10 @@ class ConcertsController extends Controller
      */
     public function store(StoreConcertRequest $request)
     {
-        $concertDto = $this->concertService->createDto($request);
+        $data = $request->validated();
+        $concertDto = $this->concertService->createDto($data);
         $concert = $this->concertService->store($concertDto);
+        return redirect()->route('concerts.show', $concert->id);
     }
 
     /**
@@ -53,7 +55,9 @@ class ConcertsController extends Controller
      */
     public function show(Concert $concert)
     {
-        //
+        return Inertia::render('Admin/ConcertManagement/ConcertsShow', [
+            'concert' => $this->concertService->formatConcert($concert)
+        ]);
     }
 
     /**

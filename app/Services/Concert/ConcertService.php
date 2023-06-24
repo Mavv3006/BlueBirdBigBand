@@ -5,7 +5,6 @@ namespace App\Services\Concert;
 use App\DataTransferObjects\Concerts\ConcertDescriptionDto;
 use App\DataTransferObjects\Concerts\ConcertDto;
 use App\DataTransferObjects\Concerts\ConcertVenueDto;
-use App\Http\Requests\StoreConcertRequest;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
@@ -21,23 +20,28 @@ class ConcertService
             ->orderBy('date')
             ->get()
             ->map(function (Concert $item) {
-                return [
-                    'date' => $item->date->format('Y-m-d'),
-                    'start_time' => $item->start_time->format('H:i'),
-                    'end_time' => $item->end_time->format('H:i'),
-                    'band' => $item->band->name,
-                    'description' => [
-                        'venue' => $item->venue_description,
-                        'event' => $item->event_description
-                    ],
-                    'address' => [
-                        'street' => $item->venue_street,
-                        'number' => $item->venue_street_number,
-                        'plz' => $item->venue_plz,
-                        'city' => $item->venue->name
-                    ]
-                ];
+                return $this->formatConcert($item);
             });
+    }
+
+    public function formatConcert(Concert $concert): array
+    {
+        return [
+            'date' => $concert->date->format('Y-m-d'),
+            'start_time' => $concert->start_time->format('H:i'),
+            'end_time' => $concert->end_time->format('H:i'),
+            'band' => $concert->band->name,
+            'description' => [
+                'venue' => $concert->venue_description,
+                'event' => $concert->event_description
+            ],
+            'address' => [
+                'street' => $concert->venue_street,
+                'number' => $concert->venue_street_number,
+                'plz' => $concert->venue_plz,
+                'city' => $concert->venue->name
+            ]
+        ];
     }
 
     public function allBands(): Collection
@@ -60,10 +64,8 @@ class ConcertService
         ]);
     }
 
-    public function createDto(StoreConcertRequest $request): ConcertDto
+    public function createDto(array $data): ConcertDto
     {
-        $data = $request->validated();
-
         return new ConcertDto(
             Carbon::parse($data['date']),
             Band::find($data['band_id']),
@@ -83,7 +85,7 @@ class ConcertService
 
     public function getRequestVenue(array $data): Venue
     {
-        if ($data['create_new_venue']) {
+        if ($data['venue']['create_new_venue']) {
             return Venue::firstOrCreate(
                 ['plz' => $data['venue']['new_plz']],
                 ['name' => $data['venue']['new_name']]
