@@ -42,26 +42,7 @@ import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
 import MusicianInstrument from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
-import {Musician} from "@/types/musician";
-
-type MusicianBackendDto = {
-    firstname: string,
-    lastname: string,
-    picture_filepath?: string
-}
-
-type MusicianProp = {
-    instrument: {
-        name: string,
-        default_picture_filepath: string
-    },
-    musicians: MusicianBackendDto[]
-}
-
-type MusicianWithInstrument = {
-    instrument: string,
-    musicians: Musician[]
-}
+import {Musician, MusicianBackendDto, MusicianProp, MusicianWithInstrument} from "@/types/musician";
 
 const props = defineProps<{ data: MusicianProp[] }>();
 
