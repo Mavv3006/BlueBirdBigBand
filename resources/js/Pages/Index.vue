@@ -11,20 +11,24 @@
             der Städtischen Musikschule Speyer
         </h1>
 
-        <img alt="Gruppenbild der Blue Bird Big Band" class="w-[80%] block mx-auto my-4"
-             src="assets/grouppictures/group-picture.jpg">
+        <img
+            alt="Gruppenbild der Blue Bird Big Band"
+            class="w-[80%] block mx-auto my-4"
+            src="assets/grouppictures/2023-05-07-mini.jpg"
+        >
 
         <div class="scroll overflow-hidden relative z-0">
-            <span class="absolute w-max text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
+            <span class="absolute text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
                 +++ Schlagzeuger/in, Posaunist/innen und Keyboarder/in gesucht +++
             </span>
         </div>
     </PublicLayout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
-import {Head} from '@inertiajs/vue3';</script>
+import {Head} from '@inertiajs/vue3';
+</script>
 
 <style scoped>
 .scroll {
