@@ -25,7 +25,7 @@
                 <div class="grid-container">
                     <NavLink href="/admin/musicians">Alle Musiker anzeigen</NavLink>
                     <NavLink href="/admin/musicians/create">Neuen Musiker anlegen</NavLink>
-                    <NavLink href="/admin/seating-position">Sitzposition ändern</NavLink>
+                    <NavLink href="/admin/musicians/seating-position">Sitzposition ändern</NavLink>
                 </div>
             </div>
 
