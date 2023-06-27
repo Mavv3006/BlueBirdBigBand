@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ConcertManagement;
 
+use App\Exceptions\NotImplementedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConcertRequest;
 use App\Http\Requests\UpdateConcertRequest;
@@ -10,7 +11,6 @@ use App\Services\Concert\ConcertService;
 use App\Services\Venue\VenueService;
 use Inertia\Inertia;
 use Inertia\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ConcertsController extends Controller
 {
@@ -26,7 +26,7 @@ class ConcertsController extends Controller
      */
     public function index()
     {
-        throw new NotFoundHttpException();
+        throw new NotImplementedHttpException();
     }
 
     /**
@@ -66,7 +66,7 @@ class ConcertsController extends Controller
      */
     public function edit(Concert $concert)
     {
-        throw new NotFoundHttpException();
+        throw new NotImplementedHttpException();
     }
 
     /**
@@ -74,7 +74,7 @@ class ConcertsController extends Controller
      */
     public function update(UpdateConcertRequest $request, Concert $concert)
     {
-        throw new NotFoundHttpException();
+        throw new NotImplementedHttpException();
     }
 
     /**
@@ -82,6 +82,6 @@ class ConcertsController extends Controller
      */
     public function destroy(Concert $concert)
     {
-        throw new NotFoundHttpException();
+        throw new NotImplementedHttpException();
     }
 }
