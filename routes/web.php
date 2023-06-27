@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ConcertManagement\ConcertsController;
 use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
 use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
 use App\Http\Controllers\Admin\RolesManagement\RolesController;
@@ -44,6 +46,8 @@ Route::prefix('intern')
 Route::prefix('admin')
     ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
     ->group(function () {
+        Route::get('/', [AdminController::class, 'index']);
+
         Route::get('activate-users', [ActivateUsersController::class, 'show']);
         Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
 
@@ -57,7 +61,8 @@ Route::prefix('admin')
         Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
         Route::resources([
             'roles' => RolesController::class,
-            'musicians' => MusiciansController::class
+            'musicians' => MusiciansController::class,
+            'concerts' => ConcertsController::class
         ]);
 
         Route::resource('songs', SongsController::class)
