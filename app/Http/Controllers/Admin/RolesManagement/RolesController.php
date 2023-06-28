@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\RolesManagement;
 
+use App\DataTransferObjects\IdDto;
+use App\DataTransferObjects\Roles\RoleUpdateDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
@@ -121,7 +123,13 @@ class RolesController extends Controller
     {
         Gate::authorize('manage roles');
 
-        $this->roleService->update($request, $id);
+        $data = $request->validated();
+        $permissions = array();
+        foreach ($data['permissions'] as $item) {
+            $permissions = array_merge($permissions, [new IdDto($item)]);
+        }
+
+        $this->roleService->update(new RoleUpdateDto($id, $permissions));
         return redirect(route('roles.show', $id));
     }
 

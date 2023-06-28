@@ -45,9 +45,9 @@ class MusicianService
     public function updateSeatingPosition(UpdateMusicianSeatingPositionDto $dto): void
     {
         foreach ($dto->data as $instrument) {
-            $musicians = $instrument->musicians;
+            $musicians = $instrument["musicians"];
             for ($i = 0; $i < sizeof($musicians); $i++) {
-                $musician = Musician::find($musicians[$i]->id);
+                $musician = Musician::find($musicians[$i]["id"]);
                 if ($musician->seating_position == $i) continue;
                 $musician->update(['seating_position' => $i]);
             }

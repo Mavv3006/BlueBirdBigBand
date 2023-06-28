@@ -6,6 +6,7 @@ namespace Admin\Role;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -70,6 +71,7 @@ class RoleTest extends TestCase
                     ->has('role', fn(AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
+                        ->has('guard_name')
                     )
                     ->has('role_permissions.0', fn(AssertableInertia $page) => $page
                         ->has('id')
@@ -94,6 +96,7 @@ class RoleTest extends TestCase
                     ->has('role', fn(AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
+                        ->has('guard_name')
                     )
                     ->has('role_permissions.0', fn(AssertableInertia $page) => $page
                         ->has('id')
@@ -114,7 +117,15 @@ class RoleTest extends TestCase
 
     public function test_update_route()
     {
-        Role::find(1)->syncPermissions([1]);
+        $this->withoutExceptionHandling();
+        $role = Role::find(1);
+
+        $role->syncPermissions([1]);
+
+        $this->assertEquals('web', $role->guard_name);
+        for ($i = 1; $i < 4; $i++) {
+            $this->assertEquals('web', Permission::find($i)->guard_name);
+        }
 
         $this->put(
             'admin/roles/1',
