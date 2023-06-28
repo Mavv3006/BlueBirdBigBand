@@ -158,6 +158,7 @@ class MusicianTest extends TestCase
             [
                 'firstname' => '1',
                 'lastname' => '2',
+                'isActive' => $databaseMusician->isActive,
                 'instrument_id' => $instrument->id,
             ]
         );

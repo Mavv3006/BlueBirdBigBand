@@ -21,6 +21,7 @@ class MusicianFactory extends Factory
         return [
             'firstname' => $this->faker->firstName,
             'lastname' => $this->faker->lastName,
+            'isActive' => true,
             'instrument_id' => Instrument::all()->random(1)->first(),
             'seating_position' => 0,
         ];
