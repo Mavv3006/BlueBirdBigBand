@@ -46,7 +46,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasPermissionTo('manage songs');
         });
         Gate::define('download songs', function (User $user) {
-            return $user->hasPermissionTo('download songs');
+            return $user->hasPermissionTo('download songs', 'web');
         });
     }
 }
