@@ -8,6 +8,7 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Guard</th>
                 <th>Aktionen</th>
             </tr>
             </thead>
@@ -19,6 +20,7 @@
                         {{ role.name }}
                     </Link>
                 </td>
+                <td>{{ role.guard_name }}</td>
                 <td class="flex flex-wrap gap-4">
                     <Link :href="`roles/${role.id}/edit`" class="mr-1">
                         <font-awesome-icon icon="fa-solid fa-pen"/>
@@ -44,7 +46,14 @@ import {defineProps} from 'vue';
 import {Head, Link} from '@inertiajs/vue3';
 import FloatingActionButton from "@/Components/FloatingActionButton.vue";
 
-const props = defineProps<{ roles: { id: number, name: string }[] }>();
+const props = defineProps<{
+    roles:
+        {
+            id: number,
+            name: string,
+            guard_name: string
+        }[]
+}>();
 </script>
 
 <style scoped>

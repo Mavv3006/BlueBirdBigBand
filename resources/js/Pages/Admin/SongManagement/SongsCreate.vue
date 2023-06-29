@@ -31,7 +31,11 @@
 
                 <div>
                     <InputLabel for="file" value="Song-Datei"/>
-                    <input name="file" class="mt-1" type="file" @input="form.file = $event.target.files[0]"/>
+                    <input
+                        name="file" accept="audio/*"
+                        class="mt-1"
+                        type="file"
+                        @input="form.file = $event.target.files[0]"/>
                     <InputError :message="form.errors.file" class="mt-2"/>
                 </div>
             </div>

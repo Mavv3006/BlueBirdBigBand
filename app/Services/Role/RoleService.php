@@ -13,7 +13,7 @@ class RoleService
 {
     public function getAll(): Collection
     {
-        return Role::select(['id', 'name'])
+        return Role::select(['id', 'name', 'guard_name'])
             ->orderBy('id')
             ->get();
     }
