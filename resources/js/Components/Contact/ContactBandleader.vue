@@ -1,6 +1,6 @@
 <template>
     <Contact class="w-1/2" email="bandleiter@bluebirdbigband.de" mobile="0171 5808481"
-             name="Klaus Gehrlein" telefax="0621 3197488" telephon="0621 409497" :bold_name="bold_name"/>
+             name="Klaus Gehrlein" :bold_name="bold_name"/>
 </template>
 
 <script setup lang="ts">
