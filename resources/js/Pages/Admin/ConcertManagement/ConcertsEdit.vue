@@ -1,7 +1,7 @@
 <template>
     <PublicLayout>
-        <Heading>Konzert erstellen</Heading>
-        <Head><title>Konzert erstellen</title></Head>
+        <Heading>Konzert bearbeiten</Heading>
+        <Head><title>Konzert bearbeiten</title></Head>
 
         <ConcertEditingForm :venues="venues" :bands="bands" :concert="concert"/>
     </PublicLayout>

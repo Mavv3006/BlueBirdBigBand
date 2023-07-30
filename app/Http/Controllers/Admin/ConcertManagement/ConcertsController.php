@@ -80,7 +80,10 @@ class ConcertsController extends Controller
      */
     public function update(UpdateConcertRequest $request, Concert $concert)
     {
-        throw new NotFoundHttpException();
+        $data = $request->validated();
+        $concertDto = $this->concertService->createDto($data);
+        $concert = $this->concertService->update($concert, $concertDto);
+        return redirect()->route('concerts.show', $concert->id);
     }
 
     /**

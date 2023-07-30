@@ -52,17 +52,13 @@ class ConcertService
 
     public function store(ConcertDto $dto): Concert
     {
-        return Concert::create([
-            'date' => $dto->date,
-            'start_time' => $dto->start_time,
-            'end_time' => $dto->end_time,
-            'event_description' => $dto->descriptionDto->event,
-            'venue_description' => $dto->descriptionDto->venue,
-            'venue_street' => $dto->venueDto->street,
-            'venue_street_number' => $dto->venueDto->house_number,
-            'band_id' => $dto->band->id,
-            'venue_plz' => $dto->venueDto->venue->plz
-        ]);
+        return Concert::create($dto->toArray());
+    }
+
+    public function update(Concert $concert, ConcertDto $concertDto): Concert
+    {
+        $concert->update($concertDto->toArray());
+        return $concert;
     }
 
     public function createDto(array $data): ConcertDto

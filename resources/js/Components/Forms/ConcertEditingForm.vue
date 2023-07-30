@@ -1,11 +1,15 @@
 <template>
     <div>
         <form @submit.prevent="submit" class="gap-4 flex flex-col">
+            <p>
+                Es können nur Konzerte bearbeitet werden, die in der Zukunft liegen. Vergangene Konzerte
+                können nicht mehr aktualisiert werden.
+            </p>
 
             <div class="grid-container sm:grid-cols-2 md:grid-cols-3">
                 <div class="sm:col-span-2 md:col-span-1">
                     <InputLabel for="date">Datum</InputLabel>
-                    <TextInput required class="w-full" type="date" name="date" id="date" v-model="form.date"/>
+                    <TextInput disabled required class="w-full" type="date" name="date" id="date" v-model="form.date"/>
                 </div>
                 <div>
                     <InputLabel for="start_time">Startzeit</InputLabel>
@@ -156,9 +160,11 @@ const custom_venues: Venue[] = [
     ...props.venues
 ];
 
+const current_band: number = custom_bands.filter((value) => value.name === props.concert.band)[0].id;
+
 const form = useForm({
     date: props.concert.date,
-    band_id: 0,
+    band_id: current_band,
     times: {
         start: props.concert.start_time,
         end: props.concert.end_time
@@ -178,7 +184,7 @@ const form = useForm({
 });
 
 const submit = () => form.submit(
-    'post',
+    'put',
     `/admin/concerts/${props.concert.id}`,
     {
         onStart: console.debug,
