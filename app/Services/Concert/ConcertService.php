@@ -27,6 +27,7 @@ class ConcertService
     public function formatConcert(Concert $concert): array
     {
         return [
+            'id' => $concert->id,
             'date' => $concert->date->format('Y-m-d'),
             'start_time' => $concert->start_time->format('H:i'),
             'end_time' => $concert->end_time->format('H:i'),
