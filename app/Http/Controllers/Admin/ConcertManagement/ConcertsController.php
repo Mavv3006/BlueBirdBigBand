@@ -9,6 +9,7 @@ use App\Models\Concert;
 use App\Services\Concert\ConcertService;
 use App\Services\Venue\VenueService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -91,6 +92,7 @@ class ConcertsController extends Controller
      */
     public function destroy(Concert $concert)
     {
-        throw new NotFoundHttpException();
+        $this->concertService->delete($concert);
+        return back();
     }
 }
