@@ -9,25 +9,11 @@
 
 <script lang="ts" setup>
 import {computed, defineProps} from 'vue';
+import {Concert} from "@/types/concert";
 
-export type ConcertType = {
-    date: string,
-    start_time: string,
-    end_time: string,
-    address: {
-        street: string,
-        city: string,
-        plz: number,
-        number: string
-    },
-    band: string,
-    description: {
-        event: string,
-        venue: string
-    }
-};
+const props = defineProps<{ concert: Concert }>();
 
-const props = defineProps<{ concert: ConcertType }>();
+console.debug(props.concert)
 
 const playTime = computed<string>(() => {
     return props.concert.start_time + ' Uhr - '

@@ -28,7 +28,12 @@ class ConcertsController extends Controller
      */
     public function index()
     {
-        throw new NotFoundHttpException();
+        return Inertia::render('Admin/ConcertManagement/ConcertsIndex', [
+            'concerts' => [
+                'upcoming' => $this->concertService->upcoming(),
+                'past' => $this->concertService->past(),
+            ],
+        ]);
     }
 
     /**

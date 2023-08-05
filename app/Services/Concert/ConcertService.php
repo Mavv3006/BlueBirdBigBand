@@ -9,12 +9,12 @@ use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
 class ConcertService
 {
-    public function upcoming()
+    public function upcoming(): Collection
     {
         return Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
@@ -92,9 +92,19 @@ class ConcertService
         return Venue::find($data['venue']['selected_plz']);
     }
 
+   public function past(): Collection
+    {
+        return Concert::with('band', 'venue')
+            ->whereDate('date', '<', Carbon::today()->toDateString())
+            ->orderBy('date')
+            ->get()
+            ->map(function (Concert $item) {
+                return $this->formatConcert($item);
+            });
+
     public function delete(Concert $concert): void
     {
         Log::info('deleting concert', $concert->toArray());
         $concert->delete();
-    }
+   }
 }
