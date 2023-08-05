@@ -181,5 +181,17 @@ class ConcertsControllerTest extends TestCase
                     ->component('Admin/ConcertManagement/ConcertsIndex')
                     ->has('concerts', 1)
             );
+
+    public function test_delete_concert()
+    {
+        Venue::factory()->create();
+        Band::factory()->create();
+        $concert = Concert::factory()->create();
+        $this->assertDatabaseCount(Concert::class, 1);
+
+        $this->delete(route('concerts.destroy', $concert->id))
+            ->assertRedirect();
+
+        $this->assertDatabaseCount(Concert::class, 0);
     }
 }
