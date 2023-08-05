@@ -38,7 +38,6 @@ class ConcertsControllerTest extends TestCase
             );
     }
 
-
     public function test_show_edit_form(): void
     {
         Venue::factory()->create();
@@ -167,5 +166,20 @@ class ConcertsControllerTest extends TestCase
         $this->assertEquals('venue description', $assertConcert->venue_description);
         $this->assertEquals('12a', $assertConcert->venue_street_number);
         $this->assertEquals('street name', $assertConcert->venue_street);
+    }
+
+    public function test_index()
+    {
+        Venue::factory()->create();
+        Band::factory()->create();
+        Concert::factory()->create();
+
+        $this->get(route('concerts.index'))
+            ->assertSuccessful()
+            ->assertInertia(
+                fn(AssertableInertia $page) => $page
+                    ->component('Admin/ConcertManagement/ConcertsIndex')
+                    ->has('concerts', 1)
+            );
     }
 }
