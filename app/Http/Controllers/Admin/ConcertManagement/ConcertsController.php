@@ -9,10 +9,8 @@ use App\Models\Concert;
 use App\Services\Concert\ConcertService;
 use App\Services\Venue\VenueService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ConcertsController extends Controller
 {
@@ -55,17 +53,7 @@ class ConcertsController extends Controller
         $data = $request->validated();
         $concertDto = $this->concertService->createDto($data);
         $concert = $this->concertService->store($concertDto);
-        return redirect()->route('concerts.show', $concert->id);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Concert $concert): Response
-    {
-        return Inertia::render('Admin/ConcertManagement/ConcertsShow', [
-            'concert' => $this->concertService->formatConcert($concert)
-        ]);
+        return redirect()->route('concerts.index');
     }
 
     /**
@@ -88,8 +76,8 @@ class ConcertsController extends Controller
     {
         $data = $request->validated();
         $concertDto = $this->concertService->createDto($data);
-        $concert = $this->concertService->update($concert, $concertDto);
-        return redirect()->route('concerts.show', $concert->id);
+        $this->concertService->update($concert, $concertDto);
+        return redirect()->route('concerts.index');
     }
 
     /**
@@ -98,6 +86,6 @@ class ConcertsController extends Controller
     public function destroy(Concert $concert)
     {
         $this->concertService->delete($concert);
-        return back();
+        return redirect()->route('concerts.index');
     }
 }

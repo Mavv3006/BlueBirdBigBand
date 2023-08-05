@@ -174,13 +174,19 @@ class ConcertsControllerTest extends TestCase
         Band::factory()->create();
         Concert::factory()->create();
 
+        $this->assertDatabaseCount(Concert::class, 1);
+
         $this->get(route('concerts.index'))
             ->assertSuccessful()
             ->assertInertia(
                 fn(AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsIndex')
-                    ->has('concerts', 1)
+                    ->has('concerts', fn(AssertableInertia $page) => $page
+                        ->has('upcoming')
+                        ->has('past')
+                    )
             );
+    }
 
     public function test_delete_concert()
     {
