@@ -10,6 +10,7 @@ use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ConcertService
 {
@@ -89,5 +90,11 @@ class ConcertService
             );
         }
         return Venue::find($data['venue']['selected_plz']);
+    }
+
+    public function delete(Concert $concert): void
+    {
+        Log::info('deleting concert', $concert->toArray());
+        $concert->delete();
     }
 }
