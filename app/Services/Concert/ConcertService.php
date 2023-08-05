@@ -92,7 +92,7 @@ class ConcertService
         return Venue::find($data['venue']['selected_plz']);
     }
 
-   public function past(): Collection
+    public function past(): Collection
     {
         return Concert::with('band', 'venue')
             ->whereDate('date', '<', Carbon::today()->toDateString())
@@ -101,10 +101,11 @@ class ConcertService
             ->map(function (Concert $item) {
                 return $this->formatConcert($item);
             });
+    }
 
     public function delete(Concert $concert): void
     {
         Log::info('deleting concert', $concert->toArray());
         $concert->delete();
-   }
+    }
 }
