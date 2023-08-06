@@ -157,6 +157,7 @@ class MusicianTest extends TestCase
             'admin/musicians/' . $databaseMusician->id,
             [
                 'firstname' => '1',
+                'isActive' => true,
                 'lastname' => '2',
                 'isActive' => $databaseMusician->isActive,
                 'instrument_id' => $instrument->id,

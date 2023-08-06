@@ -17,4 +17,19 @@ class ConcertDto
     )
     {
     }
+
+    public function toArray(): array
+    {
+        return [
+            'date' => $this->date,
+            'start_time' => $this->start_time,
+            'end_time' => $this->end_time,
+            'event_description' => $this->descriptionDto->event,
+            'venue_description' => $this->descriptionDto->venue,
+            'venue_street' => $this->venueDto->street,
+            'venue_street_number' => $this->venueDto->house_number,
+            'band_id' => $this->band->id,
+            'venue_plz' => $this->venueDto->venue->plz
+        ];
+    }
 }

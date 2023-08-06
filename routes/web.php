@@ -62,8 +62,9 @@ Route::prefix('admin')
         Route::resources([
             'roles' => RolesController::class,
             'musicians' => MusiciansController::class,
-            'concerts' => ConcertsController::class
         ]);
+
+        Route::resource('concerts', ConcertsController::class)->except('show');
 
         Route::resource('songs', SongsController::class)
             ->except('show');

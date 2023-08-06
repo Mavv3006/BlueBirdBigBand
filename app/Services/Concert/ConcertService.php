@@ -9,11 +9,12 @@ use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class ConcertService
 {
-    public function upcoming()
+    public function upcoming(): Collection
     {
         return Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
@@ -27,6 +28,7 @@ class ConcertService
     public function formatConcert(Concert $concert): array
     {
         return [
+            'id' => $concert->id,
             'date' => $concert->date->format('Y-m-d'),
             'start_time' => $concert->start_time->format('H:i'),
             'end_time' => $concert->end_time->format('H:i'),
@@ -51,17 +53,13 @@ class ConcertService
 
     public function store(ConcertDto $dto): Concert
     {
-        return Concert::create([
-            'date' => $dto->date,
-            'start_time' => $dto->start_time,
-            'end_time' => $dto->end_time,
-            'event_description' => $dto->descriptionDto->event,
-            'venue_description' => $dto->descriptionDto->venue,
-            'venue_street' => $dto->venueDto->street,
-            'venue_street_number' => $dto->venueDto->house_number,
-            'band_id' => $dto->band->id,
-            'venue_plz' => $dto->venueDto->venue->plz
-        ]);
+        return Concert::create($dto->toArray());
+    }
+
+    public function update(Concert $concert, ConcertDto $concertDto): Concert
+    {
+        $concert->update($concertDto->toArray());
+        return $concert;
     }
 
     public function createDto(array $data): ConcertDto
@@ -92,5 +90,22 @@ class ConcertService
             );
         }
         return Venue::find($data['venue']['selected_plz']);
+    }
+
+    public function past(): Collection
+    {
+        return Concert::with('band', 'venue')
+            ->whereDate('date', '<', Carbon::today()->toDateString())
+            ->orderBy('date')
+            ->get()
+            ->map(function (Concert $item) {
+                return $this->formatConcert($item);
+            });
+    }
+
+    public function delete(Concert $concert): void
+    {
+        Log::info('deleting concert', $concert->toArray());
+        $concert->delete();
     }
 }

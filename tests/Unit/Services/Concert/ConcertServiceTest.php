@@ -3,6 +3,7 @@
 namespace Services\Concert;
 
 use App\Models\Band;
+use App\Models\Concert;
 use App\Models\Venue;
 use App\Services\Concert\ConcertService;
 use Tests\TestCase;
@@ -102,5 +103,18 @@ class ConcertServiceTest extends TestCase
         $this->assertEquals('test 2', $dto->venueDto->venue->name);
         $this->assertEquals('event description', $dto->descriptionDto->event);
         $this->assertEquals('venue description', $dto->descriptionDto->venue);
+    }
+
+    public function test_delete()
+    {
+        Venue::factory()->create();
+        Band::factory()->create();
+        $concert = Concert::factory()->create();
+
+        $this->assertDatabaseCount(Concert::class, 1);
+
+        $this->concertService->delete($concert);
+
+        $this->assertDatabaseCount(Concert::class, 0);
     }
 }

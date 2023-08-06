@@ -38,6 +38,8 @@ class MusicianSeatingPositionControllerTest extends TestCase
 
     public function test_update_route()
     {
+        $this->withoutExceptionHandling();
+
         $this->assertEquals(0, Musician::find(2)->seating_position);
         $this->assertEquals(0, Musician::find(1)->seating_position);
 
