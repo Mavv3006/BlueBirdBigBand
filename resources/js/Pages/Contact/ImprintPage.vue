@@ -7,14 +7,12 @@
         <div class="flex flex-col gap-2 mb-4 md:flex-row md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
             <div class="w-1/2 md:text-right">
                 <p class="font-bold">Klaus Gehrlein</p>
-                <p>Rheinhäuserstr. 24</p>
-                <p>68165 Mannheim</p>
+                <p>Alte Ziegelei 23</p>
+                <p>67346 Speyer</p>
                 <p>Deutschland</p>
             </div>
 
             <div class="w-1/2">
-                <p>Telefon: 0621 409497</p>
-                <p>Telefax: 0621 3197488</p>
                 <p>Mobil: 0171 5808481</p>
                 <p>E-Mail:
                     <MailtoLink mail-adress="bandleiter@bluebirdbigband.de">

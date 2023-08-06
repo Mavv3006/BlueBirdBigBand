@@ -1,6 +1,6 @@
 <template>
     <ul class="text-white mt-3 gap-9 justify-center content-center">
-        <NavigationElement v-for="route in routes" :route="route"/>
+        <NavigationElement v-for="route in routes" :element="route"/>
         <li>
             <Link v-if="isLoggedIn" :href="route('logout')" as="button" method="POST">Logout</Link>
             <Link v-if="!isLoggedIn" href="login">Login</Link>

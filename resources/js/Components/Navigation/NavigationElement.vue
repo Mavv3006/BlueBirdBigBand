@@ -1,12 +1,12 @@
 <template>
-    <li v-if="route.link && !route.submenu">
-        <Link v-if="route.link" :href="route.link">{{ route.linkName }}</Link>
+    <li v-if="element.link && !element.submenu">
+        <Link v-if="element.link" :href="element.link">{{ element.linkName }}</Link>
     </li>
-    <li v-if="!route.link && route.submenu"
+    <li v-if="!element.link && element.submenu"
         class="nav-container">
-        <span>{{ route.linkName }}</span>
+        <span>{{ element.linkName }}</span>
         <ul class="dropdown-content hidden absolute bg-red-600 py-2 z-10 shadow-md -ml-4 rounded-md min-w-[112px]">
-            <li v-for="submenu in route.submenu">
+            <li v-for="submenu in element.submenu">
                 <Link :href="submenu.link">{{ submenu.linkName }}</Link>
             </li>
         </ul>
@@ -18,9 +18,9 @@ import {defineProps} from 'vue';
 import {Route} from "@/Composables/useRoutes";
 import {Link} from '@inertiajs/vue3';
 
-const props = defineProps<{ route: Route }>();
+const props = defineProps<{ element: Route }>();
 
-if (props.route.link !== undefined && props.route.submenu !== undefined) {
+if (props.element.link !== undefined && props.element.submenu !== undefined) {
     throw TypeError('both link and submenu are not supported');
 }
 </script>

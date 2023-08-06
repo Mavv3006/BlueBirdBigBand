@@ -2,8 +2,9 @@
 
 namespace App\Services\Role;
 
+use App\DataTransferObjects\IdDto;
+use App\DataTransferObjects\Roles\RoleUpdateDto;
 use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
@@ -13,7 +14,7 @@ class RoleService
 {
     public function getAll(): Collection
     {
-        return Role::select(['id', 'name'])
+        return Role::select(['id', 'name', 'guard_name'])
             ->orderBy('id')
             ->get();
     }
@@ -28,7 +29,7 @@ class RoleService
     public function getById(int $id): Role
     {
         return Role::where('id', $id)
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'guard_name'])
             ->first();
     }
 
@@ -60,12 +61,14 @@ class RoleService
                 ->get());
     }
 
-    public function update(UpdateRoleRequest $request, int $id): void
+    public function update(RoleUpdateDto $dto): void
     {
-        $role = $this->getById($id);
-        $data = $request->validated(["permissions"]);
+        $role = $this->getById($dto->role_id);
+        $data = array_map(function (IdDto $idDto) {
+            return Permission::find($idDto->id);
+        }, $dto->permission_ids);
         $role->syncPermissions($data);
-        Log::info('updating role (id: ' . $id . ', name: ' . $role->name . ').');
+        Log::info('updating role (id: ' . $role->id . ', name: ' . $role->name . ').');
     }
 
     public function delete(int $id): void

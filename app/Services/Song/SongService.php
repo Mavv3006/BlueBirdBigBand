@@ -35,7 +35,7 @@ class SongService
             'author' => $data['author'],
             'arranger' => $data['arranger'],
             'genre' => $data['genre'],
-            'file_path' => $file->store('songs', 'public'),
+            'file_path' => $file->store('songs'),
             'size' => $file->getSize()
         ]);
         Log::info('Created a new song', [$song]);

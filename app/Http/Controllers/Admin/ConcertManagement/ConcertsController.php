@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ConcertManagement;
 
+use App\Exceptions\NotImplementedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConcertRequest;
 use App\Http\Requests\UpdateConcertRequest;
@@ -26,7 +27,7 @@ class ConcertsController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/ConcertManagement/ConcertsIndex', [
+       return Inertia::render('Admin/ConcertManagement/ConcertsIndex', [
             'concerts' => [
                 'upcoming' => $this->concertService->upcoming(),
                 'past' => $this->concertService->past(),
@@ -61,13 +62,13 @@ class ConcertsController extends Controller
      */
     public function edit(Concert $concert): Response
     {
-        return Inertia::render('Admin/ConcertManagement/ConcertsEdit', [
+       return Inertia::render('Admin/ConcertManagement/ConcertsEdit', [
                 'venues' => $this->venueService->all(),
                 'bands' => $this->concertService->allBands(),
                 'concert' => $this->concertService->formatConcert($concert)
             ]
         );
-    }
+   }
 
     /**
      * Update the specified resource in storage.
@@ -78,7 +79,7 @@ class ConcertsController extends Controller
         $concertDto = $this->concertService->createDto($data);
         $this->concertService->update($concert, $concertDto);
         return redirect()->route('concerts.index');
-    }
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -87,5 +88,5 @@ class ConcertsController extends Controller
     {
         $this->concertService->delete($concert);
         return redirect()->route('concerts.index');
-    }
+   }
 }

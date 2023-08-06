@@ -6,6 +6,7 @@ namespace Admin\Role;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -70,6 +71,7 @@ class RoleTest extends TestCase
                     ->has('role', fn(AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
+                        ->has('guard_name')
                     )
                     ->has('role_permissions.0', fn(AssertableInertia $page) => $page
                         ->has('id')
@@ -94,6 +96,7 @@ class RoleTest extends TestCase
                     ->has('role', fn(AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
+                        ->has('guard_name')
                     )
                     ->has('role_permissions.0', fn(AssertableInertia $page) => $page
                         ->has('id')
@@ -112,7 +115,7 @@ class RoleTest extends TestCase
             );
     }
 
-    /**
+   /**
      * This test always throws the following error:
      * `The given role or permission should use guard `` instead of `web`.`
      */
