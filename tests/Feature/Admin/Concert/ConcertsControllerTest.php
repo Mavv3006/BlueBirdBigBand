@@ -101,7 +101,7 @@ class ConcertsControllerTest extends TestCase
 
         $this
             ->post('/admin/concerts', $data)
-            ->assertRedirect(route('concerts.show', 1));
+            ->assertRedirect(route('concerts.index'));
 
         $this->assertDatabaseCount(Concert::class, 1);
         $concert = Concert::first();
@@ -156,7 +156,7 @@ class ConcertsControllerTest extends TestCase
 
         $this
             ->put('/admin/concerts/' . $concert->id, $data)
-            ->assertRedirect(route('concerts.show', 1));
+            ->assertRedirect(route('concerts.index'));
 
         $this->assertDatabaseCount(Concert::class, 1);
         $assertConcert = Concert::first();

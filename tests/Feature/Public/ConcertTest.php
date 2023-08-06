@@ -59,6 +59,7 @@ class ConcertTest extends TestCase
                         5,
                         fn(AssertableInertia $page) => $page
                             ->has('date')
+                            ->has('id')
                             ->has('start_time')
                             ->has('end_time')
                             ->has('band')
