@@ -13,7 +13,11 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto Slab', ...defaultTheme.fontFamily.serif]
             },
+            colors: {
+                'primary': '#041286'
+            }
         },
     },
 

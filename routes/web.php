@@ -13,6 +13,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,5 +75,11 @@ Route::prefix('admin')
             Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
         });
     });
+
+Route::prefix('v2')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('v2/Index');
+    });
+});
 
 require __DIR__ . '/auth.php';
