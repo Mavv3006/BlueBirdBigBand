@@ -1,15 +1,20 @@
 <template>
-  <button>{{ name }}</button>
+    <a v-if="as === 'anchor'" :href="href">{{ name }}</a>
+    <button v-if="as === 'button'" @click="$emit('click')">{{ name }}</button>
 </template>
 
 <script setup lang="ts">
+defineEmits(['click']);
+
 defineProps<{
-  name: string
+    name: string,
+    as: 'anchor' | 'button',
+    href?: string
 }>();
 </script>
 
 <style scoped>
-button {
-  @apply text-white bg-primary rounded-xl px-[26px] py-[11px] drop-shadow-lg;
+button, a {
+    @apply text-white bg-primary rounded-xl px-[26px] py-[11px] drop-shadow-lg;
 }
 </style>
