@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <FooterHeading>Navigation</FooterHeading>
+    <div>
+        <FooterHeading>Navigation</FooterHeading>
 
-    <div class="flex flex-col gap-2 mt-2">
-      <FooterLink v-for="link in navLinks" :href="link.link">{{ link.name }}</FooterLink>
+        <div class="flex flex-col gap-2 mt-2">
+            <FooterLink v-for="link in navLinks" :href="link.link">{{ link.name }}</FooterLink>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,7 +1,7 @@
 <template>
-  <a :href="href" class="text-sm text-[#575757]">
-    <slot/>
-  </a>
+    <a :href="href" class="text-sm text-[#575757]">
+        <slot/>
+    </a>
 </template>
 
 <script setup lang="ts">

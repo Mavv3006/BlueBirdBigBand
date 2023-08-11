@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import {onMounted, ref} from 'vue';
 
 defineProps(['modelValue']);
 
@@ -13,7 +13,7 @@ onMounted(() => {
     }
 });
 
-defineExpose({ focus: () => input.value.focus() });
+defineExpose({focus: () => input.value.focus()});
 </script>
 
 <template>
