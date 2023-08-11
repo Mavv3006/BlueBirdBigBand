@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <div class="font-semibold underline">{{ concert.band }}</div>
-    <div class="font-semibold">{{ day }}</div>
-    <div>{{ playTime }}</div>
-    <div>{{ address }}</div>
-  </div>
+    <div>
+        <div class="font-semibold underline">{{ concert.band }}</div>
+        <div class="font-semibold">{{ day }}</div>
+        <div>{{ playTime }}</div>
+        <div>{{ address }}</div>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -17,17 +17,17 @@ const props = defineProps<{ concert: Concert }>();
 console.debug(props.concert)
 
 const playTime = computed<string>(() => {
-  return props.concert.start_time + ' Uhr - '
-      + props.concert.end_time + ' Uhr | '
-      + props.concert.description.event
+    return props.concert.start_time + ' Uhr - '
+        + props.concert.end_time + ' Uhr | '
+        + props.concert.description.event
 });
 
 const address = computed<string>(() => {
-  return props.concert.description.venue + ', '
-      + props.concert.address.street + ' '
-      + props.concert.address.number + ', '
-      + props.concert.address.plz + ' '
-      + props.concert.address.city;
+    return props.concert.description.venue + ', '
+        + props.concert.address.street + ' '
+        + props.concert.address.number + ', '
+        + props.concert.address.plz + ' '
+        + props.concert.address.city;
 });
 
 const day = computed<string>(() => useFormatDate(props.concert.date));

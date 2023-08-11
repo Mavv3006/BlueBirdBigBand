@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import {Head, Link} from '@inertiajs/vue3';
 
 defineProps({
     canLogin: Boolean,
@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Welcome" />
+    <Head title="Welcome"/>
 
     <div
         class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0"
@@ -20,7 +20,8 @@ defineProps({
                 v-if="$page.props.auth.user"
                 :href="route('dashboard')"
                 class="text-sm text-gray-700 dark:text-gray-500 underline"
-                >Dashboard</Link
+            >Dashboard
+            </Link
             >
 
             <template v-else>
@@ -30,7 +31,8 @@ defineProps({
                     v-if="canRegister"
                     :href="route('register')"
                     class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
-                    >Register</Link
+                >Register
+                </Link
                 >
             </template>
         </div>
@@ -70,7 +72,7 @@ defineProps({
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white"
-                                    >Documentation</a
+                                >Documentation</a
                                 >
                             </div>
                         </div>
@@ -102,7 +104,7 @@ defineProps({
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laracasts.com" class="underline text-gray-900 dark:text-white"
-                                    >Laracasts</a
+                                >Laracasts</a
                                 >
                             </div>
                         </div>
@@ -133,7 +135,7 @@ defineProps({
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold">
                                 <a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white"
-                                    >Laravel News</a
+                                >Laravel News</a
                                 >
                             </div>
                         </div>

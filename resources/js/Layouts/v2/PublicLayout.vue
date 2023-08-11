@@ -1,17 +1,17 @@
 <template>
-  <div class="wrapper">
+    <div class="wrapper">
 
-    <Head><title>{{ pageTitle }}</title></Head>
+        <Head><title>{{ pageTitle }}</title></Head>
 
-    <div class="content">
-      <Header/>
-      <slot/>
+        <div class="content">
+            <Header/>
+            <slot/>
+        </div>
+
+        <div class="footer">
+            <Footer/>
+        </div>
     </div>
-
-    <div class="footer">
-      <Footer/>
-    </div>
-  </div>
 </template>
 
 <script setup lang="ts">
@@ -24,14 +24,14 @@ defineProps<{ pageTitle: string }>();
 
 <style scoped>
 .wrapper {
-  @apply flex flex-col h-screen;
+    @apply flex flex-col h-screen;
 }
 
 .content {
-  flex: 1 0 auto;
+    flex: 1 0 auto;
 }
 
 .footer {
-  flex-shrink: 0;
+    flex-shrink: 0;
 }
 </style>
