@@ -1,8 +1,6 @@
 <template>
-  <div class="bg-gray-800 h-screen">
+  <div class="h-screen">
     <Header/>
-
-    <!--    <div class="w-full h-28 bg-gray-500"></div>-->
 
     <IndexConcertList :concerts="upcomingConcerts"/>
 

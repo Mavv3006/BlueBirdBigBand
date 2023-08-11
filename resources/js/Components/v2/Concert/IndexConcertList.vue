@@ -1,9 +1,12 @@
 <template>
   <div class="bg-white">
-    <SectionHeader class="pl-16 pt-8">Unsere nächsten Auftritte</SectionHeader>
+    <div class="container mx-auto">
+      <SectionHeader class="pl-16 pt-8 pb-4">Unsere nächsten Auftritte</SectionHeader>
 
-    <div class="flex justify-evenly mt-5 pb-20">
-      <Concert v-for="concert in concerts" :data="concert"/>
+      <div
+          class="flex flex-col items-center gap-8 pb-16 md:flex-row md:flex-wrap md:justify-center lg:mx-8 lg:gap-x-16 xl:justify-evenly">
+        <Concert v-for="concert in concerts" :data="concert"/>
+      </div>
     </div>
   </div>
 </template>
