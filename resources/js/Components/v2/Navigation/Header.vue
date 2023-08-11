@@ -35,16 +35,11 @@
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import CallToActionButton from "@/Components/v2/CallToActionButton.vue";
 import {ref} from "vue";
+import {useNavigationLinks} from "@/Composables/useNavigationLinks";
 
 const isMobileMenuOpen = ref(false);
 
-const navElements: { name: string, link: string, type: "cta" | "link" }[] = [
-    {name: "Home", type: "link", link: '/v2'},
-    {name: "Auftritte", type: "link", link: '/v2/auftritte'},
-    {name: "Band", type: "link", link: '/v2/band'},
-    {name: "Kontakt", type: "link", link: '/v2/kontakt'},
-    {name: "Login", type: "cta", link: '/v2/login'},
-];
+const navElements = useNavigationLinks();
 
 const linkNavElements = navElements.filter((value) => value.type === "link");
 const ctaNavElements = navElements.filter((value) => value.type === "cta");
