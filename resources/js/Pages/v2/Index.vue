@@ -1,10 +1,13 @@
 <template>
-  <div class="h-screen">
-    <Header/>
+  <div class="wrapper">
+    <div class="content">
+      <Header/>
+      <IndexConcertList :concerts="upcomingConcerts"/>
+    </div>
 
-    <IndexConcertList :concerts="upcomingConcerts"/>
-
-    <Footer/>
+    <div class="footer">
+      <Footer/>
+    </div>
   </div>
 </template>
 
@@ -20,5 +23,15 @@ defineProps<{
 </script>
 
 <style scoped>
+.wrapper {
+  @apply flex flex-col h-screen;
+}
 
+.content {
+  flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
 </style>
