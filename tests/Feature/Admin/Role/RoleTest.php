@@ -28,6 +28,7 @@ class RoleTest extends TestCase
                     ->component('Admin/RolesManagement/RolesIndex')
                     ->has('roles', 2, fn(AssertableInertia $page) => $page
                         ->has('id')
+                        ->has('guard_name')
                         ->has('name')
                     )
             );
