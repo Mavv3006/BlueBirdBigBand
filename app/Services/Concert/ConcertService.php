@@ -14,11 +14,16 @@ use Illuminate\Support\Facades\Log;
 
 class ConcertService
 {
-    public function upcoming(): Collection
+    public function upcoming(int $limit = null): Collection
     {
-        return Concert::with('band', 'venue')
+        $queryBuilder = Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
-            ->orderBy('date')
+            ->orderBy('date');
+
+        if ($limit) {
+            $queryBuilder->limit(3);
+        }
+        return $queryBuilder
             ->get()
             ->map(function (Concert $item) {
                 return $this->formatConcert($item);

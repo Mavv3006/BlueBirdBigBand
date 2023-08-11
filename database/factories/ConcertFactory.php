@@ -41,8 +41,8 @@ class ConcertFactory extends Factory
             'end_time' => $end_time,
             'venue_street' => $this->faker->streetName,
             'venue_street_number' => $this->faker->buildingNumber,
-            'venue_description' => $this->faker->text(50),
-            'event_description' => $this->faker->text(50),
+            'venue_description' => $this->faker->text(25),
+            'event_description' => $this->faker->text(25),
             'band_id' => Band::all()->random(1)->first(),
             'venue_plz' => Venue::all()->random(1)->first()
         ];

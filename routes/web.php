@@ -10,11 +10,11 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use App\Http\Middleware\UseDesignVersion2;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,9 +80,7 @@ Route::prefix('admin')
 Route::prefix('v2')
     ->middleware([UseDesignVersion2::class])
     ->group(function () {
-    Route::get('/', function () {
-        return Inertia::render('v2/Index');
-    });
+        Route::get('/', IndexController::class);
 });
 
 require __DIR__ . '/auth.php';
