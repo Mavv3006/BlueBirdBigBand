@@ -65,7 +65,7 @@ class ConcertsController extends Controller
        return Inertia::render('Admin/ConcertManagement/ConcertsEdit', [
                 'venues' => $this->venueService->all(),
                 'bands' => $this->concertService->allBands(),
-                'concert' => $this->concertService->formatConcert($concert)
+               'concert' => $this->concertService->formatConcert($concert)->toArray()
             ]
         );
    }
