@@ -1,7 +1,0 @@
-repos:
-  - repo: local
-    hooks:
-      - id: pint.sh
-        name: Laravel Pint
-        entry: .\\bin\\pre-commit\\pint.sh
-        language: script
