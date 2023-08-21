@@ -1,3 +1,3 @@
 #!/bin/sh
 
-../../vendor/bin/pint --dry
+./vendor/bin/pint --dirty
