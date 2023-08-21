@@ -42,7 +42,7 @@ class ConcertTest extends TestCase
     {
         $this->get('/auftritte')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('LatestInfos/ConcertsPage')
             );
     }
@@ -53,11 +53,11 @@ class ConcertTest extends TestCase
 
         $this->get('/auftritte')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->has(
                         'concerts',
                         5,
-                        fn(AssertableInertia $page) => $page
+                        fn (AssertableInertia $page) => $page
                             ->has('date')
                             ->has('id')
                             ->has('start_time')
@@ -81,7 +81,7 @@ class ConcertTest extends TestCase
             ->assertInertia(
                 function (AssertableInertia $page) {
                     $props = $page->toArray()['props']['concerts'];
-                    $this->assertEquals(5, sizeof($props));
+                    $this->assertEquals(5, count($props));
                     $this->assertTrue(Carbon::parse($props[0]['date']) <= Carbon::parse($props[1]['date']));
                     $this->assertTrue(Carbon::parse($props[1]['date']) <= Carbon::parse($props[2]['date']));
                     $this->assertTrue(Carbon::parse($props[2]['date']) <= Carbon::parse($props[3]['date']));

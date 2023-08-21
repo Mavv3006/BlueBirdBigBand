@@ -23,7 +23,7 @@ class UpcomingConcertList extends Component
     public function render(): View|Closure|string
     {
         return view('components.page-sections.upcoming-concert-list', [
-            'upcomingConcerts' => $this->concertService->upcoming(3, true)
+            'upcomingConcerts' => $this->concertService->upcoming(3, true),
         ]);
     }
 }

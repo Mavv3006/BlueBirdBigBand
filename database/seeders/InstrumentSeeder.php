@@ -9,8 +9,6 @@ class InstrumentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -28,11 +26,11 @@ class InstrumentSeeder extends Seeder
         }
     }
 
-    private function createInstrument(string $name, string|null $path)
+    private function createInstrument(string $name, ?string $path)
     {
         Instrument::factory()->create([
             'name' => $name,
-            'default_picture_filepath' => $path ?? 'assets/musician_pictures/default/tux.png'
+            'default_picture_filepath' => $path ?? 'assets/musician_pictures/default/tux.png',
         ]);
     }
 }

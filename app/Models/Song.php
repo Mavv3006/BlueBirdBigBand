@@ -17,6 +17,6 @@ class Song extends Model
         'author',
         'genre',
         'arranger',
-        'size'
+        'size',
     ];
 }

@@ -17,7 +17,7 @@ class PressInfoTest extends TestCase
     {
         $this->get('/presse')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('LatestInfos/PressInfoPage')
             );
     }

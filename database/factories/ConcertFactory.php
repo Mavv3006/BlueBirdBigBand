@@ -6,7 +6,6 @@ use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -44,7 +43,7 @@ class ConcertFactory extends Factory
             'venue_description' => $this->faker->text(25),
             'event_description' => $this->faker->text(25),
             'band_id' => Band::all()->random(1)->first(),
-            'venue_plz' => Venue::all()->random(1)->first()
+            'venue_plz' => Venue::all()->random(1)->first(),
         ];
     }
 }

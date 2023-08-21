@@ -23,7 +23,7 @@ class SongFactory extends Factory
             'genre' => 'Swing',
             'arranger' => 'Roger Holmes',
             'author' => 'J. Davenport, E. Cooley',
-            'size' => $this->faker->randomNumber(2)
+            'size' => $this->faker->randomNumber(2),
         ];
     }
 }

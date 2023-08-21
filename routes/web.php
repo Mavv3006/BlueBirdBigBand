@@ -85,4 +85,4 @@ Route::prefix('v2')
         Route::get('/blade', BladeIndexController::class);
     });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

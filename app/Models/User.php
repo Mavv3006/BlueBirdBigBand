@@ -23,11 +23,11 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
-        'activated'
+        'activated',
     ];
 
     protected $casts = [
-        'activated' => 'boolean'
+        'activated' => 'boolean',
     ];
 
     /**

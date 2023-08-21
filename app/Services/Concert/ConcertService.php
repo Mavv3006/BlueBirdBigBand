@@ -28,6 +28,7 @@ class ConcertService
         if ($limit) {
             $queryBuilder->limit(3);
         }
+
         return $queryBuilder
             ->get()
             ->map(function (Concert $item) use ($returnDtoFlag) {
@@ -35,12 +36,12 @@ class ConcertService
                 if ($returnDtoFlag) {
                     return $formattedConcertDto;
                 }
+
                 return $formattedConcertDto->toArray();
             });
     }
 
-    public
-    function formatConcert(Concert $concert): FormattedConcertDto
+    public function formatConcert(Concert $concert): FormattedConcertDto
     {
         return new FormattedConcertDto(
             id: $concert->id,
@@ -61,27 +62,24 @@ class ConcertService
         );
     }
 
-    public
-    function allBands(): Collection
+    public function allBands(): Collection
     {
         return Band::select(['id', 'name'])->get();
     }
 
-    public
-    function store(ConcertDto $dto): Concert
+    public function store(ConcertDto $dto): Concert
     {
         return Concert::create($dto->toArray());
     }
 
-    public
-    function update(Concert $concert, ConcertDto $concertDto): Concert
+    public function update(Concert $concert, ConcertDto $concertDto): Concert
     {
         $concert->update($concertDto->toArray());
+
         return $concert;
     }
 
-    public
-    function createDto(array $data): ConcertDto
+    public function createDto(array $data): ConcertDto
     {
         return new ConcertDto(
             Carbon::parse($data['date']),
@@ -100,8 +98,7 @@ class ConcertService
         );
     }
 
-    public
-    function getRequestVenue(array $data): Venue
+    public function getRequestVenue(array $data): Venue
     {
         if ($data['venue']['create_new_venue']) {
             return Venue::firstOrCreate(
@@ -109,11 +106,11 @@ class ConcertService
                 ['name' => $data['venue']['new_name']]
             );
         }
+
         return Venue::find($data['venue']['selected_plz']);
     }
 
-    public
-    function past(): Collection
+    public function past(): Collection
     {
         return Concert::with('band', 'venue')
             ->whereDate('date', '<', Carbon::today()->toDateString())
@@ -124,8 +121,7 @@ class ConcertService
             });
     }
 
-    public
-    function delete(Concert $concert): void
+    public function delete(Concert $concert): void
     {
         Log::info('deleting concert', $concert->toArray());
         $concert->delete();

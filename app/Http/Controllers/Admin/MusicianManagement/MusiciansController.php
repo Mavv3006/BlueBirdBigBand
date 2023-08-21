@@ -17,10 +17,9 @@ use Inertia\Response;
 class MusiciansController extends Controller
 {
     public function __construct(
-        public MusicianService   $musicianService,
+        public MusicianService $musicianService,
         public InstrumentService $instrumentService,
-    )
-    {
+    ) {
     }
 
     /**
@@ -57,6 +56,7 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $musician = $this->musicianService->store($request);
+
         return redirect(route('musicians.show', $musician->id));
     }
 
@@ -71,7 +71,7 @@ class MusiciansController extends Controller
             'Admin/MusicianManagement/MusiciansShow',
             [
                 'musician' => $musician,
-                'instrument' => $this->instrumentService->fromMusician($musician)
+                'instrument' => $this->instrumentService->fromMusician($musician),
             ]
         );
     }
@@ -87,7 +87,7 @@ class MusiciansController extends Controller
             'Admin/MusicianManagement/MusiciansEdit',
             [
                 'musician' => $musician,
-                'instruments' => $this->instrumentService->all()
+                'instruments' => $this->instrumentService->all(),
             ]
         );
     }
@@ -100,6 +100,7 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $this->musicianService->update($request, $musician);
+
         return redirect(route('musicians.show', $musician->id));
     }
 
@@ -111,6 +112,7 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $this->musicianService->delete($musician);
+
         return redirect(route('musicians.index'));
     }
 
@@ -119,6 +121,7 @@ class MusiciansController extends Controller
         Gate::authorize('manage musicians');
 
         $this->musicianService->deletePicture($musician);
+
         return redirect(route('musicians.show', $musician->id));
     }
 }

@@ -19,7 +19,7 @@ class MusicianTest extends TestCase
     {
         $this->get('/musiker')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Band/MusiciansPage')
             );
     }
@@ -34,14 +34,14 @@ class MusicianTest extends TestCase
 
         $this->get('/musiker')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->has(
                         'data',
                         1,
-                        fn(AssertableInertia $page) => $page
+                        fn (AssertableInertia $page) => $page
                             ->has(
                                 'instrument',
-                                fn(AssertableInertia $page) => $page
+                                fn (AssertableInertia $page) => $page
                                     ->has('name')
                                     ->has('id')
                                     ->has('default_picture_filepath')
@@ -49,7 +49,7 @@ class MusicianTest extends TestCase
                             ->has(
                                 'musicians',
                                 3,
-                                fn(AssertableInertia $page) => $page
+                                fn (AssertableInertia $page) => $page
                                     ->has('isActive')
                                     ->has('firstname')
                                     ->has('id')

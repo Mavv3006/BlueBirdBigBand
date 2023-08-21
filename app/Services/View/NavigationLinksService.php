@@ -16,19 +16,19 @@ class NavigationLinksService
     {
         $this->links = [
             new NavigationLinkDto(
-                name: "Home", link: "/v2/blade", type: NavigationLinkType::Link
+                name: 'Home', link: '/v2/blade', type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
-                name: "Auftritte", link: "/v2/blade/auftritte", type: NavigationLinkType::Link
+                name: 'Auftritte', link: '/v2/blade/auftritte', type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
-                name: "Band", link: "/v2/blade/band", type: NavigationLinkType::Link
+                name: 'Band', link: '/v2/blade/band', type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
-                name: "Kontakt", link: "/v2/blade/kontakt", type: NavigationLinkType::Link
+                name: 'Kontakt', link: '/v2/blade/kontakt', type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
-                name: "Login", link: "/v2/blade/login", type: NavigationLinkType::CallToAction
+                name: 'Login', link: '/v2/blade/login', type: NavigationLinkType::CallToAction
             ),
         ];
     }
@@ -48,7 +48,7 @@ class NavigationLinksService
     {
         return array_filter(
             array: $this->links,
-            callback: fn(NavigationLinkDto $val) => $val->type === NavigationLinkType::Link
+            callback: fn (NavigationLinkDto $val) => $val->type === NavigationLinkType::Link
         );
     }
 
@@ -59,9 +59,7 @@ class NavigationLinksService
     {
         return array_filter(
             array: $this->links,
-            callback: fn(NavigationLinkDto $val) => $val->type === NavigationLinkType::CallToAction
+            callback: fn (NavigationLinkDto $val) => $val->type === NavigationLinkType::CallToAction
         );
     }
-
-
 }

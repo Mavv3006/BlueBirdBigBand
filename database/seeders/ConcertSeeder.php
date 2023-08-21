@@ -10,8 +10,6 @@ class ConcertSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -19,7 +17,7 @@ class ConcertSeeder extends Seeder
             try {
                 Concert::factory()->create();
             } catch (QueryException $e) {
-                print_r("(" . $i . ") Failed to create " . Concert::class . "\nMessage: " . $e->getMessage() . "\n\n");
+                print_r('('.$i.') Failed to create '.Concert::class."\nMessage: ".$e->getMessage()."\n\n");
             }
         }
     }

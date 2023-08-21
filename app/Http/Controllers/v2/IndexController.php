@@ -15,7 +15,7 @@ class IndexController extends Controller
     public function __invoke()
     {
         return Inertia::render('v2/Index', [
-            'upcomingConcerts' => $this->concertService->upcoming(3)
+            'upcomingConcerts' => $this->concertService->upcoming(3),
         ]);
     }
 }

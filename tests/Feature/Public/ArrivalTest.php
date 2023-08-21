@@ -17,7 +17,7 @@ class ArrivalTest extends TestCase
     {
         $this->get('/anfahrt')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Band/ArrivalPage')
             );
     }

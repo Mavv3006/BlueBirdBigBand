@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class NavigationLinksServiceTest extends TestCase
 {
-
     protected NavigationLinksService $service;
 
     protected function setUp(): void
@@ -46,5 +45,4 @@ class NavigationLinksServiceTest extends TestCase
             $this->assertEquals(NavigationLinkType::CallToAction, $link->type);
         }
     }
-
 }

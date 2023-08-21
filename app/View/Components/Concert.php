@@ -23,7 +23,7 @@ class Concert extends Component
     public function render(): View|Closure|string
     {
         return view('components.concert', [
-            'concert' => $this->concert
+            'concert' => $this->concert,
         ]);
     }
 }

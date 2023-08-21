@@ -14,8 +14,7 @@ class ActivateUsersController extends Controller
 {
     public function __construct(
         protected UserService $userService,
-    )
-    {
+    ) {
     }
 
     public function show(): Response
@@ -33,6 +32,7 @@ class ActivateUsersController extends Controller
         Gate::authorize('manage users');
 
         $this->userService->activateUser($user);
+
         return back();
     }
 }

@@ -25,13 +25,13 @@ class ConcertsControllerTest extends TestCase
         $this->get(route('concerts.create'))
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsCreate')
-                    ->has('venues', 1, fn(AssertableInertia $page) => $page
+                    ->has('venues', 1, fn (AssertableInertia $page) => $page
                         ->has('plz')
                         ->has('name')
                     )
-                    ->has('bands', 1, fn(AssertableInertia $page) => $page
+                    ->has('bands', 1, fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
                     )
@@ -47,27 +47,27 @@ class ConcertsControllerTest extends TestCase
         $this->get(route('concerts.edit', 1))
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsEdit')
-                    ->has('venues', 1, fn(AssertableInertia $page) => $page
+                    ->has('venues', 1, fn (AssertableInertia $page) => $page
                         ->has('plz')
                         ->has('name')
                     )
-                    ->has('bands', 1, fn(AssertableInertia $page) => $page
+                    ->has('bands', 1, fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
                     )
-                    ->has('concert', fn(AssertableInertia $page) => $page
+                    ->has('concert', fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('date')
                         ->has('start_time')
                         ->has('end_time')
                         ->has('band')
-                        ->has('description', fn(AssertableInertia $page) => $page
+                        ->has('description', fn (AssertableInertia $page) => $page
                             ->has('venue')
                             ->has('event')
                         )
-                        ->has('address', fn(AssertableInertia $page) => $page
+                        ->has('address', fn (AssertableInertia $page) => $page
                             ->has('street')
                             ->has('number')
                             ->has('plz')
@@ -91,12 +91,12 @@ class ConcertsControllerTest extends TestCase
                 'new_plz' => 12000,
                 'new_name' => 'test 2',
                 'street' => 'street name',
-                'house_number' => '12a'
+                'house_number' => '12a',
             ],
             'description' => [
                 'event' => 'event description',
-                'venue' => 'venue description'
-            ]
+                'venue' => 'venue description',
+            ],
         ];
 
         $this
@@ -132,7 +132,7 @@ class ConcertsControllerTest extends TestCase
             'venue_description' => 'description',
             'venue_plz' => $venue->plz,
             'venue_street_number' => '14',
-            'venue_street' => 'help street'
+            'venue_street' => 'help street',
         ]);
 
         $data = [
@@ -146,16 +146,16 @@ class ConcertsControllerTest extends TestCase
                 'create_new_venue' => false,
                 'street' => 'street name',
                 'house_number' => '12a',
-                'selected_plz' => $venue->plz
+                'selected_plz' => $venue->plz,
             ],
             'description' => [
                 'event' => 'event description',
-                'venue' => 'venue description'
-            ]
+                'venue' => 'venue description',
+            ],
         ];
 
         $this
-            ->put('/admin/concerts/' . $concert->id, $data)
+            ->put('/admin/concerts/'.$concert->id, $data)
             ->assertRedirect(route('concerts.index'));
 
         $this->assertDatabaseCount(Concert::class, 1);
@@ -179,9 +179,9 @@ class ConcertsControllerTest extends TestCase
         $this->get(route('concerts.index'))
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsIndex')
-                    ->has('concerts', fn(AssertableInertia $page) => $page
+                    ->has('concerts', fn (AssertableInertia $page) => $page
                         ->has('upcoming')
                         ->has('past')
                     )

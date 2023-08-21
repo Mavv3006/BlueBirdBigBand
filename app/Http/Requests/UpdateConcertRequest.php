@@ -26,19 +26,19 @@ class UpdateConcertRequest extends FormRequest
                 'exclude_if:venue.create_new_venue,false',
                 'required',
                 'digits:5',
-                'integer'
+                'integer',
             ],
             'venue.new_name' => [
                 'exclude_if:venue.create_new_venue,false',
                 'required',
-                'string'
+                'string',
             ],
             'venue.selected_plz' => [
                 'exclude_if:venue.create_new_venue,true',
                 'required',
                 'integer',
                 'digits:5',
-                'exists:venues,plz'
+                'exists:venues,plz',
             ],
             'description.event' => ['required', 'string'],
             'description.venue' => ['required', 'string'],

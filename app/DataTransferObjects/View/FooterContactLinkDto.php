@@ -8,7 +8,6 @@ class FooterContactLinkDto
         public readonly string $name,
         public readonly string $icon,
         public readonly string $link,
-    )
-    {
+    ) {
     }
 }

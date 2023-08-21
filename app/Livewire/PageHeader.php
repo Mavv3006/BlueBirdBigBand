@@ -21,13 +21,13 @@ class PageHeader extends Component
 
     public function toggleMobileMenu(): void
     {
-        $this->isMobileMenuOpen = !$this->isMobileMenuOpen;
+        $this->isMobileMenuOpen = ! $this->isMobileMenuOpen;
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         return view('livewire.page-header', [
-            'navLinks' => $this->linksService
+            'navLinks' => $this->linksService,
         ]);
     }
 }

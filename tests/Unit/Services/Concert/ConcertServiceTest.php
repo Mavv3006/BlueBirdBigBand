@@ -24,8 +24,8 @@ class ConcertServiceTest extends TestCase
         $data = [
             'venue' => [
                 'create_new_venue' => false,
-                'selected_plz' => 12000
-            ]
+                'selected_plz' => 12000,
+            ],
         ];
 
         $venue = $this->concertService->getRequestVenue($data);
@@ -42,7 +42,7 @@ class ConcertServiceTest extends TestCase
                 'create_new_venue' => true,
                 'new_plz' => 13000,
                 'new_name' => 'bla bla',
-            ]
+            ],
         ];
 
         $venue = $this->concertService->getRequestVenue($data);
@@ -59,7 +59,7 @@ class ConcertServiceTest extends TestCase
                 'create_new_venue' => true,
                 'new_plz' => 12000,
                 'new_name' => 'bla bla',
-            ]
+            ],
         ];
 
         $venue = $this->concertService->getRequestVenue($data);
@@ -83,12 +83,12 @@ class ConcertServiceTest extends TestCase
                 'new_plz' => 12000,
                 'new_name' => 'test 2',
                 'street' => 'street name',
-                'house_number' => '12a'
+                'house_number' => '12a',
             ],
             'description' => [
                 'event' => 'event description',
-                'venue' => 'venue description'
-            ]
+                'venue' => 'venue description',
+            ],
         ];
 
         $dto = $this->concertService->createDto($data);

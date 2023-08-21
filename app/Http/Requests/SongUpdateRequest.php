@@ -14,7 +14,7 @@ class SongUpdateRequest extends FormRequest
             'author' => 'string|required',
             'arranger' => 'string|required',
             'genre' => 'string|required',
-            'file' => ['nullable', File::types(['audio/mpeg'])]
+            'file' => ['nullable', File::types(['audio/mpeg'])],
         ];
     }
 }
