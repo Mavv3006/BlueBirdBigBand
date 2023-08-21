@@ -17,7 +17,7 @@ class BookingTest extends TestCase
     {
         $this->get('/buchung')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('LatestInfos/BookingPage')
             );
     }

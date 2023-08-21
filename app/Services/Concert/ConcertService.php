@@ -2,9 +2,11 @@
 
 namespace App\Services\Concert;
 
+use App\DataTransferObjects\Concerts\ConcertAddressDto;
 use App\DataTransferObjects\Concerts\ConcertDescriptionDto;
 use App\DataTransferObjects\Concerts\ConcertDto;
 use App\DataTransferObjects\Concerts\ConcertVenueDto;
+use App\DataTransferObjects\Concerts\FormattedConcertDto;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
@@ -14,7 +16,10 @@ use Illuminate\Support\Facades\Log;
 
 class ConcertService
 {
-    public function upcoming(int $limit = null): Collection
+    /**
+     * @return Collection|FormattedConcertDto[]
+     */
+    public function upcoming(int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
         $queryBuilder = Concert::with('band', 'venue')
             ->whereDate('date', '>=', Carbon::today()->toDateString())
@@ -23,32 +28,38 @@ class ConcertService
         if ($limit) {
             $queryBuilder->limit(3);
         }
+
         return $queryBuilder
             ->get()
-            ->map(function (Concert $item) {
-                return $this->formatConcert($item);
+            ->map(function (Concert $item) use ($returnDtoFlag) {
+                $formattedConcertDto = $this->formatConcert($item);
+                if ($returnDtoFlag) {
+                    return $formattedConcertDto;
+                }
+
+                return $formattedConcertDto->toArray();
             });
     }
 
-    public function formatConcert(Concert $concert): array
+    public function formatConcert(Concert $concert): FormattedConcertDto
     {
-        return [
-            'id' => $concert->id,
-            'date' => $concert->date->format('Y-m-d'),
-            'start_time' => $concert->start_time->format('H:i'),
-            'end_time' => $concert->end_time->format('H:i'),
-            'band' => $concert->band->name,
-            'description' => [
-                'venue' => $concert->venue_description,
-                'event' => $concert->event_description
-            ],
-            'address' => [
-                'street' => $concert->venue_street,
-                'number' => $concert->venue_street_number,
-                'plz' => $concert->venue_plz,
-                'city' => $concert->venue->name
-            ]
-        ];
+        return new FormattedConcertDto(
+            id: $concert->id,
+            date: $concert->date,
+            start_time: $concert->start_time,
+            end_time: $concert->end_time,
+            band: $concert->band->name,
+            description: new ConcertDescriptionDto(
+                event: $concert->event_description,
+                venue: $concert->venue_description,
+            ),
+            address: new ConcertAddressDto(
+                street: $concert->venue_street,
+                number: $concert->venue_street_number,
+                plz: $concert->venue_plz,
+                city: $concert->venue->name
+            ),
+        );
     }
 
     public function allBands(): Collection
@@ -64,6 +75,7 @@ class ConcertService
     public function update(Concert $concert, ConcertDto $concertDto): Concert
     {
         $concert->update($concertDto->toArray());
+
         return $concert;
     }
 
@@ -94,6 +106,7 @@ class ConcertService
                 ['name' => $data['venue']['new_name']]
             );
         }
+
         return Venue::find($data['venue']['selected_plz']);
     }
 
@@ -104,7 +117,7 @@ class ConcertService
             ->orderBy('date')
             ->get()
             ->map(function (Concert $item) {
-                return $this->formatConcert($item);
+                return $this->formatConcert($item)->toArray();
             });
     }
 

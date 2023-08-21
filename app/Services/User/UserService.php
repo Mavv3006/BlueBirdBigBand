@@ -21,7 +21,7 @@ class UserService
     public function activateUser(User $user): void
     {
         $user->update(['activated' => true]);
-        Log::debug('Updated user ' . $user->id);
+        Log::debug('Updated user '.$user->id);
     }
 
     public function findByUsername(string $username): User
@@ -30,7 +30,6 @@ class UserService
     }
 
     /**
-     * @param User $user
      * @return UserRoleDto[]
      */
     public function getRolesOfUser(User $user): array
@@ -42,6 +41,7 @@ class UserService
         });
 
         Log::debug(json_encode($roleMap));
+
         return $roleMap;
     }
 
@@ -53,7 +53,7 @@ class UserService
         $user->syncRoles($data['roles']);
         Log::info('Updating the role assignment for a user', [
             'user' => ['id' => $user->id, 'name' => $user->name],
-            'roles' => $data['roles']
+            'roles' => $data['roles'],
         ]);
     }
 }

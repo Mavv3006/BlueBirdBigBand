@@ -25,7 +25,7 @@ class SongsTest extends TestCase
     {
         $this->get('intern/songs')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Intern/Songs')
             );
     }

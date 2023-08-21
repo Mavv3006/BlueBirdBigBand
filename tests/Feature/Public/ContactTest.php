@@ -17,7 +17,7 @@ class ContactTest extends TestCase
     {
         $this->get('/kontakt')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Contact/ContactPage')
             );
     }

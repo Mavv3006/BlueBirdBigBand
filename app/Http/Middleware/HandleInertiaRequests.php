@@ -19,7 +19,7 @@ class HandleInertiaRequests extends Middleware
     /**
      * Determine the current asset version.
      */
-    public function version(Request $request): string|null
+    public function version(Request $request): ?string
     {
         return parent::version($request);
     }
@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
                 'can' => [
                     'route.access-admin' => Gate::allows('route.access-admin'),
                     'route.access-intern' => Gate::allows('route.access-intern'),
-                ]
+                ],
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy())->toArray(), [

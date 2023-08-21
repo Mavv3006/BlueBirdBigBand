@@ -18,7 +18,7 @@ class InstrumentFactory extends Factory
     public function definition(): array
     {
         return [
-            'default_picture_filepath' => 'assets/musician_pictures/default/tux.png'
+            'default_picture_filepath' => 'assets/musician_pictures/default/tux.png',
         ];
     }
 }

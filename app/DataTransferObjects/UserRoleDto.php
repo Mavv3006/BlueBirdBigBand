@@ -5,11 +5,10 @@ namespace App\DataTransferObjects;
 class UserRoleDto
 {
     public function __construct(
-        public readonly int    $id,
+        public readonly int $id,
         public readonly string $name,
-        public readonly bool   $assigned
-    )
-    {
+        public readonly bool $assigned
+    ) {
     }
 
     public function toArray(): array

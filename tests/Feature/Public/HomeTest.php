@@ -17,7 +17,7 @@ class HomeTest extends TestCase
     {
         $this->get('/')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Index')
             );
     }

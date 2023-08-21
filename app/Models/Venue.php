@@ -13,7 +13,9 @@ class Venue extends Model
     public $incrementing = false;
 
     protected $primaryKey = 'plz';
+
     protected $fillable = ['plz', 'name'];
+
     protected $hidden = ['created_at', 'updated_at'];
 
     public function concerts(): HasMany

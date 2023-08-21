@@ -32,7 +32,7 @@ class RoleSyncPermissions extends TestCase
         $permission = $this->createPermission();
         $role = $this->createRole();
 
-        $role->syncPermissions([(string)$permission->id]);
+        $role->syncPermissions([(string) $permission->id]);
 
         $this->assertTrue($role->hasPermissionTo($permission->name));
     }

@@ -9,8 +9,6 @@ class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -18,7 +16,7 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'activated' => true
+            'activated' => true,
         ]);
     }
 }

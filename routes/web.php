@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\v2\BladeIndexController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
@@ -81,6 +82,7 @@ Route::prefix('v2')
     ->middleware([UseDesignVersion2::class])
     ->group(function () {
         Route::get('/', IndexController::class);
-});
+        Route::get('/blade', BladeIndexController::class);
+    });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

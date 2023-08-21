@@ -11,8 +11,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -21,13 +19,11 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
         Schema::defaultStringLength(125);
 
-        Model::shouldBeStrict(!App::isProduction());
+        Model::shouldBeStrict(! App::isProduction());
     }
 }

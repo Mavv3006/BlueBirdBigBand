@@ -17,7 +17,7 @@ class AboutUsTest extends TestCase
     {
         $this->get('/about-us')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Band/AboutPage')
             );
     }

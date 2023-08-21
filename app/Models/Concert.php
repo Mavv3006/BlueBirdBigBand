@@ -13,8 +13,9 @@ class Concert extends Model
     protected $casts = [
         'date' => 'datetime',
         'start_time' => 'datetime',
-        'end_time' => 'datetime'
+        'end_time' => 'datetime',
     ];
+
     protected $fillable = [
         'start_time',
         'end_time',
@@ -24,11 +25,12 @@ class Concert extends Model
         'venue_description',
         'band_id',
         'date',
-        'venue_plz'
+        'venue_plz',
     ];
+
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function band(): BelongsTo

@@ -22,7 +22,8 @@ class RoleService
     public function create(StoreRoleRequest $request): Role
     {
         $role = Role::create($request->validated());
-        Log::info('creating new role (id: ' . $role->id . ', name: ' . $role->name . ').');
+        Log::info('creating new role (id: '.$role->id.', name: '.$role->name.').');
+
         return $role;
     }
 
@@ -68,13 +69,13 @@ class RoleService
             return Permission::find($idDto->id);
         }, $dto->permission_ids);
         $role->syncPermissions($data);
-        Log::info('updating role (id: ' . $role->id . ', name: ' . $role->name . ').');
+        Log::info('updating role (id: '.$role->id.', name: '.$role->name.').');
     }
 
     public function delete(int $id): void
     {
         $role = $this->getById($id);
-        Log::info('deleting role (id: ' . $role->id . ', name: ' . $role->name . ').');
+        Log::info('deleting role (id: '.$role->id.', name: '.$role->name.').');
         $role
             ->syncPermissions([])
             ->delete();

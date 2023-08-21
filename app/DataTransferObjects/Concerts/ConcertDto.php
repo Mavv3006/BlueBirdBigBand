@@ -8,14 +8,13 @@ use Carbon\Carbon;
 class ConcertDto
 {
     public function __construct(
-        public readonly Carbon                $date,
-        public readonly Band                  $band,
-        public readonly string                $start_time,
-        public readonly string                $end_time,
-        public readonly ConcertVenueDto       $venueDto,
+        public readonly Carbon $date,
+        public readonly Band $band,
+        public readonly string $start_time,
+        public readonly string $end_time,
+        public readonly ConcertVenueDto $venueDto,
         public readonly ConcertDescriptionDto $descriptionDto,
-    )
-    {
+    ) {
     }
 
     public function toArray(): array
@@ -29,7 +28,7 @@ class ConcertDto
             'venue_street' => $this->venueDto->street,
             'venue_street_number' => $this->venueDto->house_number,
             'band_id' => $this->band->id,
-            'venue_plz' => $this->venueDto->venue->plz
+            'venue_plz' => $this->venueDto->venue->plz,
         ];
     }
 }

@@ -13,13 +13,11 @@ class HasPermissionToAccessAdminRoutes
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure(Request): (Response) $next
-     * @return Response
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->hasPermissionTo('route.access-admin')) {
+        if (! Auth::user()->hasPermissionTo('route.access-admin')) {
             throw UnauthorizedException::forPermissions(['route.access-admin']);
         }
 

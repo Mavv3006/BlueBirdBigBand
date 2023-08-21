@@ -17,7 +17,7 @@ class ImprintTest extends TestCase
     {
         $this->get('/impressum')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Contact/ImprintPage')
             );
     }

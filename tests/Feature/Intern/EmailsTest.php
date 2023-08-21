@@ -25,7 +25,7 @@ class EmailsTest extends TestCase
     {
         $this->get('intern/emails')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Intern/Emails')
             );
     }

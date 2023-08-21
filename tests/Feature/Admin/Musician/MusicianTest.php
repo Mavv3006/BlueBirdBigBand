@@ -9,7 +9,6 @@ use Tests\TestCase;
 
 class MusicianTest extends TestCase
 {
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,9 +27,9 @@ class MusicianTest extends TestCase
         $this->get('admin/musicians')
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansIndex')
-                    ->has('data', 3, fn(AssertableInertia $page) => $page
+                    ->has('data', 3, fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('firstname')
                         ->has('lastname')
@@ -38,7 +37,7 @@ class MusicianTest extends TestCase
                         ->has('seating_position')
                         ->has('instrument_id')
                         ->has('picture_filepath')
-                        ->has('instrument', fn(AssertableInertia $page) => $page
+                        ->has('instrument', fn (AssertableInertia $page) => $page
                             ->has('id')
                             ->has('name')
                             ->has('default_picture_filepath')
@@ -54,9 +53,9 @@ class MusicianTest extends TestCase
         $this->get('admin/musicians/create')
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansCreate')
-                    ->has('instruments', 1, fn(AssertableInertia $page) => $page
+                    ->has('instruments', 1, fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
                         ->has('default_picture_filepath')
@@ -94,14 +93,14 @@ class MusicianTest extends TestCase
         $this->get('admin/musicians/1')
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansShow')
-                    ->has('instrument', fn(AssertableInertia $page) => $page
+                    ->has('instrument', fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
                         ->has('default_picture_filepath')
                     )
-                    ->has('musician', fn(AssertableInertia $page) => $page
+                    ->has('musician', fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('firstname')
                         ->has('lastname')
@@ -124,14 +123,14 @@ class MusicianTest extends TestCase
         $this->get('admin/musicians/1/edit')
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansEdit')
-                    ->has('instruments', 1, fn(AssertableInertia $page) => $page
+                    ->has('instruments', 1, fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('name')
                         ->has('default_picture_filepath')
                     )
-                    ->has('musician', fn(AssertableInertia $page) => $page
+                    ->has('musician', fn (AssertableInertia $page) => $page
                         ->has('id')
                         ->has('firstname')
                         ->has('lastname')
@@ -154,7 +153,7 @@ class MusicianTest extends TestCase
             ]);
 
         $response = $this->put(
-            'admin/musicians/' . $databaseMusician->id,
+            'admin/musicians/'.$databaseMusician->id,
             [
                 'firstname' => '1',
                 'isActive' => true,
