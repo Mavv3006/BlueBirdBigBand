@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Layouts;
 
-use App\Services\View\NavigationLinksService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

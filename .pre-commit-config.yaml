@@ -3,5 +3,5 @@ repos:
     hooks:
       - id: pint.sh
         name: Laravel Pint
-        entry: .\bin\pre-commit\pint.sh
+        entry: .\\bin\\pre-commit\\pint.sh
         language: script
