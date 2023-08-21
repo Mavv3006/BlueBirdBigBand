@@ -21,10 +21,6 @@ class FooterLink extends Component
      */
     public function render(): View|Closure|string
     {
-        return <<<'blade'
-<a href="{{ $href }}" class="text-sm text-[#575757]">
-        {{ $slot }}
-</a>
-blade;
+        return view('components.layouts.footer-link');
     }
 }

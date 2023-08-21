@@ -13,7 +13,7 @@
 <div class="wrapper">
 
     <div class="content">
-        <x-layouts.header/>
+        <livewire:page-header/>
 
         {{ $slot }}
     </div>

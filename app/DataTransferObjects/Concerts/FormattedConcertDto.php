@@ -22,7 +22,7 @@ class FormattedConcertDto
     {
         return [
             'id' => $this->id,
-            'date' => $this->date->format('Y-m-d'),
+            'date' => $this->date->locale('de')->format('Y-m-d'),
             'start_time' => $this->start_time->format('H:i'),
             'end_time' => $this->end_time->format('H:i'),
             'band' => $this->band,
