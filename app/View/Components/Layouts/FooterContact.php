@@ -41,7 +41,7 @@ class FooterContact extends Component
     public function render(): View|Closure|string
     {
         return view('components.layouts.footer-contact', [
-            'contactLinks' => $this->contactLinks
+            'contactLinks' => $this->contactLinks,
         ]);
     }
 }
