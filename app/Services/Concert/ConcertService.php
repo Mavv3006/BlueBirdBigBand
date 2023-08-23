@@ -19,14 +19,14 @@ class ConcertService
     /**
      * @return Collection|FormattedConcertDto[]
      */
-    public function upcoming(int $limit = null, bool $returnDtoFlag = false): Collection|array
+    public function query(string $dateComparisonOperator, int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
         $queryBuilder = Concert::with('band', 'venue')
-            ->whereDate('date', '>=', Carbon::today()->toDateString())
+            ->whereDate('date', $dateComparisonOperator, Carbon::today()->toDateString())
             ->orderBy('date');
 
         if ($limit) {
-            $queryBuilder->limit(3);
+            $queryBuilder->limit($limit);
         }
 
         return $queryBuilder
@@ -39,6 +39,14 @@ class ConcertService
 
                 return $formattedConcertDto->toArray();
             });
+    }
+
+    /**
+     * @return Collection|FormattedConcertDto[]
+     */
+    public function upcoming(int $limit = null, bool $returnDtoFlag = false): Collection|array
+    {
+        return $this->query('>=', $limit, $returnDtoFlag);
     }
 
     public function formatConcert(Concert $concert): FormattedConcertDto
@@ -110,15 +118,12 @@ class ConcertService
         return Venue::find($data['venue']['selected_plz']);
     }
 
-    public function past(): Collection
+    /**
+     * @return Collection|FormattedConcertDto[]
+     */
+    public function past(int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
-        return Concert::with('band', 'venue')
-            ->whereDate('date', '<', Carbon::today()->toDateString())
-            ->orderBy('date')
-            ->get()
-            ->map(function (Concert $item) {
-                return $this->formatConcert($item)->toArray();
-            });
+        return $this->query('<', $limit, $returnDtoFlag);
     }
 
     public function delete(Concert $concert): void

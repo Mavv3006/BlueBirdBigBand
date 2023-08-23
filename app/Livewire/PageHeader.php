@@ -3,8 +3,6 @@
 namespace App\Livewire;
 
 use App\Services\View\NavigationLinksService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -24,7 +22,7 @@ class PageHeader extends Component
         $this->isMobileMenuOpen = ! $this->isMobileMenuOpen;
     }
 
-    public function render(): View|\Illuminate\Foundation\Application|Factory|Application
+    public function render(): View
     {
         return view('livewire.page-header', [
             'navLinks' => $this->linksService,

@@ -10,15 +10,15 @@
 </head>
 <body>
 
-<div class="wrapper">
+<div class="flex flex-col h-screen">
 
-    <div class="content">
+    <div style="flex: 1 0 auto">
         <livewire:page-header/>
 
         {{ $slot }}
     </div>
 
-    <div class="footer">
+    <div style="flex-shrink: 0">
         <x-layouts.footer/>
     </div>
 </div>
