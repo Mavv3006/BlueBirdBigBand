@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             ->call(InstrumentSeeder::class)
             ->call(MusicianSeeder::class)
             ->call(DefaultAuthorizationSeeder::class)
-            ->call(SongSeeder::class);
+            ->call(SongSeeder::class)
+            ->call(SetlistSeeder::class);
 
         User::factory()
             ->create(['name' => 'admin', 'activated' => true])

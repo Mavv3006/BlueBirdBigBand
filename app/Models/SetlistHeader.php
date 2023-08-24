@@ -4,24 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Song extends Model
+class SetlistHeader extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public function concert(): BelongsTo
+    {
+        return $this->belongsTo(Concert::class);
+    }
 
-    protected $fillable = [
-        'file_path',
-        'title',
-        'author',
-        'genre',
-        'arranger',
-        'size',
-    ];
-
-    public function setlistEntries(): HasMany
+    public function entries(): HasMany
     {
         return $this->hasMany(SetlistEntry::class);
     }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Concert extends Model
 {
@@ -41,5 +42,10 @@ class Concert extends Model
     public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class, 'venue_plz', 'plz');
+    }
+
+    public function setlist(): HasOne
+    {
+        return $this->hasOne(SetlistHeader::class);
     }
 }
