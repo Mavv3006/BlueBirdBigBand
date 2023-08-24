@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('concert_id')->constrained('concerts');
             $table->timestamps();
 
-            $table->unique(['concert_id', 'id']);
+            $table->unique(['concert_id']);
         });
     }
 

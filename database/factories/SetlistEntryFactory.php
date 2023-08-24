@@ -15,8 +15,8 @@ class SetlistEntryFactory extends Factory
     public function definition(): array
     {
         return [
-            'setlist_id' => SetlistHeader::all()->random(1)->first,
-            'song_id' => Song::all()->random(1)->first,
+            'setlist_id' => SetlistHeader::all()->random(1)->first(),
+            'song_id' => Song::all()->random(1)->first(),
             'sequence_number' => $this->faker->randomNumber(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

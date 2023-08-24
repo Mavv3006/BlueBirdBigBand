@@ -83,8 +83,8 @@ Route::prefix('v2')
     ->middleware([UseDesignVersion2::class])
     ->group(function () {
         Route::get('/', IndexController::class);
+        Route::get('/auftritt/{concert}', ConcertDetailsPageController::class);
         Route::get('/auftritte', ConcertsPageController::class);
-        Route::get('/auftritte/{concert}', ConcertDetailsPageController::class);
     });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

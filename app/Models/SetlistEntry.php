@@ -10,8 +10,13 @@ class SetlistEntry extends Model
 {
     use HasFactory;
 
-    public function songs(): BelongsTo
+    public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
+    }
+
+    public function setlistHeader(): BelongsTo
+    {
+        return $this->belongsTo(SetlistHeader::class, 'setlist_id', 'id');
     }
 }

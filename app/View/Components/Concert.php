@@ -14,7 +14,6 @@ class Concert extends Component
      */
     public function __construct(public FormattedConcertDto $concert)
     {
-        //
     }
 
     /**

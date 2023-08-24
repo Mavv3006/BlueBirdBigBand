@@ -10,7 +10,7 @@
         <div>{{ $concert->address->plz }} {{ $concert->address->city }}</div>
     </div>
     <div class="flex justify-center mt-3">
-        <x-forms.buttons.call-to-action-button-anchor href="`/v2/auftritt/{{$concert->id}}`" as="anchor"
+        <x-forms.buttons.call-to-action-button-anchor href="/v2/auftritt/{{$concert->id}}" as="anchor"
                                                       name="Details"/>
     </div>
 </div>

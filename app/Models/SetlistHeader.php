@@ -18,6 +18,6 @@ class SetlistHeader extends Model
 
     public function entries(): HasMany
     {
-        return $this->hasMany(SetlistEntry::class);
+        return $this->hasMany(SetlistEntry::class, 'setlist_id', 'id');
     }
 }
