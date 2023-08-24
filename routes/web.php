@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\v2\ConcertDetailsPageController;
 use App\Http\Controllers\v2\ConcertsPageController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
@@ -83,6 +84,7 @@ Route::prefix('v2')
     ->group(function () {
         Route::get('/', IndexController::class);
         Route::get('/auftritte', ConcertsPageController::class);
+        Route::get('/auftritte/{concert}', ConcertDetailsPageController::class);
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
