@@ -4,9 +4,9 @@ namespace App\Http\Controllers\v2;
 
 use App\Http\Controllers\Controller;
 use App\Models\Concert;
+use App\Models\SetlistHeader;
 use App\Services\Concert\ConcertService;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class ConcertDetailsPageController extends Controller
 {
@@ -14,18 +14,20 @@ class ConcertDetailsPageController extends Controller
     {
     }
 
-    public function __invoke(Request $request, Concert $concert): View
+    public function __invoke(Request $request, Concert $concert)
     {
-        $setlistSongs = $concert
+        /** @var SetlistHeader $setlistHeader */
+        $setlistHeader = $concert
             ->setlist()
-            ->first()
+            ->first();
+        $setlistSongs = $setlistHeader
             ->entries()
             ->with('song')
             ->orderBy('sequence_number')
             ->get()
-            ->map(fn($entry) => $entry->song)
+            ->map(fn ($entry) => $entry->song)
             ->unique()
-            ->map(fn($song) => [
+            ->map(fn ($song) => [
                 'title' => $song->title,
                 'genre' => $song->genre,
                 'author' => $song->author,

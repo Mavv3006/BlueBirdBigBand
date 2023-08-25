@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class ConcertDetailsPageControllerTest extends TestCase
 {
-
     public function test_database_preparation()
     {
         $this->seedDatabase();
@@ -30,7 +29,7 @@ class ConcertDetailsPageControllerTest extends TestCase
         $this->seedDatabase();
 
         $this->get(route('concert-details-page', [
-            'concert' => Concert::all()->first()
+            'concert' => Concert::all()->first(),
         ]))
             ->assertSuccessful()
             ->assertViewHas('concert');
