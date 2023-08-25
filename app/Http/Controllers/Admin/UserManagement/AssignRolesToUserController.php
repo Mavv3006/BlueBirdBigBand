@@ -24,7 +24,7 @@ class AssignRolesToUserController extends Controller
 
         $data = $request->validated();
 
-        if (! $request->has('username')) {
+        if (!$request->has('username')) {
             return Inertia::render('Admin/UserManagement/SearchUser');
         }
 

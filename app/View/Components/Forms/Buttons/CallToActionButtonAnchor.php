@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Forms\Buttons;
 
-use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -20,7 +19,7 @@ class CallToActionButtonAnchor extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View|\Closure|string
     {
         return view('components.forms.buttons.call-to-action-button-anchor', [
             'name' => $this->name,

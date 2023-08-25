@@ -8,14 +8,14 @@ use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    public function test_registration_screen_can_be_rendered(): void
+    public function testRegistrationScreenCanBeRendered(): void
     {
         $response = $this->get('/registrieren');
 
         $response->assertStatus(200);
     }
 
-    public function test_new_users_can_register(): void
+    public function testNewUsersCanRegister(): void
     {
         $response = $this->post('/registrieren', [
             'name' => 'Test User',

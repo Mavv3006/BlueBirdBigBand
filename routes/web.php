@@ -85,7 +85,8 @@ Route::prefix('v2')
         Route::get('/', IndexController::class);
         Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
             ->name('concert-details-page');
-        Route::get('/auftritte', ConcertsPageController::class);
+        Route::get('/auftritte', ConcertsPageController::class)
+            ->name('concerts-page');
     });
 
 require __DIR__.'/auth.php';

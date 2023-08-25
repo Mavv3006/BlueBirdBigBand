@@ -17,7 +17,7 @@ class ConcertsControllerTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function test_show_create_form(): void
+    public function testShowCreateForm(): void
     {
         Venue::create(['plz' => 12000, 'name' => 'test']);
         Band::create(['name' => 'test']);
@@ -27,18 +27,24 @@ class ConcertsControllerTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsCreate')
-                    ->has('venues', 1, fn (AssertableInertia $page) => $page
-                        ->has('plz')
-                        ->has('name')
+                    ->has(
+                        'venues',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('plz')
+                            ->has('name')
                     )
-                    ->has('bands', 1, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
+                    ->has(
+                        'bands',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
                     )
             );
     }
 
-    public function test_show_edit_form(): void
+    public function testShowEditForm(): void
     {
         Venue::factory()->create();
         Band::factory()->create();
@@ -49,35 +55,47 @@ class ConcertsControllerTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsEdit')
-                    ->has('venues', 1, fn (AssertableInertia $page) => $page
-                        ->has('plz')
-                        ->has('name')
-                    )
-                    ->has('bands', 1, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                    )
-                    ->has('concert', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('date')
-                        ->has('start_time')
-                        ->has('end_time')
-                        ->has('band')
-                        ->has('description', fn (AssertableInertia $page) => $page
-                            ->has('venue')
-                            ->has('event')
-                        )
-                        ->has('address', fn (AssertableInertia $page) => $page
-                            ->has('street')
-                            ->has('number')
+                    ->has(
+                        'venues',
+                        1,
+                        fn (AssertableInertia $page) => $page
                             ->has('plz')
-                            ->has('city')
-                        )
+                            ->has('name')
+                    )
+                    ->has(
+                        'bands',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                    )
+                    ->has(
+                        'concert',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('date')
+                            ->has('start_time')
+                            ->has('end_time')
+                            ->has('band')
+                            ->has(
+                                'description',
+                                fn (AssertableInertia $page) => $page
+                                    ->has('venue')
+                                    ->has('event')
+                            )
+                            ->has(
+                                'address',
+                                fn (AssertableInertia $page) => $page
+                                    ->has('street')
+                                    ->has('number')
+                                    ->has('plz')
+                                    ->has('city')
+                            )
                     )
             );
     }
 
-    public function test_store()
+    public function testStore()
     {
         $data = [
             'date' => Carbon::today()->addDays(2),
@@ -117,7 +135,7 @@ class ConcertsControllerTest extends TestCase
         $this->assertEquals('test 2', $venue->name);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
         $this->withoutExceptionHandling();
 
@@ -168,7 +186,7 @@ class ConcertsControllerTest extends TestCase
         $this->assertEquals('street name', $assertConcert->venue_street);
     }
 
-    public function test_index()
+    public function testIndex()
     {
         Venue::factory()->create();
         Band::factory()->create();
@@ -181,14 +199,16 @@ class ConcertsControllerTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/ConcertManagement/ConcertsIndex')
-                    ->has('concerts', fn (AssertableInertia $page) => $page
-                        ->has('upcoming')
-                        ->has('past')
+                    ->has(
+                        'concerts',
+                        fn (AssertableInertia $page) => $page
+                            ->has('upcoming')
+                            ->has('past')
                     )
             );
     }
 
-    public function test_delete_concert()
+    public function testDeleteConcert()
     {
         Venue::factory()->create();
         Band::factory()->create();

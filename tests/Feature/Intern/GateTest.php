@@ -19,20 +19,20 @@ class GateTest extends TestCase
         );
     }
 
-    public function test_can_access_index()
+    public function testCanAccessIndex()
     {
         $this->get('/intern')
             ->assertStatus(301)
             ->assertRedirect(route('home'));
     }
 
-    public function test_can_access_emails()
+    public function testCanAccessEmails()
     {
         $this->get('/intern/emails')
             ->assertSuccessful();
     }
 
-    public function test_can_access_songs()
+    public function testCanAccessSongs()
     {
         $this->get('/intern/songs')
             ->assertSuccessful();

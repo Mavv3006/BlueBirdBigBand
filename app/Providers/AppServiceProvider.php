@@ -14,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**
@@ -24,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(125);
 
-        Model::shouldBeStrict(! App::isProduction());
+        Model::shouldBeStrict(!App::isProduction());
     }
 }

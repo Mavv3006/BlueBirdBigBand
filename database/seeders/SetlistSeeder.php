@@ -18,7 +18,6 @@ class SetlistSeeder extends Seeder
                 ->for($concert)
                 ->has(SetlistEntry::factory()->count(4), 'entries')
                 ->create();
-
         }
     }
 }

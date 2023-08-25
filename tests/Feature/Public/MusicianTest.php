@@ -9,13 +9,13 @@ use Tests\TestCase;
 
 class MusicianTest extends TestCase
 {
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('/musiker')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('/musiker')
             ->assertInertia(
@@ -24,7 +24,7 @@ class MusicianTest extends TestCase
             );
     }
 
-    public function test_correct_data()
+    public function testCorrectData()
     {
         $instrument = Instrument::factory()->create(['name' => 'test']);
         Musician::factory()

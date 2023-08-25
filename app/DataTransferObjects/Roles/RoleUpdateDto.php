@@ -7,7 +7,7 @@ use App\DataTransferObjects\IdDto;
 class RoleUpdateDto
 {
     /**
-     * @param  IdDto[]  $permission_ids
+     * @param IdDto[] $permission_ids
      */
     public function __construct(
         public readonly int $role_id,

@@ -1,4 +1,4 @@
-<div class="container mx-auto">
+<div class="container mx-auto mb-8">
     <x-page-sections.concert-listing
         heading="Vergangene Auftritte"
         :type="\App\Enums\ConcertListingType::Past"

@@ -45,20 +45,16 @@ class LoginRequest extends FormRequest
 
         $user = User::where('name', $this->only('name'))->first();
 
-        if (! $user->activated) {
-            throw ValidationException::withMessages([
-                'name' => trans('auth.activated'),
-            ]);
+        if (!$user->activated) {
+            throw ValidationException::withMessages(['name' => trans('auth.activated')]);
         }
 
         $isAuthenticated = Auth::attempt($this->only('name', 'password'), $this->boolean('remember'));
 
-        if (! $isAuthenticated) {
+        if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'name' => trans('auth.failed'),
-            ]);
+            throw ValidationException::withMessages(['name' => trans('auth.failed')]);
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -71,7 +67,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -79,12 +75,7 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        throw ValidationException::withMessages([
-            'name' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
+        throw ValidationException::withMessages(['name' => trans('auth.throttle', ['seconds' => $seconds, 'minutes' => ceil($seconds / 60)])]);
     }
 
     /**

@@ -26,7 +26,7 @@ class SetlistTest extends TestCase
             ->seed(SongSeeder::class);
     }
 
-    public function test_create_setlist_header()
+    public function testCreateSetlistHeader()
     {
         $this->assertDatabaseCount(SetlistHeader::class, 0);
 
@@ -35,7 +35,7 @@ class SetlistTest extends TestCase
         $this->assertDatabaseCount(SetlistHeader::class, 1);
     }
 
-    public function test_create_a_single_setlist_entry()
+    public function testCreateASingleSetlistEntry()
     {
         SetlistHeader::factory()->create();
         $this->assertDatabaseCount(SetlistHeader::class, 1);
@@ -46,7 +46,7 @@ class SetlistTest extends TestCase
         $this->assertDatabaseCount(SetlistEntry::class, 1);
     }
 
-    public function test_run_setlist_seeder()
+    public function testRunSetlistSeeder()
     {
         $this->seed(SetlistSeeder::class);
 
@@ -54,6 +54,5 @@ class SetlistTest extends TestCase
 
         $this->assertDatabaseCount(SetlistHeader::class, $concertCount);
         $this->assertDatabaseCount(SetlistEntry::class, $concertCount * 4);
-
     }
 }

@@ -19,7 +19,7 @@ class PageHeader extends Component
 
     public function toggleMobileMenu(): void
     {
-        $this->isMobileMenuOpen = ! $this->isMobileMenuOpen;
+        $this->isMobileMenuOpen = !$this->isMobileMenuOpen;
     }
 
     public function render(): View

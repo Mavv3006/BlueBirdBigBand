@@ -18,22 +18,25 @@ class RoleTest extends TestCase
         $this->actingAs($this->createUserForAdminRoutes());
     }
 
-    public function test_index_route()
+    public function testIndexRoute()
     {
         $this->get('admin/roles')
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/RolesManagement/RolesIndex')
-                    ->has('roles', 2, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('guard_name')
-                        ->has('name')
+                    ->has(
+                        'roles',
+                        2,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('guard_name')
+                            ->has('name')
                     )
             );
     }
 
-    public function test_create_route()
+    public function testCreateRoute()
     {
         $this->get('admin/roles/create')
             ->assertSuccessful()
@@ -43,7 +46,7 @@ class RoleTest extends TestCase
             );
     }
 
-    public function test_store_route()
+    public function testStoreRoute()
     {
         $this->post(
             'admin/roles',
@@ -58,7 +61,7 @@ class RoleTest extends TestCase
         );
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         User::factory()
             ->create(['name' => 'test'])
@@ -68,57 +71,72 @@ class RoleTest extends TestCase
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->has('role', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('guard_name')
+                    ->has(
+                        'role',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('guard_name')
                     )
-                    ->has('role_permissions.0', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->etc()
+                    ->has(
+                        'role_permissions.0',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->etc()
                     )
-                    ->has('users', 1, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('activated')
-                        ->etc()
+                    ->has(
+                        'users',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('activated')
+                            ->etc()
                     )
             );
     }
 
-    public function test_edit_route()
+    public function testEditRoute()
     {
         $this->get('admin/roles/1/edit')
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->has('role', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('guard_name')
+                    ->has(
+                        'role',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('guard_name')
                     )
-                    ->has('role_permissions.0', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->etc()
+                    ->has(
+                        'role_permissions.0',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->etc()
                     )
-                    ->has('all_permissions.0', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->etc()
+                    ->has(
+                        'all_permissions.0',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->etc()
                     )
-                    ->has('not_used_permissions.0', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->etc()
+                    ->has(
+                        'not_used_permissions.0',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->etc()
                     )
             );
     }
 
-    /**
-      * This test always throws the following error:
-      * `The given role or permission should use guard `` instead of `web`.`
-      */
+    /*
+     * This test always throws the following error:
+     * `The given role or permission should use guard `` instead of `web`.`
+     */
     //    public function test_update_route()
     //    {
     //        Role::find(1)->syncPermissions([1]);

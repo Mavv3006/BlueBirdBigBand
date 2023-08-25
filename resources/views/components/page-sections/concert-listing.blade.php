@@ -1,10 +1,10 @@
-<div class="bg-white">
+<div>
     <div class="mx-auto">
         <x-page-sections.section-header class="pl-16 pt-8 pb-4">
             {{ $heading }}
         </x-page-sections.section-header>
 
-        <div class="flex flex-col items-center gap-8 pb-16
+        <div class="flex flex-col items-center gap-8 pb-8
                 md:flex-row md:flex-wrap md:justify-center
                 lg:mx-8 lg:gap-x-16
                 xl:justify-evenly">

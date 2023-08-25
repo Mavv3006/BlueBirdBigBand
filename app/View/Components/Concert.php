@@ -3,7 +3,6 @@
 namespace App\View\Components;
 
 use App\DataTransferObjects\Concerts\FormattedConcertDto;
-use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
@@ -19,7 +18,7 @@ class Concert extends Component
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View|\Closure|string
     {
         return view('components.concert', [
             'concert' => $this->concert,

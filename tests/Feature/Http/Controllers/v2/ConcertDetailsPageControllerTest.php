@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class ConcertDetailsPageControllerTest extends TestCase
 {
-    public function test_database_preparation()
+    public function testDatabasePreparation()
     {
         $this->seedDatabase();
 
@@ -24,7 +24,7 @@ class ConcertDetailsPageControllerTest extends TestCase
         $this->assertDatabaseCount(SetlistEntry::class, 1);
     }
 
-    public function test_controller()
+    public function testController()
     {
         $this->seedDatabase();
 

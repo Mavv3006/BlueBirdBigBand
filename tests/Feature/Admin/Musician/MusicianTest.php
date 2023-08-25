@@ -15,7 +15,7 @@ class MusicianTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function test_index_route()
+    public function testIndexRoute()
     {
         Musician::factory()
             ->count(3)
@@ -29,24 +29,29 @@ class MusicianTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansIndex')
-                    ->has('data', 3, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('firstname')
-                        ->has('lastname')
-                        ->has('isActive')
-                        ->has('seating_position')
-                        ->has('instrument_id')
-                        ->has('picture_filepath')
-                        ->has('instrument', fn (AssertableInertia $page) => $page
+                    ->has(
+                        'data',
+                        3,
+                        fn (AssertableInertia $page) => $page
                             ->has('id')
-                            ->has('name')
-                            ->has('default_picture_filepath')
-                        )
+                            ->has('firstname')
+                            ->has('lastname')
+                            ->has('isActive')
+                            ->has('seating_position')
+                            ->has('instrument_id')
+                            ->has('picture_filepath')
+                            ->has(
+                                'instrument',
+                                fn (AssertableInertia $page) => $page
+                                    ->has('id')
+                                    ->has('name')
+                                    ->has('default_picture_filepath')
+                            )
                     )
             );
     }
 
-    public function test_create_route()
+    public function testCreateRoute()
     {
         Instrument::factory()->create(['name' => 'test']);
 
@@ -55,15 +60,18 @@ class MusicianTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansCreate')
-                    ->has('instruments', 1, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('default_picture_filepath')
+                    ->has(
+                        'instruments',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('default_picture_filepath')
                     )
             );
     }
 
-    public function test_store_route()
+    public function testStoreRoute()
     {
         $response = $this->post('admin/musicians', [
             'firstname' => 'test',
@@ -82,7 +90,7 @@ class MusicianTest extends TestCase
         $this->assertNull($musician->picture_filepath);
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         Musician::factory()
             ->for(
@@ -95,24 +103,28 @@ class MusicianTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansShow')
-                    ->has('instrument', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('default_picture_filepath')
+                    ->has(
+                        'instrument',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('default_picture_filepath')
                     )
-                    ->has('musician', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('firstname')
-                        ->has('lastname')
-                        ->has('seating_position')
-                        ->has('isActive')
-                        ->has('instrument_id')
-                        ->has('picture_filepath')
+                    ->has(
+                        'musician',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('firstname')
+                            ->has('lastname')
+                            ->has('seating_position')
+                            ->has('isActive')
+                            ->has('instrument_id')
+                            ->has('picture_filepath')
                     )
             );
     }
 
-    public function test_edit_route()
+    public function testEditRoute()
     {
         Musician::factory()
             ->for(
@@ -125,24 +137,29 @@ class MusicianTest extends TestCase
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/MusiciansEdit')
-                    ->has('instruments', 1, fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('name')
-                        ->has('default_picture_filepath')
+                    ->has(
+                        'instruments',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('name')
+                            ->has('default_picture_filepath')
                     )
-                    ->has('musician', fn (AssertableInertia $page) => $page
-                        ->has('id')
-                        ->has('firstname')
-                        ->has('lastname')
-                        ->has('isActive')
-                        ->has('seating_position')
-                        ->has('instrument_id')
-                        ->has('picture_filepath')
+                    ->has(
+                        'musician',
+                        fn (AssertableInertia $page) => $page
+                            ->has('id')
+                            ->has('firstname')
+                            ->has('lastname')
+                            ->has('isActive')
+                            ->has('seating_position')
+                            ->has('instrument_id')
+                            ->has('picture_filepath')
                     )
             );
     }
 
-    public function test_update_route()
+    public function testUpdateRoute()
     {
         $instrument = Instrument::factory()->create(['name' => 'test']);
         $databaseMusician = Musician::factory()
@@ -156,7 +173,6 @@ class MusicianTest extends TestCase
             'admin/musicians/'.$databaseMusician->id,
             [
                 'firstname' => '1',
-                'isActive' => true,
                 'lastname' => '2',
                 'isActive' => $databaseMusician->isActive,
                 'instrument_id' => $instrument->id,
@@ -173,7 +189,7 @@ class MusicianTest extends TestCase
         $this->assertNull($musician->picture_filepath);
     }
 
-    public function test_destroy_route()
+    public function testDestroyRoute()
     {
         Musician::factory()
             ->for(

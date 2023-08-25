@@ -18,7 +18,7 @@ class ConcertServiceTest extends TestCase
         $this->concertService = new ConcertService();
     }
 
-    public function test_getRequestVenue_find_Venue()
+    public function testGetRequestVenueFindVenue()
     {
         Venue::create(['plz' => 12000, 'name' => 'test']);
         $data = [
@@ -34,7 +34,7 @@ class ConcertServiceTest extends TestCase
         $this->assertEquals('test', $venue->name);
     }
 
-    public function test_getRequestVenue_create_Venue()
+    public function testGetRequestVenueCreateVenue()
     {
         Venue::create(['plz' => 12000, 'name' => 'test']);
         $data = [
@@ -51,7 +51,7 @@ class ConcertServiceTest extends TestCase
         $this->assertEquals('bla bla', $venue->name);
     }
 
-    public function test_getRequestVenue_find_create_Venue()
+    public function testGetRequestVenueFindCreateVenue()
     {
         Venue::create(['plz' => 12000, 'name' => 'test']);
         $data = [
@@ -68,7 +68,7 @@ class ConcertServiceTest extends TestCase
         $this->assertEquals('test', $venue->name);
     }
 
-    public function test_createDto()
+    public function testCreateDto()
     {
         Band::create(['name' => 'test']);
         $data = [
@@ -105,7 +105,7 @@ class ConcertServiceTest extends TestCase
         $this->assertEquals('venue description', $dto->descriptionDto->venue);
     }
 
-    public function test_delete()
+    public function testDelete()
     {
         Venue::factory()->create();
         Band::factory()->create();
