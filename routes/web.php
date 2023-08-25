@@ -83,7 +83,8 @@ Route::prefix('v2')
     ->middleware([UseDesignVersion2::class])
     ->group(function () {
         Route::get('/', IndexController::class);
-        Route::get('/auftritt/{concert}', ConcertDetailsPageController::class);
+        Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
+            ->name('concert-details-page');
         Route::get('/auftritte', ConcertsPageController::class);
     });
 

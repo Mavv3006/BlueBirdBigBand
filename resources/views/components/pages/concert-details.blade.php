@@ -4,7 +4,7 @@
             Auftritt vom {{ $concert->date->locale('de')->isoFormat('DD.MM.Y') }} in {{ $concert->address->city }}
         </x-page-sections.section-header>
 
-        <div class="flex gap-12 mb-12">
+        <div class="flex gap-12 mt-4">
 
             <div class="h-96 w-80 bg-gray-300 flex justify-center items-center">
                 <p class="text-center">
@@ -24,7 +24,9 @@
 
         </div>
 
-        <x-concert.setlist :setlistSongs="$setlistSongs"/>
+        <div class="mt-8">
+            <x-concert.setlist :setlistSongs="$setlistSongs" bandName="{{$concert->band}}"/>
+        </div>
     </div>
 
 </x-layouts.public-layout>

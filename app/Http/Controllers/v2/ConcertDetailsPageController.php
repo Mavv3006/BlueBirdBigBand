@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Concert;
 use App\Services\Concert\ConcertService;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ConcertDetailsPageController extends Controller
 {
@@ -13,7 +14,7 @@ class ConcertDetailsPageController extends Controller
     {
     }
 
-    public function __invoke(Request $request, Concert $concert)
+    public function __invoke(Request $request, Concert $concert): View
     {
         $setlistSongs = $concert
             ->setlist()
@@ -22,9 +23,9 @@ class ConcertDetailsPageController extends Controller
             ->with('song')
             ->orderBy('sequence_number')
             ->get()
-            ->map(fn ($entry) => $entry->song)
+            ->map(fn($entry) => $entry->song)
             ->unique()
-            ->map(fn ($song) => [
+            ->map(fn($song) => [
                 'title' => $song->title,
                 'genre' => $song->genre,
                 'author' => $song->author,

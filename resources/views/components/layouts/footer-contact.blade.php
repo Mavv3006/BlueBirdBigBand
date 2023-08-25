@@ -5,7 +5,7 @@
         @foreach($contactLinks as $link)
             <x-layouts.footer-link href="{{ $link->link }}">
                 <i class="fa-solid {{ $link->icon }}"></i>
-                {{ $link->name }}
+                <span class="hover:underline">{{ $link->name }}</span>
             </x-layouts.footer-link>
         @endforeach
     </div>
