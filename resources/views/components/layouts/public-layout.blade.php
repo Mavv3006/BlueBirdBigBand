@@ -15,7 +15,9 @@
     <div style="flex: 1 0 auto">
         <livewire:page-header/>
 
-        {{ $slot }}
+        <div>
+            {{ $slot }}
+        </div>
     </div>
 
     <div style="flex-shrink: 0">
