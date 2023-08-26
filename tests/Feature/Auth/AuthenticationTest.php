@@ -14,7 +14,7 @@ class AuthenticationTest extends TestCase
         $this->get(route('login'))
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Auth/Login')
                     ->has('canResetPassword')
                     ->has('status')
