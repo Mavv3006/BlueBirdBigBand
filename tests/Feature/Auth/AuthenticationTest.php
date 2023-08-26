@@ -4,15 +4,21 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
     public function testLoginScreenCanBeRendered(): void
     {
-        $response = $this->get('/login');
-
-        $response->assertStatus(200);
+        $this->get(route('login'))
+            ->assertSuccessful()
+            ->assertInertia(
+                fn(AssertableInertia $page) => $page
+                    ->component('Auth/Login')
+                    ->has('canResetPassword')
+                    ->has('status')
+            );
     }
 
     public function testUsersCanAuthenticateUsingTheLoginScreen(): void
