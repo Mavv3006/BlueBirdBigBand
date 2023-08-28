@@ -17,27 +17,27 @@ class NavigationLinksService
         $this->links = [
             new NavigationLinkDto(
                 name: 'Home',
-                link: '/v2/blade',
+                link: '/v2',
                 type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
                 name: 'Auftritte',
-                link: '/v2/blade/auftritte',
+                link: '/v2/auftritte',
                 type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
                 name: 'Band',
-                link: '/v2/blade/band',
+                link: '/v2/band',
                 type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
                 name: 'Kontakt',
-                link: '/v2/blade/kontakt',
+                link: '/v2/kontakt',
                 type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
                 name: 'Login',
-                link: '/v2/blade/login',
+                link: '/v2/login',
                 type: NavigationLinkType::CallToAction
             ),
         ];

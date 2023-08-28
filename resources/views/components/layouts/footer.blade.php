@@ -1,5 +1,5 @@
 <div>
-    <div class="bg-[#eaeaea] w-full sticky">
+    <div class="bg-[#eaeaea] w-full sticky mt-4">
         <div class="pt-8 pb-8 flex gap-8 flex-col
                     md:px-12 md:flex-row md:justify-between
                     lg:px-16 xl:px-28 2xl:container 2xl:mx-auto">
@@ -7,7 +7,7 @@
                 <div class="flex gap-8 items-center w-fit md:flex-col lg:flex-row">
                     <img class="h-[120px]" src="{{ asset('assets/logos/intrologo.gif') }}" alt="Band Logo">
                     <p class="flex  text-[#575757] text-sm w-64 md:w-fit lg:w-80">
-                        Wir sind die Blue Bird Big Band der Städtischen Musikschule Speyer. Aktuell suchen wir noch
+                        Wir sind die Blue Bird Big Band der städtischen Musikschule Speyer. Aktuell suchen wir noch
                         Musiker/innen für die Instrumente Schlagzeug, Posaune und Klavier.
                     </p>
                 </div>
