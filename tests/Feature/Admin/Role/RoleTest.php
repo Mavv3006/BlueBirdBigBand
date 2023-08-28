@@ -5,7 +5,6 @@ namespace Admin\Role;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 

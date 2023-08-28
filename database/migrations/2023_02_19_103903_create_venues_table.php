@@ -17,7 +17,7 @@ return new class() extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        if (env('DB_CONNECTION') == 'mysql') {
+        if (config('database.default') == 'mysql') {
             DB::statement('alter table venues add constraint plz_check check (plz>=10000 and plz<=99999)');
         }
     }
