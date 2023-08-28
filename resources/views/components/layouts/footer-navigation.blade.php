@@ -5,7 +5,7 @@
 
     <div class="flex flex-col gap-2 mt-2">
         @foreach($navLinks->getAllLinks() as $link)
-            <x-layouts.footer-link href="hi">{{ $link->name }}</x-layouts.footer-link>
+            <x-layouts.footer-link :href="$link->link">{{ $link->name }}</x-layouts.footer-link>
         @endforeach
     </div>
 </div>

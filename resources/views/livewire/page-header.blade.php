@@ -4,7 +4,7 @@
         <div class="lg:flex lg:justify-between lg:items-center h-full">
             <div class="font-roboto font-bold text-[24px] text-center flex items-center justify-center h-full
     md:text-left md:ml-[60px] lg:text-[32px]">
-                <a href="/v2/blade">Blue Bird Big Band</a>
+                <a href="/v2">Blue Bird Big Band</a>
             </div>
             <div class="hidden mr-[60px] gap-12 relative items-center lg:flex">
                 @foreach($navLinks->getLinkNavElements() as $element)

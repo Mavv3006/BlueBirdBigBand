@@ -4,8 +4,8 @@
     </x-page-sections.section-header>
 
 
-    <div class="mt-4 gap-4 flex flex-col">
-        <div class="grid grid-cols-2 gap-4">
+    <div class="mt-4 gap-4 flex flex-col px-2 lg:px-0">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="flex gap-4 flex-col justify-center">
                 <p>
                     Im Rahmen der städtischen Musikschule Speyer haben sich im Frühjahr 1993 etwas mehr als 20 Musiker
@@ -18,7 +18,7 @@
                 </p>
             </div>
 
-            <img src="{{ asset('assets/grouppictures/bbband.jpg') }}" alt="Altes Gruppenbild">
+            <img class="w-full" src="{{ asset('assets/grouppictures/bbband-small.jpg') }}" alt="Altes Gruppenbild">
 
             <img src="{{ asset('assets/grouppictures/group-picture.jpg') }}" alt="Neueres Gruppenbild">
 
