@@ -17,7 +17,7 @@ class PublicController extends Controller
 
     public function home(): Response
     {
-        return Inertia::render('Concert');
+        return Inertia::render('Index');
     }
 
     public function aboutUs(): Response
