@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import {defineProps} from 'vue';
 import MailtoLink from "@/Components/Link/MailtoLink.vue";
 
 interface Props {
