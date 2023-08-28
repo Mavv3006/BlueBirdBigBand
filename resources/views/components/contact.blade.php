@@ -1,5 +1,5 @@
 <div>
-    <p :class="{'font-bold' : bold_name}">{{ $name }}</p>
+    <p class="{{$boldName? 'font-bold': ''}}">{{ $name }}</p>
     @if($telephone)
         <p>Telefon: {{ $telephone }}</p>
     @endif
@@ -10,11 +10,6 @@
         <p>Mobil: {{ $mobile }}</p>
     @endif
     <p>E-Mail:
-        <a href="mailto:{{ $email }}"
-           class="border-b-2 border-transparent text-blue-900 transition duration-150 ease-in-out
-           hover:border-blue-900
-           focus:outline-none focus:text-blue-900 focus:border-blue-900">
-            {{ $email }}
-        </a>
+        <x-email-link :mail-address="$email"/>
     </p>
 </div>
