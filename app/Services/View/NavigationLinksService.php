@@ -36,6 +36,11 @@ class NavigationLinksService
                 type: NavigationLinkType::Link
             ),
             new NavigationLinkDto(
+                name: 'Impressum',
+                link: '/v2/impressum',
+                type: NavigationLinkType::Link
+            ),
+            new NavigationLinkDto(
                 name: 'Login',
                 link: '/v2/login',
                 type: NavigationLinkType::CallToAction

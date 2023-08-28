@@ -13,6 +13,7 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\v2\ConcertDetailsPageController;
 use App\Http\Controllers\v2\ConcertsPageController;
 use App\Http\Controllers\v2\ContactPageController;
+use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
@@ -90,6 +91,8 @@ Route::prefix('v2')
             ->name('concerts-page');
         Route::get('/kontakt', ContactPageController::class)
             ->name('contact-page');
+        Route::get('/impressum', ImprintController::class)
+            ->name('imprint');
     });
 
 require __DIR__.'/auth.php';
