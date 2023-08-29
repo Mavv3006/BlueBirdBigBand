@@ -8,7 +8,8 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="flex gap-4 flex-col justify-center">
                 <p>
-                    Im Rahmen der städtischen Musikschule Speyer haben sich im Frühjahr 1993 etwas mehr als 20 Musiker
+                    Im Rahmen der städtischen Musikschule Speyer haben sich im Frühjahr 1993 etwas mehr als 20
+                    Musiker
                     und Musikerinnen unter der Leitung von Herrn Klaus Gehrlein zur Gründung einer Jazz-Big-Band
                     zusammengefunden. Mittlerweile sind ca. 20 Musiker und Musikerinnen daraus geworden.
                 </p>
@@ -24,14 +25,15 @@
 
             <div class="flex gap-4 flex-col justify-center">
                 <p>
-                    Bei der BLUE BIRD BIG BAND handelt es sich um eine Amateur-Band jedoch mit akademischem Anspruch,
+                    Bei der BLUE BIRD BIG BAND handelt es sich um eine Amateur-Band jedoch mit akademischem
+                    Anspruch,
                     die quasi unter anderem Sprungbrett - Plattform für angehende Klassik- und Jazz-Studenten der
                     Musikhochschule sein soll, geprägt vom Spaß an der Musik.
                 </p>
                 <p>
                     Auch Wiedereinsteiger und leicht Fortgeschrittene sind bei uns herzlich willkommen. Für sie
-                    haben wir eigens eine Midi-BlueBirdBigBand gegründet. Aus der Midi-BlueBirdBigBand ist mittlerweile
-                    die Dome Town Band entstanden.
+                    haben wir eigens eine Midi-BlueBirdBigBand gegründet. Aus der Midi-BlueBirdBigBand ist
+                    mittlerweile die Dome Town Band entstanden.
                 </p>
             </div>
         </div>

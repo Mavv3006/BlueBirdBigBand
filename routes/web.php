@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\v2\BandController;
 use App\Http\Controllers\v2\ConcertDetailsPageController;
 use App\Http\Controllers\v2\ConcertsPageController;
 use App\Http\Controllers\v2\ContactPageController;
@@ -93,6 +94,8 @@ Route::prefix('v2')
             ->name('contact-page');
         Route::get('/impressum', ImprintController::class)
             ->name('imprint');
+        Route::get('band', BandController::class)
+            ->name('band');
     });
 
 require __DIR__.'/auth.php';
