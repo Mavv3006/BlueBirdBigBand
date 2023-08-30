@@ -16,23 +16,26 @@ class ConcertDetailsPageController extends Controller
 
     public function __invoke(Request $request, Concert $concert)
     {
-        /** @var SetlistHeader $setlistHeader */
+        /** @var SetlistHeader|null $setlistHeader */
         $setlistHeader = $concert
             ->setlist()
             ->first();
-        $setlistSongs = $setlistHeader
-            ->entries()
-            ->with('song')
-            ->orderBy('sequence_number')
-            ->get()
-            ->map(fn ($entry) => $entry->song)
-            ->unique()
-            ->map(fn ($song) => [
-                'title' => $song->title,
-                'genre' => $song->genre,
-                'author' => $song->author,
-                'arranger' => $song->arranger,
-            ]);
+
+        $setlistSongs = $setlistHeader == null
+            ? collect([])
+            : $setlistHeader
+                ->entries()
+                ->with('song')
+                ->orderBy('sequence_number')
+                ->get()
+                ->map(fn ($entry) => $entry->song)
+                ->unique()
+                ->map(fn ($song) => [
+                    'title' => $song->title,
+                    'genre' => $song->genre,
+                    'author' => $song->author,
+                    'arranger' => $song->arranger,
+                ]);
 
         return view('components.pages.concert-details', [
             'concert' => $this->service->formatConcert($concert),
