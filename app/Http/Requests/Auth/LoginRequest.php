@@ -46,9 +46,7 @@ class LoginRequest extends FormRequest
         $user = User::where('name', $this->only('name'))->first();
 
         if (!$user->activated) {
-            throw ValidationException::withMessages([
-                'name' => trans('auth.activated')
-            ]);
+            throw ValidationException::withMessages(['name' => trans('auth.activated')]);
         }
 
         $isAuthenticated = Auth::attempt($this->only('name', 'password'), $this->boolean('remember'));
@@ -56,9 +54,7 @@ class LoginRequest extends FormRequest
         if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'name' => trans('auth.failed'),
-            ]);
+            throw ValidationException::withMessages(['name' => trans('auth.failed')]);
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -79,12 +75,7 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        throw ValidationException::withMessages([
-            'name' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
+        throw ValidationException::withMessages(['name' => trans('auth.throttle', ['seconds' => $seconds, 'minutes' => ceil($seconds / 60)])]);
     }
 
     /**
@@ -92,6 +83,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('name')) . '|' . $this->ip());
+        return Str::transliterate(Str::lower($this->input('name')).'|'.$this->ip());
     }
 }

@@ -9,25 +9,12 @@
 
 <script lang="ts" setup>
 import {computed, defineProps} from 'vue';
+import {Concert} from "@/types/concert";
+import {useFormatDate} from "@/Composables/useFormatDate";
 
-export type ConcertType = {
-    date: string,
-    start_time: string,
-    end_time: string,
-    address: {
-        street: string,
-        city: string,
-        plz: number,
-        number: string
-    },
-    band: string,
-    description: {
-        event: string,
-        venue: string
-    }
-};
+const props = defineProps<{ concert: Concert }>();
 
-const props = defineProps<{ concert: ConcertType }>();
+console.debug(props.concert)
 
 const playTime = computed<string>(() => {
     return props.concert.start_time + ' Uhr - '
@@ -43,17 +30,7 @@ const address = computed<string>(() => {
         + props.concert.address.city;
 });
 
-const day = computed<string>(() => {
-    return new Date(props.concert.date).toLocaleDateString(
-        'de-DE',
-        {
-            weekday: 'long',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit'
-        }
-    )
-});
+const day = computed<string>(() => useFormatDate(props.concert.date));
 
 </script>
 

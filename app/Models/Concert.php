@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Concert extends Model
 {
@@ -13,8 +14,9 @@ class Concert extends Model
     protected $casts = [
         'date' => 'datetime',
         'start_time' => 'datetime',
-        'end_time' => 'datetime'
+        'end_time' => 'datetime',
     ];
+
     protected $fillable = [
         'start_time',
         'end_time',
@@ -24,11 +26,12 @@ class Concert extends Model
         'venue_description',
         'band_id',
         'date',
-        'venue_plz'
+        'venue_plz',
     ];
+
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     public function band(): BelongsTo
@@ -39,5 +42,10 @@ class Concert extends Model
     public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class, 'venue_plz', 'plz');
+    }
+
+    public function setlist(): HasOne
+    {
+        return $this->hasOne(SetlistHeader::class);
     }
 }

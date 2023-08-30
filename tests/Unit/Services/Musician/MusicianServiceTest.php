@@ -42,14 +42,13 @@ class MusicianServiceTest extends TestCase
             ->state(['isActive' => false])
             ->create();
 
-
         $result = $this->service->activeMusicians()->toArray();
 
         $this->assertCount(1, $result);
         $this->assertCount(0, $result[0]['musicians']);
     }
 
-    public function test_all_order_by()
+    public function testAllOrderBy()
     {
         $firstInstrument = Instrument::factory()->create(['name' => 'test1']);
         $secondInstrument = Instrument::factory()->create(['name' => 'test2']);

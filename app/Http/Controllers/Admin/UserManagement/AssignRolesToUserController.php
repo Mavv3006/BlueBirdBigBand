@@ -14,7 +14,6 @@ use Inertia\Response;
 
 class AssignRolesToUserController extends Controller
 {
-
     public function __construct(protected UserService $userService)
     {
     }
@@ -30,11 +29,12 @@ class AssignRolesToUserController extends Controller
         }
 
         $user = $this->userService->findByUsername($data['username']);
+
         return Inertia::render(
             'Admin/UserManagement/AssignRoles',
             [
                 'roleMap' => $this->userService->getRolesOfUser($user),
-                'user' => ['name' => $user->name, 'id' => $user->id]
+                'user' => ['name' => $user->name, 'id' => $user->id],
             ]
         );
     }
@@ -44,6 +44,7 @@ class AssignRolesToUserController extends Controller
         Gate::authorize('manage users');
 
         $this->userService->syncRoles($user, $request);
+
         return response()->redirectTo('admin/assign-roles');
     }
 }

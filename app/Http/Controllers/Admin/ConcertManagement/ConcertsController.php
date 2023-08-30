@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin\ConcertManagement;
 
-use App\Exceptions\NotImplementedHttpException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConcertRequest;
 use App\Http\Requests\UpdateConcertRequest;
 use App\Models\Concert;
 use App\Services\Concert\ConcertService;
 use App\Services\Venue\VenueService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -16,9 +16,8 @@ class ConcertsController extends Controller
 {
     public function __construct(
         protected ConcertService $concertService,
-        protected VenueService   $venueService
-    )
-    {
+        protected VenueService $venueService
+    ) {
     }
 
     /**
@@ -26,7 +25,12 @@ class ConcertsController extends Controller
      */
     public function index()
     {
-        throw new NotImplementedHttpException();
+        return Inertia::render('Admin/ConcertManagement/ConcertsIndex', [
+            'concerts' => [
+                'upcoming' => $this->concertService->upcoming(),
+                'past' => $this->concertService->past(),
+            ],
+        ]);
     }
 
     /**
@@ -36,37 +40,35 @@ class ConcertsController extends Controller
     {
         return Inertia::render('Admin/ConcertManagement/ConcertsCreate', [
             'venues' => $this->venueService->all(),
-            'bands' => $this->concertService->allBands()
+            'bands' => $this->concertService->allBands(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreConcertRequest $request)
+    public function store(StoreConcertRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $concertDto = $this->concertService->createDto($data);
         $concert = $this->concertService->store($concertDto);
-        return redirect()->route('concerts.show', $concert->id);
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Concert $concert)
-    {
-        return Inertia::render('Admin/ConcertManagement/ConcertsShow', [
-            'concert' => $this->concertService->formatConcert($concert)
-        ]);
+        return redirect()->route('concerts.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Concert $concert)
+    public function edit(Concert $concert): Response
     {
-        throw new NotImplementedHttpException();
+        return Inertia::render(
+            'Admin/ConcertManagement/ConcertsEdit',
+            [
+                'venues' => $this->venueService->all(),
+                'bands' => $this->concertService->allBands(),
+                'concert' => $this->concertService->formatConcert($concert)->toArray(),
+            ]
+        );
     }
 
     /**
@@ -74,7 +76,11 @@ class ConcertsController extends Controller
      */
     public function update(UpdateConcertRequest $request, Concert $concert)
     {
-        throw new NotImplementedHttpException();
+        $data = $request->validated();
+        $concertDto = $this->concertService->createDto($data);
+        $this->concertService->update($concert, $concertDto);
+
+        return redirect()->route('concerts.index');
     }
 
     /**
@@ -82,6 +88,8 @@ class ConcertsController extends Controller
      */
     public function destroy(Concert $concert)
     {
-        throw new NotImplementedHttpException();
+        $this->concertService->delete($concert);
+
+        return redirect()->route('concerts.index');
     }
 }

@@ -15,17 +15,17 @@ class EmailsTest extends TestCase
         $this->actingAs($this->createUserForInternalRoutes());
     }
 
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('intern/emails')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('intern/emails')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Intern/Emails')
             );
     }

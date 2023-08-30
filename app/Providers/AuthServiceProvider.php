@@ -20,8 +20,6 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -46,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasPermissionTo('manage songs');
         });
         Gate::define('download songs', function (User $user) {
-            return $user->hasPermissionTo('download songs');
+            return $user->hasPermissionTo('download songs', 'web');
         });
     }
 }

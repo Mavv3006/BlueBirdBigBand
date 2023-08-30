@@ -13,7 +13,17 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto Slab', ...defaultTheme.fontFamily.serif],
+                open_sans: ['Open Sans', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'primary': '#041286'
+            },
+            maxHeight: {
+                '1/4': '25vh',
+                '1/2': '50vh',
+                '3/4': '75vh',
+            }
         },
     },
 

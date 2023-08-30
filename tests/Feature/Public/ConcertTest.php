@@ -32,33 +32,34 @@ class ConcertTest extends TestCase
             ->create();
     }
 
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('/auftritte')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('/auftritte')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('LatestInfos/ConcertsPage')
             );
     }
 
-    public function test_correct_values_as_view_arguments()
+    public function testCorrectValuesAsViewArguments()
     {
         $this->assertDatabaseCount('concerts', 5);
 
         $this->get('/auftritte')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->has(
                         'concerts',
                         5,
-                        fn(AssertableInertia $page) => $page
+                        fn (AssertableInertia $page) => $page
                             ->has('date')
+                            ->has('id')
                             ->has('start_time')
                             ->has('end_time')
                             ->has('band')
@@ -74,13 +75,13 @@ class ConcertTest extends TestCase
             );
     }
 
-    public function test_order_of_concerts()
+    public function testOrderOfConcerts()
     {
         $this->get('/auftritte')
             ->assertInertia(
                 function (AssertableInertia $page) {
                     $props = $page->toArray()['props']['concerts'];
-                    $this->assertEquals(5, sizeof($props));
+                    $this->assertEquals(5, count($props));
                     $this->assertTrue(Carbon::parse($props[0]['date']) <= Carbon::parse($props[1]['date']));
                     $this->assertTrue(Carbon::parse($props[1]['date']) <= Carbon::parse($props[2]['date']));
                     $this->assertTrue(Carbon::parse($props[2]['date']) <= Carbon::parse($props[3]['date']));

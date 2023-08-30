@@ -10,7 +10,7 @@
             <div class="inline-flex items-center justify-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
                 <p class="text-right font-bold w-1/2">Bandleader:</p>
                 <Contact class="w-1/2" email="bandleiter@bluebirdbigband.de" mobile="0171 5808481"
-                         name="Klaus Gehrlein" telefax="0621 3197488" telephon="0621 409497"/>
+                         name="Klaus Gehrlein"/>
             </div>
 
             <div class="inline-flex items-center justify-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">

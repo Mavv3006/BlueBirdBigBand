@@ -5,13 +5,12 @@
         <p v-if="telefax">Telefax: {{ telefax }}</p>
         <p v-if="mobile">Mobil: {{ mobile }}</p>
         <p>E-Mail:
-            <MailtoLink :mail-adress="email">{{ email}}</MailtoLink>
+            <MailtoLink :mail-adress="email">{{ email }}</MailtoLink>
         </p>
     </div>
 </template>
 
 <script setup lang="ts">
-import {defineProps} from 'vue';
 import MailtoLink from "@/Components/Link/MailtoLink.vue";
 
 interface Props {
