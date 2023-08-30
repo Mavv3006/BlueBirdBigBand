@@ -24,9 +24,11 @@
 
         </div>
 
-        <div class="mt-8">
-            <x-concert.setlist :setlistSongs="$setlistSongs" bandName="{{$concert->band}}"/>
-        </div>
+        @if( sizeof($setlistSongs) > 0)
+            <div class="mt-8">
+                <x-concert.setlist :setlistSongs="$setlistSongs" bandName="{{$concert->band}}"/>
+            </div>
+        @endif
     </div>
 
 </x-layouts.public-layout>

@@ -22,7 +22,7 @@ class ConcertDetailsPageController extends Controller
             ->first();
 
         $setlistSongs = $setlistHeader == null
-            ? collect([])
+            ? collect()
             : $setlistHeader
                 ->entries()
                 ->with('song')

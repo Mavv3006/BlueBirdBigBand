@@ -1,7 +1,6 @@
 <div>
     <x-page-sections.section-header>Setliste</x-page-sections.section-header>
 
-    @if( sizeof($setlistSongs) > 0)
     <p class="mt-4">
         Das sind die Titel, die die Blue Bird Big Band beim Auftritt gespielt hat.
     </p>
@@ -26,9 +25,4 @@
             @endforeach
             </tbody>
         </table>
-    @else
-        <p class="mt-4">Für diesen Auftritt sind keine Informationen über die gespielten Titel vorhanden.</p>
-    @endif
-
-
 </div>
