@@ -27,7 +27,7 @@
             </tbody>
         </table>
     @else
-        <p class="mt-4">Bei diesem Auftritt wurden keine Titel gespielt</p>
+        <p class="mt-4">Für diesen Auftritt sind keine Informationen über die gespielten Titel vorhanden.</p>
     @endif
 
 
