@@ -14,9 +14,11 @@ class Musicians extends Component
 
     public function render(): View
     {
-        //        dd($this->musicianService->activeMusicians());
+        $allMusicians = $this->musicianService->activeMusicians();
+
         return view('components.page-sections.musicians', [
-            'activeMusicians' => $this->musicianService->activeMusicians(),
+            'instrumentalists' => $allMusicians->splice(2),
+            'bandleaderPlusVocals' => $allMusicians->splice(0, 2),
         ]);
     }
 }
