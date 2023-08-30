@@ -14,11 +14,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DownloadSongController extends Controller
 {
-
     public function __construct(
         protected SongService $service,
-    )
-    {
+    ) {
     }
 
     /**
@@ -31,6 +29,7 @@ class DownloadSongController extends Controller
         Log::info('check successful');
 
         $file_path = $this->service->download($song);
+
         return Storage::download($file_path);
     }
 }

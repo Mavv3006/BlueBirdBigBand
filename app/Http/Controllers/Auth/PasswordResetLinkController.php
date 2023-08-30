@@ -44,8 +44,6 @@ class PasswordResetLinkController extends Controller
             return back()->with('status', __($status));
         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
+        throw ValidationException::withMessages(['email' => [trans($status)]]);
     }
 }

@@ -7,18 +7,18 @@ use Tests\TestCase;
 
 class HomeTest extends TestCase
 {
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('/')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('/')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
-                    ->component('Index')
+                fn (AssertableInertia $page) => $page
+                    ->component('Concert')
             );
     }
 }

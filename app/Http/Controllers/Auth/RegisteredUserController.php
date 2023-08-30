@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): Response
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:' . User::class,
+            'name' => 'required|string|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         return Inertia::render('Auth/Register', [
-            'status' => __('messages.register-success', ['username' => $request->name])
+            'status' => __('messages.register-success', ['username' => $request->name]),
         ]);
     }
 }

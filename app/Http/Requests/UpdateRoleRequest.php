@@ -10,7 +10,7 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'permissions' => 'array|required',
-            'permissions.*' => 'integer|numeric'
+            'permissions.*' => 'integer|numeric',
         ];
     }
 }

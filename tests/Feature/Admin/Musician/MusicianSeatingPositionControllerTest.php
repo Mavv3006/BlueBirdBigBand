@@ -19,24 +19,30 @@ class MusicianSeatingPositionControllerTest extends TestCase
             ->create();
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         $this->get('admin/musicians/seating-position')
             ->assertSuccessful()
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Admin/MusicianManagement/SeatingPosition')
-                    ->has('data', 1, fn(AssertableInertia $page) => $page
-                        ->has('instrument')
-                        ->has('musicians', 2, fn(AssertableInertia $page) => $page
-                            ->has('seating_position')
-                            ->etc()
-                        )
+                    ->has(
+                        'data',
+                        1,
+                        fn (AssertableInertia $page) => $page
+                            ->has('instrument')
+                            ->has(
+                                'musicians',
+                                2,
+                                fn (AssertableInertia $page) => $page
+                                    ->has('seating_position')
+                                    ->etc()
+                            )
                     )
             );
     }
 
-    public function test_update_route()
+    public function testUpdateRoute()
     {
         $this->withoutExceptionHandling();
 
@@ -50,9 +56,9 @@ class MusicianSeatingPositionControllerTest extends TestCase
                     'musicians' => [
                         ['id' => 2],
                         ['id' => 1],
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ];
 
         $this->put('admin/musicians/seating-position', $data)

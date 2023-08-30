@@ -36,32 +36,35 @@ class SongService
             'arranger' => $data['arranger'],
             'genre' => $data['genre'],
             'file_path' => $file->store('songs'),
-            'size' => $file->getSize()
+            'size' => $file->getSize(),
         ]);
         Log::info('Created a new song', [$song]);
     }
 
-    public function destroy(Song $song): bool|null
+    public function destroy(Song $song): ?bool
     {
         Log::info('deleting song', [$song]);
 
         if (Storage::exists($song->file_path)) {
             Storage::delete($song->file_path);
         }
+
         return $song->delete();
     }
 
     public function download(Song $song): string
     {
-        Log::info("[SongService] Requesting to download song file", [$song]);
-        $file_path = $song->file_path ?? "";
+        Log::info('[SongService] Requesting to download song file', [$song]);
+        $file_path = $song->file_path ?? '';
         Log::debug($file_path);
         if (!Storage::exists($file_path)) {
-            Log::warning("[SongService] The file does not exist");
-            return response()->json(['error' => "File not found"], status: 404);
+            Log::warning('[SongService] The file does not exist');
+
+            return response()->json(['error' => 'File not found'], status: 404);
         }
 
         Log::info('[SongService] The file does exist');
+
         return $file_path;
     }
 }

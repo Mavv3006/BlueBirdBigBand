@@ -17,7 +17,10 @@ import {
     faMinus,
     faPen,
     faPlus,
-    faTrash
+    faTrash,
+    faLocationDot,
+    faEnvelope,
+    faPhone
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -30,7 +33,10 @@ library.add(
     faChevronUp,
     faChevronDown,
     faPen,
-    faTrash
+    faTrash,
+    faLocationDot,
+    faEnvelope,
+    faPhone
 );
 
 createInertiaApp({

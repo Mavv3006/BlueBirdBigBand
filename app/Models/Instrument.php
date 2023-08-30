@@ -12,7 +12,7 @@ class Instrument extends Model
 
     protected $fillable = [
         'name',
-        'default_picture_filepath'
+        'default_picture_filepath',
     ];
 
     protected $hidden = [

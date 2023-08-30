@@ -10,8 +10,15 @@ use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\v2\BandController;
+use App\Http\Controllers\v2\ConcertDetailsPageController;
+use App\Http\Controllers\v2\ConcertsPageController;
+use App\Http\Controllers\v2\ContactPageController;
+use App\Http\Controllers\v2\ImprintController;
+use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
+use App\Http\Middleware\UseDesignVersion2;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,4 +82,20 @@ Route::prefix('admin')
         });
     });
 
-require __DIR__ . '/auth.php';
+Route::prefix('v2')
+    ->middleware([UseDesignVersion2::class])
+    ->group(function () {
+        Route::get('/', IndexController::class);
+        Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
+            ->name('concert-details-page');
+        Route::get('/auftritte', ConcertsPageController::class)
+            ->name('concerts-page');
+        Route::get('/kontakt', ContactPageController::class)
+            ->name('contact-page');
+        Route::get('/impressum', ImprintController::class)
+            ->name('imprint');
+        Route::get('band', BandController::class)
+            ->name('band');
+    });
+
+require __DIR__.'/auth.php';

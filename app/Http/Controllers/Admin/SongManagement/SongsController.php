@@ -18,8 +18,7 @@ class SongsController extends Controller
 {
     public function __construct(
         public SongService $service,
-    )
-    {
+    ) {
     }
 
     /**
@@ -53,6 +52,7 @@ class SongsController extends Controller
         Gate::authorize('manage songs');
 
         $this->service->store($request);
+
         return redirect(route('songs.index'));
     }
 
@@ -77,6 +77,7 @@ class SongsController extends Controller
         Gate::authorize('manage songs');
 
         $this->service->update($request, $song);
+
         return redirect(route('songs.index'));
     }
 
@@ -88,6 +89,7 @@ class SongsController extends Controller
         Gate::authorize('manage songs');
 
         $this->service->destroy($song);
+
         return redirect('admin/songs');
     }
 }

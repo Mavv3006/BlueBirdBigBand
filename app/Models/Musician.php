@@ -16,11 +16,11 @@ class Musician extends Model
         'lastname',
         'instrument_id',
         'picture_filepath',
-        'seating_position'
+        'seating_position',
     ];
 
     protected $casts = [
-        'isActive' => 'boolean'
+        'isActive' => 'boolean',
     ];
 
     protected $hidden = [

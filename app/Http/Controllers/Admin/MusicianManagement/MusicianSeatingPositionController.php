@@ -32,6 +32,7 @@ class MusicianSeatingPositionController extends Controller
 
         $dto = UpdateMusicianSeatingPositionDto::fromRequest($request);
         $this->musicianService->updateSeatingPosition($dto);
+
         return response()->redirectTo(route('musicians.index'));
     }
 }

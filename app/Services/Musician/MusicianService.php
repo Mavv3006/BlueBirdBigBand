@@ -15,13 +15,13 @@ class MusicianService
 {
     public function activeMusicians(): BaseCollection
     {
-        return Instrument::all()->map(fn(Instrument $instrument) => [
+        return Instrument::all()->map(fn (Instrument $instrument) => [
             'instrument' => $instrument,
             'musicians' => $instrument
                 ->musicians()
                 ->where('isActive', 1)
                 ->orderBy('seating_position')
-                ->get()
+                ->get(),
         ]);
     }
 
@@ -32,23 +32,26 @@ class MusicianService
             ->get();
     }
 
-    public function delete(Musician $musician): bool|null
+    public function delete(Musician $musician): ?bool
     {
         if ($musician->picture_filepath != null) {
             Log::info('Deleting picture of musician', [$musician]);
             Storage::delete($musician->picture_filepath);
         }
         Log::info('Deleting musician', [$musician]);
+
         return $musician->delete();
     }
 
     public function updateSeatingPosition(UpdateMusicianSeatingPositionDto $dto): void
     {
         foreach ($dto->data as $instrument) {
-            $musicians = $instrument["musicians"];
-            for ($i = 0; $i < sizeof($musicians); $i++) {
-                $musician = Musician::find($musicians[$i]["id"]);
-                if ($musician->seating_position == $i) continue;
+            $musicians = $instrument['musicians'];
+            for ($i = 0; $i < count($musicians); $i++) {
+                $musician = Musician::find($musicians[$i]['id']);
+                if ($musician->seating_position == $i) {
+                    continue;
+                }
                 $musician->update(['seating_position' => $i]);
             }
         }
@@ -58,6 +61,7 @@ class MusicianService
     {
         $musician = Musician::create($this->getMusicianData($request));
         Log::info('Created a new musician', [$musician]);
+
         return $musician;
     }
 
@@ -84,9 +88,10 @@ class MusicianService
             $picture_path = $request
                 ->file('picture')
                 ->store('musician_pictures', 'public');
-            Log::debug('picture path:' . $picture_path);
+            Log::debug('picture path:'.$picture_path);
             $data['picture_filepath'] = $picture_path;
         }
+
         return $data;
     }
 }

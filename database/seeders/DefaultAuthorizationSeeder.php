@@ -9,8 +9,6 @@ class DefaultAuthorizationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -25,14 +23,14 @@ class DefaultAuthorizationSeeder extends Seeder
                 'manage musicians',
                 'manage songs',
                 'route.access-admin',
-                'download songs'
+                'download songs',
             ]);
 
         Role::where('name', 'musician')
             ->first()
             ->syncPermissions([
                 'route.access-intern',
-                'download songs'
+                'download songs',
             ]);
     }
 }

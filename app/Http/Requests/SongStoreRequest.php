@@ -14,7 +14,7 @@ class SongStoreRequest extends FormRequest
             'author' => 'string|required',
             'arranger' => 'string|required',
             'genre' => 'string|required',
-            'file' => ['required', File::types(['audio/mpeg'])]
+            'file' => ['required', File::types(['audio/mpeg'])],
         ];
     }
 }

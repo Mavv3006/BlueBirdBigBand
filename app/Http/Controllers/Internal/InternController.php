@@ -14,8 +14,7 @@ class InternController extends Controller
 {
     public function __construct(
         public SongService $songService,
-    )
-    {
+    ) {
     }
 
     public function index(): Redirector|RedirectResponse|Application
@@ -31,7 +30,7 @@ class InternController extends Controller
     public function songs(): Response
     {
         return Inertia::render('Intern/Songs', [
-            'songs' => $this->songService->all()
+            'songs' => $this->songService->all(),
         ]);
     }
 }

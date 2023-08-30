@@ -7,17 +7,17 @@ use Tests\TestCase;
 
 class ContactTest extends TestCase
 {
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('/kontakt')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('/kontakt')
             ->assertInertia(
-                fn(AssertableInertia $page) => $page
+                fn (AssertableInertia $page) => $page
                     ->component('Contact/ContactPage')
             );
     }

@@ -15,6 +15,13 @@ Route::middleware('guest')->group(function () {
         ->name('login');
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::prefix('v2')->group(function () {
+        Route::get('login', [AuthenticatedSessionController::class, 'create'])
+            ->name('v2-login');
+
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    });
 });
 
 Route::middleware('auth')->group(function () {

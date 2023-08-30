@@ -1,21 +1,21 @@
 <template>
-  <PublicLayout>
-    <Heading>Alle Konzerte</Heading>
-    <Head><title>Alle Konzerte</title></Head>
+    <PublicLayout>
+        <Heading>Alle Konzerte</Heading>
+        <Head><title>Alle Konzerte</title></Head>
 
-    <div class="flex flex-col gap-8 lg:flex-row lg:gap-16 lg:justify-center">
-      <div>
-        <h2>Anstehende Konzerte</h2>
-        <AdminConcertList :concerts="concerts.upcoming"/>
-      </div>
+        <div class="flex flex-col gap-8 lg:flex-row lg:gap-16 lg:justify-center">
+            <div>
+                <h2>Anstehende Konzerte</h2>
+                <AdminConcertList :concerts="concerts.upcoming"/>
+            </div>
 
-      <div>
-        <h2>Vergangene Konzerte</h2>
-        <AdminConcertList :concerts="concerts.past"/>
-      </div>
-    </div>
+            <div>
+                <h2>Vergangene Konzerte</h2>
+                <AdminConcertList :concerts="concerts.past"/>
+            </div>
+        </div>
 
-  </PublicLayout>
+    </PublicLayout>
 </template>
 
 <script lang="ts" setup>
@@ -26,15 +26,15 @@ import AdminConcertList from "@/Components/AdminConcertList.vue";
 import {Concert as ConcertType} from "@/types/concert";
 
 const props = defineProps<{
-  concerts: {
-    upcoming: ConcertType[],
-    past: ConcertType[]
-  }
+    concerts: {
+        upcoming: ConcertType[],
+        past: ConcertType[]
+    }
 }>();
 </script>
 
 <style scoped>
 h2 {
-  @apply text-[1em] leading-normal text-center w-full inline-block mb-[0.5em] text-[#3d4449] font-bold md:text-[1.25em] md:text-left lg:text-[1.5em] 2xl:font-[2175em] 2xl:leading-snug;
+    @apply text-[1em] leading-normal text-center w-full inline-block mb-[0.5em] text-[#3d4449] font-bold md:text-[1.25em] md:text-left lg:text-[1.5em] 2xl:font-[2175em] 2xl:leading-snug;
 }
 </style>
