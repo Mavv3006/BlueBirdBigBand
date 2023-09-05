@@ -64,6 +64,7 @@ const showModal = ref<boolean>(false);
 const selectedSong = ref<Song | null>(null);
 
 const downloadUrl = computed<string>(() => {
+    console.debug(selectedSong.value.file_path ?? 'no file path');
     let url = `/api/download/song/${selectedSong.value.id}`;
     console.debug(`trying to download song ${selectedSong.value.title} from '${url}'`)
     return url;
