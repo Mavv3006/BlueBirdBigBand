@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')
-    ->get('download/song/{song}', DownloadSongController::class);
+//Route::middleware('auth:sanctum')
+//    ->get('download/song/{song}', DownloadSongController::class);
