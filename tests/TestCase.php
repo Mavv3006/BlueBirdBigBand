@@ -26,6 +26,12 @@ abstract class TestCase extends BaseTestCase
             ->assignRole('admin');
     }
 
+    protected function setupMusician(): void
+    {
+        $this->seed(DefaultAuthorizationSeeder::class);
+        $this->actingAs($this->createUserForInternalRoutes());
+    }
+
     protected function setupAdmin(): void
     {
         $this->seed(DefaultAuthorizationSeeder::class);

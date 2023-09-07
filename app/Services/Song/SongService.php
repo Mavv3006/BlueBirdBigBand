@@ -8,6 +8,7 @@ use App\Models\Song;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SongService
 {
@@ -52,18 +53,21 @@ class SongService
         return $song->delete();
     }
 
+    /**
+     * @throws NotFoundHttpException if the requested file does not exist.
+     */
     public function download(Song $song): string
     {
         Log::info('[SongService] Requesting to download song file', [$song]);
-        $file_path = $song->file_path ?? '';
+        $file_path = '/songs/'.$song->file_path ?? '';
         Log::debug($file_path);
         if (!Storage::exists($file_path)) {
             Log::warning('[SongService] The file does not exist');
 
-            return response()->json(['error' => 'File not found'], status: 404);
+            throw new NotFoundHttpException();
         }
 
-        Log::info('[SongService] The file does exist');
+        Log::info('[SongService] The file exists');
 
         return $file_path;
     }

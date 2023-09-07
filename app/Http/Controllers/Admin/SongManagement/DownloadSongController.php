@@ -24,11 +24,13 @@ class DownloadSongController extends Controller
      */
     public function __invoke(Song $song, Request $request): StreamedResponse|JsonResponse
     {
-        Log::info('checking against Permission "download songs".');
+        Log::debug('checking against Permission "download songs".');
         Gate::authorize('download songs');
-        Log::info('check successful');
+        Log::debug('check successful');
 
         $file_path = $this->service->download($song);
+
+        Log::info('Downloading the requested song located at path: '.$file_path);
 
         return Storage::download($file_path);
     }
