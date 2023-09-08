@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ConcertManagement\ConcertsController;
 use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
 use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
 use App\Http\Controllers\Admin\RolesManagement\RolesController;
+use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
 use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
@@ -41,6 +42,10 @@ Route::get('/impressum', [PublicController::class, 'imprint']);
 Route::get('/kontakt', [PublicController::class, 'contact']);
 Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
+
+Route::middleware('auth')
+    ->get('download/song/{song}', DownloadSongController::class)
+    ->name('download-song');
 
 Route::prefix('intern')
     ->middleware(['auth', HasPermissionToAccessInternalRoutes::class])
