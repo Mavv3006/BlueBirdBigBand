@@ -19,10 +19,10 @@ class SongFactory extends Factory
     {
         return [
             'file_path' => 'fever.mp3',
-            'title' => 'Fever',
-            'genre' => 'Swing',
-            'arranger' => 'Roger Holmes',
-            'author' => 'J. Davenport, E. Cooley',
+            'title' => $this->faker->words(3, true),
+            'genre' => $this->faker->word(),
+            'arranger' => $this->faker->name,
+            'author' => $this->faker->name,
             'size' => $this->faker->randomNumber(2),
         ];
     }

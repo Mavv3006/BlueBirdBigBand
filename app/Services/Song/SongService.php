@@ -15,6 +15,7 @@ class SongService
     public function all(): Collection
     {
         return Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
+            ->orderBy('title')
             ->get();
     }
 
