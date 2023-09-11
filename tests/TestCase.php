@@ -16,7 +16,7 @@ abstract class TestCase extends BaseTestCase
     protected function createUserForInternalRoutes()
     {
         return User::factory()
-            ->create(['activated' => true])
+            ->create(['status' => UserStates::Activated])
             ->assignRole('musician');
     }
 

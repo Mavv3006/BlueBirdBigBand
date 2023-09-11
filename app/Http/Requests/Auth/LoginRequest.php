@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\Rule;
@@ -45,7 +46,7 @@ class LoginRequest extends FormRequest
 
         $user = User::where('name', $this->only('name'))->first();
 
-        if (!$user->activated) {
+        if ($user->status != UserStates::Activated) {
             throw ValidationException::withMessages(['name' => trans('auth.activated')]);
         }
 

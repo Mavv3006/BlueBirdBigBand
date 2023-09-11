@@ -20,6 +20,5 @@ class BaseUserStateMachineTest extends TestCase
         $user = User::factory()->create();
 
         $this->assertEquals(UserStates::Registered, $user->status);
-        $this->assertFalse($user->activated);
     }
 }

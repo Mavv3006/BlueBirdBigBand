@@ -11,7 +11,7 @@ class ActivatedUserStateTest extends TestCase
 {
     public function testActivate()
     {
-        $user = User::factory()->create(['status' => UserStates::Activated, 'activated' => true]);
+        $user = User::factory()->create(['status' => UserStates::Activated]);
 
         $this->expectException(Exception::class);
         $user->state()->activate();

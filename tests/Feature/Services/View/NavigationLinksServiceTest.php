@@ -22,7 +22,7 @@ class NavigationLinksServiceTest extends TestCase
     {
         $link = $this->service->getAllLinks();
 
-        $this->assertCount(5, $link);
+        $this->assertCount(6, $link);
         $this->assertInstanceOf(NavigationLinkDto::class, $link[0]);
     }
 
