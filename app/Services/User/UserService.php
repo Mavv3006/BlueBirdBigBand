@@ -18,12 +18,6 @@ class UserService
             ->get();
     }
 
-    public function activateUser(User $user): void
-    {
-        $user->update(['activated' => true]);
-        Log::debug('Updated user '.$user->id);
-    }
-
     public function findByUsername(string $username): User
     {
         return User::firstWhere('name', $username);

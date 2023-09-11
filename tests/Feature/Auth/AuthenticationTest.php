@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Inertia\Testing\AssertableInertia;
@@ -11,6 +12,8 @@ class AuthenticationTest extends TestCase
 {
     public function testLoginScreenCanBeRendered(): void
     {
+        $this->withoutExceptionHandling();
+
         $this->get(route('login'))
             ->assertSuccessful()
             ->assertInertia(
@@ -23,7 +26,7 @@ class AuthenticationTest extends TestCase
 
     public function testUsersCanAuthenticateUsingTheLoginScreen(): void
     {
-        $user = User::factory()->create(['activated' => true]);
+        $user = User::factory()->create(['status' => UserStates::Activated]);
 
         $response = $this->post('/login', [
             'name' => $user->name,

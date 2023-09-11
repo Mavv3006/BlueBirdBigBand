@@ -2,6 +2,7 @@
 
 namespace Intern;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Tests\TestCase;
@@ -14,7 +15,7 @@ class GateTest extends TestCase
         $this->seed(DefaultAuthorizationSeeder::class);
         $this->actingAs(
             User::factory()
-                ->create(['activated' => true])
+                ->create(['status' => UserStates::Activated])
                 ->givePermissionTo('route.access-intern')
         );
     }

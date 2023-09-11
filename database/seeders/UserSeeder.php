@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,7 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'activated' => true,
+            'status' => UserStates::Activated,
         ]);
     }
 }

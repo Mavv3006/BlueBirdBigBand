@@ -90,7 +90,6 @@ class RoleTest extends TestCase
                         fn (AssertableInertia $page) => $page
                             ->has('id')
                             ->has('name')
-                            ->has('activated')
                             ->etc()
                     )
             );
