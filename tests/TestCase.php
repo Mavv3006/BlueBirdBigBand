@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -22,7 +23,7 @@ abstract class TestCase extends BaseTestCase
     protected function createUserForAdminRoutes()
     {
         return User::factory()
-            ->create(['activated' => true])
+            ->create(['status' => UserStates::Activated])
             ->assignRole('admin');
     }
 
