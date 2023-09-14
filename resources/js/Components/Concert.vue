@@ -23,12 +23,18 @@ const playTime = computed<string>(() => {
 });
 
 const address = computed<string>(() => {
-    return props.concert.description.venue + ', '
-        + props.concert.address.street + ' '
-        + props.concert.address.number + ', '
-        + props.concert.address.plz + ' '
-        + props.concert.address.city;
+    return `${venueDescription()} ${streetNumber()} ${props.concert.address.plz} ${props.concert.address.city}`;
 });
+
+const venueDescription = () => {
+    return !props.concert.description.venue ? "" : `${props.concert.description.venue}, `;
+};
+
+const streetNumber = () => {
+    return !props.concert.address.street
+        ? ""
+        : `${props.concert.address.street} ${props.concert.address.number}, `;
+};
 
 const day = computed<string>(() => useFormatDate(props.concert.date));
 
