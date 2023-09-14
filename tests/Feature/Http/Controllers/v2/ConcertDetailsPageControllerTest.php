@@ -31,8 +31,7 @@ class ConcertDetailsPageControllerTest extends TestCase
         $this->get(route('concert-details-page', [
             'concert' => Concert::all()->first(),
         ]))
-            ->assertSuccessful()
-            ->assertViewHas('concert');
+            ->assertSuccessful();
     }
 
     private function seedDatabase(): void

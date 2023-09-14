@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\StateMachines\UserStates;
+use App\StateMachines\User\ActivatedUserState;
+use App\StateMachines\User\BaseUserState;
+use App\StateMachines\User\RegisteredUserState;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,8 +16,8 @@ class User extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    use Notifiable;
     use HasRoles;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,11 +27,15 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
-        'activated',
+        'status',
     ];
 
     protected $casts = [
-        'activated' => 'boolean',
+        'status' => UserStates::class,
+    ];
+
+    protected $attributes = [
+        'status' => UserStates::Registered,
     ];
 
     /**
@@ -41,4 +49,12 @@ class User extends Authenticatable
     ];
 
     protected array $guard_name = ['api', 'web'];
+
+    public function state(): BaseUserState
+    {
+        return match ($this->status) {
+            UserStates::Registered => new RegisteredUserState($this),
+            UserStates::Activated => new ActivatedUserState($this)
+        };
+    }
 }

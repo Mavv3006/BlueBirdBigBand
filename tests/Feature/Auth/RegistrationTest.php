@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -30,6 +31,6 @@ class RegistrationTest extends TestCase
         $user = User::first();
         $this->assertEquals('Test User', $user->name);
         $this->assertTrue(Hash::check('password', $user->password));
-        $this->assertFalse($user->activated);
+        $this->assertEquals(UserStates::Registered, $user->status);
     }
 }

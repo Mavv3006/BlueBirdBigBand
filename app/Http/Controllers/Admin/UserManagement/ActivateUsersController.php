@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\UserManagement;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\User\UserService;
+use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -27,11 +28,14 @@ class ActivateUsersController extends Controller
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function update(User $user): RedirectResponse
     {
         Gate::authorize('manage users');
 
-        $this->userService->activateUser($user);
+        $user->state()->activate();
 
         return back();
     }

@@ -8,29 +8,23 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, defineProps} from 'vue';
+import {defineProps} from 'vue';
 import {Concert} from "@/types/concert";
 import {useFormatDate} from "@/Composables/useFormatDate";
 
 const props = defineProps<{ concert: Concert }>();
 
-console.debug(props.concert)
+const playTime = `${props.concert.start_time} Uhr - ${props.concert.end_time} Uhr | ${props.concert.description.event}`;
 
-const playTime = computed<string>(() => {
-    return props.concert.start_time + ' Uhr - '
-        + props.concert.end_time + ' Uhr | '
-        + props.concert.description.event
-});
+const venueDescription = !props.concert.description.venue ? "" : `${props.concert.description.venue}, `;
 
-const address = computed<string>(() => {
-    return props.concert.description.venue + ', '
-        + props.concert.address.street + ' '
-        + props.concert.address.number + ', '
-        + props.concert.address.plz + ' '
-        + props.concert.address.city;
-});
+const streetNumber = !props.concert.address.street
+    ? ""
+    : `${props.concert.address.street} ${props.concert.address.number}, `;
 
-const day = computed<string>(() => useFormatDate(props.concert.date));
+const address = `${venueDescription} ${streetNumber} ${props.concert.address.plz} ${props.concert.address.city}`;
+
+const day = useFormatDate(props.concert.date);
 
 </script>
 

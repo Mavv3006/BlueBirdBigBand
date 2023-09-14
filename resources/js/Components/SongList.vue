@@ -3,7 +3,6 @@
         <table>
             <thead>
             <tr>
-                <th v-if="showId">#</th>
                 <th>Titel</th>
                 <th>Arrangeur</th>
                 <th>Autor</th>
@@ -13,7 +12,6 @@
             </thead>
             <tbody>
             <tr v-for="song in songs">
-                <td v-if="showId">{{ song.id }}</td>
                 <td
                     :class="{'play-song': song.file_path !== null}"
                     @click="songTitleClicked(song)"

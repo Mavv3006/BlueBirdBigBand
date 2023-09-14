@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -24,10 +25,10 @@ class DatabaseSeeder extends Seeder
             ->call(SetlistSeeder::class);
 
         User::factory()
-            ->create(['name' => 'admin', 'activated' => true])
+            ->create(['name' => 'admin', 'status' => UserStates::Activated])
             ->assignRole('admin');
         User::factory()
-            ->create(['name' => 'musician', 'activated' => true])
+            ->create(['name' => 'musician', 'status' => UserStates::Activated])
             ->assignRole('musician');
     }
 }
