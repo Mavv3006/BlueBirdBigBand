@@ -19,7 +19,7 @@
 
         <div class="scroll overflow-hidden relative z-0">
             <span class="absolute text-lg h-full m-0 text-left text-[#990000] font-bold w-[100vw] tracking-[2px]">
-                +++ Schlagzeuger/in, Posaunist/innen und Keyboarder/in gesucht +++
+                +++ Posaunist/innen und Keyboarder/in gesucht +++
             </span>
         </div>
     </PublicLayout>
