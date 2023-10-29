@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\FeatureFlagName;
 use App\Enums\StateMachines\FeatureFlagState;
 use App\StateMachines\FeatureFlag\BaseFeatureFlagState;
 use App\StateMachines\FeatureFlag\OffFeatureFlagState;
@@ -19,6 +20,7 @@ class FeatureFlag extends Model
     ];
 
     protected $casts = [
+        'name' => FeatureFlagName::class,
         'status' => FeatureFlagState::class,
     ];
 

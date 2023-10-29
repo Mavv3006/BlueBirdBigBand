@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use App\Enums\FeatureFlagName;
 use App\Enums\StateMachines\FeatureFlagState;
 use App\Models\FeatureFlag;
 use App\StateMachines\FeatureFlag\OffFeatureFlagState;
@@ -13,7 +14,7 @@ class FeatureFlagTest extends TestCase
     public function testStateOff()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'tests',
+            'name' => FeatureFlagName::DesignV2,
             'status' => FeatureFlagState::Off,
         ]);
         $this->assertInstanceOf(OffFeatureFlagState::class, $feature->state());
@@ -22,7 +23,7 @@ class FeatureFlagTest extends TestCase
     public function testStateOn()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'tests',
+            'name' => FeatureFlagName::DesignV2,
             'status' => FeatureFlagState::On,
         ]);
         $this->assertInstanceOf(OnFeatureFlagState::class, $feature->state());
