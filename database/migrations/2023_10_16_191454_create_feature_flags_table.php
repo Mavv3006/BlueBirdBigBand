@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('feature_flags', function (Blueprint $table) {
+        Schema::create('features', function (Blueprint $table) {
             $table->string('status');
             $table->string('name');
             $table->timestamps();

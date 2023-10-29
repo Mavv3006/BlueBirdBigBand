@@ -28,6 +28,8 @@ class FeatureFlag extends Model
         'status' => FeatureFlagState::Off,
     ];
 
+    protected $table = 'features';
+
     protected $primaryKey = 'name';
 
     public $incrementing = false;
