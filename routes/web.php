@@ -88,7 +88,7 @@ Route::prefix('admin')
     });
 
 Route::prefix('v2')
-    ->middleware(['feature:'.FeatureFlagName::DesignV2->value])
+    ->middleware(['feature:'.FeatureFlagName::DesignV2->value, 'auth'])
     ->group(function () {
         Route::get('/', IndexController::class);
         Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
