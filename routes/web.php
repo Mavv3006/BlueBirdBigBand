@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\FeatureFlagName;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ConcertManagement\ConcertsController;
 use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
@@ -19,7 +20,6 @@ use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
-use App\Http\Middleware\UseDesignVersion2;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,7 +88,7 @@ Route::prefix('admin')
     });
 
 Route::prefix('v2')
-    ->middleware([UseDesignVersion2::class])
+    ->middleware(['feature:'.FeatureFlagName::DesignV2->value, 'auth'])
     ->group(function () {
         Route::get('/', IndexController::class);
         Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
