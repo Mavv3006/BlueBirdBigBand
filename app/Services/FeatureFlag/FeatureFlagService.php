@@ -14,6 +14,16 @@ class FeatureFlagService
         return FeatureFlag::firstOrCreate(['name' => $flagName])->status;
     }
 
+    public static function isOn(FeatureFlagName $flagName): bool
+    {
+        return self::getState($flagName) == FeatureFlagState::On;
+    }
+
+    public static function isOff(FeatureFlagName $flagName): bool
+    {
+        return self::getState($flagName) == FeatureFlagState::Off;
+    }
+
     /**
      * @return bool True, if the activation of the feature flag was successful. False otherwise.
      */

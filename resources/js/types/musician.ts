@@ -21,4 +21,4 @@ export type MusicianWithInstrument = {
     musicians: Musician[]
 }
 
-export type Musician = { picture: String, name: String };
+export type Musician = { name: String };

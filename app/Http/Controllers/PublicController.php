@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FeatureFlagName;
 use App\Services\Concert\ConcertService;
+use App\Services\FeatureFlag\FeatureFlagService;
 use App\Services\Musician\MusicianService;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -10,9 +12,10 @@ use Inertia\Response;
 class PublicController extends Controller
 {
     public function __construct(
-        public ConcertService $concertService,
+        public ConcertService  $concertService,
         public MusicianService $musicianService,
-    ) {
+    )
+    {
     }
 
     public function home(): Response
@@ -59,8 +62,15 @@ class PublicController extends Controller
 
     public function musicians(): Response
     {
+        $musicians = $this->musicianService->activeMusicians();
+        if (FeatureFlagService::isOn(FeatureFlagName::NewMusicianPage)) {
+            return Inertia::render('Band/NewMusiciansPage', [
+                'data' => $musicians,
+            ]);
+        }
+
         return Inertia::render('Band/MusiciansPage', [
-            'data' => $this->musicianService->activeMusicians(),
+            'data' => $musicians,
         ]);
     }
 }
