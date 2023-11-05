@@ -32,7 +32,7 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
 import {Head} from '@inertiajs/vue3';
-import {Musician, MusicianProp, MusicianWithInstrument} from "@/types/musician";
+import {Musician, MusicianProp, MusicianWithInstrument, ReducedInstrument} from "@/types/musician";
 import NewMusicianInstrument from "@/Components/NewMusicianInstrument.vue";
 
 const props = defineProps<{ data: MusicianProp[] }>();
@@ -45,12 +45,12 @@ const musicianMapping = (value: MusicianProp): Musician[] => value.musicians
         name: `${musician.firstname} ${musician.lastname}`,
     }));
 
-const instrumentMapping = (instrument: string): MusicianWithInstrument => ({
+const instrumentMapping = (instrument: ReducedInstrument): MusicianWithInstrument => ({
     instrument: instrument,
     musicians: props.data
-        .filter(instrumentFilter(instrument))
+        .filter(instrumentFilter(instrument.name))
         .map(musicianMapping)[0]
 });
 
-const musicianWithInstrument = props.data.map((value) => instrumentMapping(value.instrument.name));
+const musicianWithInstrument = props.data.map((value) => instrumentMapping(value.instrument));
 </script>

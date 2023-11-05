@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\FeatureFlagName;
+use App\Enums\StateMachines\FeatureFlagState;
 use App\Services\Concert\ConcertService;
 use App\Services\FeatureFlag\FeatureFlagService;
 use App\Services\Musician\MusicianService;
@@ -62,15 +63,13 @@ class PublicController extends Controller
 
     public function musicians(): Response
     {
-        $musicians = $this->musicianService->activeMusicians();
-        if (FeatureFlagService::isOn(FeatureFlagName::NewMusicianPage)) {
-            return Inertia::render('Band/NewMusiciansPage', [
-                'data' => $musicians,
-            ]);
-        }
+        $inertiaComponent = match (FeatureFlagService::getState(FeatureFlagName::NewMusicianPage)) {
+            FeatureFlagState::On => 'Band/NewMusiciansPage',
+            FeatureFlagState::Off => 'Band/MusiciansPage',
+        };
 
-        return Inertia::render('Band/MusiciansPage', [
-            'data' => $musicians,
+        return Inertia::render($inertiaComponent, [
+            'data' => $this->musicianService->activeMusicians(),
         ]);
     }
 }

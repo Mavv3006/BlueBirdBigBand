@@ -11,13 +11,19 @@ export type MusicianProp = {
     instrument: {
         id: number,
         name: string,
-        default_picture_filepath: string
+        default_picture_filepath: string,
+        tux_filepath: string,
     },
     musicians: MusicianBackendDto[]
 }
 
+export type ReducedInstrument = {
+    name: string
+    tux_filepath: string,
+};
+
 export type MusicianWithInstrument = {
-    instrument: string,
+    instrument: ReducedInstrument,
     musicians: Musician[]
 }
 
