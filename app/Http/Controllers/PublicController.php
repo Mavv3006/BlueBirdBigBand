@@ -13,10 +13,9 @@ use Inertia\Response;
 class PublicController extends Controller
 {
     public function __construct(
-        public ConcertService  $concertService,
+        public ConcertService $concertService,
         public MusicianService $musicianService,
-    )
-    {
+    ) {
     }
 
     public function home(): Response
