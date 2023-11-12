@@ -13,6 +13,7 @@ class Instrument extends Model
     protected $fillable = [
         'name',
         'default_picture_filepath',
+        'tux_filepath',
     ];
 
     protected $hidden = [

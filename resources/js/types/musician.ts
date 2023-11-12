@@ -19,7 +19,7 @@ export type MusicianProp = {
 
 export type ReducedInstrument = {
     name: string
-    tux_filepath: string,
+    default_picture_filepath: string,
 };
 
 export type MusicianWithInstrument = {

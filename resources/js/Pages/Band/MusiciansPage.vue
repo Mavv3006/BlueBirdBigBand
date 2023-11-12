@@ -17,20 +17,11 @@
             finden Sie noch einmal die Zeiten und die genaue Adresse, um zu unseren Proben zu finden.
         </p>
 
-        <div class="flex flex-col md:flex-row">
-            <div v-for="musician in bandleaderPlusVocals" class="md:w-1/2">
-                <MusicianInstrument
-                    :instrument="musician.instrument"
-                    :musicians="musician.musicians"/>
-            </div>
-        </div>
-
-        <div>
+        <div class="flex flex-col gap-12">
             <MusicianInstrument
-                v-for="musician in instrumentalists"
+                v-for="musician in musicianWithInstrument"
                 :instrument="musician.instrument"
                 :musicians="musician.musicians"/>
-
         </div>
 
     </public-layout>
@@ -40,27 +31,26 @@
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
-import MusicianInstrument from "@/Components/MusicianInstrument.vue";
 import {Head} from '@inertiajs/vue3';
-import {Musician, MusicianBackendDto, MusicianProp, MusicianWithInstrument} from "@/types/musician";
+import {Musician, MusicianProp, MusicianWithInstrument, ReducedInstrument} from "@/types/musician";
+import MusicianInstrument from "@/Components/MusicianInstrument.vue";
 
 const props = defineProps<{ data: MusicianProp[] }>();
 
 const instrumentFilter = (instrument: string) => (value: MusicianProp): boolean => value.instrument.name === instrument;
 
-const musicianMapping = (value: MusicianProp): Musician[] => value.musicians.map((musician: MusicianBackendDto) => ({
-    name: `${musician.firstname} ${musician.lastname}`,
-    picture: musician.picture_filepath === null ? value.instrument.default_picture_filepath : `storage/${musician.picture_filepath}`
-}));
+const musicianMapping = (value: MusicianProp): Musician[] => value.musicians
+    .sort((a, b) => a.lastname > b.lastname ? 1 : -1)
+    .map((musician) => ({
+        name: `${musician.firstname} ${musician.lastname}`,
+    }));
 
-const instrumentMapping = (instrument: string): MusicianWithInstrument => ({
+const instrumentMapping = (instrument: ReducedInstrument): MusicianWithInstrument => ({
     instrument: instrument,
-    musicians: props.data.filter(instrumentFilter(instrument)).map(musicianMapping)[0]
+    musicians: props.data
+        .filter(instrumentFilter(instrument.name))
+        .map(musicianMapping)[0]
 });
 
-const musicianWithInstrument = props.data.map((value: MusicianProp) => instrumentMapping(value.instrument.name));
-
-const bandleaderPlusVocals = musicianWithInstrument.filter((value, index) => index < 2);
-
-const instrumentalists = musicianWithInstrument.filter((value, index) => index >= 2);
+const musicianWithInstrument = props.data.map((value: MusicianProp) => instrumentMapping(value.instrument));
 </script>
