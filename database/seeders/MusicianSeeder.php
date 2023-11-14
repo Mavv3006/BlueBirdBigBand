@@ -44,7 +44,13 @@ class MusicianSeeder extends Seeder
         Musician::factory()
             ->count(3)
             ->create([
-                'instrument_id' => Instrument::where('name', 'Rhythmusgruppe')->first(),
+                'instrument_id' => Instrument::where('name', 'Gitarre & Bass')->first(),
+            ]);
+
+        Musician::factory()
+            ->count(3)
+            ->create([
+                'instrument_id' => Instrument::where('name', 'Drums')->first(),
             ]);
     }
 }
