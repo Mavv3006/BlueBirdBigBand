@@ -25,7 +25,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin/filament')
-            ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])
