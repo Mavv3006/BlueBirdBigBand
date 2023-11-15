@@ -16,15 +16,16 @@
     },
     "require": {
         "php": "^8.1",
-      "ext-pdo": "*",
+        "ext-pdo": "*",
+        "filament/filament": "3.0-stable",
         "guzzlehttp/guzzle": "^7.5.2",
         "inertiajs/inertia-laravel": "^v0.6.9",
         "laravel/framework": "^v10.13.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
-      "livewire/livewire": "^3.0@beta",
+        "livewire/livewire": "^3.0@beta",
         "spatie/laravel-permission": "^5.9",
-      "tightenco/ziggy": "^v1.6.0"
+        "tightenco/ziggy": "^v1.6.0"
     },
     "require-dev": {
         "brianium/paratest": "^7.1",
@@ -54,7 +55,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
