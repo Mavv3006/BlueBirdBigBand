@@ -20,7 +20,7 @@ class InstrumentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Instrumente';
 
-    protected static ?string $modelLabel = "Instrument";
+    protected static ?string $modelLabel = 'Instrument';
 
     public static function form(Form $form): Form
     {
@@ -59,7 +59,7 @@ class InstrumentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

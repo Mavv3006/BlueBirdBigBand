@@ -20,7 +20,7 @@ class MusicianResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Musiker';
 
-    protected static ?string $modelLabel = "Musiker";
+    protected static ?string $modelLabel = 'Musiker';
 
     public static function form(Form $form): Form
     {
@@ -37,7 +37,7 @@ class MusicianResource extends Resource
                     ->relationship('instrument', 'name')
                     ->preload()
                     ->required()
-                    ->searchable()
+                    ->searchable(),
             ]);
     }
 
@@ -66,7 +66,7 @@ class MusicianResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
