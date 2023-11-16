@@ -2,40 +2,42 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InstrumentResource\Pages;
-use App\Models\Instrument;
+use App\Filament\Resources\MusicianResource\Pages;
+use App\Models\Musician;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class InstrumentResource extends Resource
+class MusicianResource extends Resource
 {
-    protected static ?string $model = Instrument::class;
+    protected static ?string $model = Musician::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Instrumente';
+    protected static ?string $navigationLabel = 'Musiker';
 
-    protected static ?string $pluralModelLabel = 'Instrumente';
+    protected static ?string $pluralModelLabel = 'Musiker';
 
-    protected static ?string $modelLabel = "Instrument";
+    protected static ?string $modelLabel = "Musiker";
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('firstname')
                     ->required()
                     ->string()
                     ->autofocus(),
-                Forms\Components\TextInput::make('default_picture_filepath')
+                Forms\Components\TextInput::make('lastname')
                     ->required()
                     ->string(),
-                Forms\Components\TextInput::make('tux_filepath')
+                Forms\Components\Select::make('instrument_id')
+                    ->relationship('instrument', 'name')
+                    ->preload()
                     ->required()
-                    ->string(),
+                    ->searchable()
             ]);
     }
 
@@ -46,7 +48,12 @@ class InstrumentResource extends Resource
                 Tables\Columns\TextColumn::make('id')
                     ->numeric()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('firstname')
+                    ->label('Vorname'),
+                Tables\Columns\TextColumn::make('lastname')
+                    ->label('Nachname'),
+                Tables\Columns\TextColumn::make('instrument.name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -81,9 +88,9 @@ class InstrumentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInstruments::route('/'),
-            'create' => Pages\CreateInstrument::route('/create'),
-            'edit' => Pages\EditInstrument::route('/{record}/edit'),
+            'index' => Pages\ListMusicians::route('/'),
+            'create' => Pages\CreateMusician::route('/create'),
+            'edit' => Pages\EditMusician::route('/{record}/edit'),
         ];
     }
 }
