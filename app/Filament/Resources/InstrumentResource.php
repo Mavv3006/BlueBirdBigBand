@@ -21,6 +21,15 @@ class InstrumentResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->string()
+                    ->autofocus(),
+                Forms\Components\TextInput::make('default_picture_filepath')
+                    ->required()
+                    ->string(),
+                Forms\Components\TextInput::make('tux_filepath')
+                    ->required()
+                    ->string(),
             ]);
     }
 
