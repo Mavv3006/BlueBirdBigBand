@@ -4,11 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\InstrumentResource\Pages;
 use App\Models\Instrument;
+use Exception;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class InstrumentResource extends Resource
 {
@@ -30,6 +33,10 @@ class InstrumentResource extends Resource
                     ->required()
                     ->string()
                     ->autofocus(),
+                Forms\Components\TextInput::make('order')
+                    ->label('Reihenfolge')
+                    ->integer()
+                    ->unique('instruments'),
                 Forms\Components\TextInput::make('default_picture_filepath')
                     ->required()
                     ->string(),
@@ -39,14 +46,23 @@ class InstrumentResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->numeric()
+                    ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('order')
+                    ->label('Reihenfolge')
+                    ->sortable()
+                    ->default('<null>'),
+                Tables\Columns\TextColumn::make('name')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -55,7 +71,11 @@ class InstrumentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('order not null')
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('order'))
+                    ->label('Aktiv')
+                    ->default(),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -64,11 +84,16 @@ class InstrumentResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('deactivate')
+                        ->requiresConfirmation()
+                        ->action(fn (Collection $collection) => $collection->each->update(['order' => null]))
+                        ->label('Deaktivieren'),
                 ]),
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->defaultSort('order');
     }
 
     public static function getRelations(): array
