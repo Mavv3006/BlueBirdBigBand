@@ -40,7 +40,6 @@ const props = defineProps<{ data: MusicianProp[] }>();
 const instrumentFilter = (instrument: string) => (value: MusicianProp): boolean => value.instrument.name === instrument;
 
 const musicianMapping = (value: MusicianProp): Musician[] => value.musicians
-    .sort((a, b) => a.lastname > b.lastname ? 1 : -1)
     .map((musician) => ({
         name: `${musician.firstname} ${musician.lastname}`,
     }));

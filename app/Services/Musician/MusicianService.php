@@ -15,14 +15,16 @@ class MusicianService
 {
     public function activeMusicians(): BaseCollection
     {
-        return Instrument::all()->map(fn (Instrument $instrument) => [
-            'instrument' => $instrument,
-            'musicians' => $instrument
-                ->musicians()
-                ->where('isActive', 1)
-                ->orderBy('seating_position')
-                ->get(),
-        ]);
+        return Instrument::orderBy('order')
+            ->get()
+            ->map(fn (Instrument $instrument) => [
+                'instrument' => $instrument,
+                'musicians' => $instrument
+                    ->musicians()
+                    ->where('isActive', 1)
+                    ->orderBy('lastname')
+                    ->get(),
+            ]);
     }
 
     public function all(): Collection
