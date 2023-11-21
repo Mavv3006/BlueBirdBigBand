@@ -14,6 +14,7 @@ class Instrument extends Model
         'name',
         'default_picture_filepath',
         'tux_filepath',
+        'order',
     ];
 
     protected $hidden = [

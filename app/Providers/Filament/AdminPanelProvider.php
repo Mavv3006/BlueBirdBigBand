@@ -23,6 +23,7 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->brandName('Blue Bird Big Band Admin')
             ->id('admin')
             ->path('admin/filament')
             ->colors([
@@ -49,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->sidebarFullyCollapsibleOnDesktop();
     }
 }
