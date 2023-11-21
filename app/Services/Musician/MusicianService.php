@@ -22,7 +22,7 @@ class MusicianService
                 'musicians' => $instrument
                     ->musicians()
                     ->where('isActive', 1)
-                    ->orderBy('seating_position')
+                    ->orderBy('lastname')
                     ->get(),
             ]);
     }
