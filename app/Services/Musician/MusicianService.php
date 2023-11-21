@@ -15,7 +15,8 @@ class MusicianService
 {
     public function activeMusicians(): BaseCollection
     {
-        return Instrument::orderBy('order')
+        return Instrument::whereNotNull('order')
+            ->orderBy('order')
             ->get()
             ->map(fn (Instrument $instrument) => [
                 'instrument' => $instrument,
