@@ -13,24 +13,54 @@ class InstrumentSeeder extends Seeder
     public function run(): void
     {
         $instrumentNames = [
-            ['name' => 'Bandleader', 'path' => 'assets/musician_pictures/default/tux-dirigent.png'],
-            ['name' => 'Gesang', 'path' => null],
-            ['name' => 'Saxophone', 'path' => 'assets/musician_pictures/default/tux-sax.jpg'],
-            ['name' => 'Posaunen', 'path' => null],
-            ['name' => 'Trompeten', 'path' => 'assets/musician_pictures/default/tux-trompeter.png'],
-            ['name' => 'Rhythmusgruppe', 'path' => null],
+            [
+                'name' => 'Bandleader',
+                'tux' => 'assets/musician_pictures/default/tux-dirigent.png',
+                'default' => null,
+            ],
+            [
+                'name' => 'Gesang',
+                'tux' => null,
+                'default' => 'assets/instruments/Vocals.jpg',
+            ],
+            [
+                'name' => 'Saxophone',
+                'tux' => 'assets/musician_pictures/default/tux-sax.jpg',
+                'default' => 'assets/instruments/Sax.jpg',
+            ],
+            [
+                'name' => 'Posaunen',
+                'tux' => null,
+                'default' => 'assets/instruments/Trombone.jpg',
+            ],
+            [
+                'name' => 'Trompeten',
+                'tux' => 'assets/musician_pictures/default/tux-trompeter.png',
+                'default' => 'assets/instruments/Trumpet.jpg',
+            ],
+            [
+                'name' => 'Gitarre & Bass',
+                'tux' => null,
+                'default' => 'assets/instruments/Guitar.jpg',
+            ],
+            [
+                'name' => 'Drums',
+                'tux' => null,
+                'default' => 'assets/instruments/Drums.jpg',
+            ],
         ];
 
         foreach ($instrumentNames as $instrumentName) {
-            $this->createInstrument($instrumentName['name'], $instrumentName['path']);
+            $this->createInstrument($instrumentName['name'], $instrumentName['tux'], $instrumentName['default']);
         }
     }
 
-    private function createInstrument(string $name, ?string $path)
+    private function createInstrument(string $name, ?string $path, ?string $default): void
     {
         Instrument::factory()->create([
             'name' => $name,
-            'default_picture_filepath' => $path ?? 'assets/musician_pictures/default/tux.png',
+            'default_picture_filepath' => $default ?? 'assets/musician_pictures/default/tux.png',
+            'tux_filepath' => $tux ?? 'assets/musician_pictures/default/tux.png',
         ]);
     }
 }

@@ -6,13 +6,15 @@ use App\Enums\StateMachines\UserStates;
 use App\StateMachines\User\ActivatedUserState;
 use App\StateMachines\User\BaseUserState;
 use App\StateMachines\User\RegisteredUserState;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -56,5 +58,10 @@ class User extends Authenticatable
             UserStates::Registered => new RegisteredUserState($this),
             UserStates::Activated => new ActivatedUserState($this)
         };
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->hasPermissionTo('route.access-admin');
     }
 }
