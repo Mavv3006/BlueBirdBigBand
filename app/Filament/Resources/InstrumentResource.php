@@ -74,8 +74,8 @@ class InstrumentResource extends Resource
                 Tables\Filters\Filter::make('order not null')
                     ->query(fn (Builder $query): Builder => $query->whereNotNull('order'))
                     ->label('Aktiv')
+                    ->indicator('Aktive Instrumente')
                     ->default(),
-
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
