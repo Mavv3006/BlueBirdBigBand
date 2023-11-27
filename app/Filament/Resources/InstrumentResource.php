@@ -36,11 +36,14 @@ class InstrumentResource extends Resource
                 Forms\Components\TextInput::make('order')
                     ->label('Reihenfolge')
                     ->integer()
+                    ->placeholder('leer')
                     ->unique('instruments'),
                 Forms\Components\TextInput::make('default_picture_filepath')
+                    ->label('Pfad zum Bild')
                     ->required()
                     ->string(),
                 Forms\Components\TextInput::make('tux_filepath')
+                    ->label('Pfad zum Tux Bild')
                     ->required()
                     ->string(),
             ]);
@@ -60,7 +63,7 @@ class InstrumentResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->label('Reihenfolge')
                     ->sortable()
-                    ->default('<null>'),
+                    ->default('leer'),
                 Tables\Columns\TextColumn::make('name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -78,6 +81,7 @@ class InstrumentResource extends Resource
                     ->default(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -111,4 +115,40 @@ class InstrumentResource extends Resource
             'edit' => Pages\EditInstrument::route('/{record}/edit'),
         ];
     }
+
+    //    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    //    {
+    //        return $infolist
+    //            ->schema([
+    //                \Filament\Infolists\Components\Grid::make(1)
+    //                    ->schema([
+    //                        \Filament\Infolists\Components\TextEntry::make('name'),
+    //                        \Filament\Infolists\Components\RepeatableEntry::make('musicians')
+    //                            ->label('Musiker')
+    //                            ->columns(4)
+    //                            ->schema([
+    //                                \Filament\Infolists\Components\TextEntry::make('id')
+    //                                    ->label('ID'),
+    //                                \Filament\Infolists\Components\TextEntry::make('firstname')
+    //                                    ->label('Vorname'),
+    //                                \Filament\Infolists\Components\TextEntry::make('lastname')
+    //                                    ->label('Nachname'),
+    //                                \Filament\Infolists\Components\TextEntry::make('isActive')
+    //                                    ->label('Status')
+    //                                    ->badge()
+    //                                    ->formatStateUsing(fn(string $state): string => $state ? "Aktiv" : "Inaktiv")
+    //                                    ->color(function (int $state): string {
+    //                                        \Illuminate\Support\Facades\Log::debug('states: ' . $state, [$state]);
+    //                                        $color = match ($state) {
+    //                                            1 => 'success',
+    //                                            0 => 'warning',
+    //                                            default => 'danger',
+    //                                        };
+    //                                        \Illuminate\Support\Facades\Log::debug('color: ' . $color);
+    //                                        return $color;
+    //                                    }),
+    //                            ]),
+    //                    ])
+    //            ]);
+    //    }
 }
