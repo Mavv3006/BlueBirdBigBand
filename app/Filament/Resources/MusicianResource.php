@@ -4,11 +4,13 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MusicianResource\Pages;
 use App\Models\Musician;
+use Exception;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class MusicianResource extends Resource
 {
@@ -38,9 +40,15 @@ class MusicianResource extends Resource
                     ->preload()
                     ->required()
                     ->searchable(),
+                Forms\Components\Checkbox::make('isActive')
+                    ->label('Aktiv?')
+                    ->inline(false),
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -54,6 +62,9 @@ class MusicianResource extends Resource
                     ->label('Nachname'),
                 Tables\Columns\TextColumn::make('instrument.name')
                     ->searchable(),
+                Tables\Columns\CheckboxColumn::make('isActive')
+                    ->label('Aktiv?')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -62,9 +73,14 @@ class MusicianResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\Filter::make('isActive')
+                    ->query(fn (Builder $query): Builder => $query->where('isActive', '=', true))
+                    ->label('Musiker aktiv?')
+                    ->indicator('Aktive Musiker')
+                    ->default(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
