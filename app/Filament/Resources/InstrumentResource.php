@@ -21,6 +21,8 @@ class InstrumentResource extends Resource
 
     protected static ?string $navigationLabel = 'Instrumente';
 
+    protected static ?string $navigationGroup = 'Band';
+
     protected static ?string $pluralModelLabel = 'Instrumente';
 
     protected static ?string $modelLabel = 'Instrument';

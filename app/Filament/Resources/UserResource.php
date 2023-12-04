@@ -16,13 +16,18 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'User';
 
     protected static ?string $pluralModelLabel = 'User';
 
     protected static ?string $modelLabel = 'User';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __(config('filament-spatie-roles-permissions.navigation_section_group', 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions'));
+    }
 
     public static function form(Form $form): Form
     {

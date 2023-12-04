@@ -13,7 +13,15 @@ class ConcertResource extends Resource
 {
     protected static ?string $model = Concert::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-microphone';
+
+    protected static ?string $navigationLabel = 'Auftritte';
+
+    protected static ?string $navigationGroup = 'Auftritte';
+
+    protected static ?string $pluralModelLabel = 'Auftritte';
+
+    protected static ?string $modelLabel = 'Auftritt';
 
     public static function form(Form $form): Form
     {
