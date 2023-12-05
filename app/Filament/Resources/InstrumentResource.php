@@ -72,7 +72,7 @@ class InstrumentResource extends Resource
                 Tables\Columns\TextColumn::make('musicians_count')
                     ->label('Anzahl der Musiker')
                     ->counts([
-                        'musicians' => fn(Builder $query) => $query->where('isActive', '=', true)
+                        'musicians' => fn (Builder $query) => $query->where('isActive', '=', true),
                     ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
@@ -83,7 +83,7 @@ class InstrumentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('order not null')
-                    ->query(fn(Builder $query): Builder => $query->whereNotNull('order'))
+                    ->query(fn (Builder $query): Builder => $query->whereNotNull('order'))
                     ->label('Aktiv')
                     ->indicator('Aktive Instrumente')
                     ->default(),
@@ -98,7 +98,7 @@ class InstrumentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make('deactivate')
                         ->requiresConfirmation()
-                        ->action(fn(Collection $collection) => $collection->each->update(['order' => null]))
+                        ->action(fn (Collection $collection) => $collection->each->update(['order' => null]))
                         ->label('Deaktivieren'),
                 ]),
             ])
@@ -111,7 +111,7 @@ class InstrumentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            MusiciansRelationManager::class
+            MusiciansRelationManager::class,
         ];
     }
 

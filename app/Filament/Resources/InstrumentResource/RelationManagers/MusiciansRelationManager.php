@@ -58,7 +58,7 @@ class MusiciansRelationManager extends RelationManager
             ])
             ->filters([
                 Tables\Filters\Filter::make('isActive')
-                    ->query(fn(Builder $query): Builder => $query->where('isActive', '=', true))
+                    ->query(fn (Builder $query): Builder => $query->where('isActive', '=', true))
                     ->label('Musiker aktiv?')
                     ->indicator('Aktive Musiker'),
             ])
