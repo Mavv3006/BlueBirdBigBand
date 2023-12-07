@@ -19,7 +19,7 @@ class SongFactory extends Factory
     {
         return [
             'file_path' => 'fever.mp3',
-            'title' => $this->faker->words(3, true),
+            'title' => chr(rand(65, 90)).$this->faker->words(3, true),
             'genre' => $this->faker->word(),
             'arranger' => $this->faker->name,
             'author' => $this->faker->name,

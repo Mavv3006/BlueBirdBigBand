@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SongResource\Pages;
 use App\Models\Song;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,7 +22,15 @@ class SongResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('title')
+                    ->required()
+                    ->label('Titel'),
+                TextInput::make('author')
+                    ->label('Komponist'),
+                TextInput::make('arranger')
+                    ->label('Arrangeur'),
+                TextInput::make('genre')
+                    ->label('Genre'),
             ]);
     }
 
@@ -29,13 +38,23 @@ class SongResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Titel')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('author')
+                    ->label('Komponist'),
+                Tables\Columns\TextColumn::make('arranger')
+                    ->label('Arrangeur'),
+                Tables\Columns\TextColumn::make('genre')
+                    ->label('Genre'),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                //                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -44,7 +63,8 @@ class SongResource extends Resource
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
-            ]);
+            ])
+            ->defaultSort('title');
     }
 
     public static function getRelations(): array
