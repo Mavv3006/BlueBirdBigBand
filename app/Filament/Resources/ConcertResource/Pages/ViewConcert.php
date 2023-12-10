@@ -16,11 +16,11 @@ class ViewConcert extends ViewRecord
         return [
             Actions\EditAction::make(),
             Actions\DeleteAction::make()
-                ->hidden($this->isPlayedConcert()),
+                ->hidden($this->concertIsPlayed()),
         ];
     }
 
-    private function isPlayedConcert(): bool
+    private function concertIsPlayed(): bool
     {
         /**
          * @var Concert $concert
