@@ -88,18 +88,22 @@ class ConcertResource extends Resource
                             'md' => 2,
                         ])->schema([
                             TextInput::make('venue_street')
-                                ->required(),
+                                ->required()
+                                ->label('Straßenname'),
                             TextInput::make('venue_street_number')
-                                ->required(),
+                                ->required()
+                                ->label('Hausnummer'),
                         ]),
                         Grid::make([
                             'default' => 1,
                             'md' => 2,
                         ])->schema([
                             TextInput::make('venue_plz')
-                                ->disabled(),
+                                ->disabled()
+                                ->label('Postleitzahl (PLZ)'),
                             Select::make('venue_plz')
                                 ->native(false)
+                                ->label('Ort')
                                 ->searchable()
                                 ->preload()
                                 // TODO: make it work
