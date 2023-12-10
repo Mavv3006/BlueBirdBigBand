@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\ConcertResource\Pages;
 
 use App\Filament\Resources\ConcertResource;
+use App\Models\Concert;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
@@ -21,6 +22,11 @@ class ViewConcert extends ViewRecord
 
     private function isPlayedConcert(): bool
     {
-        return $this->record->isPlayed();
+        /**
+         * @var Concert $concert
+         */
+        $concert = $this->getRecord();
+
+        return $concert->isPlayed();
     }
 }
