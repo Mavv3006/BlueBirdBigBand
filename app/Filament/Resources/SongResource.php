@@ -18,6 +18,10 @@ class SongResource extends Resource
 
     protected static ?string $navigationGroup = 'Auftritte';
 
+    protected static ?string $pluralModelLabel = 'Songs';
+
+    protected static ?string $modelLabel = 'Song';
+
     public static function form(Form $form): Form
     {
         return $form

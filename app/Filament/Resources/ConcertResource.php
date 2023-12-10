@@ -4,12 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ConcertResource\Pages;
 use App\Models\Concert;
-use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 
 class ConcertResource extends Resource
 {
@@ -29,7 +33,89 @@ class ConcertResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Section::make('Datum und Uhrzeit')
+                    ->description('Beschreibt an welchem Datum und von wann bis wann der Auftritt stattfindet.')
+                    ->columns([
+                        'default' => 1,
+                        'sm' => 3,
+                    ])
+                    ->schema([
+                        DatePicker::make('date')
+                            ->label('Datum')
+                            ->displayFormat('d M Y')
+                            ->native(false)
+                            ->weekStartsOnMonday()
+                            ->closeOnDateSelection()
+                            ->required()
+                            ->minDate(now()),
+                        DateTimePicker::make('start_time')
+                            ->label('Startzeit')
+                            ->native(false)
+                            ->seconds(false)
+                            ->weekStartsOnMonday()
+                            ->closeOnDateSelection()
+                            ->required()
+                            ->minDate(now())
+                            ->displayFormat(' H:i'),
+                        DateTimePicker::make('end_time')
+                            ->label('Endzeit')
+                            ->native(false)
+                            ->seconds(false)
+                            ->weekStartsOnMonday()
+                            ->closeOnDateSelection()
+                            ->required()
+                            ->minDate(now())
+                            ->displayFormat('H:i'),
+                    ]),
+                Section::make('Beschreibungen')
+                    ->columns([
+                        'default' => 1,
+                        'lg' => 2,
+                    ])
+                    ->schema([
+                        TextInput::make('event_description')
+                            ->label('Beschreibung')
+                            ->required(),
+                        TextInput::make('venue_description')
+                            ->label('Name der Location')
+                            ->required(),
+                    ]),
+                Section::make('Adresse')
+                    ->description('An welcher Adresse wird die Band spielen?')
+                    ->schema([
+                        Grid::make([
+                            'default' => 1,
+                            'md' => 2,
+                        ])->schema([
+                            TextInput::make('venue_street')
+                                ->required(),
+                            TextInput::make('venue_street_number')
+                                ->required(),
+                        ]),
+                        Grid::make([
+                            'default' => 1,
+                            'md' => 2,
+                        ])->schema([
+                            TextInput::make('venue_plz')
+                                ->disabled(),
+                            Select::make('venue_plz')
+                                ->native(false)
+                                ->searchable()
+                                ->preload()
+                                // TODO: make it work
+//                                ->createOptionForm([
+//                                    TextInput::make('plz')
+//                                        ->numeric()
+//                                        ->minValue(10000)
+//                                        ->maxValue(99999)
+//                                        ->unique('venues', 'plz')
+//                                        ->required(),
+//                                    TextInput::make('name')
+//                                        ->required(),
+//                                ])
+                                ->relationship(name: 'venue', titleAttribute: 'name'),
+                        ]),
+                    ]),
             ]);
     }
 
@@ -60,18 +146,8 @@ class ConcertResource extends Resource
                     ->searchable()
                     ->sortable(),
             ])
-            ->filters([
-                Tables\Filters\Filter::make('past')
-                    ->query(fn (Builder $query): Builder => $query->whereDate('date', '<', Carbon::today()->toDateString()))
-                    ->label('vergangene')
-                    ->indicator('Bereits gespielte Auftritte'),
-                Tables\Filters\Filter::make('upcoming')
-                    ->query(fn (Builder $query): Builder => $query->whereDate('date', '>=', Carbon::today()->toDateString()))
-                    ->label('zukünftige')
-                    ->indicator('Kommende Auftritte')
-                    ->default(),
-            ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -98,6 +174,7 @@ class ConcertResource extends Resource
             'index' => Pages\ListConcerts::route('/'),
             'create' => Pages\CreateConcert::route('/create'),
             'edit' => Pages\EditConcert::route('/{record}/edit'),
+            'view' => Pages\ViewConcert::route('/{record}'),
         ];
     }
 }

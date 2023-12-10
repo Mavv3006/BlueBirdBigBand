@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,5 +48,15 @@ class Concert extends Model
     public function setlist(): HasOne
     {
         return $this->hasOne(SetlistHeader::class);
+    }
+
+    public function isUpcoming(): bool
+    {
+        return $this->date >= Carbon::today()->toDateString();
+    }
+
+    public function isPlayed(): bool
+    {
+        return $this->date < Carbon::today()->toDateString();
     }
 }
