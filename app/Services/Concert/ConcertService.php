@@ -19,7 +19,7 @@ class ConcertService
     /**
      * @return Collection|FormattedConcertDto[]
      */
-    public function query(string $dateComparisonOperator, int $limit = null, bool $returnDtoFlag = false): Collection|array
+    public function query(string $dateComparisonOperator, ?int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
         $queryBuilder = Concert::with('band', 'venue')
             ->whereDate('date', $dateComparisonOperator, Carbon::today()->toDateString())
@@ -44,7 +44,7 @@ class ConcertService
     /**
      * @return Collection|FormattedConcertDto[]
      */
-    public function upcoming(int $limit = null, bool $returnDtoFlag = false): Collection|array
+    public function upcoming(?int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
         return $this->query('>=', $limit, $returnDtoFlag);
     }
@@ -121,7 +121,7 @@ class ConcertService
     /**
      * @return Collection|FormattedConcertDto[]
      */
-    public function past(int $limit = null, bool $returnDtoFlag = false): Collection|array
+    public function past(?int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
         return $this->query('<', $limit, $returnDtoFlag);
     }
