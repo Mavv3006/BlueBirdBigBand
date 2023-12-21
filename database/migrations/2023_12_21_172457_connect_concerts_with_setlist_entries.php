@@ -10,9 +10,6 @@ return new class extends Migration
     {
         Schema::table('setlist_entries', function (Blueprint $table) {
             $table->unsignedBigInteger('concert_id');
-
-            //            $table->foreignId('concert_id')->constrained('concerts');
-            //            $table->foreign('concert_id')->references('id')->on('concerts');
         });
     }
 
