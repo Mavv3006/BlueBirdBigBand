@@ -15,8 +15,8 @@ class SetlistEntry extends Model
         return $this->belongsTo(Song::class);
     }
 
-    public function setlistHeader(): BelongsTo
+    public function concert(): BelongsTo
     {
-        return $this->belongsTo(SetlistHeader::class, 'setlist_id', 'id');
+        return $this->belongsTo(Concert::class);
     }
 }
