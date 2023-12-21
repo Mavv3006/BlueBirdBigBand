@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ConcertResource\Pages;
+use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -168,7 +169,7 @@ class ConcertResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SetlistRelationManager::class,
         ];
     }
 
