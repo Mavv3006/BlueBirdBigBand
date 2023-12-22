@@ -19,6 +19,6 @@ return new class() extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('setlists');
+        Schema::dropIfExists('setlist_headers');
     }
 };

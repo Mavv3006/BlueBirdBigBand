@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ConcertResource\Pages;
+use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -88,18 +89,22 @@ class ConcertResource extends Resource
                             'md' => 2,
                         ])->schema([
                             TextInput::make('venue_street')
-                                ->required(),
+                                ->required()
+                                ->label('Straßenname'),
                             TextInput::make('venue_street_number')
-                                ->required(),
+                                ->required()
+                                ->label('Hausnummer'),
                         ]),
                         Grid::make([
                             'default' => 1,
                             'md' => 2,
                         ])->schema([
                             TextInput::make('venue_plz')
-                                ->disabled(),
+                                ->disabled()
+                                ->label('Postleitzahl (PLZ)'),
                             Select::make('venue_plz')
                                 ->native(false)
+                                ->label('Ort')
                                 ->searchable()
                                 ->preload()
                                 // TODO: make it work
@@ -164,7 +169,7 @@ class ConcertResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SetlistRelationManager::class,
         ];
     }
 

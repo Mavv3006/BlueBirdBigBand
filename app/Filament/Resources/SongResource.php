@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SongResource\Pages;
 use App\Models\Song;
+use App\Rules\StartsWithUppercaseLetterRule;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,7 +29,8 @@ class SongResource extends Resource
             ->schema([
                 TextInput::make('title')
                     ->required()
-                    ->label('Titel'),
+                    ->label('Titel')
+                    ->rule(new StartsWithUppercaseLetterRule()),
                 TextInput::make('author')
                     ->label('Komponist'),
                 TextInput::make('arranger')
@@ -58,7 +60,6 @@ class SongResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                //                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
