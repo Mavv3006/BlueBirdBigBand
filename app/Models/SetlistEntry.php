@@ -10,6 +10,12 @@ class SetlistEntry extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'song_id',
+        'concert_id',
+        'sequence_number',
+    ];
+
     public function song(): BelongsTo
     {
         return $this->belongsTo(Song::class);
