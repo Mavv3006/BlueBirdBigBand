@@ -16,7 +16,7 @@ class SetlistRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\TextInput::make('song_id')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -25,9 +25,9 @@ class SetlistRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('id')
+            ->recordTitleAttribute('song_id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('song_id'),
             ])
             ->filters([
                 //
