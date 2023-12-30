@@ -36,7 +36,7 @@ return new class extends Migration
     private function createSetlistEntryTable(): void
     {
         Schema::create('setlist_entries', function (Blueprint $table) {
-            $table->integer('id')->primary();
+            $table->id();
             $table->foreignIdFor(Song::class)
                 ->constrained()
                 ->cascadeOnUpdate()
