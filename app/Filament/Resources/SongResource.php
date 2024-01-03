@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\SongResource\Pages;
 use App\Models\Song;
 use App\Rules\StartsWithUppercaseLetterRule;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -37,6 +38,12 @@ class SongResource extends Resource
                     ->label('Arrangeur'),
                 TextInput::make('genre')
                     ->label('Genre'),
+                FileUpload::make('file_path')
+                    ->label('Audio Datei')
+                    ->downloadable()
+                    ->moveFiles()
+                    ->directory('songs')
+                    ->acceptedFileTypes(['audio/mp3']),
             ]);
     }
 
@@ -48,11 +55,14 @@ class SongResource extends Resource
                     ->label('Titel')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('author')
-                    ->label('Komponist'),
+                    ->label('Komponist')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('arranger')
-                    ->label('Arrangeur'),
+                    ->label('Arrangeur')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('genre')
-                    ->label('Genre'),
+                    ->label('Genre')
+                    ->sortable(),
             ])
             ->filters([
                 //

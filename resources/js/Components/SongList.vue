@@ -66,7 +66,7 @@ const downloadUrl = computed<string>(() => {
         console.error('the requested song does not have a file.');
         return;
     }
-    let url = `/download/song/${selectedSong.value.id}`;
+    let url = `/storage/${selectedSong.value.file_path}`;
     console.debug(`trying to download song ${selectedSong.value.title} from '${url}'`)
     return url;
 });
