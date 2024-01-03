@@ -10,8 +10,6 @@ class Song extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'file_path',
         'title',
