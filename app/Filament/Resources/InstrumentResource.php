@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\InstrumentResource\Pages;
+use App\Filament\Resources\InstrumentResource\RelationManagers\MusiciansRelationManager;
 use App\Models\Instrument;
 use Exception;
 use Filament\Forms;
@@ -21,6 +22,8 @@ class InstrumentResource extends Resource
 
     protected static ?string $navigationLabel = 'Instrumente';
 
+    protected static ?string $navigationGroup = 'Band';
+
     protected static ?string $pluralModelLabel = 'Instrumente';
 
     protected static ?string $modelLabel = 'Instrument';
@@ -36,11 +39,14 @@ class InstrumentResource extends Resource
                 Forms\Components\TextInput::make('order')
                     ->label('Reihenfolge')
                     ->integer()
+                    ->placeholder('leer')
                     ->unique('instruments'),
                 Forms\Components\TextInput::make('default_picture_filepath')
+                    ->label('Pfad zum Bild')
                     ->required()
                     ->string(),
                 Forms\Components\TextInput::make('tux_filepath')
+                    ->label('Pfad zum Tux Bild')
                     ->required()
                     ->string(),
             ]);
@@ -60,9 +66,14 @@ class InstrumentResource extends Resource
                 Tables\Columns\TextColumn::make('order')
                     ->label('Reihenfolge')
                     ->sortable()
-                    ->default('<null>'),
+                    ->default('leer'),
                 Tables\Columns\TextColumn::make('name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('musicians_count')
+                    ->label('Anzahl der Musiker')
+                    ->counts([
+                        'musicians' => fn (Builder $query) => $query->where('isActive', '=', true),
+                    ]),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -78,6 +89,7 @@ class InstrumentResource extends Resource
                     ->default(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -99,7 +111,7 @@ class InstrumentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MusiciansRelationManager::class,
         ];
     }
 
@@ -109,6 +121,43 @@ class InstrumentResource extends Resource
             'index' => Pages\ListInstruments::route('/'),
             'create' => Pages\CreateInstrument::route('/create'),
             'edit' => Pages\EditInstrument::route('/{record}/edit'),
+            'view' => Pages\ViewInstrument::route('/{record}'),
         ];
     }
+
+    //    public static function infolist(\Filament\Infolists\Infolist $infolist): \Filament\Infolists\Infolist
+    //    {
+    //        return $infolist
+    //            ->schema([
+    //                \Filament\Infolists\Components\Grid::make(1)
+    //                    ->schema([
+    //                        \Filament\Infolists\Components\TextEntry::make('name'),
+    //                        \Filament\Infolists\Components\RepeatableEntry::make('musicians')
+    //                            ->label('Musiker')
+    //                            ->columns(4)
+    //                            ->schema([
+    //                                \Filament\Infolists\Components\TextEntry::make('id')
+    //                                    ->label('ID'),
+    //                                \Filament\Infolists\Components\TextEntry::make('firstname')
+    //                                    ->label('Vorname'),
+    //                                \Filament\Infolists\Components\TextEntry::make('lastname')
+    //                                    ->label('Nachname'),
+    //                                \Filament\Infolists\Components\TextEntry::make('isActive')
+    //                                    ->label('Status')
+    //                                    ->badge()
+    //                                    ->formatStateUsing(fn(string $state): string => $state ? "Aktiv" : "Inaktiv")
+    //                                    ->color(function (int $state): string {
+    //                                        \Illuminate\Support\Facades\Log::debug('states: ' . $state, [$state]);
+    //                                        $color = match ($state) {
+    //                                            1 => 'success',
+    //                                            0 => 'warning',
+    //                                            default => 'danger',
+    //                                        };
+    //                                        \Illuminate\Support\Facades\Log::debug('color: ' . $color);
+    //                                        return $color;
+    //                                    }),
+    //                            ]),
+    //                    ])
+    //            ]);
+    //    }
 }

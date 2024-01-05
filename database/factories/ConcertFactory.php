@@ -20,19 +20,13 @@ class ConcertFactory extends Factory
      */
     public function definition(): array
     {
-        $start_time = Carbon::createFromTimestamp(
-            $this
-                ->faker
-                ->dateTimeBetween(
-                    '-3 years',
-                    '+3 years'
-                )->getTimestamp()
+        $start_time = Carbon::instance(
+            $this->faker->dateTimeBetween('-3 years', '+3 years')
         );
         $end_time = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)
             ->addHours(2);
-        $date = $this
-            ->faker
-            ->dateTimeThisYear('+12 months');
+        $date = $this->faker
+            ->dateTimeInInterval('now', '+12 months');
 
         return [
             'date' => $date,

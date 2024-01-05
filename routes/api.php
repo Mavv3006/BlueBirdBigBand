@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes

@@ -16,9 +16,11 @@ class MusicianResource extends Resource
 {
     protected static ?string $model = Musician::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Musiker';
+
+    protected static ?string $navigationGroup = 'Band';
 
     protected static ?string $pluralModelLabel = 'Musiker';
 
@@ -80,6 +82,7 @@ class MusicianResource extends Resource
                     ->default(),
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
