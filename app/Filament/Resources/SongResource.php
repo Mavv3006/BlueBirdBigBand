@@ -43,7 +43,7 @@ class SongResource extends Resource
                     ->downloadable()
                     ->moveFiles()
                     ->directory('songs')
-                    ->acceptedFileTypes(['audio/mp3']),
+                    ->acceptedFileTypes(['audio/mpeg']),
             ]);
     }
 
