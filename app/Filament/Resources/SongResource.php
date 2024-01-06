@@ -53,12 +53,13 @@ class SongResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Titel')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('arranger')
+                    ->label('Arrangeur')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('author')
                     ->label('Komponist')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('arranger')
-                    ->label('Arrangeur')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('genre')
                     ->label('Genre')
