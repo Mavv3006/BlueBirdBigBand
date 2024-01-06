@@ -60,10 +60,12 @@ class SongResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('author')
                     ->label('Komponist')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('genre')
                     ->label('Genre')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
