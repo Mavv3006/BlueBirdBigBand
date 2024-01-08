@@ -9,6 +9,11 @@ jobs:
     name: Build Vue3 Frontend
     runs-on: ubuntu-latest
     steps:
+      - name: setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
       - name: get code
         uses: actions/checkout@v3
 
@@ -17,7 +22,10 @@ jobs:
         with:
           node-version: "16"
 
-      - name: get php dependencies
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: build project
