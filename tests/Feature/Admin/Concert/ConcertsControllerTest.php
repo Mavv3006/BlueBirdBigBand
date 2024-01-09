@@ -137,8 +137,6 @@ class ConcertsControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $this->withoutExceptionHandling();
-
         $venue = Venue::factory()->create();
         $band = Band::factory()->create();
         $concert = Concert::create([
