@@ -45,6 +45,8 @@ class MusicianTest extends TestCase
                                 fn (AssertableInertia $page) => $page
                                     ->has('id')
                                     ->has('name')
+                                    ->has('tux_filepath')
+                                    ->has('order')
                                     ->has('default_picture_filepath')
                             )
                     )
@@ -66,6 +68,8 @@ class MusicianTest extends TestCase
                         fn (AssertableInertia $page) => $page
                             ->has('id')
                             ->has('name')
+                            ->has('tux_filepath')
+                            ->has('order')
                             ->has('default_picture_filepath')
                     )
             );
@@ -73,32 +77,33 @@ class MusicianTest extends TestCase
 
     public function testStoreRoute()
     {
+        $instrument_id = Instrument::factory()->create(['name' => 'test'])->id;
         $response = $this->post('admin/musicians', [
             'firstname' => 'test',
             'lastname' => 'test',
             'isActive' => true,
-            'instrument_id' => Instrument::factory()->create(['name' => 'test'])->id,
+            'instrument_id' => $instrument_id,
         ]);
         $musician = Musician::first();
 
-        $response->assertRedirect(route('musicians.show', 1));
+        $response->assertRedirect(route('musicians.show', $musician->id));
         $this->assertDatabaseCount('musicians', 1);
         $this->assertEquals('test', $musician->firstname);
         $this->assertEquals('test', $musician->lastname);
-        $this->assertEquals(1, $musician->instrument_id);
+        $this->assertEquals($instrument_id, $musician->instrument_id);
         $this->assertTrue($musician->isActive);
         $this->assertNull($musician->picture_filepath);
     }
 
     public function testShowRoute()
     {
-        Musician::factory()
+        $musician = Musician::factory()
             ->for(
                 Instrument::factory()->create(['name' => 'test'])
             )
             ->create();
 
-        $this->get('admin/musicians/1')
+        $this->get('admin/musicians/'.$musician->id)
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
@@ -108,6 +113,8 @@ class MusicianTest extends TestCase
                         fn (AssertableInertia $page) => $page
                             ->has('id')
                             ->has('name')
+                            ->has('tux_filepath')
+                            ->has('order')
                             ->has('default_picture_filepath')
                     )
                     ->has(
@@ -126,13 +133,13 @@ class MusicianTest extends TestCase
 
     public function testEditRoute()
     {
-        Musician::factory()
+        $musician = Musician::factory()
             ->for(
                 Instrument::factory()->create(['name' => 'test'])
             )
             ->create();
 
-        $this->get('admin/musicians/1/edit')
+        $this->get('admin/musicians/'.$musician->id.'/edit')
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
@@ -143,6 +150,8 @@ class MusicianTest extends TestCase
                         fn (AssertableInertia $page) => $page
                             ->has('id')
                             ->has('name')
+                            ->has('tux_filepath')
+                            ->has('order')
                             ->has('default_picture_filepath')
                     )
                     ->has(
@@ -180,24 +189,24 @@ class MusicianTest extends TestCase
         );
         $musician = Musician::first();
 
-        $response->assertRedirect(route('musicians.show', 1));
+        $response->assertRedirect(route('musicians.show', $databaseMusician->id));
         $this->assertDatabaseCount('musicians', 1);
         $this->assertEquals('1', $musician->firstname);
         $this->assertEquals('2', $musician->lastname);
-        $this->assertEquals(1, $musician->instrument_id);
+        $this->assertEquals($instrument->id, $musician->instrument_id);
         $this->assertTrue($musician->isActive);
         $this->assertNull($musician->picture_filepath);
     }
 
     public function testDestroyRoute()
     {
-        Musician::factory()
+        $musician = Musician::factory()
             ->for(
                 Instrument::factory()->create(['name' => 'test'])
             )
             ->create();
 
-        $this->delete('admin/musicians/1')
+        $this->delete('admin/musicians/'.$musician->id)
             ->assertRedirect(route('musicians.index'));
 
         $this->assertDatabaseCount('musicians', 0);

@@ -70,10 +70,10 @@ class ConcertServiceTest extends TestCase
 
     public function testCreateDto()
     {
-        Band::create(['name' => 'test']);
+        $band = Band::create(['name' => 'test']);
         $data = [
             'date' => '31.12.2020',
-            'band_id' => 1,
+            'band_id' => $band->id,
             'times' => [
                 'start' => '10:00:00',
                 'end' => '12:00:00',

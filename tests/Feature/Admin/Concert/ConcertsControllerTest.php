@@ -48,9 +48,9 @@ class ConcertsControllerTest extends TestCase
     {
         Venue::factory()->create();
         Band::factory()->create();
-        Concert::factory()->create();
+        $concert = Concert::factory()->create();
 
-        $this->get(route('concerts.edit', 1))
+        $this->get(route('concerts.edit', $concert->id))
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
@@ -137,8 +137,6 @@ class ConcertsControllerTest extends TestCase
 
     public function testUpdate()
     {
-        $this->withoutExceptionHandling();
-
         $venue = Venue::factory()->create();
         $band = Band::factory()->create();
         $concert = Concert::create([

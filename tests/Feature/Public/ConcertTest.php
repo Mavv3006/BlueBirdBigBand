@@ -89,9 +89,4 @@ class ConcertTest extends TestCase
                 }
             );
     }
-
-    public function testIsUpcoming()
-    {
-
-    }
 }

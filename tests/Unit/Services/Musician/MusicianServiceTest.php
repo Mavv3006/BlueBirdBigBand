@@ -19,7 +19,10 @@ class MusicianServiceTest extends TestCase
 
     public function testActiveMusicians()
     {
-        $instrument = Instrument::factory()->create(['name' => 'test']);
+        $instrument = Instrument::factory()->create([
+            'name' => 'test',
+            'order' => 2,
+        ]);
         Musician::factory()
             ->count(3)
             ->for($instrument)
@@ -35,7 +38,10 @@ class MusicianServiceTest extends TestCase
 
     public function testActiveMusiciansDontShowInactiveMusicians()
     {
-        $instrument = Instrument::factory()->create(['name' => 'test']);
+        $instrument = Instrument::factory()->create([
+            'name' => 'test',
+            'order' => 2,
+        ]);
         Musician::factory()
             ->count(3)
             ->for($instrument)
@@ -72,9 +78,9 @@ class MusicianServiceTest extends TestCase
 
         $this->assertTrue($first['instrument_id'] < $second['instrument_id']);
         $this->assertTrue($second['instrument_id'] < $third['instrument_id']);
-        $this->assertTrue($first['id'] === 3);
-        $this->assertTrue($second['id'] === 1);
-        $this->assertTrue($third['id'] === 2);
+        $this->assertTrue($first['id'] > $second['id']);
+        $this->assertTrue($third['id'] > $second['id']);
+        $this->assertTrue($first['id'] > $third['id']);
     }
 
     public function test_ordering_instruments()
@@ -100,8 +106,8 @@ class MusicianServiceTest extends TestCase
         $third = $all[2];
         $this->assertTrue($first['instrument']['order'] < $second['instrument']['order']);
         $this->assertTrue($second['instrument']['order'] < $third['instrument']['order']);
-        $this->assertTrue($first['instrument']['id'] === 2);
-        $this->assertTrue($second['instrument']['id'] === 1);
-        $this->assertTrue($third['instrument']['id'] === 3);
+        $this->assertTrue($first['instrument']['id'] > $second['instrument']['id']);
+        $this->assertTrue($third['instrument']['id'] > $second['instrument']['id']);
+        $this->assertTrue($third['instrument']['id'] > $first['instrument']['id']);
     }
 }
