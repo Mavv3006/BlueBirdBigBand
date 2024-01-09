@@ -17,7 +17,7 @@
         "serve": "concurrently --kill-others \"npm run dev\" \"php artisan serve\""
     },
     "devDependencies": {
-        "@inertiajs/vue3": "^1.0.0",
+        "@inertiajs/vue3": "^1.0.14",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vue/server-renderer": "^3.2.31",
