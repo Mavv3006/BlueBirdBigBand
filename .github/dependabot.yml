@@ -7,6 +7,9 @@ updates:
     # Check for updates once a week
     schedule:
       interval: "weekly"
+    # Raise pull requests for version updates
+    # to pip against the `dev` branch
+    target-branch: 'dev'
     labels:
       - "dependencies"
 
@@ -17,6 +20,9 @@ updates:
     # Check for updates once a week
     schedule:
       interval: "weekly"
+    # Raise pull requests for version updates
+    # to pip against the `dev` branch
+    target-branch: 'dev'
     labels:
       - "dependencies"
 
@@ -24,5 +30,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    # Raise pull requests for version updates
+    # to pip against the `dev` branch
+    target-branch: 'dev'
     labels:
       - "dependencies"
