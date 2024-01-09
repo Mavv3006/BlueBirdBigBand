@@ -9,23 +9,27 @@ jobs:
     name: Deploy Fullstack Application
     runs-on: ubuntu-latest
     steps:
+      - name: setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
       - name: get code
         uses: actions/checkout@v3
+
+      - name: install backend dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: install frontend dependencies
         run: |
           npm ci
-
-      - name: install backend dependencies
-        run: |
-          composer install --optimize-autoloader --no-dev
 
       - name: setup frontend
         run: |
           npm run build
 
       - name: push files to server
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
         with:
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_username }}
