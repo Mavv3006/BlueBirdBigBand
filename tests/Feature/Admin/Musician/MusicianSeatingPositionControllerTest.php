@@ -14,7 +14,7 @@ class MusicianSeatingPositionControllerTest extends TestCase
         parent::setUp();
         $this->setupAdmin();
         Musician::factory()
-            ->for(Instrument::factory()->create(['name' => 'test']))
+            ->for(Instrument::factory()->create(['name' => 'test', 'order' => 2]))
             ->count(2)
             ->create();
     }
@@ -44,18 +44,19 @@ class MusicianSeatingPositionControllerTest extends TestCase
 
     public function testUpdateRoute()
     {
-        $this->withoutExceptionHandling();
-
-        $this->assertEquals(0, Musician::find(2)->seating_position);
-        $this->assertEquals(0, Musician::find(1)->seating_position);
+        $musicians = Musician::all();
+        $firstMusician = $musicians[0];
+        $secondMusician = $musicians[1];
+        $this->assertEquals(0, $secondMusician->seating_position);
+        $this->assertEquals(0, $firstMusician->seating_position);
 
         $data = [
             'data' => [
                 [
                     'instrument_id' => 1,
                     'musicians' => [
-                        ['id' => 2],
-                        ['id' => 1],
+                        ['id' => $secondMusician->id],
+                        ['id' => $firstMusician->id],
                     ],
                 ],
             ],
@@ -64,7 +65,8 @@ class MusicianSeatingPositionControllerTest extends TestCase
         $this->put('admin/musicians/seating-position', $data)
             ->assertRedirect(route('musicians.index'));
 
-        $this->assertEquals(0, Musician::find(2)->seating_position);
-        $this->assertEquals(1, Musician::find(1)->seating_position);
+        $new_musicians = Musician::all();
+        $this->assertEquals(0, $new_musicians[1]->seating_position);
+        $this->assertEquals(1, $new_musicians[0]->seating_position);
     }
 }
