@@ -47,26 +47,28 @@ class RoleTest extends TestCase
 
     public function testStoreRoute()
     {
-        $this->post(
+        $response = $this->post(
             'admin/roles',
             ['name' => 'Test role']
-        )
-            ->assertRedirect(route('roles.show', 3));
+        );
 
-        $this->assertDatabaseCount('roles', 3);
         $this->assertNotNull(
             Role::where('name', 'Test role')
                 ->first()
         );
+        $this->assertDatabaseCount('roles', 3);
+        $role_id = Role::where('name', 'Test role')->first()->id;
+        $response->assertRedirect(route('roles.show', $role_id));
     }
 
     public function testShowRoute()
     {
+        $role = Role::first();
         User::factory()
             ->create(['name' => 'test'])
-            ->assignRole(Role::find(1));
+            ->assignRole($role->id);
 
-        $this->get('admin/roles/1')
+        $this->get('admin/roles/'.$role->id)
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
@@ -97,7 +99,7 @@ class RoleTest extends TestCase
 
     public function testEditRoute()
     {
-        $this->get('admin/roles/1/edit')
+        $this->get('admin/roles/'.Role::first()->id.'/edit')
             ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
