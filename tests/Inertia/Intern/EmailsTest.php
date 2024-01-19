@@ -1,6 +1,6 @@
 <?php
 
-namespace Intern;
+namespace Tests\Inertia\Intern;
 
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;

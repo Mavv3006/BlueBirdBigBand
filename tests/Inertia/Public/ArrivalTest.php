@@ -1,24 +1,24 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
-class PressInfoTest extends TestCase
+class ArrivalTest extends TestCase
 {
     public function testRouteReturnsSuccessful()
     {
-        $this->get('/presse')
+        $this->get('/anfahrt')
             ->assertSuccessful();
     }
 
     public function testCorrectView()
     {
-        $this->get('/presse')
+        $this->get('/anfahrt')
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->component('LatestInfos/PressInfoPage')
+                    ->component('Band/ArrivalPage')
             );
     }
 }
