@@ -48,8 +48,8 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
 
-      - name: Run Vite
-        run: npm run dev
+      - name: Build frontend
+        run: npm run build
 
       - name: Execute unit tests via PHPUnit
         env:
