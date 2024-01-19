@@ -1,24 +1,24 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
-class BookingTest extends TestCase
+class ContactTest extends TestCase
 {
     public function testRouteReturnsSuccessful()
     {
-        $this->get('/buchung')
+        $this->get('/kontakt')
             ->assertSuccessful();
     }
 
     public function testCorrectView()
     {
-        $this->get('/buchung')
+        $this->get('/kontakt')
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->component('LatestInfos/BookingPage')
+                    ->component('Contact/ContactPage')
             );
     }
 }

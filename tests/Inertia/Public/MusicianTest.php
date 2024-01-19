@@ -1,6 +1,6 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use App\Models\Instrument;
 use App\Models\Musician;

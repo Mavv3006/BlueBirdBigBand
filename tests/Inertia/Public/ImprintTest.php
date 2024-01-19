@@ -1,24 +1,24 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
-class AboutUsTest extends TestCase
+class ImprintTest extends TestCase
 {
     public function testRouteReturnsSuccessful()
     {
-        $this->get('/about-us')
+        $this->get('/impressum')
             ->assertSuccessful();
     }
 
     public function testCorrectView()
     {
-        $this->get('/about-us')
+        $this->get('/impressum')
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->component('Band/AboutPage')
+                    ->component('Contact/ImprintPage')
             );
     }
 }

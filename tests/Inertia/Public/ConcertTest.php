@@ -1,6 +1,6 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use App\Models\Band;
 use App\Models\Concert;
@@ -41,6 +41,7 @@ class ConcertTest extends TestCase
     public function testCorrectView()
     {
         $this->get('/auftritte')
+            ->assertSuccessful()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('LatestInfos/ConcertsPage')
