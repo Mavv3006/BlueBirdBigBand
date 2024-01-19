@@ -29,4 +29,13 @@ class SongsTest extends TestCase
                     ->component('Intern/Songs')
             );
     }
+
+    public function testCorrectView2()
+    {
+        $this->get(route('intern.songs'))
+            ->assertInertia(
+                fn (AssertableInertia $page) => $page
+                    ->component('Intern/Songs')
+            );
+    }
 }

@@ -52,7 +52,7 @@ Route::prefix('intern')
     ->group(function () {
         Route::get('/', [InternController::class, 'index']);
         Route::get('/emails', [InternController::class, 'emails']);
-        Route::get('/songs', [InternController::class, 'songs']);
+        Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
     });
 
 Route::prefix('admin')
