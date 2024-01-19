@@ -16,7 +16,6 @@ class AboutUsTest extends TestCase
     public function testCorrectView()
     {
         $this->get('/about-us')
-            ->dump()
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Band/AboutPage')
