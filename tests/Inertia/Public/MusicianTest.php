@@ -1,6 +1,6 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use App\Models\Instrument;
 use App\Models\Musician;
@@ -26,7 +26,7 @@ class MusicianTest extends TestCase
 
     public function testCorrectData()
     {
-        $instrument = Instrument::factory()->create(['name' => 'test']);
+        $instrument = Instrument::factory()->create(['name' => 'test', 'order' => 1]);
         Musician::factory()
             ->count(3)
             ->for($instrument)
@@ -44,6 +44,8 @@ class MusicianTest extends TestCase
                                 fn (AssertableInertia $page) => $page
                                     ->has('name')
                                     ->has('id')
+                                    ->has('tux_filepath')
+                                    ->has('order')
                                     ->has('default_picture_filepath')
                             )
                             ->has(

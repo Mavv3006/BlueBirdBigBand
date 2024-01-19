@@ -1,6 +1,6 @@
 <?php
 
-namespace Intern;
+namespace Tests\Inertia\Intern;
 
 use App\Enums\StateMachines\UserStates;
 use App\Models\User;

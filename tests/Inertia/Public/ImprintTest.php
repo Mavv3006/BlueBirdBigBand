@@ -1,6 +1,6 @@
 <?php
 
-namespace Public;
+namespace Tests\Inertia\Public;
 
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;

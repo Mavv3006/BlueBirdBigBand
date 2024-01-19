@@ -12,8 +12,6 @@ class AuthenticationTest extends TestCase
 {
     public function testLoginScreenCanBeRendered(): void
     {
-        $this->withoutExceptionHandling();
-
         $this->get(route('login'))
             ->assertSuccessful()
             ->assertInertia(

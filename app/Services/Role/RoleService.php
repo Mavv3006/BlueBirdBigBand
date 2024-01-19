@@ -47,7 +47,7 @@ class RoleService
     {
         return $role
             ->users()
-            ->select('id', 'name', 'activated')
+            ->select('id', 'name', 'status')
             ->orderBy('id')
             ->get();
     }

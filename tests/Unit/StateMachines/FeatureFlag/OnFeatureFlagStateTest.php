@@ -15,7 +15,7 @@ class OnFeatureFlagStateTest extends TestCase
     public function testTurnOff()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'test',
+            'name' => 'design_v2',
             'status' => FeatureFlagState::On,
         ]);
 
@@ -27,7 +27,7 @@ class OnFeatureFlagStateTest extends TestCase
     public function testTurnOn()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'test',
+            'name' => 'design_v2',
             'status' => FeatureFlagState::On,
         ]);
 

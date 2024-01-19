@@ -1,6 +1,6 @@
 <?php
 
-namespace Intern;
+namespace Tests\Inertia\Intern;
 
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Inertia\Testing\AssertableInertia;
@@ -24,6 +24,15 @@ class SongsTest extends TestCase
     public function testCorrectView()
     {
         $this->get('intern/songs')
+            ->assertInertia(
+                fn (AssertableInertia $page) => $page
+                    ->component('Intern/Songs')
+            );
+    }
+
+    public function testCorrectView2()
+    {
+        $this->get(route('intern.songs'))
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
                     ->component('Intern/Songs')

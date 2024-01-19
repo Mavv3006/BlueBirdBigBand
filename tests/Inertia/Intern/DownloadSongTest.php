@@ -1,6 +1,6 @@
 <?php
 
-namespace Intern;
+namespace Tests\Inertia\Intern;
 
 use App\Models\Song;
 use Illuminate\Support\Facades\Storage;
