@@ -17,7 +17,10 @@ class SetlistStatisticsService
      */
     public static function mostPlayed(int $limit = 5): array
     {
-        return SetlistStatisticsService::query()
+        return DB::table('setlist_entries')
+            ->select(DB::raw('count("song_id") as count, song_id'))
+            ->groupBy('song_id')
+            ->orderByDesc('count')
             ->limit($limit)
             ->get()
             ->map(fn ($value) => new SetlistCountDto(
@@ -26,11 +29,4 @@ class SetlistStatisticsService
             ))->toArray();
     }
 
-    private static function query(): Builder
-    {
-        return DB::table('setlist_entries')
-            ->select(DB::raw('count("song_id") as count, song_id'))
-            ->groupBy('song_id')
-            ->orderByDesc('count');
-    }
 }
