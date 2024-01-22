@@ -4,7 +4,6 @@ namespace App\Services\Setlist;
 
 use App\DataTransferObjects\SetlistStatistics\SetlistCountDto;
 use DB;
-use Illuminate\Database\Query\Builder;
 
 class SetlistStatisticsService
 {
