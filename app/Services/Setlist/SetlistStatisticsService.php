@@ -2,7 +2,9 @@
 
 namespace App\Services\Setlist;
 
+use App\DataTransferObjects\SetlistStatistics\LastTimePlayedDto;
 use App\DataTransferObjects\SetlistStatistics\SetlistCountDto;
+use Carbon\Carbon;
 use DB;
 
 class SetlistStatisticsService
@@ -29,6 +31,20 @@ class SetlistStatisticsService
                 arranger: $value->arranger,
                 title: $value->title,
                 count: $value->count))
+            ->toArray();
+    }
+
+    public static function lastTimePlayed():array
+    {
+        return DB::table('setlist_entries')
+            ->select(DB::raw('songs.id, max(concerts.date) as last_played_date'))
+            ->join('songs', 'setlist_entries.song_id', '=', 'songs.id')
+            ->join('concerts', 'setlist_entries.concert_id', '=', 'concerts.id')
+            ->groupBy('songs.id')
+            ->get()
+            ->map(fn ($value) => new LastTimePlayedDto(
+                id: $value->id,
+                lastPlayedDate: new Carbon($value->last_played_date)))
             ->toArray();
     }
 }

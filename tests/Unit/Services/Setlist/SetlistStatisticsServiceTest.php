@@ -13,10 +13,16 @@ use Tests\TestCase;
 
 class SetlistStatisticsServiceTest extends TestCase
 {
-    public function testMostPlayed()
+
+    protected Song $song1;
+    protected Song $song2;
+
+    protected function setUp(): void
     {
-        $song1 = Song::factory()->create();
-        $song2 = Song::factory()->create();
+        parent::setUp();
+
+        $this->song1 = Song::factory()->create();
+        $this->song2 = Song::factory()->create();
         $band = Band::factory()->create();
         $venue = Venue::factory()->create();
         $concert1 = Concert::factory()
@@ -25,82 +31,60 @@ class SetlistStatisticsServiceTest extends TestCase
             ->create();
         SetlistEntry::factory()
             ->for($concert1)
-            ->for($song1)
+            ->for($this->song1)
             ->create();
         SetlistEntry::factory()
             ->for($concert1)
-            ->for($song2)
+            ->for($this->song2)
             ->create();
         SetlistEntry::factory()
             ->for(Concert::factory()
                 ->for($band)
                 ->for($venue)
                 ->create())
-            ->for($song1)
+            ->for($this->song1)
             ->create();
         SetlistEntry::factory()
             ->for(Concert::factory()
                 ->for($band)
                 ->for($venue)
                 ->create())
-            ->for($song1)
+            ->for($this->song1)
             ->create();
+    }
 
+    public function testMostPlayed()
+    {
         $result = SetlistStatisticsService::mostPlayed();
 
         $this->assertIsArray($result);
         $this->assertCount(2, $result);
         $this->assertInstanceOf(SetlistCountDto::class, $result[0]);
         $this->assertInstanceOf(SetlistCountDto::class, $result[1]);
-        $this->assertEquals($song1->id, $result[0]->id);
-        $this->assertEquals($song2->id, $result[1]->id);
+        $this->assertEquals($this->song1->id, $result[0]->id);
+        $this->assertEquals($this->song2->id, $result[1]->id);
         $this->assertEquals(3, $result[0]->count);
         $this->assertEquals(1, $result[1]->count);
-        $this->assertEquals($song1->title, $result[0]->title);
-        $this->assertEquals($song1->arranger, $result[0]->arranger);
-        $this->assertEquals($song2->title, $result[1]->title);
-        $this->assertEquals($song2->arranger, $result[1]->arranger);
+        $this->assertEquals($this->song1->title, $result[0]->title);
+        $this->assertEquals($this->song1->arranger, $result[0]->arranger);
+        $this->assertEquals($this->song2->title, $result[1]->title);
+        $this->assertEquals($this->song2->arranger, $result[1]->arranger);
     }
 
     public function testMostPlayedWithLimit()
     {
-        $song1 = Song::factory()->create();
-        $song2 = Song::factory()->create();
-        $band = Band::factory()->create();
-        $venue = Venue::factory()->create();
-        $concert1 = Concert::factory()
-            ->for($band)
-            ->for($venue)
-            ->create();
-        SetlistEntry::factory()
-            ->for($concert1)
-            ->for($song1)
-            ->create();
-        SetlistEntry::factory()
-            ->for($concert1)
-            ->for($song2)
-            ->create();
-        SetlistEntry::factory()
-            ->for(Concert::factory()
-                ->for($band)
-                ->for($venue)
-                ->create())
-            ->for($song1)
-            ->create();
-        SetlistEntry::factory()
-            ->for(Concert::factory()
-                ->for($band)
-                ->for($venue)
-                ->create())
-            ->for($song1)
-            ->create();
-
         $result = SetlistStatisticsService::mostPlayed(limit: 1);
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertInstanceOf(SetlistCountDto::class, $result[0]);
-        $this->assertEquals($song1->id, $result[0]->id);
+        $this->assertEquals($this->song1->id, $result[0]->id);
         $this->assertEquals(3, $result[0]->count);
+    }
+
+    public function testLastTimePlayed()
+    {
+        $result = SetlistStatisticsService::lastTimePlayed();
+        var_dump($result);
     }
 }
