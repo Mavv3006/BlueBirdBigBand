@@ -52,10 +52,14 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->assertCount(2, $result);
         $this->assertInstanceOf(SetlistCountDto::class, $result[0]);
         $this->assertInstanceOf(SetlistCountDto::class, $result[1]);
-        $this->assertEquals($song1->id, $result[0]->song_id);
-        $this->assertEquals($song2->id, $result[1]->song_id);
+        $this->assertEquals($song1->id, $result[0]->id);
+        $this->assertEquals($song2->id, $result[1]->id);
         $this->assertEquals(3, $result[0]->count);
         $this->assertEquals(1, $result[1]->count);
+        $this->assertEquals($song1->title, $result[0]->title);
+        $this->assertEquals($song1->arranger, $result[0]->arranger);
+        $this->assertEquals($song2->title, $result[1]->title);
+        $this->assertEquals($song2->arranger, $result[1]->arranger);
     }
     public function testMostPlayedWithLimit()
     {
@@ -95,7 +99,7 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->assertIsArray($result);
         $this->assertCount(1, $result);
         $this->assertInstanceOf(SetlistCountDto::class, $result[0]);
-        $this->assertEquals($song1->id, $result[0]->song_id);
+        $this->assertEquals($song1->id, $result[0]->id);
         $this->assertEquals(3, $result[0]->count);
     }
 }
