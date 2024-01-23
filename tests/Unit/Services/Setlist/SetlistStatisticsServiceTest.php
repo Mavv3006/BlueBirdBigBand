@@ -61,6 +61,7 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->assertEquals($song2->title, $result[1]->title);
         $this->assertEquals($song2->arranger, $result[1]->arranger);
     }
+
     public function testMostPlayedWithLimit()
     {
         $song1 = Song::factory()->create();
