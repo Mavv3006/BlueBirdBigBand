@@ -34,16 +34,26 @@ class SetlistStatisticsService
             ->toArray();
     }
 
-    public static function lastTimePlayed(): array
+    /**
+     * Calculates the date of the concert in which a particular song has been played the last time.
+     *
+     * @param int|null $limit limits the number of query results. <code>Null</code>, if the
+     *                        number of query results should not be limited. Default: <code>Null</code>
+     * @return LastTimePlayedDto[]
+     */
+    public static function lastTimePlayed(?int $limit = null): array
     {
         return DB::table('setlist_entries')
-            ->select(DB::raw('songs.id, max(concerts.date) as last_played_date'))
+            ->select(DB::raw('songs.id, songs.title, songs.arranger, max(concerts.date) as last_played_date'))
             ->join('songs', 'setlist_entries.song_id', '=', 'songs.id')
             ->join('concerts', 'setlist_entries.concert_id', '=', 'concerts.id')
-            ->groupBy('songs.id')
+            ->groupBy('songs.id', 'songs.title', 'songs.arranger')
+            ->limit($limit)
             ->get()
             ->map(fn ($value) => new LastTimePlayedDto(
                 id: $value->id,
+                arranger: $value->arranger,
+                title: $value->title,
                 lastPlayedDate: new Carbon($value->last_played_date)))
             ->toArray();
     }

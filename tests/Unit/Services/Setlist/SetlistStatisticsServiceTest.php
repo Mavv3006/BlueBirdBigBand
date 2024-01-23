@@ -9,6 +9,7 @@ use App\Models\SetlistEntry;
 use App\Models\Song;
 use App\Models\Venue;
 use App\Services\Setlist\SetlistStatisticsService;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class SetlistStatisticsServiceTest extends TestCase
@@ -17,10 +18,8 @@ class SetlistStatisticsServiceTest extends TestCase
 
     protected Song $song2;
 
-    protected function setUp(): void
+    private function setupMostPlayed(): void
     {
-        parent::setUp();
-
         $this->song1 = Song::factory()->create();
         $this->song2 = Song::factory()->create();
         $band = Band::factory()->create();
@@ -55,6 +54,8 @@ class SetlistStatisticsServiceTest extends TestCase
 
     public function testMostPlayed()
     {
+        $this->setupMostPlayed();
+
         $result = SetlistStatisticsService::mostPlayed();
 
         $this->assertIsArray($result);
@@ -73,6 +74,8 @@ class SetlistStatisticsServiceTest extends TestCase
 
     public function testMostPlayedWithLimit()
     {
+        $this->setupMostPlayed();
+
         $result = SetlistStatisticsService::mostPlayed(limit: 1);
 
         $this->assertIsArray($result);
@@ -84,7 +87,38 @@ class SetlistStatisticsServiceTest extends TestCase
 
     public function testLastTimePlayed()
     {
+        $this->song1 = Song::factory()->create();
+        $band = Band::factory()->create();
+        $venue = Venue::factory()->create();
+        $date1 = Carbon::createFromDate(2023, 10, 12);
+        $date2 = Carbon::createFromDate(2023, 12, 12);
+        $concert1 = Concert::factory()
+            ->for($band)
+            ->for($venue)
+            ->create([
+                'date' => $date1,
+            ]);
+        $concert2 = Concert::factory()
+            ->for($band)
+            ->for($venue)
+            ->create([
+                'date' => $date2,
+            ]);
+        SetlistEntry::factory()
+            ->for($concert1)
+            ->for($this->song1)
+            ->create();
+        SetlistEntry::factory()
+            ->for($concert2)
+            ->for($this->song1)
+            ->create();
+
         $result = SetlistStatisticsService::lastTimePlayed();
-        var_dump($result);
+
+        $this->assertCount(1, $result);
+        $this->assertEquals($date2->toDateString(), $result[0]->lastPlayedDate->toDateString());
+        $this->assertEquals($this->song1->id, $result[0]->id);
+        $this->assertEquals($this->song1->arranger, $result[0]->arranger);
+        $this->assertEquals($this->song1->title, $result[0]->title);
     }
 }
