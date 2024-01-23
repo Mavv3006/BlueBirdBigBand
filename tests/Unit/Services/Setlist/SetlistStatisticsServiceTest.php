@@ -13,8 +13,8 @@ use Tests\TestCase;
 
 class SetlistStatisticsServiceTest extends TestCase
 {
-
     protected Song $song1;
+
     protected Song $song2;
 
     protected function setUp(): void

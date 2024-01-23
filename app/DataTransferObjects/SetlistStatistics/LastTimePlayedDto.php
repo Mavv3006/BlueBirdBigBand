@@ -7,9 +7,8 @@ use Carbon\Carbon;
 class LastTimePlayedDto
 {
     public function __construct(
-        public readonly int    $id,
+        public readonly int $id,
         public readonly Carbon $lastPlayedDate,
-    )
-    {
+    ) {
     }
 }

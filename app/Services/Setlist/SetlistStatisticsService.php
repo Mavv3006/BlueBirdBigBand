@@ -34,7 +34,7 @@ class SetlistStatisticsService
             ->toArray();
     }
 
-    public static function lastTimePlayed():array
+    public static function lastTimePlayed(): array
     {
         return DB::table('setlist_entries')
             ->select(DB::raw('songs.id, max(concerts.date) as last_played_date'))
