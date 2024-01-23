@@ -27,5 +27,4 @@ class SetlistStatisticsService
                 count: $value->count
             ))->toArray();
     }
-
 }
