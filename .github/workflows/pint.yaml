@@ -2,6 +2,9 @@ name: PHP Linting (Pint)
 on:
   workflow_dispatch:
   push:
+    branches:
+      - '*'
+      - '!main'
 jobs:
   Pint:
     runs-on: ubuntu-latest

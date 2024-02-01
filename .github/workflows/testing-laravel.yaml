@@ -2,7 +2,7 @@ name: Testing Laravel
 
 on:
   pull_request:
-    branches: [ "main" , "dev" ]
+    branches: [ main, dev ]
 
 jobs:
   laravel-tests:
