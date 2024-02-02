@@ -62,7 +62,7 @@ class MusicianService
         return Instrument::whereNotNull('order')
             ->orderBy('order')
             ->get()
-            ->map(fn(Instrument $instrument) => [
+            ->map(fn (Instrument $instrument) => [
                 'instrument' => $instrument,
                 'musicians' => $instrument
                     ->musicians()
@@ -135,7 +135,7 @@ class MusicianService
             $picture_path = $request
                 ->file('picture')
                 ->store('musician_pictures', 'public');
-            Log::debug('picture path:' . $picture_path);
+            Log::debug('picture path:'.$picture_path);
             $data['picture_filepath'] = $picture_path;
         }
 
