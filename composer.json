@@ -29,6 +29,7 @@
         "tightenco/ziggy": "^v1.6.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.9",
         "brianium/paratest": "^7.1",
         "doctrine/dbal": "^3.6",
         "fakerphp/faker": "^1.22.0",
