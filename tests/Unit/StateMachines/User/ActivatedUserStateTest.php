@@ -1,6 +1,6 @@
 <?php
 
-namespace StateMachines\User;
+namespace Tests\Unit\StateMachines\User;
 
 use App\Enums\StateMachines\UserStates;
 use App\Models\User;

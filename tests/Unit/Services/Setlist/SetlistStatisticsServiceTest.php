@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Services\Setlist;
+namespace Tests\Unit\Services\Setlist;
 
 use App\DataTransferObjects\SetlistStatistics\SetlistCountDto;
 use App\Models\Band;
