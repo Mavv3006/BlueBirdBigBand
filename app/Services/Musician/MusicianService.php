@@ -13,12 +13,56 @@ use Illuminate\Support\Facades\Storage;
 
 class MusicianService
 {
+    /**
+     * @return array{
+     *     instrument: array {
+     *         name: string,
+     *         id: numeric,
+     *         filepath: string,
+     *     },
+     *     musicians: array { string }
+     * }
+     */
+    public function activeMusicians2(): array
+    {
+        $instruments = Instrument::with('musicians')
+            ->whereNotNull('order')
+            ->select('id', 'name', 'default_picture_filepath')
+            ->orderBy('order')
+            ->get();
+
+        $return = [];
+
+        foreach ($instruments as $instrument) {
+            $instrumentObject = [
+                'name' => $instrument->name,
+                'id' => $instrument->id,
+                'filepath' => $instrument->default_picture_filepath,
+            ];
+
+            $musiciansArray = [];
+
+            foreach ($instrument->musicians as $musician) {
+                $musiciansArray[] = "$musician->firstname $musician->lastname";
+            }
+
+            $return[] = [
+                'instrument' => $instrumentObject,
+                'musicians' => $musiciansArray,
+            ];
+        }
+
+        return $return;
+    }
+
     public function activeMusicians(): BaseCollection
     {
+        $this->activeMusicians2();
+
         return Instrument::whereNotNull('order')
             ->orderBy('order')
             ->get()
-            ->map(fn (Instrument $instrument) => [
+            ->map(fn(Instrument $instrument) => [
                 'instrument' => $instrument,
                 'musicians' => $instrument
                     ->musicians()
@@ -91,7 +135,7 @@ class MusicianService
             $picture_path = $request
                 ->file('picture')
                 ->store('musician_pictures', 'public');
-            Log::debug('picture path:'.$picture_path);
+            Log::debug('picture path:' . $picture_path);
             $data['picture_filepath'] = $picture_path;
         }
 
