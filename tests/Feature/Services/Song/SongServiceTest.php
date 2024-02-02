@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Song;
+namespace Tests\Feature\Services\Song;
 
 use App\Models\Song;
 use App\Services\Song\SongService;
