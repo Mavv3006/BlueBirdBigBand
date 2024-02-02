@@ -1,10 +1,11 @@
 <?php
 
-namespace Services\Musician;
+namespace Tests\Unit\Services\Musician;
 
 use App\Models\Instrument;
 use App\Models\Musician;
 use App\Services\Musician\MusicianService;
+use Database\Seeders\InstrumentSeeder;
 use Tests\TestCase;
 
 class MusicianServiceTest extends TestCase
@@ -31,6 +32,23 @@ class MusicianServiceTest extends TestCase
         $result = $this->service->activeMusicians()->toArray();
 
         $this->assertCount(1, $result);
+        $this->assertCount(3, $result[0]['musicians']);
+        $this->assertInstanceOf(Instrument::class, $result[0]['instrument']);
+        $this->assertInstanceOf(Musician::class, $result[0]['musicians'][0]);
+    }
+
+    public function testActiveMusiciansWithSeeder()
+    {
+        $this->seed(InstrumentSeeder::class);
+        $instrument = Instrument::first();
+        Musician::factory()
+            ->count(3)
+            ->for($instrument)
+            ->create();
+
+        $result = $this->service->activeMusicians()->toArray();
+
+        $this->assertCount(7, $result);
         $this->assertCount(3, $result[0]['musicians']);
         $this->assertInstanceOf(Instrument::class, $result[0]['instrument']);
         $this->assertInstanceOf(Musician::class, $result[0]['musicians'][0]);
