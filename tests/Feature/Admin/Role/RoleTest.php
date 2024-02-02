@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Role;
+namespace Tests\Feature\Admin\Role;
 
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;

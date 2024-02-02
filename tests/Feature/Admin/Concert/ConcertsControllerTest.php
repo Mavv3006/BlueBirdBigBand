@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Concert;
+namespace Tests\Feature\Admin\Concert;
 
 use App\Models\Band;
 use App\Models\Concert;

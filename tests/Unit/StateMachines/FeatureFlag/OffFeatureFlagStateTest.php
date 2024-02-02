@@ -1,6 +1,6 @@
 <?php
 
-namespace StateMachines\FeatureFlag;
+namespace Tests\Unit\StateMachines\FeatureFlag;
 
 use App\Enums\StateMachines\FeatureFlagState;
 use App\Models\FeatureFlag;
