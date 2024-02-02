@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\View;
+namespace Tests\Feature\Services\View;
 
 use App\DataTransferObjects\View\NavigationLinkDto;
 use App\Enums\NavigationLinkType;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Role;
+namespace Tests\Unit\Services\Role;
 
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;

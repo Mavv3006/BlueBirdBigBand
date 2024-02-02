@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Musician;
+namespace Tests\Feature\Admin\Musician;
 
 use App\Models\Instrument;
 use App\Models\Musician;
