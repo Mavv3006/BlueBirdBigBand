@@ -52,7 +52,6 @@ class MusicianTest extends TestCase
                                 'musicians',
                                 3,
                                 fn (AssertableInertia $page) => $page
-                                    ->has('isActive')
                                     ->has('firstname')
                                     ->has('id')
                                     ->has('lastname')
