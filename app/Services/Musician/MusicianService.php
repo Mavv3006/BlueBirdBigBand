@@ -7,7 +7,6 @@ use App\Http\Requests\MusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,53 +22,68 @@ class MusicianService
      *     musicians: array { string }
      * }
      */
-    public function activeMusicians2(): array
+    public function activeMusicians(): array
     {
         $instruments = Instrument::with('musicians')
             ->whereNotNull('order')
-            ->select('id', 'name', 'default_picture_filepath')
+//            ->select('id', 'name', 'default_picture_filepath')
             ->orderBy('order')
             ->get();
 
         $return = [];
 
+        //        foreach ($instruments as $instrument) {
+        //            $instrumentObject = [
+        //                'name' => $instrument->name,
+        //                'id' => $instrument->id,
+        //                'filepath' => $instrument->default_picture_filepath,
+        //            ];
+        //
+        //            $musiciansArray = [];
+        //
+        //            foreach ($instrument->musicians as $musician) {
+        //                $musiciansArray[] = "$musician->firstname $musician->lastname";
+        //            }
+        //
+        //            $return[] = [
+        //                'instrument' => $instrumentObject,
+        //                'musicians' => $musiciansArray,
+        //            ];
+        //        }
+
         foreach ($instruments as $instrument) {
             $instrumentObject = [
-                'name' => $instrument->name,
                 'id' => $instrument->id,
-                'filepath' => $instrument->default_picture_filepath,
+                'name' => $instrument->name,
+                'default_picture_filepath' => $instrument->default_picture_filepath,
+                'order' => $instrument->order,
+                'tux_filepath' => $instrument->tux_filepath,
             ];
 
-            $musiciansArray = [];
+            $musiciansObject = [];
 
             foreach ($instrument->musicians as $musician) {
-                $musiciansArray[] = "$musician->firstname $musician->lastname";
+                if (!$musician->isActive) {
+                    continue;
+                }
+
+                $musiciansObject[] = [
+                    'id' => $musician->id,
+                    'instrument_id' => $musician->instrument_id,
+                    'firstname' => $musician->firstname,
+                    'lastname' => $musician->lastname,
+                    'seating_position' => $musician->seating_position,
+                    'picture_filepath' => $musician->picture_filepath,
+                ];
             }
 
             $return[] = [
                 'instrument' => $instrumentObject,
-                'musicians' => $musiciansArray,
+                'musicians' => $musiciansObject,
             ];
         }
 
         return $return;
-    }
-
-    public function activeMusicians(): BaseCollection
-    {
-        $this->activeMusicians2();
-
-        return Instrument::whereNotNull('order')
-            ->orderBy('order')
-            ->get()
-            ->map(fn (Instrument $instrument) => [
-                'instrument' => $instrument,
-                'musicians' => $instrument
-                    ->musicians()
-                    ->where('isActive', 1)
-                    ->orderBy('lastname')
-                    ->get(),
-            ]);
     }
 
     public function all(): Collection
