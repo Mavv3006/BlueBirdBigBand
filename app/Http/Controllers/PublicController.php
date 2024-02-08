@@ -10,9 +10,10 @@ use Inertia\Response;
 class PublicController extends Controller
 {
     public function __construct(
-        public ConcertService $concertService,
+        public ConcertService  $concertService,
         public MusicianService $musicianService,
-    ) {
+    )
+    {
     }
 
     public function home(): Response
@@ -62,5 +63,10 @@ class PublicController extends Controller
         return Inertia::render('Band/MusiciansPage', [
             'data' => $this->musicianService->activeMusicians(),
         ]);
+    }
+
+    public function newsletter()
+    {
+        return Inertia::render('Contact/Newsletter');
     }
 }
