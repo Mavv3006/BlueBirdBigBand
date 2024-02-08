@@ -15,6 +15,9 @@
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white submenu-element">
                         <Link href="/auftritte">Auftritte</Link>
                     </p>
+                    <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white submenu-element">
+                        <Link href="/newsletter">Newsletter</Link>
+                    </p>
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
                         <Link href="/presse">Presseinfos</Link>
                     </p>

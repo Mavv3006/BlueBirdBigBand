@@ -37,6 +37,7 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
             linkName: 'Aktuelles',
             submenu: [
                 {link: '/auftritte', linkName: 'Auftritte'},
+                {link: '/newsletter', linkName: 'Newsletter'},
                 {link: '/presse', linkName: 'Presseinfos'},
                 {link: '/buchung', linkName: 'Buchungsinfos'}
             ],
