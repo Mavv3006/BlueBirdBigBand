@@ -11,8 +11,7 @@ class CompletedNewsletterState extends BaseNewsletterState
     {
         $this->newsletterRequest->update([
             'status' => NewsletterState::Completed,
-            'completed_at' => Carbon::now()
+            'completed_at' => Carbon::now(),
         ]);
     }
-
 }
