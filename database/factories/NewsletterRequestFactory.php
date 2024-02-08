@@ -20,12 +20,15 @@ class NewsletterRequestFactory extends Factory
      */
     public function definition(): array
     {
-        $type = Random::generate(length: 1, charlist: '0-1') == '1'
-            ? NewsletterType::Adding
-            : NewsletterType::Removing;
-        $status = Random::generate(length: 1, charlist: '0-1') == '1'
-            ? NewsletterState::Requested
-            : NewsletterState::Completed;
+        $type = match (Random::generate(length: 1, charlist: '0-1')) {
+            '0' => NewsletterType::Adding,
+            '1' => NewsletterType::Removing
+        };
+        $status = match (Random::generate(length: 1, charlist: '0-2')) {
+            '0' => NewsletterState::Requested,
+            '1' => NewsletterState::Confirmed,
+            '2' => NewsletterState::Completed
+        };
 
         return [
             'email' => $this->faker->email(),

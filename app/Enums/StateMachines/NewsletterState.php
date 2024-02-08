@@ -6,4 +6,5 @@ enum NewsletterState: string
 {
     case Requested = 'requested';
     case Completed = 'completed';
+    case Confirmed = 'confirmed';
 }
