@@ -12,7 +12,6 @@ class NewsletterRequestControllerTest extends TestCase
 {
     public function testAddingRequest()
     {
-        $this->withoutExceptionHandling();
         $this->assertDatabaseCount(NewsletterRequest::class, 0);
 
         $email = 'test@example.com';
@@ -37,7 +36,6 @@ class NewsletterRequestControllerTest extends TestCase
 
     public function testRemovingRequest()
     {
-        $this->withoutExceptionHandling();
         $this->assertDatabaseCount(NewsletterRequest::class, 0);
 
         $email = 'test@example.com';
