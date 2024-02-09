@@ -18,6 +18,9 @@ class ConfirmedNewsletterStateTest extends TestCase
 
         $this->expectException(Exception::class);
         $request->state()->confirm();
+
+        $this->assertNull($request->confirmed_at);
+        $this->assertNull($request->completed_at);
     }
 
     /**
@@ -33,5 +36,8 @@ class ConfirmedNewsletterStateTest extends TestCase
         $this->assertInstanceOf(ConfirmedNewsletterState::class, $state);
         $state->complete();
         $this->assertEquals(NewsletterState::Completed, $request->status);
+
+        $this->assertNotNull($request->completed_at);
+        $this->assertNull($request->confirmed_at);
     }
 }

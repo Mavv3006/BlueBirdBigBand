@@ -20,6 +20,9 @@ class CompletedNewsletterStateTest extends TestCase
         $state = $request->state();
         $this->assertInstanceOf(CompletedNewsletterState::class, $state);
         $state->confirm();
+
+        $this->assertNull($request->completed_at);
+        $this->assertNull($request->confirmed_at);
     }
 
     public function testComplete()
@@ -30,5 +33,8 @@ class CompletedNewsletterStateTest extends TestCase
 
         $this->expectException(Exception::class);
         $request->state()->complete();
+
+        $this->assertNull($request->completed_at);
+        $this->assertNull($request->confirmed_at);
     }
 }
