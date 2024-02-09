@@ -12,7 +12,7 @@ class NewsletterRequestController extends Controller
     {
         NewsletterRequestService::createNew($request);
 
-        redirect(route('newsletter'));
+        return redirect(route('newsletter'));
     }
 
     public function confirm(NewsletterRequest $newsletterRequest)

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\NewsletterType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsletterRequestingRequest extends FormRequest
 {
@@ -24,6 +26,7 @@ class NewsletterRequestingRequest extends FormRequest
     {
         return [
             'email' => ['string', 'required', 'email'],
+            'type' => ['required', 'string', Rule::enum(NewsletterType::class)]
         ];
     }
 }
