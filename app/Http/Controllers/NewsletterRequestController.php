@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsletterRequestingRequest;
 use App\Models\NewsletterRequest;
-use Illuminate\Http\Request;
+use App\Services\NewsletterRequest\NewsletterRequestService;
 
 class NewsletterRequestController extends Controller
 {
-    public function request()
+    public function request(NewsletterRequestingRequest $request)
     {
+        NewsletterRequestService::createNew($request);
 
+        redirect(route('newsletter'));
     }
 
-    public function confirm()
+    public function confirm(NewsletterRequest $newsletterRequest)
     {
-
+        NewsletterRequestService::confirm($newsletterRequest);
     }
 }
