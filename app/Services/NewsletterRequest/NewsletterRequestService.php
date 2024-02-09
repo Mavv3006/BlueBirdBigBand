@@ -9,10 +9,10 @@ class NewsletterRequestService
 {
     public static function createNew(NewsletterRequestingRequest $request): void
     {
-        $data =$request->validated();
+        $data = $request->validated();
         $newsletterRequest = NewsletterRequest::create([
             'email' => $data['email'],
-            'type' => $data['type']
+            'type' => $data['type'],
         ]);
 
         $confirmationUrl = url(route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest->id]));

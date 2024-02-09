@@ -18,7 +18,7 @@ class NewsletterRequestControllerTest extends TestCase
         $email = 'test@example.com';
         $response = $this->post(route('newsletter.request'), [
             'email' => $email,
-            'type' => NewsletterType::Adding->value
+            'type' => NewsletterType::Adding->value,
         ]);
 
         $response->assertRedirectToRoute('newsletter');
@@ -34,6 +34,7 @@ class NewsletterRequestControllerTest extends TestCase
         $this->assertEquals(NewsletterType::Adding, $request->type);
         $this->assertEquals(NewsletterState::Requested, $request->status);
     }
+
     public function testRemovingRequest()
     {
         $this->withoutExceptionHandling();
@@ -42,7 +43,7 @@ class NewsletterRequestControllerTest extends TestCase
         $email = 'test@example.com';
         $response = $this->post(route('newsletter.request'), [
             'email' => $email,
-            'type' => NewsletterType::Removing->value
+            'type' => NewsletterType::Removing->value,
         ]);
 
         $response->assertRedirectToRoute('newsletter');

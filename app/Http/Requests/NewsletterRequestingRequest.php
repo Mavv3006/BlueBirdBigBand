@@ -26,7 +26,7 @@ class NewsletterRequestingRequest extends FormRequest
     {
         return [
             'email' => ['string', 'required', 'email'],
-            'type' => ['required', 'string', Rule::enum(NewsletterType::class)]
+            'type' => ['required', 'string', Rule::enum(NewsletterType::class)],
         ];
     }
 }

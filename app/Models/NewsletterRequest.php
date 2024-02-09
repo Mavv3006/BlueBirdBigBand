@@ -21,7 +21,7 @@ class NewsletterRequest extends Model
         'completed_at',
         'confirmed_at',
         'email',
-        'type'
+        'type',
     ];
 
     protected $casts = [
