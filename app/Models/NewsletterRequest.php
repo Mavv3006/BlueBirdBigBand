@@ -16,6 +16,12 @@ class NewsletterRequest extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $fillable = [
+        'status',
+        'completed_at',
+        'confirmed_at',
+    ];
+
     protected $casts = [
         'status' => NewsletterState::class,
         'type' => NewsletterType::class,

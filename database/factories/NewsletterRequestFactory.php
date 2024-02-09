@@ -31,7 +31,7 @@ class NewsletterRequestFactory extends Factory
         };
 
         return [
-            'email' => $this->faker->email(),
+            'email' => $this->faker->email,
             'type' => $type,
             'status' => $status,
         ];
