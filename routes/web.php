@@ -43,13 +43,17 @@ Route::get('/impressum', [PublicController::class, 'imprint']);
 Route::get('/kontakt', [PublicController::class, 'contact']);
 Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
-Route::get('/newsletter', [PublicController::class, 'newsletter'])
-    ->name('newsletter');
 
-Route::post('newsletter/request', [NewsletterRequestController::class, 'request'])
-    ->name('newsletter.request');
-Route::get('newsletter/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
-    ->name('newsletter.confirm');
+Route::middleware([
+    'feature:'.FeatureFlagName::Newsletter->value,
+])->group(function () {
+    Route::get('/newsletter', [PublicController::class, 'newsletter'])
+        ->name('newsletter');
+    Route::post('newsletter/request', [NewsletterRequestController::class, 'request'])
+        ->name('newsletter.request');
+    Route::get('newsletter/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
+        ->name('newsletter.confirm');
+});
 
 Route::middleware('auth')
     ->get('download/song/{song}', DownloadSongController::class)
