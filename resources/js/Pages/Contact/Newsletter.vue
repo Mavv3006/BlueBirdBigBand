@@ -8,11 +8,11 @@
             Hier können Sie sich für unseren Konzert-Newsletter eintragen bzw. austragen.
         </div>
 
-        <div class="grid md:grid-cols-2 gap-y-12 md:gap-x-14">
+        <div class="grid mt-4 md:grid-cols-2 gap-y-12 md:gap-x-14">
             <section>
                 <SubHeading>Eintragen</SubHeading>
 
-                <form action="">
+                <form @submit.prevent="submitAddingForm">
                     <div>
                         <InputLabel for="addingEmail" value="E-Mail Adresse"/>
 
@@ -40,7 +40,7 @@
             <section>
                 <SubHeading>Austragen</SubHeading>
 
-                <form action="">
+                <form @submit.prevent="submitRemovingForm">
                     <div>
                         <InputLabel for="removingEmail" value="E-Mail Adresse"/>
 
@@ -77,19 +77,35 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {add} from "lodash";
 
-const addingForm = useForm<{
+type NewsletterRequestType = {
     email: string,
-}>({
+    type: 'adding' | 'removing';
+};
+
+const addingForm = useForm<NewsletterRequestType>({
     email: null,
+    type: "adding"
 });
 
-const removingForm = useForm<{
-    email: string,
-}>({
+const removingForm = useForm<NewsletterRequestType>({
     email: null,
+    type: "removing"
 });
 
+let submitAddingForm = () => {
+    console.log('submitting adding form', addingForm.data())
+    addingForm.post('/newsletter/request', {
+        onSuccess: () => addingForm.reset('email')
+    });
+}
+let submitRemovingForm = () => {
+    console.log('submitting adding form', removingForm.data())
+    removingForm.post('/newsletter/request', {
+        onSuccess: () => removingForm.reset('email')
+    });
+}
 
 </script>
 

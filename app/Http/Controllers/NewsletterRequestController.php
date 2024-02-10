@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewsletterRequestingRequest;
 use App\Models\NewsletterRequest;
 use App\Services\NewsletterRequest\NewsletterRequestService;
+use Illuminate\Support\Facades\Log;
 
 class NewsletterRequestController extends Controller
 {
