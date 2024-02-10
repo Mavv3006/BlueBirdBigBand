@@ -1,6 +1,6 @@
 <?php
 
-namespace StateMachines\FeatureFlag;
+namespace Tests\Unit\StateMachines\FeatureFlag;
 
 use App\Enums\StateMachines\FeatureFlagState;
 use App\Models\FeatureFlag;
@@ -15,7 +15,7 @@ class OnFeatureFlagStateTest extends TestCase
     public function testTurnOff()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'test',
+            'name' => 'design_v2',
             'status' => FeatureFlagState::On,
         ]);
 
@@ -27,7 +27,7 @@ class OnFeatureFlagStateTest extends TestCase
     public function testTurnOn()
     {
         $feature = FeatureFlag::factory()->create([
-            'name' => 'test',
+            'name' => 'design_v2',
             'status' => FeatureFlagState::On,
         ]);
 

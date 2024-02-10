@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Internal\InternController;
+use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\v2\BandController;
 use App\Http\Controllers\v2\ConcertDetailsPageController;
@@ -43,6 +44,17 @@ Route::get('/kontakt', [PublicController::class, 'contact']);
 Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
 
+Route::middleware([
+    'feature:'.FeatureFlagName::Newsletter->value,
+])->group(function () {
+    Route::get('/newsletter', [PublicController::class, 'newsletter'])
+        ->name('newsletter');
+    Route::post('newsletter/request', [NewsletterRequestController::class, 'request'])
+        ->name('newsletter.request');
+    Route::get('newsletter/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
+        ->name('newsletter.confirm');
+});
+
 Route::middleware('auth')
     ->get('download/song/{song}', DownloadSongController::class)
     ->name('download-song');
@@ -52,7 +64,7 @@ Route::prefix('intern')
     ->group(function () {
         Route::get('/', [InternController::class, 'index']);
         Route::get('/emails', [InternController::class, 'emails']);
-        Route::get('/songs', [InternController::class, 'songs']);
+        Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
     });
 
 Route::prefix('admin')

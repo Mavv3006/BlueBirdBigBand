@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\FeatureFlagName;
+use App\Enums\StateMachines\FeatureFlagState;
+use App\Services\FeatureFlag\FeatureFlagService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Middleware;
@@ -44,6 +47,14 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'feature_flags' => [
+                'newsletter' => $this->checkFeatureFlag(FeatureFlagName::Newsletter),
+            ],
         ]);
+    }
+
+    public function checkFeatureFlag(FeatureFlagName $flagName): bool
+    {
+        return FeatureFlagService::getState(FeatureFlagName::from($flagName->value)) == FeatureFlagState::On;
     }
 }

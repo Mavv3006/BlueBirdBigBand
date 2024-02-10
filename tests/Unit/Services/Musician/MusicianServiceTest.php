@@ -1,10 +1,11 @@
 <?php
 
-namespace Services\Musician;
+namespace Tests\Unit\Services\Musician;
 
 use App\Models\Instrument;
 use App\Models\Musician;
 use App\Services\Musician\MusicianService;
+use Database\Seeders\InstrumentSeeder;
 use Tests\TestCase;
 
 class MusicianServiceTest extends TestCase
@@ -17,32 +18,71 @@ class MusicianServiceTest extends TestCase
         $this->service = new MusicianService();
     }
 
-    public function testActiveMusicians()
+    public function testAmountOfActiveMusicians()
     {
-        $instrument = Instrument::factory()->create(['name' => 'test']);
+        $instrument = Instrument::factory()->create([
+            'name' => 'test',
+            'order' => 2,
+        ]);
         Musician::factory()
             ->count(3)
             ->for($instrument)
             ->create();
 
-        $result = $this->service->activeMusicians()->toArray();
+        $result = $this->service->activeMusicians();
 
         $this->assertCount(1, $result);
         $this->assertCount(3, $result[0]['musicians']);
-        $this->assertInstanceOf(Instrument::class, $result[0]['instrument']);
-        $this->assertInstanceOf(Musician::class, $result[0]['musicians'][0]);
+    }
+
+    public function testFormatOfActiveMusicians()
+    {
+        $instrument = Instrument::factory()->create([
+            'name' => 'test',
+            'order' => 2,
+        ]);
+        Musician::factory()
+            ->count(3)
+            ->for($instrument)
+            ->create([
+                'seating_position' => 12,
+                'picture_filepath' => 'test',
+            ]);
+
+        $result = $this->service->activeMusicians();
+
+        $this->verifyArrayStructure($result[0]);
+    }
+
+    public function testActiveMusiciansWithSeeder()
+    {
+        $this->seed(InstrumentSeeder::class);
+        $instrument = Instrument::first();
+        Musician::factory()
+            ->count(3)
+            ->for($instrument)
+            ->create();
+
+        $result = $this->service->activeMusicians();
+
+        $this->assertCount(7, $result);
+        $this->assertCount(3, $result[0]['musicians']);
+        $this->verifyArrayStructure($result[0]);
     }
 
     public function testActiveMusiciansDontShowInactiveMusicians()
     {
-        $instrument = Instrument::factory()->create(['name' => 'test']);
+        $instrument = Instrument::factory()->create([
+            'name' => 'test',
+            'order' => 2,
+        ]);
         Musician::factory()
             ->count(3)
             ->for($instrument)
             ->state(['isActive' => false])
             ->create();
 
-        $result = $this->service->activeMusicians()->toArray();
+        $result = $this->service->activeMusicians();
 
         $this->assertCount(1, $result);
         $this->assertCount(0, $result[0]['musicians']);
@@ -72,9 +112,9 @@ class MusicianServiceTest extends TestCase
 
         $this->assertTrue($first['instrument_id'] < $second['instrument_id']);
         $this->assertTrue($second['instrument_id'] < $third['instrument_id']);
-        $this->assertTrue($first['id'] === 3);
-        $this->assertTrue($second['id'] === 1);
-        $this->assertTrue($third['id'] === 2);
+        $this->assertTrue($first['id'] > $second['id']);
+        $this->assertTrue($third['id'] > $second['id']);
+        $this->assertTrue($first['id'] > $third['id']);
     }
 
     public function test_ordering_instruments()
@@ -100,8 +140,25 @@ class MusicianServiceTest extends TestCase
         $third = $all[2];
         $this->assertTrue($first['instrument']['order'] < $second['instrument']['order']);
         $this->assertTrue($second['instrument']['order'] < $third['instrument']['order']);
-        $this->assertTrue($first['instrument']['id'] === 2);
-        $this->assertTrue($second['instrument']['id'] === 1);
-        $this->assertTrue($third['instrument']['id'] === 3);
+        $this->assertTrue($first['instrument']['id'] > $second['instrument']['id']);
+        $this->assertTrue($third['instrument']['id'] > $second['instrument']['id']);
+        $this->assertTrue($third['instrument']['id'] > $first['instrument']['id']);
+    }
+
+    private function verifyArrayStructure($result): void
+    {
+        $instrumentFromResult = $result['instrument'];
+        $this->assertNotNull($instrumentFromResult['id']);
+        $this->assertNotNull($instrumentFromResult['name']);
+        $this->assertNotNull($instrumentFromResult['default_picture_filepath']);
+        $this->assertNotNull($instrumentFromResult['tux_filepath']);
+        $this->assertNotNull($instrumentFromResult['order']);
+
+        $musicianFromResult = $result['musicians'][0];
+        $this->assertNotNull($musicianFromResult['id']);
+        $this->assertNotNull($musicianFromResult['instrument_id']);
+        $this->assertNotNull($musicianFromResult['firstname']);
+        $this->assertNotNull($musicianFromResult['lastname']);
+        $this->assertNotNull($musicianFromResult['seating_position']);
     }
 }

@@ -7,25 +7,83 @@ use App\Http\Requests\MusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class MusicianService
 {
-    public function activeMusicians(): BaseCollection
+    /**
+     * @return array{
+     *     instrument: array {
+     *         name: string,
+     *         id: numeric,
+     *         filepath: string,
+     *     },
+     *     musicians: array { string }
+     * }
+     */
+    public function activeMusicians(): array
     {
-        return Instrument::whereNotNull('order')
+        $instruments = Instrument::with('musicians')
+            ->whereNotNull('order')
+//            ->select('id', 'name', 'default_picture_filepath')
             ->orderBy('order')
-            ->get()
-            ->map(fn (Instrument $instrument) => [
-                'instrument' => $instrument,
-                'musicians' => $instrument
-                    ->musicians()
-                    ->where('isActive', 1)
-                    ->orderBy('lastname')
-                    ->get(),
-            ]);
+            ->get();
+
+        $return = [];
+
+        //        foreach ($instruments as $instrument) {
+        //            $instrumentObject = [
+        //                'name' => $instrument->name,
+        //                'id' => $instrument->id,
+        //                'filepath' => $instrument->default_picture_filepath,
+        //            ];
+        //
+        //            $musiciansArray = [];
+        //
+        //            foreach ($instrument->musicians as $musician) {
+        //                $musiciansArray[] = "$musician->firstname $musician->lastname";
+        //            }
+        //
+        //            $return[] = [
+        //                'instrument' => $instrumentObject,
+        //                'musicians' => $musiciansArray,
+        //            ];
+        //        }
+
+        foreach ($instruments as $instrument) {
+            $instrumentObject = [
+                'id' => $instrument->id,
+                'name' => $instrument->name,
+                'default_picture_filepath' => $instrument->default_picture_filepath,
+                'order' => $instrument->order,
+                'tux_filepath' => $instrument->tux_filepath,
+            ];
+
+            $musiciansObject = [];
+
+            foreach ($instrument->musicians as $musician) {
+                if (!$musician->isActive) {
+                    continue;
+                }
+
+                $musiciansObject[] = [
+                    'id' => $musician->id,
+                    'instrument_id' => $musician->instrument_id,
+                    'firstname' => $musician->firstname,
+                    'lastname' => $musician->lastname,
+                    'seating_position' => $musician->seating_position,
+                    'picture_filepath' => $musician->picture_filepath,
+                ];
+            }
+
+            $return[] = [
+                'instrument' => $instrumentObject,
+                'musicians' => $musiciansObject,
+            ];
+        }
+
+        return $return;
     }
 
     public function all(): Collection
