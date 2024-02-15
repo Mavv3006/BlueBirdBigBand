@@ -6,6 +6,7 @@
 /storage/*.key
 /coverage
 /vendor
+/data
 .env
 .env.backup
 .env.development
