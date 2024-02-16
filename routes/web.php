@@ -21,6 +21,8 @@ use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
+use App\Mail\NewsletterMail;
+use App\Models\Concert;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +45,11 @@ Route::get('/impressum', [PublicController::class, 'imprint']);
 Route::get('/kontakt', [PublicController::class, 'contact']);
 Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
+
+Route::get('/test', function () {
+    \Illuminate\Support\Facades\Mail::to('test@example.com')
+        ->send(new NewsletterMail(Concert::first()));
+});
 
 Route::middleware([
     'feature:'.FeatureFlagName::Newsletter->value,
