@@ -13,6 +13,6 @@ Bringen Sie Ihre Freunde, Familie und alle Swing-Enthusiasten mit, die Sie kenne
 
 Wir danken Ihnen für Ihre Unterstützung und freuen uns darauf, Sie am {{ $concert->date->translatedFormat('l, d.m.Y') }} in {{ $concert->venue->name }} zu sehen!
 
-Mit swingenden Grüßen,<br>
+Mit swingenden Grüßen,
 Eure Blue Bird Big Band
 @endcomponent
