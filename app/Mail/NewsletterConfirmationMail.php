@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\NewsletterRequest;
+use App\Services\NewsletterRequest\NewsletterRequestService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Attachment;
@@ -14,12 +15,14 @@ class NewsletterConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public string $confirmationUrl;
+
     /**
      * Create a new message instance.
      */
     public function __construct(public NewsletterRequest $newsletterRequest)
     {
-        //
+        $this->confirmationUrl = NewsletterRequestService::confirmationLink($this->newsletterRequest);
     }
 
     /**
