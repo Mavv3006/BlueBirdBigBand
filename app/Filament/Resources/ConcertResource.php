@@ -129,7 +129,7 @@ class ConcertResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('date')
-                    ->date('d M Y')
+                    ->date('l d M Y')
                     ->label('Datum')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_time')
