@@ -61,7 +61,7 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
         routes.push({
             linkName: 'Intern',
             submenu: [
-                {link: '/intern/emails', linkName: 'E-Mail Verteiler'},
+                {link: '/intern/emails', linkName: 'E-mail Verteiler'},
                 {link: '/intern/songs', linkName: 'Songs'}
             ],
         })
