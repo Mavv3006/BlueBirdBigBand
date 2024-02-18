@@ -63,4 +63,9 @@ class PublicController extends Controller
             'data' => $this->musicianService->activeMusicians(),
         ]);
     }
+
+    public function newsletter()
+    {
+        return Inertia::render('Contact/Newsletter');
+    }
 }
