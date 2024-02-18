@@ -1,17 +1,6 @@
 version: '3.1'
 
 services:
-    db:
-        image: mariadb:latest
-        container_name: database
-        ports:
-           - 3306:3306
-        environment:
-            MARIADB_ROOT_PASSWORD: password
-        volumes:
-            - ./database/init:/docker-entrypoint-initdb.d
-
-
     mailpit:
         image: axllent/mailpit
         container_name: mailpit
