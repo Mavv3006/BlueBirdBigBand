@@ -4,6 +4,7 @@ namespace Tests\Unit\Services\NewsletterRequest;
 
 use App\Models\NewsletterRequest;
 use App\Services\NewsletterRequest\NewsletterRequestService;
+use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
 class NewsletterRequestServiceTest extends TestCase
@@ -14,6 +15,6 @@ class NewsletterRequestServiceTest extends TestCase
 
         $url = NewsletterRequestService::confirmationLink($newsletterRequest);
 
-        $this->assertEquals("http://localhost:8000/newsletter/confirm/$newsletterRequest->id", $url);
+        $this->assertEquals("/newsletter/confirm/$newsletterRequest->id", parse_url($url)['path']);
     }
 }
