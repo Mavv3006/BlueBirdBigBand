@@ -3,7 +3,9 @@
 namespace App\Services\NewsletterRequest;
 
 use App\Http\Requests\NewsletterRequestingRequest;
+use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
+use Illuminate\Support\Facades\Mail;
 
 class NewsletterRequestService
 {
@@ -15,8 +17,7 @@ class NewsletterRequestService
             'type' => $data['type'],
         ]);
 
-        $confirmationUrl = url(route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest->id]));
-        // TODO: send confirmation email to user
+        Mail::to($newsletterRequest->email)->send(new NewsletterConfirmationMail($newsletterRequest));
     }
 
     public static function confirm(NewsletterRequest $newsletterRequest): void
@@ -28,5 +29,10 @@ class NewsletterRequestService
         } catch (\Exception) {
             // ignore exception
         }
+    }
+
+    public static function confirmationLink(NewsletterRequest $newsletterRequest): string
+    {
+        return route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
     }
 }
