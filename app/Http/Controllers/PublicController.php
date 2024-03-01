@@ -20,11 +20,6 @@ class PublicController extends Controller
         return Inertia::render('Index');
     }
 
-    public function aboutUs(): Response
-    {
-        return Inertia::render('Band/AboutPage');
-    }
-
     public function arrival(): Response
     {
         return Inertia::render('Band/ArrivalPage');

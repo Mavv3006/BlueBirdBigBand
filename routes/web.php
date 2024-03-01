@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
 use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
+use App\Http\Controllers\Inertia\AboutUsController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PublicController::class, 'home'])->name('home');
-Route::get('/about-us', [PublicController::class, 'aboutUs']);
+Route::get('/about-us', AboutUsController::class);
 Route::get('/anfahrt', [PublicController::class, 'arrival']);
 Route::get('/auftritte', [PublicController::class, 'concerts']);
 Route::get('/buchung', [PublicController::class, 'booking']);

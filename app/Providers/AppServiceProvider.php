@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(InertiaMetaInfoDto::class, fn () => new InertiaMetaInfoDto());
     }
 
     /**
