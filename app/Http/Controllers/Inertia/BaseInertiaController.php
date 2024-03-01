@@ -25,6 +25,7 @@ abstract class BaseInertiaController extends Controller
     public function __invoke(): Response
     {
         $this->setUpMetaInfos();
+
         return $this->render();
     }
 }
