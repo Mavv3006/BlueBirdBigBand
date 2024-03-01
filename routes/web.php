@@ -11,6 +11,13 @@ use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
 use App\Http\Controllers\Inertia\AboutUsController;
+use App\Http\Controllers\Inertia\ArrivalController;
+use App\Http\Controllers\Inertia\BookingController;
+use App\Http\Controllers\Inertia\ConcertController;
+use App\Http\Controllers\Inertia\ContactController;
+use App\Http\Controllers\Inertia\HomeController;
+use App\Http\Controllers\Inertia\NewsletterController;
+use App\Http\Controllers\Inertia\PressInfoController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
@@ -37,15 +44,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PublicController::class, 'home'])->name('home');
+Route::get('/', HomeController::class)->name('home');
 Route::get('/about-us', AboutUsController::class);
-Route::get('/anfahrt', [PublicController::class, 'arrival']);
-Route::get('/auftritte', [PublicController::class, 'concerts']);
-Route::get('/buchung', [PublicController::class, 'booking']);
-Route::get('/impressum', [PublicController::class, 'imprint']);
-Route::get('/kontakt', [PublicController::class, 'contact']);
-Route::get('/musiker', [PublicController::class, 'musicians']);
-Route::get('/presse', [PublicController::class, 'pressInfo']);
+Route::get('/anfahrt', ArrivalController::class);
+Route::get('/auftritte', ConcertController::class);
+Route::get('/buchung', BookingController::class);
+Route::get('/impressum', \App\Http\Controllers\Inertia\ImprintController::class);
+Route::get('/kontakt', ContactController::class);
+Route::get('/musiker', \App\Http\Controllers\Inertia\MusiciansController::class);
+Route::get('/presse', PressInfoController::class);
 
 Route::get('/test', function () {
     \Illuminate\Support\Facades\Mail::to('test@example.com')
@@ -55,7 +62,7 @@ Route::get('/test', function () {
 Route::middleware([
     'feature:'.FeatureFlagName::Newsletter->value,
 ])->group(function () {
-    Route::get('/newsletter', [PublicController::class, 'newsletter'])
+    Route::get('/newsletter', NewsletterController::class)
         ->name('newsletter');
     Route::post('newsletter/request', [NewsletterRequestController::class, 'request'])
         ->name('newsletter.request');
