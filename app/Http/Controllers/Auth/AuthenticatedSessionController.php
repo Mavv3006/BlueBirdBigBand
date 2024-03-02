@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +21,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
+        $service = App::make(InertiaMetaInfoDto::class);
+        $service->setTitle('');
+        $service->setDescription('');
+
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),

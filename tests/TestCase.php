@@ -2,11 +2,13 @@
 
 namespace Tests;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
 use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Database\Seeders\DefaultAuthorizationSeeder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\App;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -37,5 +39,12 @@ abstract class TestCase extends BaseTestCase
     {
         $this->seed(DefaultAuthorizationSeeder::class);
         $this->actingAs($this->createUserForAdminRoutes());
+    }
+
+    protected function setupInertiaMetaInfo()
+    {
+        $service = App::make(InertiaMetaInfoDto::class);
+        $service->setTitle('fjaöf');
+        $service->setDescription('slfjöas');
     }
 }

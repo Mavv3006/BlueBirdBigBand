@@ -16,8 +16,11 @@ use App\Http\Controllers\Inertia\BookingController;
 use App\Http\Controllers\Inertia\ConcertController;
 use App\Http\Controllers\Inertia\ContactController;
 use App\Http\Controllers\Inertia\HomeController;
+use App\Http\Controllers\Inertia\InternalEmailController;
+use App\Http\Controllers\Inertia\InternalSongsController;
 use App\Http\Controllers\Inertia\NewsletterController;
 use App\Http\Controllers\Inertia\PressInfoController;
+use App\Http\Controllers\Internal\InternalIndexController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
@@ -77,9 +80,9 @@ Route::middleware('auth')
 Route::prefix('intern')
     ->middleware(['auth', HasPermissionToAccessInternalRoutes::class])
     ->group(function () {
-        Route::get('/', [InternController::class, 'index']);
-        Route::get('/emails', [InternController::class, 'emails']);
-        Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
+        Route::get('/', InternalIndexController::class);
+        Route::get('/emails', InternalEmailController::class);
+        Route::get('/songs', InternalSongsController::class)->name('intern.songs');
     });
 
 Route::prefix('admin')

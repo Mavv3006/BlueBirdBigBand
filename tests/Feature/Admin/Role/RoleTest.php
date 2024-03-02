@@ -15,6 +15,7 @@ class RoleTest extends TestCase
         parent::setUp();
         $this->seed(DefaultAuthorizationSeeder::class);
         $this->actingAs($this->createUserForAdminRoutes());
+        $this->setupInertiaMetaInfo();
     }
 
     public function testIndexRoute()

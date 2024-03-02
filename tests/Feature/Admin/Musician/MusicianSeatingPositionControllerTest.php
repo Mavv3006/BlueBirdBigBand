@@ -13,6 +13,7 @@ class MusicianSeatingPositionControllerTest extends TestCase
     {
         parent::setUp();
         $this->setupAdmin();
+        $this->setupInertiaMetaInfo();
         Musician::factory()
             ->for(Instrument::factory()->create(['name' => 'test', 'order' => 2]))
             ->count(2)

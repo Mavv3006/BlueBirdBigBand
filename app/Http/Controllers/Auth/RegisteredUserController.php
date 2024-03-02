@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -19,6 +21,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
+        $service = App::make(InertiaMetaInfoDto::class);
+        $service->setTitle('');
+        $service->setDescription('');
+
         return Inertia::render('Auth/Register', ['status' => '']);
     }
 
@@ -29,6 +35,10 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): Response
     {
+        $service = App::make(InertiaMetaInfoDto::class);
+        $service->setTitle('');
+        $service->setDescription('');
+
         $request->validate([
             'name' => 'required|string|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Password::defaults()],

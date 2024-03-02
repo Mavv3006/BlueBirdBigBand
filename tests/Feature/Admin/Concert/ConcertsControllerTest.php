@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Admin\Concert;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
@@ -15,6 +17,7 @@ class ConcertsControllerTest extends TestCase
     {
         parent::setUp();
         $this->setupAdmin();
+        $this->setupInertiaMetaInfo();
     }
 
     public function testShowCreateForm(): void

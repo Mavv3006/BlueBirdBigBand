@@ -13,6 +13,7 @@ class MusicianTest extends TestCase
     {
         parent::setUp();
         $this->setupAdmin();
+        $this->setupInertiaMetaInfo();
     }
 
     public function testIndexRoute()
