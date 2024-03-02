@@ -19,12 +19,18 @@ $service = \Illuminate\Support\Facades\App::make(\App\DataTransferObjects\View\I
     <meta property="og:title" content="{{ $service->title }}">
     <meta property="og:url" content="{{ $service->url }}">
     <meta property="og:description" content="{{ $service->description }}">
+    @if($service->imageUrl != null)
+        <meta property="og:image" content="{{ $service->imageUrl }}">
+    @endif
 
     <!-- Twitter -->
     <meta property="twitter:title" content="{{ $service->title }}">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ $service->url }}">
     <meta property="twitter:description" content="{{ $service->description }}">
+    @if($service->imageUrl != null)
+        <meta property="twitter:image" content="{{ $service->imageUrl }}">
+    @endif
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">

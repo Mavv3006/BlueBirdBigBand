@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\ConcertManagement;
 
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConcertRequest;
 use App\Http\Requests\UpdateConcertRequest;
@@ -12,12 +13,13 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ConcertsController extends Controller
+class ConcertsController extends BaseAdminController
 {
     public function __construct(
         protected ConcertService $concertService,
         protected VenueService $venueService
     ) {
+        parent::__construct();
     }
 
     /**

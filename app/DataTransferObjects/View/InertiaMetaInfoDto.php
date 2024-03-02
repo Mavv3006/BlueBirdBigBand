@@ -10,6 +10,8 @@ readonly class InertiaMetaInfoDto
 
     public string $url;
 
+    public string|null $imageUrl;
+
     public function __construct()
     {
         $this->url = config('app.url');
@@ -23,5 +25,10 @@ readonly class InertiaMetaInfoDto
     public function setTitle(string $title): void
     {
         $this->title = $title;
+    }
+
+    public function setImageUrl(string $imageUrl): void
+    {
+        $this->imageUrl = $imageUrl;
     }
 }

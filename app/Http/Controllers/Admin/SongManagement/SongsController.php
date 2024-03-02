@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\SongManagement;
 
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SongStoreRequest;
 use App\Http\Requests\SongUpdateRequest;
@@ -14,11 +15,12 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class SongsController extends Controller
+class SongsController extends BaseAdminController
 {
     public function __construct(
         public SongService $service,
     ) {
+        parent::__construct();
     }
 
     /**

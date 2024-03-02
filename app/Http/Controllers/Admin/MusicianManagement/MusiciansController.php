@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\MusicianManagement;
 
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MusicianRequest;
 use App\Models\Musician;
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class MusiciansController extends Controller
+class MusiciansController extends BaseAdminController
 {
     public function __construct(
         public MusicianService $musicianService,
         public InstrumentService $instrumentService,
     ) {
+        parent::__construct();
     }
 
     /**

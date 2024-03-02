@@ -13,6 +13,11 @@ abstract class BaseInertiaController extends Controller
 
     abstract public function getTitle(): string;
 
+    public function getImageUrl(): string|null
+    {
+        return null;
+    }
+
     abstract public function render(): Response;
 
     protected function setUpMetaInfos(): void
@@ -20,6 +25,7 @@ abstract class BaseInertiaController extends Controller
         $service = App::make(InertiaMetaInfoDto::class);
         $service->setTitle($this->getTitle());
         $service->setDescription($this->getDescription());
+        $service->setImageUrl($this->getImageUrl());
     }
 
     public function __invoke(): Response
