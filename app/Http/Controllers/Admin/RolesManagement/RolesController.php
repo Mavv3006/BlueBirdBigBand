@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\RolesManagement;
 
 use App\DataTransferObjects\IdDto;
 use App\DataTransferObjects\Roles\RoleUpdateDto;
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
@@ -16,12 +17,13 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class RolesController extends Controller
+class RolesController extends BaseAdminController
 {
     public function __construct(
         public RoleService $roleService,
         public PermissionService $permissionService
     ) {
+        parent::__construct();
     }
 
     /**

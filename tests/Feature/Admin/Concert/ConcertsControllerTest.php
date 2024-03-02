@@ -15,6 +15,7 @@ class ConcertsControllerTest extends TestCase
     {
         parent::setUp();
         $this->setupAdmin();
+        $this->setupInertiaMetaInfo();
     }
 
     public function testShowCreateForm(): void

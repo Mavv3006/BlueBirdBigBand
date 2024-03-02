@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\SongManagement;
 
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Models\Song;
 use App\Services\Song\SongService;
@@ -12,11 +13,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class DownloadSongController extends Controller
+class DownloadSongController extends BaseAdminController
 {
     public function __construct(
         protected SongService $service,
     ) {
+        parent::__construct();
     }
 
     /**

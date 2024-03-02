@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\MusicianManagement;
 
 use App\DataTransferObjects\Musicians\UpdateMusicianSeatingPositionDto;
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MusicianSeatingPositionRequest;
 use App\Services\Musician\MusicianService;
@@ -10,10 +11,11 @@ use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class MusicianSeatingPositionController extends Controller
+class MusicianSeatingPositionController extends BaseAdminController
 {
     public function __construct(public MusicianService $musicianService)
     {
+        parent::__construct();
     }
 
     public function show(): Response

@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers\Admin\UserManagement;
 
+use App\DataTransferObjects\View\InertiaMetaInfoDto;
+use App\Http\Controllers\Admin\BaseAdminController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SearchUserRequest;
 use App\Http\Requests\UserRoleRequest;
 use App\Models\User;
 use App\Services\User\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class AssignRolesToUserController extends Controller
+class AssignRolesToUserController extends BaseAdminController
 {
     public function __construct(protected UserService $userService)
     {
+        parent::__construct();
     }
 
     public function showSearchForm(SearchUserRequest $request): Response
