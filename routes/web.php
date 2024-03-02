@@ -21,7 +21,6 @@ use App\Http\Controllers\Inertia\InternalSongsController;
 use App\Http\Controllers\Inertia\NewsletterController;
 use App\Http\Controllers\Inertia\PressInfoController;
 use App\Http\Controllers\Internal\InternalIndexController;
-use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\v2\BandController;
 use App\Http\Controllers\v2\ConcertDetailsPageController;
