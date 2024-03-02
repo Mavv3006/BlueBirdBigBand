@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\MusicianManagement;
 
 use App\Http\Controllers\Admin\BaseAdminController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MusicianRequest;
 use App\Models\Musician;
 use App\Services\Instrument\InstrumentService;

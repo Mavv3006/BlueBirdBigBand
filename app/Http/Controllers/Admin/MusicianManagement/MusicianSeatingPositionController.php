@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\MusicianManagement;
 
 use App\DataTransferObjects\Musicians\UpdateMusicianSeatingPositionDto;
 use App\Http\Controllers\Admin\BaseAdminController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\MusicianSeatingPositionRequest;
 use App\Services\Musician\MusicianService;
 use Illuminate\Support\Facades\Gate;

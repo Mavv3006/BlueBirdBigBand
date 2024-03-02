@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\RolesManagement;
 use App\DataTransferObjects\IdDto;
 use App\DataTransferObjects\Roles\RoleUpdateDto;
 use App\Http\Controllers\Admin\BaseAdminController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Services\Permission\PermissionService;

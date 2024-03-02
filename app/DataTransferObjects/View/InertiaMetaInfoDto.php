@@ -10,7 +10,7 @@ readonly class InertiaMetaInfoDto
 
     public string $url;
 
-    public string|null $imageUrl;
+    public ?string $imageUrl;
 
     public function __construct()
     {

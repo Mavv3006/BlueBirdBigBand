@@ -13,7 +13,7 @@ abstract class BaseInertiaController extends Controller
 
     abstract public function getTitle(): string;
 
-    public function getImageUrl(): string|null
+    public function getImageUrl(): ?string
     {
         return null;
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\ConcertManagement;
 
 use App\Http\Controllers\Admin\BaseAdminController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreConcertRequest;
 use App\Http\Requests\UpdateConcertRequest;
 use App\Models\Concert;

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\SongManagement;
 
 use App\Http\Controllers\Admin\BaseAdminController;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\SongStoreRequest;
 use App\Http\Requests\SongUpdateRequest;
 use App\Models\Song;
