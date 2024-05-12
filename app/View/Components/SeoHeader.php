@@ -10,7 +10,7 @@ use Illuminate\View\Component;
 
 class SeoHeader extends Component
 {
-    public ?SeoMetaDto $seoMetaDto;
+    public SeoMetaDto $seoMetaDto;
 
     /**
      * Create a new component instance.
