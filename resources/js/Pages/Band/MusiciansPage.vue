@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head><title>Musiker</title></Head>
+
         <Heading>Musiker</Heading>
 
         <p class="text-justify mb-4">
@@ -29,6 +31,7 @@
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import NavLink from "@/Components/Link/NavLink.vue";
+import {Head} from '@inertiajs/vue3';
 import {Musician, MusicianProp, MusicianWithInstrument, ReducedInstrument} from "@/types/musician";
 import MusicianInstrument from "@/Components/MusicianInstrument.vue";
 

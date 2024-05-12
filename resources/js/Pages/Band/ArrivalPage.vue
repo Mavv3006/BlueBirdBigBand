@@ -1,5 +1,6 @@
 <template>
     <public-layout>
+        <Head><title>Anfahrt</title></Head>
         <Heading>Wegbeschreibung zur Probe</Heading>
 
         <div class="flex flex-col gap-8">

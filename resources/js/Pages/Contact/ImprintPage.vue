@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head title="Impressum"/>
+
         <Heading>Impressum</Heading>
 
         <div class="flex flex-col gap-2 mb-4 md:flex-row md:gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
@@ -51,6 +53,8 @@
 </template>
 
 <script setup>
+
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
+import {Head} from '@inertiajs/vue3';
 import MailtoLink from "@/Components/Link/MailtoLink.vue";</script>

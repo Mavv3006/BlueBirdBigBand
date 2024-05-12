@@ -1,5 +1,7 @@
 <template>
     <public-layout>
+        <Head title="Newsletter"></Head>
+
         <Heading> Newsletter</Heading>
 
         <div>
@@ -68,13 +70,14 @@
 
 <script setup lang="ts">
 import PublicLayout from "@/Layouts/PublicLayout.vue";
-import {useForm} from "@inertiajs/vue3";
+import {Head, useForm} from "@inertiajs/vue3";
 import Heading from "@/Components/Heading.vue";
 import SubHeading from "@/Components/SubHeading.vue";
 import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import {add} from "lodash";
 
 type NewsletterRequestType = {
     email: string,
