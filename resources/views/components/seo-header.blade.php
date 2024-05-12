@@ -1,3 +1,9 @@
-<title>{{ $seoMetaDto->title }} | Blue Bird Big Band</title>
+@if(isset($seoMetaDto->title))
+    <title>{{ $seoMetaDto->title }} | Blue Bird Big Band</title>
+@else
+    <title>Blue Bird Big Band</title>
+@endif
 
-<meta property="description" content="{{ $seoMetaDto->description }}"/>
+@if(isset($seoMetaDto->description))
+    <meta property="description" content="{{ $seoMetaDto->description }}"/>
+@endif
