@@ -1,7 +1,5 @@
 <template>
     <public-layout>
-        <Head><title>Auftritte</title></Head>
-
         <Heading>Auftritte</Heading>
 
         <div v-if="hasConcerts" class="flex flex-col gap-4">
@@ -15,7 +13,6 @@
 </template>
 
 <script lang="ts" setup>
-import {Head} from '@inertiajs/vue3';
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import {computed} from 'vue';

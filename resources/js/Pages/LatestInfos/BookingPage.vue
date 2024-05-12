@@ -1,7 +1,5 @@
 <template>
     <public-layout>
-        <Head title="Buchungsinfos"/>
-
         <Heading>Buchungsinfos</Heading>
 
         <div class="flex flex-col gap-4">
@@ -38,8 +36,7 @@
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import ContactBandleader from "@/Components/Contact/ContactBandleader.vue";
-import ContactManagement from "@/Components/Contact/ContactManagement.vue";
-import {Head} from '@inertiajs/vue3';</script>
+import ContactManagement from "@/Components/Contact/ContactManagement.vue";</script>
 
 <style scoped>
 p {

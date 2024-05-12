@@ -1,6 +1,5 @@
 <template>
     <PublicLayout>
-        <Head><title>E-Mail Verteiler</title></Head>
         <Heading>E-Mail Verteiler</Heading>
 
         <div v-for="group in emails" class="email-group">
@@ -12,7 +11,6 @@
 <script lang="ts" setup>
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
-import {Head} from "@inertiajs/vue3";
 import EmailGroup, {EmailGroupModel} from "@/Components/EmailGroup.vue";
 
 const emails: EmailGroupModel[] = [
