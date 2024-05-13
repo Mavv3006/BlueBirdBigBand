@@ -23,10 +23,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(125);
 
-        if (!config('app.debugbar_enabled')) {
-            \Debugbar::disable();
-        }
-
         Model::shouldBeStrict(!App::isProduction());
     }
 }
