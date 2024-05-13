@@ -212,4 +212,6 @@ return [
     ])->toArray(),
 
     'use design v2' => env('APP_USE_DESIGN_V2', true),
+
+    'debugbar_enabled' => env('DEBUGBAR_ENABLED', true),
 ];

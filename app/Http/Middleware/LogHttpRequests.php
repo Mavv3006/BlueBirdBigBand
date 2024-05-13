@@ -16,11 +16,13 @@ class LogHttpRequests
      */
     public function handle(Request $request, Closure $next): Response
     {
-        Log::debug('Request logged', [
+        Log::info('Request logged', [
             'url' => $request->url(),
             'method' => $request->method(),
-            'data' => $request->except('password'),
+            'headers' => $request->headers->all(),
         ]);
+
+        Log::debug('Request data', ['data' => $request->except('password')]);
 
         return $next($request);
     }

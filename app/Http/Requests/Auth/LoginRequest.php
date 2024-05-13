@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -47,6 +48,7 @@ class LoginRequest extends FormRequest
         $user = User::where('name', $this->only('name'))->first();
 
         if ($user->status != UserStates::Activated) {
+            Log::notice('User is not activated', ['user_id' => $user->id, 'user_name' => $user->name]);
             throw ValidationException::withMessages(['name' => trans('auth.activated')]);
         }
 
@@ -54,10 +56,12 @@ class LoginRequest extends FormRequest
 
         if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
+            Log::notice('User failed to login.', ['user_id' => $user->id, 'user_name' => $user->name]);
 
             throw ValidationException::withMessages(['name' => trans('auth.failed')]);
         }
 
+        Log::notice('User successfully logged in.', ['user_id' => $user->id, 'user_name' => $user->name]);
         RateLimiter::clear($this->throttleKey());
     }
 
