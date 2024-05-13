@@ -17,7 +17,7 @@ class SeoHeader extends Component
      */
     public function __construct()
     {
-        $this->seoMetaDto = SeoMetaService::getSeoMetaDto();
+        $this->seoMetaDto = SeoMetaService::getSeoMetaDto() ?? new SeoMetaDto('', '');
     }
 
     /**
