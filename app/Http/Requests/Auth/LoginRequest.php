@@ -50,7 +50,7 @@ class LoginRequest extends FormRequest
             throw ValidationException::withMessages(['name' => trans('auth.activated')]);
         }
 
-        $isAuthenticated = Auth::attempt($this->only('name', 'password'), $this->boolean('remember'));
+        $isAuthenticated = Auth::attempt($this->only('name', 'password'));
 
         if (!$isAuthenticated) {
             RateLimiter::hit($this->throttleKey());
