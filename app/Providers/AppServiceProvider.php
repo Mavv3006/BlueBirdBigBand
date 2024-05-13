@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Debugbar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(125);
+
+        if (!config('app.debugbar_enabled')) {
+            Debugbar::disable();
+        }
 
         Model::shouldBeStrict(!App::isProduction());
     }
