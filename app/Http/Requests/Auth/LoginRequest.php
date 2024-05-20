@@ -6,6 +6,7 @@ use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -45,24 +46,30 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $user = User::where('name', $this->only('name'))->first();
+        try {
+            $user = User::where('name', $this->only('name'))->firstOrFail();
 
-        if ($user->status != UserStates::Activated) {
-            Log::notice('User is not activated', ['user_id' => $user->id, 'user_name' => $user->name]);
-            throw ValidationException::withMessages(['name' => trans('auth.activated')]);
-        }
+            if ($user->status != UserStates::Activated) {
+                Log::notice('User is not activated', ['user_id' => $user->id, 'user_name' => $user->name]);
+                throw ValidationException::withMessages(['name' => trans('auth.activated')]);
+            }
 
-        $isAuthenticated = Auth::attempt($this->only('name', 'password'));
+            $isAuthenticated = Auth::attempt($this->only('name', 'password'));
 
-        if (!$isAuthenticated) {
-            RateLimiter::hit($this->throttleKey());
-            Log::notice('User failed to login.', ['user_id' => $user->id, 'user_name' => $user->name]);
+            if (!$isAuthenticated) {
+                RateLimiter::hit($this->throttleKey());
+                Log::notice('User failed to login.', ['user_id' => $user->id, 'user_name' => $user->name]);
 
+                throw ValidationException::withMessages(['name' => trans('auth.failed')]);
+            }
+
+            Log::notice('User successfully logged in.', ['user_id' => $user->id, 'user_name' => $user->name]);
+            RateLimiter::clear($this->throttleKey());
+
+        } catch (ModelNotFoundException $exception) {
+            Log::notice('User not found.', ['user_name' => $this->only('name')]);
             throw ValidationException::withMessages(['name' => trans('auth.failed')]);
         }
-
-        Log::notice('User successfully logged in.', ['user_id' => $user->id, 'user_name' => $user->name]);
-        RateLimiter::clear($this->throttleKey());
     }
 
     /**

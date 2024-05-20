@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\ValidationException;
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
@@ -45,5 +46,16 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertGuest();
+    }
+
+    public function testTryLoginUserWhichDoesNotExist(): void
+    {
+        $this->assertDatabaseCount(User::class, 0);
+        $this->expectException(ValidationException::class);
+
+        $this->post('/login', [
+            'name' => 'test',
+            'password' => 'wrong-password',
+        ]);
     }
 }
