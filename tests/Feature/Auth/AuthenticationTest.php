@@ -5,7 +5,6 @@ namespace Tests\Feature\Auth;
 use App\Enums\StateMachines\UserStates;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Validation\ValidationException;
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
