@@ -1,7 +1,11 @@
 <template>
     <PublicLayout>
 
-        <Head><title>Willkommen</title></Head>
+        <Head>
+            <title>Willkommen</title>
+            <meta name="description" content="Your page description">
+            <meta property="og:type" content="website">
+        </Head>
 
         <h1 class="text-center font-bold text-[#3d4449] text-xl md:text-3xl lg:text-4xl xl:text-5xl">
             Willkommen bei der
