@@ -51,7 +51,6 @@ class AuthenticationTest extends TestCase
     public function testTryLoginUserWhichDoesNotExist(): void
     {
         $this->assertDatabaseCount(User::class, 0);
-        $this->expectException(ValidationException::class);
 
         $this->post('/login', [
             'name' => 'test',

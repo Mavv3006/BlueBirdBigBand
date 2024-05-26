@@ -66,7 +66,7 @@ class LoginRequest extends FormRequest
             Log::notice('User successfully logged in.', ['user_id' => $user->id, 'user_name' => $user->name]);
             RateLimiter::clear($this->throttleKey());
 
-        } catch (ModelNotFoundException $exception) {
+        } catch (ModelNotFoundException) {
             Log::notice('User not found.', ['user_name' => $this->only('name')]);
             throw ValidationException::withMessages(['name' => trans('auth.failed')]);
         }
