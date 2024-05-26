@@ -15,7 +15,7 @@
         "source": "https://github.com/Mavv3006/BlueBirdBigBand"
     },
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-pdo": "*",
         "althinect/filament-spatie-roles-permissions": "^2.2",
         "filament/filament": "^3.1",
