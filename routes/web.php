@@ -45,6 +45,7 @@ Route::get('/impressum', [PublicController::class, 'imprint']);
 Route::get('/kontakt', [PublicController::class, 'contact']);
 Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
+Route::get('/repertoire', [PublicController::class, 'repertoire']);
 
 Route::get('/test', function () {
     \Illuminate\Support\Facades\Mail::to('test@example.com')

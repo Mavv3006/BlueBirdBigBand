@@ -120,4 +120,9 @@ class PublicController extends Controller
 
         return Inertia::render('Contact/Newsletter');
     }
+
+    public function repertoire()
+    {
+        return Inertia::render('LatestInfos/Repertoire');
+    }
 }
