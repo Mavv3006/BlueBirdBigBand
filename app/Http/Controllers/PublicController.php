@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTransferObjects\SeoMetaDto;
 use App\Services\Concert\ConcertService;
 use App\Services\Musician\MusicianService;
+use App\Services\RepertoireService;
 use App\Services\SeoMetaService;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -12,9 +13,10 @@ use Inertia\Response;
 class PublicController extends Controller
 {
     public function __construct(
-        public ConcertService $concertService,
+        public ConcertService  $concertService,
         public MusicianService $musicianService,
-    ) {
+    )
+    {
     }
 
     public function home(): Response
@@ -123,6 +125,13 @@ class PublicController extends Controller
 
     public function repertoire()
     {
-        return Inertia::render('LatestInfos/Repertoire');
+        SeoMetaService::setSeoMetaDto(new SeoMetaDto(
+            title: 'Repertoire',
+            description: 'Homepage der Blue Bird Big Band - hier finden sie Infos und die aktuellen Veranstaltungstermine der Blue Bird Bigband der Musikschule Speyer'
+        ));
+
+        $repertoire = RepertoireService::getCurrentRepertoire();
+
+        return Inertia::render('LatestInfos/Repertoire', ['repertoire' => $repertoire]);
     }
 }
