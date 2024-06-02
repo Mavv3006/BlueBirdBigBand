@@ -46,6 +46,7 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
             submenu: [
                 {link: '/about-us', linkName: 'Über uns'},
                 {link: '/musiker', linkName: 'Musiker'},
+                {link: '/repertoire', linkName: 'Repertoire'},
                 {link: '/anfahrt', linkName: 'Anfahrt'}
             ],
         },

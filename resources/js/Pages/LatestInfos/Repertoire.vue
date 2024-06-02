@@ -1,6 +1,8 @@
 <template>
     <PublicLayout page-title="Repertoire">
 
+        <Head><title>Repertoire</title></Head>
+
         <Heading>Repertoire</Heading>
 
         <div>
@@ -11,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import {Head} from '@inertiajs/vue3';
 import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 
