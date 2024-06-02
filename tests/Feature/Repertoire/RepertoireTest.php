@@ -25,12 +25,25 @@ class RepertoireTest extends TestCase
                 ->component('LatestInfos/Repertoire'));
     }
 
-    public function testRepertoireData()
+    public function testRepertoireDataLimit()
     {
         $this->seedDB();
 
-        $data = RepertoireService::getCurrentRepertoire();
+       $this->assertCount(5, RepertoireService::getCurrentRepertoire());
+       $this->assertCount(3, RepertoireService::getCurrentRepertoire(3));
+       $this->assertCount(6, RepertoireService::getCurrentRepertoire(6));
+    }
 
+    public function testRepertoireDataFormat()
+    {
+        $this->seedDB();
+
+       $firstSong =  RepertoireService::getCurrentRepertoire()->first();
+
+       $this->assertArrayHasKey('title',$firstSong);
+       $this->assertArrayHasKey('genre',$firstSong);
+       $this->assertArrayHasKey('author',$firstSong);
+       $this->assertArrayHasKey('arranger',$firstSong);
     }
 
     protected function seedDB(int $count = 10): void
