@@ -29,21 +29,21 @@ class RepertoireTest extends TestCase
     {
         $this->seedDB();
 
-       $this->assertCount(5, RepertoireService::getCurrentRepertoire());
-       $this->assertCount(3, RepertoireService::getCurrentRepertoire(3));
-       $this->assertCount(6, RepertoireService::getCurrentRepertoire(6));
+        $this->assertCount(5, RepertoireService::getCurrentRepertoire());
+        $this->assertCount(3, RepertoireService::getCurrentRepertoire(3));
+        $this->assertCount(6, RepertoireService::getCurrentRepertoire(6));
     }
 
     public function testRepertoireDataFormat()
     {
         $this->seedDB();
 
-       $firstSong =  RepertoireService::getCurrentRepertoire()->first();
+        $firstSong = RepertoireService::getCurrentRepertoire()->first();
 
-       $this->assertArrayHasKey('title',$firstSong);
-       $this->assertArrayHasKey('genre',$firstSong);
-       $this->assertArrayHasKey('author',$firstSong);
-       $this->assertArrayHasKey('arranger',$firstSong);
+        $this->assertArrayHasKey('title', $firstSong);
+        $this->assertArrayHasKey('genre', $firstSong);
+        $this->assertArrayHasKey('author', $firstSong);
+        $this->assertArrayHasKey('arranger', $firstSong);
     }
 
     protected function seedDB(int $count = 10): void
