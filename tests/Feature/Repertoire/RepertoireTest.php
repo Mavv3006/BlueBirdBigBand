@@ -15,20 +15,30 @@ use Tests\TestCase;
 
 class RepertoireTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seedDB();
+    }
+
     public function testUserCanAccessPage()
     {
-        $this->withoutExceptionHandling();
-
         $this->get('/repertoire')
             ->assertSuccessful()
             ->assertInertia(fn (AssertableInertia $page) => $page
-                ->component('LatestInfos/Repertoire'));
+                ->component('LatestInfos/Repertoire')
+                ->has('repertoire', 5, fn (AssertableInertia $page) => $page
+                    ->has('title')
+                    ->has('author')
+                    ->has('genre')
+                    ->has('arranger')
+                )
+            );
     }
 
     public function testRepertoireDataLimit()
     {
-        $this->seedDB();
-
         $this->assertCount(5, RepertoireService::getCurrentRepertoire());
         $this->assertCount(3, RepertoireService::getCurrentRepertoire(3));
         $this->assertCount(6, RepertoireService::getCurrentRepertoire(6));
@@ -36,8 +46,6 @@ class RepertoireTest extends TestCase
 
     public function testRepertoireDataFormat()
     {
-        $this->seedDB();
-
         $firstSong = RepertoireService::getCurrentRepertoire()->first();
 
         $this->assertArrayHasKey('title', $firstSong);
