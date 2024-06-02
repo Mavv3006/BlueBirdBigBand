@@ -31,7 +31,6 @@ class RepertoireTest extends TestCase
 
         $data = RepertoireService::getCurrentRepertoire();
 
-
     }
 
     protected function seedDB(int $count = 10): void
