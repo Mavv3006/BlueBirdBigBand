@@ -34,6 +34,17 @@ class ConcertResource extends Resource
     {
         return $form
             ->schema([
+                Section::make('Band')
+                    ->description('Wähle aus welche Band den Auftritt spielt.')
+                    ->schema([
+                        Select::make('band_id')
+                            ->native(false)
+                            ->label('Band')
+                            ->searchable()
+                            ->required()
+                            ->preload()
+                            ->relationship(name: 'band', titleAttribute: 'name'),
+                    ]),
                 Section::make('Datum und Uhrzeit')
                     ->description('Beschreibt an welchem Datum und von wann bis wann der Auftritt stattfindet.')
                     ->columns([
