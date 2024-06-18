@@ -41,6 +41,7 @@ class ConcertResource extends Resource
                             ->native(false)
                             ->label('Band')
                             ->searchable()
+                            ->required()
                             ->preload()
                             ->relationship(name: 'band', titleAttribute: 'name'),
                     ]),
