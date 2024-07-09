@@ -11,6 +11,5 @@ class LastTimePlayedDto
         public readonly string $arranger,
         public readonly string $title,
         public readonly Carbon $lastPlayedDate,
-    ) {
-    }
+    ) {}
 }

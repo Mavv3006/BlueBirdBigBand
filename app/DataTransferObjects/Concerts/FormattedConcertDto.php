@@ -14,8 +14,7 @@ class FormattedConcertDto
         public readonly string $band,
         public readonly ConcertDescriptionDto $description,
         public readonly ConcertAddressDto $address,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

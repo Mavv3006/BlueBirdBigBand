@@ -17,9 +17,7 @@ class NewsletterMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public Concert $concert)
-    {
-    }
+    public function __construct(public Concert $concert) {}
 
     /**
      * Get the message envelope.

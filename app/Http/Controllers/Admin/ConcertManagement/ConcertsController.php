@@ -17,8 +17,7 @@ class ConcertsController extends Controller
     public function __construct(
         protected ConcertService $concertService,
         protected VenueService $venueService
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

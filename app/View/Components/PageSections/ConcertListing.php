@@ -14,8 +14,7 @@ class ConcertListing extends Component
         public ConcertListingType $type,
         public int $limit,
         public ConcertService $concertService,
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {

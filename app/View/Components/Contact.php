@@ -14,8 +14,7 @@ class Contact extends Component
         public ?string $telefax = null,
         public ?string $mobile = null,
         public bool $boldName = false
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {

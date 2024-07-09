@@ -8,9 +8,7 @@ use Exception;
 
 abstract class BaseFeatureFlagState
 {
-    public function __construct(public FeatureFlag $featureFlag)
-    {
-    }
+    public function __construct(public FeatureFlag $featureFlag) {}
 
     protected function changeStateTo(FeatureFlagState $newState): void
     {

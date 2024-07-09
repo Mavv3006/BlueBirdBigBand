@@ -21,8 +21,7 @@ class RolesController extends Controller
     public function __construct(
         public RoleService $roleService,
         public PermissionService $permissionService
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

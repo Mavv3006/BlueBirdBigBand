@@ -8,9 +8,7 @@ use Illuminate\View\Component;
 
 class Setlist extends Component
 {
-    public function __construct(public Collection $setlistSongs, public string $bandName)
-    {
-    }
+    public function __construct(public Collection $setlistSongs, public string $bandName) {}
 
     public function render(): View
     {
