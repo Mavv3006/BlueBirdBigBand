@@ -14,8 +14,7 @@ class ConcertDto
         public readonly string $end_time,
         public readonly ConcertVenueDto $venueDto,
         public readonly ConcertDescriptionDto $descriptionDto,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -9,6 +9,5 @@ class SetlistCountDto
         public readonly string $arranger,
         public readonly string $title,
         public readonly int $count
-    ) {
-    }
+    ) {}
 }

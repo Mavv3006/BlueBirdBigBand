@@ -8,8 +8,7 @@ class UserRoleDto
         public readonly int $id,
         public readonly string $name,
         public readonly bool $assigned
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

@@ -16,8 +16,7 @@ class InternController extends Controller
 {
     public function __construct(
         public SongService $songService,
-    ) {
-    }
+    ) {}
 
     public function index(): Redirector|RedirectResponse|Application
     {

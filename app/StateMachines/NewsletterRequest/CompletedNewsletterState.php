@@ -2,6 +2,4 @@
 
 namespace App\StateMachines\NewsletterRequest;
 
-class CompletedNewsletterState extends BaseNewsletterState
-{
-}
+class CompletedNewsletterState extends BaseNewsletterState {}

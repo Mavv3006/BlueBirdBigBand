@@ -12,6 +12,5 @@ class MusicianSeatingPositionDto
     public function __construct(
         public readonly int $instrument_id,
         public readonly array $musicians
-    ) {
-    }
+    ) {}
 }

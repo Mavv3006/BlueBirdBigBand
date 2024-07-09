@@ -6,9 +6,7 @@ use Illuminate\View\Component;
 
 class EmailLink extends Component
 {
-    public function __construct(public string $mailAddress)
-    {
-    }
+    public function __construct(public string $mailAddress) {}
 
     public function render(): string
     {

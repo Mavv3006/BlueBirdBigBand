@@ -16,8 +16,7 @@ class DownloadSongController extends Controller
 {
     public function __construct(
         protected SongService $service,
-    ) {
-    }
+    ) {}
 
     /**
      * Download the requested song file.

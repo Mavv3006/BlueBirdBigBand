@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 
 class ConcertDetailsPageController extends Controller
 {
-    public function __construct(public ConcertService $service)
-    {
-    }
+    public function __construct(public ConcertService $service) {}
 
     public function __invoke(Request $request, Concert $concert)
     {

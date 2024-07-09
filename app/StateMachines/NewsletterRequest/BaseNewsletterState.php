@@ -7,9 +7,7 @@ use Exception;
 
 abstract class BaseNewsletterState
 {
-    public function __construct(public NewsletterRequest $newsletterRequest)
-    {
-    }
+    public function __construct(public NewsletterRequest $newsletterRequest) {}
 
     /**
      * @throws Exception

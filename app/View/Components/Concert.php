@@ -11,9 +11,7 @@ class Concert extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public FormattedConcertDto $concert)
-    {
-    }
+    public function __construct(public FormattedConcertDto $concert) {}
 
     /**
      * Get the view / contents that represent the component.

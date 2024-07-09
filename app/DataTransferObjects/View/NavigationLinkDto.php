@@ -10,6 +10,5 @@ class NavigationLinkDto
         public readonly string $name,
         public readonly string $link,
         public readonly NavigationLinkType $type,
-    ) {
-    }
+    ) {}
 }

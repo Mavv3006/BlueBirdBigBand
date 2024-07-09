@@ -9,6 +9,5 @@ class ConcertAddressDto
         public readonly string $number,
         public readonly int $plz,
         public readonly string $city,
-    ) {
-    }
+    ) {}
 }
