@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\Resources\InstrumentResource;
+namespace Filament\InstrumentResource;
 
 use App\Filament\Resources\InstrumentResource;
 use App\Models\Instrument;

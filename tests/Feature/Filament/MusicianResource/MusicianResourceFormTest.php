@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources\MusicianResource;
+namespace Filament\MusicianResource;
 
 use App\Filament\Resources\MusicianResource\Pages\CreateMusician;
 use App\Models\Instrument;
