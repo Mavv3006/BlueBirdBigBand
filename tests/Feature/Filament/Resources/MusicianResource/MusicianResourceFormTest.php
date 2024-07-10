@@ -21,6 +21,7 @@ class MusicianResourceFormTest extends TestCase
 
         Livewire::test(CreateMusician::class)
             // test form field existence
+            ->assertFormExists()
             ->assertFormFieldExists('firstname')
             ->assertFormFieldExists('lastname')
             ->assertFormFieldExists('instrument_id')
@@ -55,5 +56,17 @@ class MusicianResourceFormTest extends TestCase
         $this->assertequals($firstname, $musician->firstname);
         $this->assertequals($lastname, $musician->lastname);
         $this->assertequals($isActive, $musician->isActive);
+    }
+
+    public function testRequiredFormFields()
+    {
+        Livewire::test(CreateMusician::class)
+            ->fillForm()
+            ->call('create')
+            ->assertHasFormErrors([
+                'firstname' => 'required',
+                'lastname' => 'required',
+                'instrument_id' => 'required',
+            ]);
     }
 }
