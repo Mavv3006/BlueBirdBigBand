@@ -1,22 +1,15 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace Tests\Feature\Filament\Resources\MusicianResource;
 
-use App\Filament\Resources\MusicianResource;
 use App\Filament\Resources\MusicianResource\Pages\CreateMusician;
 use App\Models\Instrument;
 use App\Models\Musician;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class MusicianResourceTest extends TestCase
+class MusicianResourceFormTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->setupAdmin();
-    }
-
     public function testFillForm()
     {
         $instrument_id = Instrument::factory()->create()->id;
@@ -62,12 +55,5 @@ class MusicianResourceTest extends TestCase
         $this->assertequals($firstname, $musician->firstname);
         $this->assertequals($lastname, $musician->lastname);
         $this->assertequals($isActive, $musician->isActive);
-    }
-
-    public function testRenderingResourcePage()
-    {
-
-        $this->get(MusicianResource::getUrl())
-            ->assertSuccessful();
     }
 }
