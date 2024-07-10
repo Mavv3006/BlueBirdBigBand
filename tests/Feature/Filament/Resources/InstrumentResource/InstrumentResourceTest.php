@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace Filament\Resources\InstrumentResource;
 
 use App\Filament\Resources\InstrumentResource;
 use Tests\TestCase;
@@ -15,7 +15,6 @@ class InstrumentResourceTest extends TestCase
 
     public function testRenderingResourcePage()
     {
-
         $this->get(InstrumentResource::getUrl())
             ->assertSuccessful();
     }

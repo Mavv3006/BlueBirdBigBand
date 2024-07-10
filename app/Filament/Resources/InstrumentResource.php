@@ -39,6 +39,9 @@ class InstrumentResource extends Resource
                 Forms\Components\TextInput::make('order')
                     ->label('Reihenfolge')
                     ->integer()
+                    ->minValue(0)
+                    ->required()
+                    ->maxValue(16777215)
                     ->placeholder('leer')
                     ->unique('instruments'),
                 Forms\Components\TextInput::make('default_picture_filepath')
