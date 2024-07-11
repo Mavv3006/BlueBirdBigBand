@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      mysql:
-        image: mysql:5.7
+      database:
+        image: mariadb:10.5.25
         env:
           MYSQL_DATABASE: test_db
           MYSQL_USER: user
@@ -56,7 +56,7 @@ jobs:
           DB_DATABASE: test_db
           DB_USERNAME: user
           DB_PASSWORD: secret
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: ${{ job.services.database.ports[3306] }}
         run: vendor/bin/phpunit --testsuite Unit
 
       - name: Execute feature tests via PHPUnit
@@ -64,7 +64,7 @@ jobs:
           DB_DATABASE: test_db
           DB_USERNAME: user
           DB_PASSWORD: secret
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: ${{ job.services.database.ports[3306] }}
         run: vendor/bin/phpunit --testsuite Feature
 
       - name: Execute inertia tests via PHPUnit
@@ -72,5 +72,5 @@ jobs:
           DB_DATABASE: test_db
           DB_USERNAME: user
           DB_PASSWORD: secret
-          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_PORT: ${{ job.services.database.ports[3306] }}
         run: vendor/bin/phpunit --testsuite Inertia
