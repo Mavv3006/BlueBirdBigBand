@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Enums\StateMachines\UserStates;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -33,7 +36,39 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('name')
+                    ->required()
+                    ->unique('users')
+                    ->maxLength(255),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\Section::make('Kopfdaten')->schema([
+                    Infolists\Components\Grid::make()->schema([
+                        Infolists\Components\TextEntry::make('name'),
+                        Infolists\Components\TextEntry::make('status')
+                            ->badge()
+                            ->color(fn (UserStates $state): string => match ($state) {
+                                UserStates::Registered => 'warning',
+                                UserStates::Activated => 'success',
+                            }),
+                    ]),
+                ]),
+                Infolists\Components\Section::make('Uhrzeiten')->schema([
+                    Infolists\Components\Grid::make()->schema([
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->dateTime('d M Y H:i:s')
+                            ->label('Angelegt am'),
+                        Infolists\Components\TextEntry::make('updated_at')
+                            ->dateTime('d M Y H:i:s')
+                            ->label('Geändert am'),
+                    ]),
+                ]),
+                // Rollen + Berechtigungen
             ]);
     }
 
@@ -93,19 +128,16 @@ class UserResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

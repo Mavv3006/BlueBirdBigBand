@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace Tests\Feature\Filament\UserResource;
 
 use App\Filament\Resources\UserResource;
 use Tests\TestCase;
