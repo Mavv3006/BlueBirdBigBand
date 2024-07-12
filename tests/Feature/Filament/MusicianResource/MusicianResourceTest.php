@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\MusicianResource;
+namespace Tests\Feature\Filament\MusicianResource;
 
 use App\Filament\Resources\MusicianResource;
 use Tests\TestCase;

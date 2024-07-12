@@ -1,6 +1,6 @@
 <?php
 
-namespace Filament\InstrumentResource;
+namespace Tests\Feature\Filament\InstrumentResource;
 
 use App\Filament\Resources\InstrumentResource;
 use App\Models\Instrument;
