@@ -38,8 +38,9 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()
+                    ->autofocus()
                     ->unique('users')
-                    ->maxLength(255),
+                    ->maxLength(125),
             ]);
     }
 
