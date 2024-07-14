@@ -17,17 +17,21 @@ class ListUsers extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            // used for testing sending emails on the server.
             Actions\Action::make('email')
-                ->label('E-Mail')
+                ->label('Sende Test-E-Mail')
                 ->form([
                     TextInput::make('email')
                         ->label('E-Mail Adresse')
+                        ->helperText('Hiermit kann eine Test-E-Mail an die angegebene E-Mail-Adresse geschickt werden.')
+                        ->autofocus()
                         ->email()
                         ->required(),
                 ])
                 ->action(
                     fn (array $data) => Mail::to($data['email'])->send(new TestMail())
-                ),
+                )
+                ->requiresConfirmation(),
         ];
     }
 }

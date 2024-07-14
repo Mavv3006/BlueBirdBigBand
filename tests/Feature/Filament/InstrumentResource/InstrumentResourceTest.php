@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace Tests\Feature\Filament\InstrumentResource;
 
-use App\Filament\Resources\MusicianResource;
+use App\Filament\Resources\InstrumentResource;
 use Tests\TestCase;
 
-class MusicianResourceTest extends TestCase
+class InstrumentResourceTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -15,8 +15,7 @@ class MusicianResourceTest extends TestCase
 
     public function testRenderingResourcePage()
     {
-
-        $this->get(MusicianResource::getUrl())
+        $this->get(InstrumentResource::getUrl())
             ->assertSuccessful();
     }
 }

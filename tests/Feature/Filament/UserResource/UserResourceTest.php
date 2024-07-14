@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Filament\Resources;
+namespace Tests\Feature\Filament\UserResource;
 
-use App\Filament\Resources\InstrumentResource;
+use App\Filament\Resources\UserResource;
 use Tests\TestCase;
 
-class InstrumentResourceTest extends TestCase
+class UserResourceTest extends TestCase
 {
     protected function setUp(): void
     {
@@ -16,7 +16,7 @@ class InstrumentResourceTest extends TestCase
     public function testRenderingResourcePage()
     {
 
-        $this->get(InstrumentResource::getUrl())
+        $this->get(UserResource::getUrl())
             ->assertSuccessful();
     }
 }

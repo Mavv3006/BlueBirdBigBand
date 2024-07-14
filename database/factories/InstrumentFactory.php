@@ -18,6 +18,7 @@ class InstrumentFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => $this->faker->name(),
             'default_picture_filepath' => 'assets/musician_pictures/default/tux.png',
         ];
     }
