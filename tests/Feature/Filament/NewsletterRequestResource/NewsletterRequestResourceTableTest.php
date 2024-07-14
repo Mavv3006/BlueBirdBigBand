@@ -6,7 +6,6 @@ use App\Enums\NewsletterType;
 use App\Enums\StateMachines\NewsletterState;
 use App\Filament\Resources\NewsletterRequestResource\Pages\ListNewsletterRequests;
 use App\Models\NewsletterRequest;
-use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Livewire\Livewire;
 use Tests\TestCase;
