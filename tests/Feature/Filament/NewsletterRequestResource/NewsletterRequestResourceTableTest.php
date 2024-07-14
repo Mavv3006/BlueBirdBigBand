@@ -6,6 +6,7 @@ use App\Enums\NewsletterType;
 use App\Enums\StateMachines\NewsletterState;
 use App\Filament\Resources\NewsletterRequestResource\Pages\ListNewsletterRequests;
 use App\Models\NewsletterRequest;
+use Filament\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -76,5 +77,33 @@ class NewsletterRequestResourceTableTest extends TestCase
             ->assertCanSeeTableRecords($confirmed)
             ->assertCanNotSeeTableRecords($requested)
             ->assertCanNotSeeTableRecords($completed);
+    }
+
+    public function testCompleteTableRowAction()
+    {
+        $confirmed = NewsletterRequest::factory()->create([
+            'status' => NewsletterState::Confirmed,
+        ]);
+        $requested = NewsletterRequest::factory()->create([
+            'status' => NewsletterState::Requested,
+        ]);
+        $completed = NewsletterRequest::factory()->create([
+            'status' => NewsletterState::Completed,
+        ]);
+
+        $this->assertEquals(NewsletterState::Confirmed, $confirmed->status);
+
+        Livewire::test(ListNewsletterRequests::class)
+            ->assertTableActionExists('complete')
+            ->assertTableActionHasLabel('complete', 'Abschließen')
+            ->assertTableActionEnabled('complete', $confirmed)
+            ->assertTableActionDisabled('complete', $requested)
+            ->assertTableActionDisabled('complete', $completed)
+            ->assertTableActionVisible('complete', $confirmed)
+            ->callTableAction('complete', $confirmed)
+            ->assertHasNoTableActionErrors();
+
+        $confirmed->refresh();
+        $this->assertEquals(NewsletterState::Completed, $confirmed->status);
     }
 }
