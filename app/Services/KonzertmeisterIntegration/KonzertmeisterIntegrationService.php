@@ -17,7 +17,5 @@ class KonzertmeisterIntegrationService
         ]);
     }
 
-    public function filterConcerts()
-    {
-    }
+    public function filterConcerts() {}
 }
