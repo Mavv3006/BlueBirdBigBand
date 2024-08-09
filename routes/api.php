@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\KonzertmeisterUpdateConcertsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,3 +16,5 @@
 //Route::middleware('auth:sanctum')
 //    ->get('download/song/{song}', DownloadSongController::class)
 //    ->name('download-song');
+
+Route::get('concerts/pull', KonzertmeisterUpdateConcertsController::class);
