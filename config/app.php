@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -223,4 +223,6 @@ return [
     'use design v2' => env('APP_USE_DESIGN_V2', true),
 
     'konzertmeister_url' => env('KONZERTMEISTER_URL'),
+    'konzertmeister_api_key' => env('KONZERTMEISTER_API_KEY'),
+    'konzertmeister_appointment_prefix' => 'https://web.konzertmeister.app/appointment/',
 ];
