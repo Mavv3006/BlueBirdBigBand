@@ -15,7 +15,7 @@ class NavigationLinksServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = new NavigationLinksService();
+        $this->service = new NavigationLinksService;
     }
 
     public function testGetAllLinks()

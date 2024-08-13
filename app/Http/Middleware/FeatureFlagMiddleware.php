@@ -23,6 +23,6 @@ class FeatureFlagMiddleware
             return $next($request);
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundHttpException;
     }
 }

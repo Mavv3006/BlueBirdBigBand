@@ -15,7 +15,7 @@ class ConcertServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->concertService = new ConcertService();
+        $this->concertService = new ConcertService;
     }
 
     public function testGetRequestVenueFindVenue()

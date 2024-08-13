@@ -13,7 +13,7 @@ class SongServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->songService = new SongService();
+        $this->songService = new SongService;
     }
 
     public function test_sorting_songs_by_title()

@@ -65,7 +65,7 @@ class SongService
         if (!Storage::exists($file_path)) {
             Log::warning('[SongService] The file does not exist');
 
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
 
         Log::info('[SongService] The file exists');
