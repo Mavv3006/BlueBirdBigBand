@@ -17,4 +17,4 @@ use App\Http\Controllers\Api\KonzertmeisterUpdateConcertsController;
 //    ->get('download/song/{song}', DownloadSongController::class)
 //    ->name('download-song');
 
-Route::get('concerts/pull', KonzertmeisterUpdateConcertsController::class);
+Route::get('concerts/pull', KonzertmeisterUpdateConcertsController::class)->name('api.concerts.pull');

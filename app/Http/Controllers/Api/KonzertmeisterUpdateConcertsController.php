@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
+use App\Enums\KonzertmeisterEventType;
+use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use ICal\Event;
@@ -43,12 +47,49 @@ class KonzertmeisterUpdateConcertsController
             'filterDaysBefore' => Carbon::now(),
         ]);
 
-        Log::debug('KonzertmeisterUpdateConcertsController', ['event count' => count($calendar->events())]);
-        Log::debug('', ['events' => $calendar->events()]);
+        Log::debug('KonzertmeisterUpdateConcertsController', [
+            'event count' => count($calendar->events()),
+            'events' => $calendar->events(),
+        ]);
 
-        /** @var Event $event */
-        foreach ($calendar->events() as $event) {
-            KonzertmeisterEvent::firstOrCreate();
-        }
+        $mappedCalendarEvents = array_map(fn (Event $event) => $this->mapCalendarEvents($event), $calendar->events());
+
+        Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
+
+        KonzertmeisterEvent::upsert(
+            $mappedCalendarEvents,
+            uniqueBy: ['id'],
+            update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
+        );
+
+        Log::debug('KonzertmeisterUpdateConcertsController', [
+            'konzertmeister count' => KonzertmeisterEvent::all()->count(),
+            'konzertmeister events' => KonzertmeisterEvent::query()->orderBy('dtstart')->get(),
+        ]);
+    }
+
+    protected function mapCalendarEvents(Event $event): array
+    {
+        $type = $event->description == null ? null : KonzertmeisterEventType::fromIcal($event->description);
+        $band_id = Band::find(1)->id;
+
+        // TODO: add splitting location for events
+        // if ($event->location != null && str_contains($event->location, ' ') && str_contains($event->location, ',')) {
+        //     [$street_name, $house_number, $plz, $city_name] = array_map(
+        //         fn ($location) => explode(' ', trim($location)),
+        //         explode(',', $event->location)
+        //     );
+        // }
+
+        return [
+            'id' => $event->uid,
+            'summary' => $event->summary,
+            'location' => $event->location,
+            'dtstart' => Carbon::parse($event->dtstart),
+            'dtend' => Carbon::parse($event->dtend),
+            'description' => $event->description,
+            'band_id' => $band_id,
+            'type' => $type,
+        ];
     }
 }
