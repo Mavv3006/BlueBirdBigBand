@@ -11,6 +11,7 @@ enum KonzertmeisterEventType: string
     public static function fromIcal(string $icalDescription): self
     {
         $descriptionArray = explode(' ', $icalDescription);
+
         return match ($descriptionArray[0]) {
             'Probe' => self::Probe,
             'Auftritt' => self::Auftritt,
