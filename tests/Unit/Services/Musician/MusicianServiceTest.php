@@ -15,7 +15,7 @@ class MusicianServiceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new MusicianService();
+        $this->service = new MusicianService;
     }
 
     public function testAmountOfActiveMusicians()

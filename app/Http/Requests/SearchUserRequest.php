@@ -10,7 +10,7 @@ class SearchUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['string', new AvailableUser()],
+            'username' => ['string', new AvailableUser],
         ];
     }
 }

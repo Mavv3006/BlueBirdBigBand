@@ -26,7 +26,7 @@ abstract class BaseFeatureFlagState
      */
     public function turnOn(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 
     /**
@@ -34,6 +34,6 @@ abstract class BaseFeatureFlagState
      */
     public function turnOff(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 }

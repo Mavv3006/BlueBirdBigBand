@@ -31,7 +31,7 @@ class SongResource extends Resource
                 TextInput::make('title')
                     ->required()
                     ->label('Titel')
-                    ->rule(new StartsWithUppercaseLetterRule()),
+                    ->rule(new StartsWithUppercaseLetterRule),
                 TextInput::make('author')
                     ->label('Komponist'),
                 TextInput::make('arranger')

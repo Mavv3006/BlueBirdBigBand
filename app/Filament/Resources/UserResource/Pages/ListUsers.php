@@ -26,7 +26,7 @@ class ListUsers extends ListRecords
                         ->required(),
                 ])
                 ->action(
-                    fn (array $data) => Mail::to($data['email'])->send(new TestMail())
+                    fn (array $data) => Mail::to($data['email'])->send(new TestMail)
                 ),
         ];
     }

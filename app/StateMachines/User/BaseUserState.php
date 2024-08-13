@@ -14,6 +14,6 @@ abstract class BaseUserState
      */
     public function activate(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 }

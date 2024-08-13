@@ -14,7 +14,7 @@ abstract class BaseNewsletterState
      */
     public function confirm(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 
     /**
@@ -22,6 +22,6 @@ abstract class BaseNewsletterState
      */
     public function complete(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 }
