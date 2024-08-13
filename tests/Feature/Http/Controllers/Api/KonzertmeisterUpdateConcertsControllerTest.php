@@ -18,7 +18,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
     protected function setUp(): void
     {
         $_ENV['KONZERTMEISTER_API_KEY'] = $this->apiKey;
-        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'/single_rehearsal.ics';
+        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'/mockEvents.ics';
 
         parent::setUp();
 
@@ -37,7 +37,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
             ->assertStatus(Response::HTTP_ACCEPTED);
 
-        $this->assertDatabaseCount(KonzertmeisterEvent::class, 1);
+        $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
         $event = KonzertmeisterEvent::first();
 
         $this->assertnotnull($event->id);
@@ -63,15 +63,13 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     public function testProcessMultipleEvent()
     {
-        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'/multiple_rehearsals.ics';
-
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         var_dump(config('app.konzertmeister_url'));
         var_dump(config('app.konzertmeister_api_key'));
 
-        $this->assertDatabaseCount(KonzertmeisterEvent::class, 5);
+        $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
         //        $event = KonzertmeisterEvent::first();
         //
         //        $this->assertnotnull($event->id);
@@ -94,4 +92,6 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         //        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
         //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
     }
+
+    public function testUpdatingEventsInDatabase() {}
 }
