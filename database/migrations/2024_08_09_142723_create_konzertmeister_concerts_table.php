@@ -5,8 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,11 +15,14 @@ return new class extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->foreignIdFor(Band::class)->constrained()->cascadeOnDelete()->cascadeOnUpdate();
 
-            $table->string('summary')->nullable();
-            $table->string('description')->nullable();
-            $table->string('location')->nullable();
             $table->datetime('dtstart')->nullable();
             $table->datetime('dtend')->nullable();
+
+            $table->string('summary')->nullable();
+            $table->string('description')->nullable();
+            $table->string('type')->nullable();
+
+            $table->string('location')->nullable();
 
             $table->timestamps();
         });
