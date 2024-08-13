@@ -30,7 +30,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
-        "brianium/paratest": "^7.1",
+        "brianium/paratest°": "^7.1",
         "fakerphp/faker": "^1.22.0",
         "friendsofphp/php-cs-fixer": "^v3.17.0",
         "laravel/breeze": "^2.0",
