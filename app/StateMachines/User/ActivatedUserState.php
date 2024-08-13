@@ -2,6 +2,4 @@
 
 namespace App\StateMachines\User;
 
-class ActivatedUserState extends BaseUserState
-{
-}
+class ActivatedUserState extends BaseUserState {}

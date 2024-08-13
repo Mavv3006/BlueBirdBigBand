@@ -12,6 +12,5 @@ class RoleUpdateDto
     public function __construct(
         public readonly int $role_id,
         public readonly array $permission_ids,
-    ) {
-    }
+    ) {}
 }

@@ -12,9 +12,7 @@ use Inertia\Response;
 
 class MusicianSeatingPositionController extends Controller
 {
-    public function __construct(public MusicianService $musicianService)
-    {
-    }
+    public function __construct(public MusicianService $musicianService) {}
 
     public function show(): Response
     {

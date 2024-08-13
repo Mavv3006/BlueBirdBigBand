@@ -10,9 +10,7 @@ class CallToActionButtonButton extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $name)
-    {
-    }
+    public function __construct(public string $name) {}
 
     /**
      * Get the view / contents that represent the component.

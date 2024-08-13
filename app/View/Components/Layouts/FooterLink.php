@@ -10,9 +10,7 @@ class FooterLink extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $href)
-    {
-    }
+    public function __construct(public string $href) {}
 
     /**
      * Get the view / contents that represent the component.

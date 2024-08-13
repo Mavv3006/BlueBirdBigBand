@@ -7,9 +7,7 @@ use Exception;
 
 abstract class BaseUserState
 {
-    public function __construct(public User $user)
-    {
-    }
+    public function __construct(public User $user) {}
 
     /**
      * @throws Exception

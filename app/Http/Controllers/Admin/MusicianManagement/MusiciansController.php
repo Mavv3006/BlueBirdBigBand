@@ -19,8 +19,7 @@ class MusiciansController extends Controller
     public function __construct(
         public MusicianService $musicianService,
         public InstrumentService $instrumentService,
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

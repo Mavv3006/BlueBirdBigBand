@@ -18,8 +18,7 @@ class SongsController extends Controller
 {
     public function __construct(
         public SongService $service,
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.

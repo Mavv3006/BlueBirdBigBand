@@ -14,9 +14,7 @@ use Inertia\Response;
 
 class AssignRolesToUserController extends Controller
 {
-    public function __construct(protected UserService $userService)
-    {
-    }
+    public function __construct(protected UserService $userService) {}
 
     public function showSearchForm(SearchUserRequest $request): Response
     {

@@ -8,9 +8,7 @@ use Illuminate\View\Component;
 
 class Musicians extends Component
 {
-    public function __construct(public MusicianService $musicianService)
-    {
-    }
+    public function __construct(public MusicianService $musicianService) {}
 
     public function render(): View
     {

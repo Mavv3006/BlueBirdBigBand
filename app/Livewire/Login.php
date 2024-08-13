@@ -17,8 +17,7 @@ class Login extends Component
 
     public function mount(
         AuthService $authService,
-    ) {
-    }
+    ) {}
 
     public function login()
     {
