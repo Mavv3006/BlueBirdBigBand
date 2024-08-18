@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
+use App\Enums\BandNames;
 use App\Enums\KonzertmeisterEventType;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
+use Database\Seeders\DefaultBandSeeder;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -22,19 +24,38 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
         parent::setUp();
 
-        $this->band = Band::factory()->create();
+        $this->seed(DefaultBandSeeder::class);
+        $this->band = Band::whereName(BandNames::BlueBird->value)->firstOrFail();
+    }
+
+    public function testValidatingApiKey()
+    {
+        $this->get(route('api.concerts.pull', ['band_name' => BandNames::BlueBird]))
+            ->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testValidatingBandName()
+    {
+        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
+            ->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testValidatingAllParameters()
+    {
+        $this->get(route('api.concerts.pull'))
+            ->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     public function testPullData()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
+        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
             ->assertStatus(Response::HTTP_ACCEPTED)
             ->assertContent('');
     }
 
     public function testProcessSingleEvent()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
+        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
@@ -63,7 +84,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     public function testProcessMultipleEvent()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
+        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         var_dump(config('app.konzertmeister_url'));
@@ -93,5 +114,5 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
     }
 
-    public function testUpdatingEventsInDatabase() {}
+    //    public function testUpdatingEventsInDatabase() {}
 }

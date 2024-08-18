@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\BandNames;
 use App\Enums\KonzertmeisterEventType;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class KonzertmeisterUpdateConcertsController
 {
+    private BandNames $band_name;
+
     public function __invoke(Request $request): ResponseFactory|Application|Response
     {
         $validator = Validator::make($request->all(), [
@@ -29,11 +32,18 @@ class KonzertmeisterUpdateConcertsController
                 'string',
                 Rule::in([config('app.konzertmeister_api_key')]),
             ],
+            'band_name' => [
+                'required',
+                'string',
+                Rule::enum(BandNames::class),
+            ],
         ]);
 
         if ($validator->fails()) {
             return response(null, SymfonyResponse::HTTP_BAD_REQUEST);
         }
+
+        $this->band_name = BandNames::fromString($request->get('band_name'));
 
         $this->pullNewConcertData();
 
@@ -52,7 +62,9 @@ class KonzertmeisterUpdateConcertsController
             'events' => $calendar->events(),
         ]);
 
-        $mappedCalendarEvents = array_map(fn (Event $event) => $this->mapCalendarEvents($event), $calendar->events());
+        $band = $this->findBandToUse();
+
+        $mappedCalendarEvents = array_map(fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $band), $calendar->events());
 
         Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
 
@@ -68,10 +80,10 @@ class KonzertmeisterUpdateConcertsController
         ]);
     }
 
-    protected function mapCalendarEvents(Event $event): array
+    protected function mapCalendarEvents(Event $event, Band $band): array
     {
         $type = $event->description == null ? null : KonzertmeisterEventType::fromIcal($event->description);
-        $band_id = Band::find(1)->id;
+        $band_id = $band->id;
 
         // TODO: add splitting location for events
         // if ($event->location != null && str_contains($event->location, ' ') && str_contains($event->location, ',')) {
@@ -91,5 +103,13 @@ class KonzertmeisterUpdateConcertsController
             'band_id' => $band_id,
             'type' => $type,
         ];
+    }
+
+    protected function findBandToUse(): Band
+    {
+        return match ($this->band_name) {
+            BandNames::BlueBird => Band::whereName(BandNames::BlueBird->value)->firstOrFail(),
+            BandNames::DomeTown => Band::whereName(BandNames::DomeTown->value)->firstOrFail(),
+        };
     }
 }
