@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\BandNames;
+use App\Enums\BandName;
 use App\Models\Band;
 use Illuminate\Database\Seeder;
 
@@ -14,10 +14,10 @@ class DefaultBandSeeder extends Seeder
     public function run(): void
     {
         Band::factory()->create([
-            'name' => BandNames::BlueBird,
+            'name' => BandName::BlueBird,
         ]);
         Band::factory()->create([
-            'name' => BandNames::DomeTown,
+            'name' => BandName::DomeTown,
         ]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Enums\BandNames;
+use App\Enums\BandName;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
@@ -25,26 +25,26 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         parent::setUp();
 
         $this->seed(DefaultBandSeeder::class);
-        $this->band = Band::whereName(BandNames::BlueBird->value)->firstOrFail();
-        $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird];
+        $this->band = Band::whereName(BandName::BlueBird->value)->firstOrFail();
+        $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
     }
 
     public function testValidatingApiKey()
     {
-        $this->get(route('api.concerts.pull', ['band_name' => BandNames::BlueBird]))
-            ->assertStatus(Response::HTTP_BAD_REQUEST);
+        $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
+            ->assertBadRequest();
     }
 
     public function testValidatingBandName()
     {
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
-            ->assertStatus(Response::HTTP_BAD_REQUEST);
+            ->assertBadRequest();
     }
 
     public function testValidatingAllParameters()
     {
         $this->get(route('api.concerts.pull'))
-            ->assertStatus(Response::HTTP_BAD_REQUEST);
+            ->assertBadRequest();
     }
 
     public function testContentOfCreatedEvent()
@@ -52,7 +52,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->get(route('api.concerts.pull', $this->params))
-            ->assertStatus(Response::HTTP_ACCEPTED);
+            ->assertAccepted();
 
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
         $event = KonzertmeisterEvent::first();
@@ -177,5 +177,13 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(2022, $event->dtend->year);
         $this->assertEquals(Carbon::parse('20220904T180000Z'), $event->dtstart);
         $this->assertEquals(Carbon::parse('20220904T200000Z'), $event->dtend);
+    }
+
+    public function testWithFaultyDescription()
+    {
+        $this->get(route('api.concerts.pull', $this->params))->assertAccepted();
+
+        $event = KonzertmeisterEvent::find(2036720);
+        $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
     }
 }

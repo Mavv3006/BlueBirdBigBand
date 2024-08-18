@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum BandNames: string
+enum BandName: string
 {
     case BlueBird = 'Blue Bird Big Band';
     case DomeTown = 'Dometown-Big Band';

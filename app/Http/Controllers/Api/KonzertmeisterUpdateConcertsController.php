@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\BandNames;
+use App\Enums\BandName;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
@@ -20,10 +20,11 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use UnhandledMatchError;
 
 class KonzertmeisterUpdateConcertsController
 {
-    private BandNames $band_name;
+    private BandName $band_name;
 
     public function __invoke(Request $request): ResponseFactory|Application|Response
     {
@@ -36,7 +37,7 @@ class KonzertmeisterUpdateConcertsController
             'band_name' => [
                 'required',
                 'string',
-                Rule::enum(BandNames::class),
+                Rule::enum(BandName::class),
             ],
         ]);
 
@@ -44,7 +45,7 @@ class KonzertmeisterUpdateConcertsController
             return response(null, SymfonyResponse::HTTP_BAD_REQUEST);
         }
 
-        $this->band_name = BandNames::fromString($validator->validated()['band_name']);
+        $this->band_name = BandName::fromString($validator->validated()['band_name']);
 
         $this->pullNewConcertData();
 
@@ -63,26 +64,13 @@ class KonzertmeisterUpdateConcertsController
             'events' => $calendar->events(),
         ]);
 
-        $band = $this->findBandToUse();
-
         $mappedCalendarEvents = array_map(
-            callback: fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $band),
+            callback: fn(Event $event) => $this->mapCalendarEvents(event: $event, band: $this->findBandToUse()),
             array: $calendar->events());
 
         Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
 
-        foreach ($mappedCalendarEvents as $event) {
-            $savedEvent = KonzertmeisterEvent::find($event['id']);
-            if ($savedEvent != null && $savedEvent->conversion_state == KonzertmeisterEventConversionState::Rejected) {
-                continue;
-            }
-
-            KonzertmeisterEvent::upsert(
-                $event,
-                uniqueBy: ['id'],
-                update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
-            );
-        }
+        $this->upsertAllEvents($mappedCalendarEvents);
 
         Log::debug('KonzertmeisterUpdateConcertsController', [
             'konzertmeister count' => KonzertmeisterEvent::all()->count(),
@@ -92,9 +80,6 @@ class KonzertmeisterUpdateConcertsController
 
     protected function mapCalendarEvents(Event $event, Band $band): array
     {
-        $type = $event->description == null ? null : KonzertmeisterEventType::fromIcal($event->description);
-        $band_id = $band->id;
-
         // TODO: add splitting location for events
         // if ($event->location != null && str_contains($event->location, ' ') && str_contains($event->location, ',')) {
         //     [$street_name, $house_number, $plz, $city_name] = array_map(
@@ -110,16 +95,52 @@ class KonzertmeisterUpdateConcertsController
             'dtstart' => Carbon::parse($event->dtstart),
             'dtend' => Carbon::parse($event->dtend),
             'description' => $event->description,
-            'band_id' => $band_id,
-            'type' => $type,
+            'band_id' => $band->id,
+            'type' => $this->getEventType($event),
         ];
     }
 
     protected function findBandToUse(): Band
     {
         return match ($this->band_name) {
-            BandNames::BlueBird => Band::whereName(BandNames::BlueBird->value)->firstOrFail(),
-            BandNames::DomeTown => Band::whereName(BandNames::DomeTown->value)->firstOrFail(),
+            BandName::BlueBird => Band::whereName(BandName::BlueBird->value)->firstOrFail(),
+            BandName::DomeTown => Band::whereName(BandName::DomeTown->value)->firstOrFail(),
         };
+    }
+
+    /**
+     * @param Event $event
+     * @return KonzertmeisterEventType|null
+     */
+    protected function getEventType(Event $event): ?KonzertmeisterEventType
+    {
+        try {
+            return $event->description == null ? null : KonzertmeisterEventType::fromIcal($event->description);
+        } catch (UnhandledMatchError) {
+            Log::notice(
+                message: 'KonzertmeisterUpdateConcertsController - cannot get correct type from description - setting to default',
+                context: ['event_id' => $event->id, 'description' => $event->description]);
+            return KonzertmeisterEventType::Sonstiges;
+        }
+    }
+
+    /**
+     * @param array $mappedCalendarEvents
+     * @return void
+     */
+    protected function upsertAllEvents(array $mappedCalendarEvents): void
+    {
+        foreach ($mappedCalendarEvents as $event) {
+            $savedEvent = KonzertmeisterEvent::find($event['id']);
+            if ($savedEvent != null && $savedEvent->conversion_state == KonzertmeisterEventConversionState::Rejected) {
+                continue;
+            }
+
+            KonzertmeisterEvent::upsert(
+                $event,
+                uniqueBy: ['id'],
+                update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
+            );
+        }
     }
 }
