@@ -65,7 +65,7 @@ class KonzertmeisterUpdateConcertsController
         ]);
 
         $mappedCalendarEvents = array_map(
-            callback: fn(Event $event) => $this->mapCalendarEvents(event: $event, band: $this->findBandToUse()),
+            callback: fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $this->findBandToUse()),
             array: $calendar->events());
 
         Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
@@ -108,10 +108,6 @@ class KonzertmeisterUpdateConcertsController
         };
     }
 
-    /**
-     * @param Event $event
-     * @return KonzertmeisterEventType|null
-     */
     protected function getEventType(Event $event): ?KonzertmeisterEventType
     {
         try {
@@ -120,14 +116,11 @@ class KonzertmeisterUpdateConcertsController
             Log::notice(
                 message: 'KonzertmeisterUpdateConcertsController - cannot get correct type from description - setting to default',
                 context: ['event_id' => $event->id, 'description' => $event->description]);
+
             return KonzertmeisterEventType::Sonstiges;
         }
     }
 
-    /**
-     * @param array $mappedCalendarEvents
-     * @return void
-     */
     protected function upsertAllEvents(array $mappedCalendarEvents): void
     {
         foreach ($mappedCalendarEvents as $event) {
