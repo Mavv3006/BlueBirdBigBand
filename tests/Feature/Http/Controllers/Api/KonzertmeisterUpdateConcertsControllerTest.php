@@ -19,9 +19,6 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     protected function setUp(): void
     {
-        $_ENV['KONZERTMEISTER_API_KEY'] = $this->apiKey;
-        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'/mockEvents.ics';
-
         parent::setUp();
 
         $this->seed(DefaultBandSeeder::class);
@@ -86,9 +83,6 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
     {
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
             ->assertStatus(Response::HTTP_ACCEPTED);
-
-        var_dump(config('app.konzertmeister_url'));
-        var_dump(config('app.konzertmeister_api_key'));
 
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
         //        $event = KonzertmeisterEvent::first();
