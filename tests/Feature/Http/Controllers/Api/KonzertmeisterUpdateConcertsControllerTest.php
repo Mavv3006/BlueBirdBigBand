@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers\Api;
 
 use App\Enums\BandNames;
 use App\Enums\KonzertmeisterEventType;
+use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
@@ -17,12 +18,15 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     protected Band $band;
 
+    protected array $params;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->seed(DefaultBandSeeder::class);
         $this->band = Band::whereName(BandNames::BlueBird->value)->firstOrFail();
+        $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird];
     }
 
     public function testValidatingApiKey()
@@ -43,16 +47,11 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
             ->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
-    public function testPullData()
+    public function testContentOfCreatedEvent()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
-            ->assertStatus(Response::HTTP_ACCEPTED)
-            ->assertContent('');
-    }
+        $this->withoutExceptionHandling();
 
-    public function testProcessSingleEvent()
-    {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
+        $this->get(route('api.concerts.pull', $this->params))
             ->assertStatus(Response::HTTP_ACCEPTED);
 
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
@@ -66,6 +65,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertnotnull($event->description);
         $this->assertnotnull($event->type);
         $this->assertnotnull($event->location);
+        $this->assertnotnull($event->conversion_state);
 
         $this->assertEquals($this->band->id, $event->band->id);
         $this->assertEquals(2036713, $event->id);
@@ -73,40 +73,108 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
         $this->assertEquals('Probe', $event->description);
         $this->assertInstanceOf(KonzertmeisterEventType::class, $event->type);
+        $this->assertInstanceOf(KonzertmeisterEventConversionState::class, $event->conversion_state);
         $this->assertInstanceOf(Carbon::class, $event->dtstart);
         $this->assertInstanceOf(Carbon::class, $event->dtend);
         $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
         $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+        $this->assertEquals(KonzertmeisterEventConversionState::Open, $event->conversion_state);
     }
 
-    public function testProcessMultipleEvent()
+    public function testVerifyIdsOfAllEvents()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey, 'band_name' => BandNames::BlueBird]))
-            ->assertStatus(Response::HTTP_ACCEPTED);
+        $this->get(route('api.concerts.pull', $this->params));
 
-        $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
-        //        $event = KonzertmeisterEvent::first();
-        //
-        //        $this->assertnotnull($event->id);
-        //        $this->assertnotnull($event->band);
-        //        $this->assertnotnull($event->dtstart);
-        //        $this->assertnotnull($event->dtend);
-        //        $this->assertnotnull($event->summary);
-        //        $this->assertnotnull($event->description);
-        //        $this->assertnotnull($event->type);
-        //        $this->assertnotnull($event->location);
-        //
-        //        $this->assertEquals($this->band->id, $event->band->id);
-        //        $this->assertEquals(2036713, $event->id);
-        //        $this->assertEquals('BBBB Probe (BlueBirdBigBand)', $event->summary);
-        //        $this->assertEquals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
-        //        $this->assertEquals('Probe', $event->description);
-        //        $this->assertInstanceOf(KonzertmeisterEventType::class, $event->type);
-        //        $this->assertInstanceOf(Carbon::class, $event->dtstart);
-        //        $this->assertInstanceOf(Carbon::class, $event->dtend);
-        //        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
-        //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $events = KonzertmeisterEvent::query()->get();
+        for ($i = 0; $i < count($events); $i++) {
+            $this->assertEquals(
+                expected: [2036713, 2036716, 2036717, 2036720][$i],
+                actual: $events[$i]->id);
+        }
     }
 
-    //    public function testUpdatingEventsInDatabase() {}
+    public function testUpdateOpenEvents()
+    {
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => $this->band->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => 'Probe',
+            'description' => 'hi hi hi',
+            'location' => 'Deutschland',
+            'type' => KonzertmeisterEventType::Auftritt,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Open,
+        ]);
+
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals('Probe', $event->description);
+        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
+        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
+        $this->assertEquals(2024, $event->dtstart->year);
+        $this->assertEquals(2024, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+    }
+    public function testUpdateConvertedEvents()
+    {
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => $this->band->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => 'Probe',
+            'description' => 'hi hi hi',
+            'location' => 'Deutschland',
+            'type' => KonzertmeisterEventType::Auftritt,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Converted,
+        ]);
+
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals('Probe', $event->description);
+        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
+        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
+        $this->assertEquals(2024, $event->dtstart->year);
+        $this->assertEquals(2024, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+    }
+
+    public function testDoNotUpdateRejectedEvents()
+    {
+        $summary = 'Probe';
+        $description = 'hi hi hi';
+        $location = 'Deutschland';
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => $this->band->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => $summary,
+            'description' => $description,
+            'location' => $location,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Rejected,
+        ]);
+
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals($description, $event->description);
+        $this->assertequals($summary, $event->summary);
+        $this->assertequals($location, $event->location);
+        $this->assertEquals(2022, $event->dtstart->year);
+        $this->assertEquals(2022, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20220904T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20220904T200000Z'), $event->dtend);
+    }
 }
