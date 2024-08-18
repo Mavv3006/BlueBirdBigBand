@@ -6,7 +6,7 @@ use App\Enums\BandNames;
 use App\Models\Band;
 use Illuminate\Database\Seeder;
 
-class BandSeeder extends Seeder
+class DefaultBandSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,5 @@ class BandSeeder extends Seeder
         Band::factory()->create([
             'name' => BandNames::DomeTown,
         ]);
-
-        Band::factory()->count(5)->create();
     }
 }
