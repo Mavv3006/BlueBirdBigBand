@@ -2,12 +2,19 @@
 
 namespace App\Enums;
 
+use UnhandledMatchError;
+
 enum KonzertmeisterEventType: string
 {
     case Probe = 'Probe';
     case Auftritt = 'Auftritt';
     case Sonstiges = 'Sonstiges';
 
+    /**
+     * @param string $icalDescription
+     * @return self
+     * @throws UnhandledMatchError
+     */
     public static function fromIcal(string $icalDescription): self
     {
         $descriptionArray = explode(' ', $icalDescription);
