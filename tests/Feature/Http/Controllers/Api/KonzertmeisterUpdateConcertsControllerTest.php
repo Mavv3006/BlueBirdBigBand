@@ -9,7 +9,6 @@ use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class KonzertmeisterUpdateConcertsControllerTest extends TestCase

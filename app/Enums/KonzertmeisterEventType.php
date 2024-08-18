@@ -11,8 +11,6 @@ enum KonzertmeisterEventType: string
     case Sonstiges = 'Sonstiges';
 
     /**
-     * @param string $icalDescription
-     * @return self
      * @throws UnhandledMatchError
      */
     public static function fromIcal(string $icalDescription): self

@@ -3,7 +3,6 @@
 namespace Tests\Enums;
 
 use App\Enums\KonzertmeisterEventType;
-use Illuminate\Support\Facades\Exceptions;
 use Tests\TestCase;
 use UnhandledMatchError;
 
