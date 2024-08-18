@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\BandNames;
 use App\Enums\KonzertmeisterEventType;
+use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
@@ -43,7 +44,7 @@ class KonzertmeisterUpdateConcertsController
             return response(null, SymfonyResponse::HTTP_BAD_REQUEST);
         }
 
-        $this->band_name = BandNames::fromString($request->get('band_name'));
+        $this->band_name = BandNames::fromString($validator->validated()['band_name']);
 
         $this->pullNewConcertData();
 
@@ -64,15 +65,24 @@ class KonzertmeisterUpdateConcertsController
 
         $band = $this->findBandToUse();
 
-        $mappedCalendarEvents = array_map(fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $band), $calendar->events());
+        $mappedCalendarEvents = array_map(
+            callback: fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $band),
+            array: $calendar->events());
 
         Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
 
-        KonzertmeisterEvent::upsert(
-            $mappedCalendarEvents,
-            uniqueBy: ['id'],
-            update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
-        );
+        foreach ($mappedCalendarEvents as $event) {
+            $savedEvent = KonzertmeisterEvent::find($event['id']);
+            if ($savedEvent != null && $savedEvent->conversion_state == KonzertmeisterEventConversionState::Rejected) {
+                continue;
+            }
+
+            KonzertmeisterEvent::upsert(
+                $event,
+                uniqueBy: ['id'],
+                update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
+            );
+        }
 
         Log::debug('KonzertmeisterUpdateConcertsController', [
             'konzertmeister count' => KonzertmeisterEvent::all()->count(),
