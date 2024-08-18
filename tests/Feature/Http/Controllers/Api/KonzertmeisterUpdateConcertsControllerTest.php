@@ -121,6 +121,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
         $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
     }
+
     public function testUpdateConvertedEvents()
     {
         KonzertmeisterEvent::factory()->create([
