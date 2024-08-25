@@ -28,10 +28,6 @@ class SecurityHeadersTest extends TestCase
         $this->checkHeaders($response);
     }
 
-    /**
-     * @param TestResponse $response
-     * @return void
-     */
     public function checkHeaders(TestResponse $response): void
     {
         $response->assertStatus(200);
