@@ -22,16 +22,16 @@
     "@tailwindcss/forms": "^0.5.7",
     "@vitejs/plugin-vue": "^5.1.2",
     "autoprefixer": "^10.4.20",
-    "axios": "^1.7.3",
+    "axios": "^1.7.5",
     "concurrently": "^8.2.2",
     "laravel-vite-plugin": "^1.0.5",
     "lodash": "^4.17.21",
     "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "vite": "^5.4.1",
-    "vue": "^3.4.37"
+    "vue": "^3.4.38"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
