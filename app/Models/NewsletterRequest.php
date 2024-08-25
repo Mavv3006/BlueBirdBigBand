@@ -8,13 +8,12 @@ use App\StateMachines\NewsletterRequest\BaseNewsletterState;
 use App\StateMachines\NewsletterRequest\CompletedNewsletterState;
 use App\StateMachines\NewsletterRequest\ConfirmedNewsletterState;
 use App\StateMachines\NewsletterRequest\RequestedNewsletterState;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class NewsletterRequest extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
     protected $fillable = [
         'status',
