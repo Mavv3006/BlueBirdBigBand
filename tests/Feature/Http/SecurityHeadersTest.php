@@ -13,12 +13,14 @@ class SecurityHeadersTest extends TestCase
 
         $this->checkHeaders($response);
     }
+
     public function testSecurityHeadersOnAboutUs(): void
     {
         $response = $this->get('/about-us');
 
         $this->checkHeaders($response);
     }
+
     public function testSecurityHeadersOnPressInfo(): void
     {
         $response = $this->get('/presse');
@@ -26,10 +28,6 @@ class SecurityHeadersTest extends TestCase
         $this->checkHeaders($response);
     }
 
-    /**
-     * @param TestResponse $response
-     * @return void
-     */
     public function checkHeaders(TestResponse $response): void
     {
         $response->assertStatus(200);
