@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('newsletter_requests', function (Blueprint $table) {
-            $table->string('id', 36);
+            $table->id()->primary();
             $table->string('email');
             $table->string('type');
             $table->string('status')->default(NewsletterState::Requested->value);
