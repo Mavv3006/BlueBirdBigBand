@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NewsletterRequest extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
     protected $fillable = [
         'status',
