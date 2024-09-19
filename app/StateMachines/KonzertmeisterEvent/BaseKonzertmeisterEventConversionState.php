@@ -26,7 +26,7 @@ abstract class BaseKonzertmeisterEventConversionState
      */
     public function reject(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 
     /**
@@ -34,6 +34,6 @@ abstract class BaseKonzertmeisterEventConversionState
      */
     public function convert(): void
     {
-        throw new Exception();
+        throw new Exception;
     }
 }
