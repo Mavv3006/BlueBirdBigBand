@@ -18,4 +18,9 @@ class Band extends Model
     {
         return $this->hasMany(Concert::class, 'band_id', 'id');
     }
+
+    public function konzertmeisterEvents(): HasMany
+    {
+        return $this->hasMany(KonzertmeisterEvent::class);
+    }
 }
