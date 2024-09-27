@@ -59,4 +59,9 @@ class Concert extends Model
     {
         return $this->date < Carbon::today()->toDateString();
     }
+
+    public function konzertmeisterEvent(): BelongsTo
+    {
+        return $this->belongsTo(KonzertmeisterEvent::class);
+    }
 }
