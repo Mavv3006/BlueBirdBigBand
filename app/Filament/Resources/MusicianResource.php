@@ -44,7 +44,8 @@ class MusicianResource extends Resource
                     ->searchable(),
                 Forms\Components\Checkbox::make('isActive')
                     ->label('Aktiv?')
-                    ->inline(false),
+                    ->inline(false)
+                    ->default(true),
             ]);
     }
 
@@ -57,21 +58,29 @@ class MusicianResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->numeric()
-                    ->toggleable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('firstname')
-                    ->label('Vorname'),
+                    ->label('Vorname')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('lastname')
-                    ->label('Nachname'),
+                    ->label('Nachname')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('instrument.name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\CheckboxColumn::make('isActive')
                     ->label('Aktiv?')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime('d M Y H:i:s')
+                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
