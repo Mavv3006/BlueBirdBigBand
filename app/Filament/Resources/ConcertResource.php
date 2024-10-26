@@ -8,6 +8,7 @@ use App\Models\Concert;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -132,6 +133,13 @@ class ConcertResource extends Resource
                                 ->relationship(name: 'venue', titleAttribute: 'name'),
                         ]),
                     ]),
+                Section::make('Newsletter')
+                    ->description('Schreibe den Inhalt der E-Mail, die an die Abonnenten des Newsletters gesendet wird.')
+                    ->schema([
+                        MarkdownEditor::make('newsletter_content_markdown')
+                            ->label('Inhalt der E-Mail')
+                            ->placeholder('Schreibe hier deinen Newsletter für den Auftritt.'),
+                    ]),
             ]);
     }
 
@@ -160,6 +168,18 @@ class ConcertResource extends Resource
                 Tables\Columns\TextColumn::make('venue.name')
                     ->label('Auftrittsort')
                     ->searchable()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('newsletter_sent')
+                    ->boolean()
+                    ->sortable()
+                    ->label('Newsletter versendet?')
+                    ->tooltip('Wurde eine E-Mail an die Abonnenten des Newsletters versendet?')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('newsletter_sent_at')
+                    ->dateTime('d M Y H:i')
+                    ->tooltip('Wann wurde die E-Mail an die Abonnenten versendet?')
+                    ->label('Newsletter E-Mail versendet am')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
             ])
             ->actions([

@@ -28,6 +28,7 @@ class Concert extends Model
         'band_id',
         'date',
         'venue_plz',
+        'newsletter_content_markdown',
     ];
 
     protected $hidden = [
