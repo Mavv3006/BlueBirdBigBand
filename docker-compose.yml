@@ -14,7 +14,7 @@ services:
             MP_SMTP_AUTH_ALLOW_INSECURE: 1
 
     database:
-        image: mariadb:10.5.25
+        image: mariadb:10.11
         container_name: bbbb-db
         environment:
             MARIADB_ROOT_PASSWORD: example
