@@ -77,6 +77,11 @@ class MusicianService
                 ];
             }
 
+            $musiciansObject = collect($musiciansObject)
+                ->sortBy('firstname')
+                ->values()
+                ->all();
+
             $return[] = [
                 'instrument' => $instrumentObject,
                 'musicians' => $musiciansObject,
@@ -149,7 +154,7 @@ class MusicianService
             $picture_path = $request
                 ->file('picture')
                 ->store('musician_pictures', 'public');
-            Log::debug('picture path:'.$picture_path);
+            Log::debug('picture path:' . $picture_path);
             $data['picture_filepath'] = $picture_path;
         }
 
