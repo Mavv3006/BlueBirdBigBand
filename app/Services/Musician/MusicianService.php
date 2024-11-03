@@ -77,6 +77,11 @@ class MusicianService
                 ];
             }
 
+            $musiciansObject = collect($musiciansObject)
+                ->sortBy('firstname')
+                ->values()
+                ->all();
+
             $return[] = [
                 'instrument' => $instrumentObject,
                 'musicians' => $musiciansObject,
