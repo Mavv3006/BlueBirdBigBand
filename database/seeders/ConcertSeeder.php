@@ -24,8 +24,6 @@ class ConcertSeeder extends Seeder
      * @param string $sign Indicates the direction of date calculation ('+' for future,
      *                     '-' for past).
      * @param int $num The number of concerts to create.
-     *
-     * @return void
      */
     protected function createConcerts(string $sign, int $num): void
     {
