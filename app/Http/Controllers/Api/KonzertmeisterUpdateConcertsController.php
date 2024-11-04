@@ -56,7 +56,7 @@ class KonzertmeisterUpdateConcertsController
     {
         $calendar = new ICal(config('app.konzertmeister_url'), [
             'defaultTimeZone' => 'Europe/Berlin',
-            'filterDaysBefore' => Carbon::now(),
+            // 'filterDaysBefore' => Carbon::now(),
         ]);
 
         Log::debug('KonzertmeisterUpdateConcertsController', [
