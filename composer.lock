@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
-            "version": "v2.2.33",
+            "version": "v2.2.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Althinect/filament-spatie-roles-permissions.git",
-                "reference": "2466cf3039b3dcdc6008ca90c10a2b4d4a230f9c"
+                "reference": "e5ccc0e2e8b324cbe591005dffc04b1269688b7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/2466cf3039b3dcdc6008ca90c10a2b4d4a230f9c",
-                "reference": "2466cf3039b3dcdc6008ca90c10a2b4d4a230f9c",
+                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/e5ccc0e2e8b324cbe591005dffc04b1269688b7d",
+                "reference": "e5ccc0e2e8b324cbe591005dffc04b1269688b7d",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Althinect/filament-spatie-roles-permissions/issues",
-                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.33"
+                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.35"
             },
-            "time": "2024-10-12T14:43:52+00:00"
+            "time": "2024-10-30T13:09:22+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
