@@ -16,6 +16,7 @@ use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -47,16 +48,34 @@ class KonzertmeisterUpdateConcertsController
 
         $this->band_name = BandName::fromString($validator->validated()['band_name']);
 
-        $this->pullNewConcertData();
+        $calendarEvents = $this->pullNewConcertData();
 
-        return response(null, SymfonyResponse::HTTP_ACCEPTED);
+        if (count($calendarEvents) === 0) {
+            Log::warning('KonzertmeisterUpdateConcertsController / No Events found');
+
+            return response(null, SymfonyResponse::HTTP_NO_CONTENT);
+        }
+
+        $this->mapEvents($calendarEvents);
+
+        return response(null, SymfonyResponse::HTTP_OK);
     }
 
-    private function pullNewConcertData()
+    private function pullNewConcertData(): array
     {
+        Log::debug('KonzertmeisterUpdateConcertsController', [
+            'file exists' => File::exists(config('app.konzertmeister_url')),
+        ]);
+
         $calendar = new ICal(config('app.konzertmeister_url'), [
             'defaultTimeZone' => 'Europe/Berlin',
-            // 'filterDaysBefore' => Carbon::now(),
+            //'filterDaysBefore' => Carbon::now(),
+        ]);
+
+        Log::debug('KonzertmeisterUpdateConcertsController', [
+            'url' => config('app.konzertmeister_url'),
+            'calendar' => $calendar->cal,
+            'calendar name' => $calendar->calendarName(),
         ]);
 
         Log::debug('KonzertmeisterUpdateConcertsController', [
@@ -64,9 +83,14 @@ class KonzertmeisterUpdateConcertsController
             'events' => $calendar->events(),
         ]);
 
+        return $calendar->events();
+    }
+
+    protected function mapEvents(array $events): void
+    {
         $mappedCalendarEvents = array_map(
-            callback: fn (Event $event) => $this->mapCalendarEvents(event: $event, band: $this->findBandToUse()),
-            array: $calendar->events());
+            callback: fn (Event $event) => $this->mapSingleCalendarEvent(event: $event, band: $this->findBandToUse()),
+            array: $events);
 
         Log::debug('KonzertmeisterUpdateConcertsController', ['mapped events' => $mappedCalendarEvents]);
 
@@ -78,7 +102,7 @@ class KonzertmeisterUpdateConcertsController
         ]);
     }
 
-    protected function mapCalendarEvents(Event $event, Band $band): array
+    protected function mapSingleCalendarEvent(Event $event, Band $band): array
     {
         // TODO: add splitting location for events
         // if ($event->location != null && str_contains($event->location, ' ') && str_contains($event->location, ',')) {

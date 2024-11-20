@@ -41,7 +41,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function setUp(): void
     {
-        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'\Feature\Http\Controllers\api\mockEvents.ics';
+        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'/Feature/Http/Controllers/api/mockEvents.ics';
 
         parent::setUp();
     }

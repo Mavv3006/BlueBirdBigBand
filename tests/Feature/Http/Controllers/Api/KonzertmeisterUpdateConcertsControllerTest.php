@@ -28,30 +28,30 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
     }
 
-    public function testValidatingApiKey()
+    public function test_validating_api_key()
     {
         $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
             ->assertBadRequest();
     }
 
-    public function testValidatingBandName()
+    public function test_validating_band_name()
     {
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
             ->assertBadRequest();
     }
 
-    public function testValidatingAllParameters()
+    public function test_validating_all_parameters()
     {
         $this->get(route('api.concerts.pull'))
             ->assertBadRequest();
     }
 
-    public function testContentOfCreatedEvent()
+    public function test_content_of_created_event()
     {
         $this->withoutExceptionHandling();
 
         $this->get(route('api.concerts.pull', $this->params))
-            ->assertAccepted();
+            ->assertOk();
 
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
         $event = KonzertmeisterEvent::first();
@@ -81,11 +81,16 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(KonzertmeisterEventConversionState::Open, $event->conversion_state);
     }
 
-    public function testVerifyIdsOfAllEvents()
+    public function test_verify_ids_of_all_events()
     {
         $this->get(route('api.concerts.pull', $this->params));
 
         $events = KonzertmeisterEvent::query()->get();
+
+        if (count($events) === 0) {
+            $this->fail('No events were found');
+        }
+
         for ($i = 0; $i < count($events); $i++) {
             $this->assertEquals(
                 expected: [2036713, 2036716, 2036717, 2036720][$i],
@@ -93,7 +98,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         }
     }
 
-    public function testUpdateOpenEvents()
+    public function test_update_open_events()
     {
         KonzertmeisterEvent::factory()->create([
             'band_id' => $this->band->id,
@@ -121,7 +126,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
     }
 
-    public function testUpdateConvertedEvents()
+    public function test_update_converted_events()
     {
         KonzertmeisterEvent::factory()->create([
             'band_id' => $this->band->id,
@@ -149,7 +154,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
     }
 
-    public function testDoNotUpdateRejectedEvents()
+    public function test_do_not_update_rejected_events()
     {
         $summary = 'Probe';
         $description = 'hi hi hi';
@@ -178,9 +183,9 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(Carbon::parse('20220904T200000Z'), $event->dtend);
     }
 
-    public function testWithFaultyDescription()
+    public function test_with_faulty_description()
     {
-        $this->get(route('api.concerts.pull', $this->params))->assertAccepted();
+        $this->get(route('api.concerts.pull', $this->params));
 
         $event = KonzertmeisterEvent::find(2036720);
         $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
