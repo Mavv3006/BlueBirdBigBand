@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class RoleSyncPermissions extends TestCase
 {
-    public function testGuardOnPermissionsAndRoles()
+    public function test_guard_on_permissions_and_roles()
     {
         $permission = $this->createPermission();
         $role = $this->createRole();
@@ -17,7 +17,7 @@ class RoleSyncPermissions extends TestCase
         $this->assertEquals('web', $role->guard_name);
     }
 
-    public function testSyncPermission()
+    public function test_sync_permission()
     {
         $permission = $this->createPermission();
         $role = $this->createRole();
@@ -27,7 +27,7 @@ class RoleSyncPermissions extends TestCase
         $this->assertTrue($role->hasPermissionTo($permission->name));
     }
 
-    public function testSyncPermission2()
+    public function test_sync_permission2()
     {
         $permission = $this->createPermission();
         $role = $this->createRole();
