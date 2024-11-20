@@ -145,6 +145,23 @@ class MusicianServiceTest extends TestCase
         $this->assertTrue($third['instrument']['id'] > $first['instrument']['id']);
     }
 
+    public function test_sorting_musicians_by_firstname()
+    {
+        $instrument = Instrument::factory()->create(['name' => 'test1', 'order' => 1]);
+
+        Musician::factory()
+            ->for($instrument)
+            ->create(['firstname' => 'Test']);
+        Musician::factory()
+            ->for($instrument)
+            ->create(['firstname' => 'Bla Bla']);
+
+        $all = $this->service->activeMusicians();
+
+        $this->assertEquals('Bla Bla', $all[0]['musicians'][0]['firstname']);
+        $this->assertEquals('Test', $all[0]['musicians'][1]['firstname']);
+    }
+
     private function verifyArrayStructure($result): void
     {
         $instrumentFromResult = $result['instrument'];
