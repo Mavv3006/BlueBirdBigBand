@@ -8,7 +8,7 @@ use UnhandledMatchError;
 
 class KonzertmeisterEventTypeTest extends TestCase
 {
-    public function testFromIcalWithValidInput()
+    public function test_from_ical_with_valid_input()
     {
         $type = KonzertmeisterEventType::fromIcal('Probe');
 
@@ -16,7 +16,7 @@ class KonzertmeisterEventTypeTest extends TestCase
         $this->assertEquals(KonzertmeisterEventType::Probe, $type);
     }
 
-    public function testFromIcalWithNoValidInput()
+    public function test_from_ical_with_no_valid_input()
     {
         $this->assertThrows(
             fn () => KonzertmeisterEventType::fromIcal('bla bla'),

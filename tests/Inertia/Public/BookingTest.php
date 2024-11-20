@@ -7,13 +7,13 @@ use Tests\TestCase;
 
 class BookingTest extends TestCase
 {
-    public function testRouteReturnsSuccessful()
+    public function test_route_returns_successful()
     {
         $this->get('/buchung')
             ->assertSuccessful();
     }
 
-    public function testCorrectView()
+    public function test_correct_view()
     {
         $this->get('/buchung')
             ->assertInertia(
