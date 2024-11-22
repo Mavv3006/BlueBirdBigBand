@@ -67,6 +67,8 @@ class KonzertmeisterUpdateConcertsController
             'file exists' => File::exists(config('app.konzertmeister_url')),
         ]);
 
+        // TODO: refactor to retrieve the file / url contents first and then pass the string to ICal
+
         $calendar = new ICal(config('app.konzertmeister_url'), [
             'defaultTimeZone' => 'Europe/Berlin',
             //'filterDaysBefore' => Carbon::now(),
