@@ -9,6 +9,7 @@ use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
+use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
 class KonzertmeisterUpdateConcertsControllerTest extends TestCase
@@ -26,6 +27,16 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->seed(DefaultBandSeeder::class);
         $this->band = Band::whereName(BandName::BlueBird->value)->firstOrFail();
         $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
+    }
+
+    public function test_konzertmeister_url_is_set()
+    {
+        $this->assertStringContainsString('/Feature/Http/Controllers/api/mockEvents.ics', config('app.konzertmeister_url'));
+    }
+
+    public function test_url_points_to_valid_file()
+    {
+        $this->assertTrue(File::exists(config('app.konzertmeister_url')));
     }
 
     public function test_validating_api_key()
