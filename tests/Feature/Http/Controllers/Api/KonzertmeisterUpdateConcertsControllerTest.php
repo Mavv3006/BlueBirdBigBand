@@ -36,7 +36,10 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     public function test_url_points_to_valid_file()
     {
-        $this->assertTrue(File::exists(config('app.konzertmeister_url')));
+        $config = config('app.konzertmeister_url');
+        $this->assertTrue(File::exists($config), 'Config Path does not point to a valid file');
+        $path = __DIR__.'/Feature/Http/Controllers/api/mockEvents.ics';
+        $this->assertTrue(File::exists($path), 'Config Path does not point to a valid file');
     }
 
     public function test_validating_api_key()
