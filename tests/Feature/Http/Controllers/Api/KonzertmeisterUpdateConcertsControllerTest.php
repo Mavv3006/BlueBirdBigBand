@@ -202,9 +202,12 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
     public function test_with_faulty_description()
     {
+        $id = 2036720;
+
         $this->get(route('api.concerts.pull', $this->params));
 
-        $event = KonzertmeisterEvent::find(2036720);
+        $this->assertDatabaseHas('konzertmeister_events', ['id' => $id]);
+        $event = KonzertmeisterEvent::find($id);
         $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
     }
 
