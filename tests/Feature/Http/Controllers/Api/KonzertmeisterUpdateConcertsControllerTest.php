@@ -9,6 +9,7 @@ use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
+use DirectoryIterator;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
 
@@ -37,6 +38,16 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
     public function test_mocked_file_exists()
     {
         $this->assertTrue(File::exists(config('app.konzertmeister_url')));
+
+        var_dump(config('app.konzertmeister_url'));
+
+        foreach (new DirectoryIterator('./tests/Feature/Http/Controllers/api') as $file) {
+            if ($file->isDot()) {
+                continue;
+            }
+            var_dump($file->getFilename());
+        }
+
     }
 
     public function test_mock_file_facade()
