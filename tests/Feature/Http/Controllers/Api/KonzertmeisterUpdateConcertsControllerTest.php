@@ -46,21 +46,6 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertStringContainsString('/Feature/Http/Controllers/api/mockEvents.ics', config('app.konzertmeister_url'));
     }
 
-    public function test_mocked_file_exists()
-    {
-        $this->assertTrue(File::exists(config('app.konzertmeister_url')));
-
-        var_dump(config('app.konzertmeister_url'));
-
-        foreach (new DirectoryIterator('./tests/Feature/Http/Controllers/api') as $file) {
-            if ($file->isDot()) {
-                continue;
-            }
-            var_dump($file->getFilename());
-        }
-
-    }
-
     public function test_validating_api_key()
     {
         $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
