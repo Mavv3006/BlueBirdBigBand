@@ -34,6 +34,11 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertStringContainsString('/Feature/Http/Controllers/api/mockEvents.ics', config('app.konzertmeister_url'));
     }
 
+    public function test_mocked_file_exists()
+    {
+        $this->assertTrue(File::exists(config('app.konzertmeister_url')));
+    }
+
     public function test_mock_file_facade()
     {
         File::shouldReceive('exists')->andReturn(true);
