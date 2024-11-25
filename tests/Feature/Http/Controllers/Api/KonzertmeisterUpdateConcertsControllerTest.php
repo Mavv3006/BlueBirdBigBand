@@ -36,7 +36,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->band = Band::whereName(BandName::BlueBird->value)->firstOrFail();
         $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
 
-        $this->partialMock(ICal::class, function (MockInterface $mock) {
+        $this->mock(ICal::class, function (MockInterface $mock) {
             $mock->shouldReceive('events')->andReturn($this->mockedEvents());
         });
     }
