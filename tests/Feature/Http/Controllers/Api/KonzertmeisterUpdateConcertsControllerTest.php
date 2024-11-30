@@ -10,10 +10,8 @@ use App\Models\KonzertmeisterEvent;
 use App\Services\KonzertmeisterIntegration\KonzertmeisterIntegrationService;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
-use DirectoryIterator;
 use ICal\Event;
 use ICal\ICal;
-use Illuminate\Support\Facades\File;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
@@ -217,6 +215,8 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
      */
     public function mockedEvents(): array
     {
+        $this->fail('function mockedEvents() executed');
+
         return [
             new Event([
                 'DTSTAMP' => '20240812T143121Z',
