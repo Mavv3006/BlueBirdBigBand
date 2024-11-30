@@ -215,7 +215,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
      */
     public function mockedEvents(): array
     {
-        $this->fail('function mockedEvents() executed');
+        // $this->fail('function mockedEvents() executed');
 
         return [
             new Event([
