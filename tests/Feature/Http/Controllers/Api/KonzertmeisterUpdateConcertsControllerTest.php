@@ -7,6 +7,7 @@ use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
+use App\Services\KonzertmeisterIntegration\ICalAdapter;
 use App\Services\KonzertmeisterIntegration\KonzertmeisterIntegrationService;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
@@ -208,6 +209,21 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertDatabaseHas('konzertmeister_events', ['id' => $id]);
         $event = KonzertmeisterEvent::find($id);
         $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
+    }
+
+    public function test_retrieving_mocked_events()
+    {
+        $adapter = new ICalAdapter;
+        $adapter->setup();
+
+        $this->mock(ICal::class, function (MockInterface $mock) {
+            $mock->shouldReceive('events')->andReturn($this->mockedEvents());
+        });
+
+        $events = $adapter->events();
+
+        $this->assertCount(4, $events);
+
     }
 
     /**
