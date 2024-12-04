@@ -7,13 +7,13 @@ use Tests\TestCase;
 
 class AboutUsTest extends TestCase
 {
-    public function testRouteReturnsSuccessful()
+    public function test_route_returns_successful()
     {
         $this->get('/about-us')
             ->assertSuccessful();
     }
 
-    public function testCorrectView()
+    public function test_correct_view()
     {
         $this->get('/about-us')
             ->assertInertia(

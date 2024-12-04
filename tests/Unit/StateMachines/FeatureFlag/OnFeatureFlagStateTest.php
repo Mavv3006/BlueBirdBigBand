@@ -12,7 +12,7 @@ class OnFeatureFlagStateTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testTurnOff()
+    public function test_turn_off()
     {
         $feature = FeatureFlag::factory()->create([
             'name' => 'design_v2',
@@ -24,7 +24,7 @@ class OnFeatureFlagStateTest extends TestCase
         $this->assertEquals(FeatureFlagState::Off, $feature->status);
     }
 
-    public function testTurnOn()
+    public function test_turn_on()
     {
         $feature = FeatureFlag::factory()->create([
             'name' => 'design_v2',
