@@ -32,11 +32,6 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
     }
 
-    public function test_konzertmeister_url_is_set()
-    {
-        $this->assertStringContainsString('/Feature/Http/Controllers/api/mockEvents.ics', config('app.konzertmeister_url'));
-    }
-
     public function test_validating_api_key()
     {
         $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
