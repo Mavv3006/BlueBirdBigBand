@@ -6,7 +6,6 @@ use ICal\Event;
 
 class ICalMockAdapter implements ICalInterface
 {
-
     public function events(): array
     {
         return [
