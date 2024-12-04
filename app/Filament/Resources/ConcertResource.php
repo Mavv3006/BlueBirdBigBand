@@ -117,6 +117,7 @@ class ConcertResource extends Resource
                                 ->native(false)
                                 ->label('Ort')
                                 ->searchable()
+                                ->required()
                                 ->preload()
                                 // TODO: make it work
 //                                ->createOptionForm([
