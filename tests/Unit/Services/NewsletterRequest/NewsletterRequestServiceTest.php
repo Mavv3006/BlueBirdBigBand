@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class NewsletterRequestServiceTest extends TestCase
 {
-    public function test_confirmation_link()
+    public function testConfirmationLink()
     {
         $newsletterRequest = NewsletterRequest::factory()->create();
 

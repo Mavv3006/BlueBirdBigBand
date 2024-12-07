@@ -18,7 +18,7 @@ class NavigationLinksServiceTest extends TestCase
         $this->service = new NavigationLinksService;
     }
 
-    public function test_get_all_links()
+    public function testGetAllLinks()
     {
         $link = $this->service->getAllLinks();
 
@@ -26,7 +26,7 @@ class NavigationLinksServiceTest extends TestCase
         $this->assertInstanceOf(NavigationLinkDto::class, $link[0]);
     }
 
-    public function test_get_link_nav_elements()
+    public function testGetLinkNavElements()
     {
         $allLinks = $this->service->getLinkNavElements();
 
@@ -36,7 +36,7 @@ class NavigationLinksServiceTest extends TestCase
         }
     }
 
-    public function test_get_cta_nav_elements()
+    public function testGetCtaNavElements()
     {
         $allLinks = $this->service->getCtaNavElements();
 

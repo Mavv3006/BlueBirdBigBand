@@ -52,7 +52,7 @@ class SetlistStatisticsServiceTest extends TestCase
             ->create();
     }
 
-    public function test_most_played()
+    public function testMostPlayed()
     {
         $this->setupMostPlayed();
 
@@ -72,7 +72,7 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->assertEquals($this->song2->arranger, $result[1]->arranger);
     }
 
-    public function test_most_played_with_limit()
+    public function testMostPlayedWithLimit()
     {
         $this->setupMostPlayed();
 
@@ -85,7 +85,7 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->assertEquals(3, $result[0]->count);
     }
 
-    public function test_last_time_played()
+    public function testLastTimePlayed()
     {
         $this->song1 = Song::factory()->create();
         $band = Band::factory()->create();

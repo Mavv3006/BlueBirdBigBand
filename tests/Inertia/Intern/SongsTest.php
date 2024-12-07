@@ -15,13 +15,13 @@ class SongsTest extends TestCase
         $this->actingAs($this->createUserForInternalRoutes());
     }
 
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('intern/songs')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('intern/songs')
             ->assertInertia(
@@ -30,7 +30,7 @@ class SongsTest extends TestCase
             );
     }
 
-    public function test_correct_view2()
+    public function testCorrectView2()
     {
         $this->get(route('intern.songs'))
             ->assertInertia(

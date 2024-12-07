@@ -17,7 +17,7 @@ class RoleTest extends TestCase
         $this->actingAs($this->createUserForAdminRoutes());
     }
 
-    public function test_index_route()
+    public function testIndexRoute()
     {
         $this->get('admin/roles')
             ->assertSuccessful()
@@ -35,7 +35,7 @@ class RoleTest extends TestCase
             );
     }
 
-    public function test_create_route()
+    public function testCreateRoute()
     {
         $this->get('admin/roles/create')
             ->assertSuccessful()
@@ -45,7 +45,7 @@ class RoleTest extends TestCase
             );
     }
 
-    public function test_store_route()
+    public function testStoreRoute()
     {
         $response = $this->post(
             'admin/roles',
@@ -61,7 +61,7 @@ class RoleTest extends TestCase
         $response->assertRedirect(route('roles.show', $role_id));
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         $role = Role::first();
         User::factory()
@@ -97,7 +97,7 @@ class RoleTest extends TestCase
             );
     }
 
-    public function test_edit_route()
+    public function testEditRoute()
     {
         $this->get('admin/roles/'.Role::first()->id.'/edit')
             ->assertSuccessful()

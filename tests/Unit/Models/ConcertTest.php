@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class ConcertTest extends TestCase
 {
-    public function test_is_upcoming()
+    public function testIsUpcoming()
     {
         Band::factory()->create();
         Venue::factory()->create();
@@ -18,7 +18,7 @@ class ConcertTest extends TestCase
         $this->assertTrue($concert->isUpcoming());
     }
 
-    public function test_is_played()
+    public function testIsPlayed()
     {
         Band::factory()->create();
         Venue::factory()->create();

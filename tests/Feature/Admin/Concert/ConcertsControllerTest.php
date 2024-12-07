@@ -17,7 +17,7 @@ class ConcertsControllerTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function test_show_create_form(): void
+    public function testShowCreateForm(): void
     {
         Venue::create(['plz' => 12000, 'name' => 'test']);
         Band::create(['name' => 'test']);
@@ -44,7 +44,7 @@ class ConcertsControllerTest extends TestCase
             );
     }
 
-    public function test_show_edit_form(): void
+    public function testShowEditForm(): void
     {
         Venue::factory()->create();
         Band::factory()->create();
@@ -95,7 +95,7 @@ class ConcertsControllerTest extends TestCase
             );
     }
 
-    public function test_store()
+    public function testStore()
     {
         $data = [
             'date' => Carbon::today()->addDays(2),
@@ -135,7 +135,7 @@ class ConcertsControllerTest extends TestCase
         $this->assertEquals('test 2', $venue->name);
     }
 
-    public function test_update()
+    public function testUpdate()
     {
         $venue = Venue::factory()->create();
         $band = Band::factory()->create();
@@ -184,7 +184,7 @@ class ConcertsControllerTest extends TestCase
         $this->assertEquals('street name', $assertConcert->venue_street);
     }
 
-    public function test_index()
+    public function testIndex()
     {
         Venue::factory()->create();
         Band::factory()->create();
@@ -206,7 +206,7 @@ class ConcertsControllerTest extends TestCase
             );
     }
 
-    public function test_delete_concert()
+    public function testDeleteConcert()
     {
         Venue::factory()->create();
         Band::factory()->create();

@@ -7,13 +7,13 @@ use Tests\TestCase;
 
 class PressInfoTest extends TestCase
 {
-    public function test_route_returns_successful()
+    public function testRouteReturnsSuccessful()
     {
         $this->get('/presse')
             ->assertSuccessful();
     }
 
-    public function test_correct_view()
+    public function testCorrectView()
     {
         $this->get('/presse')
             ->assertInertia(

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class CompletedNewsletterStateTest extends TestCase
 {
-    public function test_confirm()
+    public function testConfirm()
     {
         $request = NewsletterRequest::factory()->create([
             'status' => NewsletterState::Completed,
@@ -25,7 +25,7 @@ class CompletedNewsletterStateTest extends TestCase
         $this->assertNull($request->confirmed_at);
     }
 
-    public function test_complete()
+    public function testComplete()
     {
         $request = NewsletterRequest::factory()->create([
             'status' => NewsletterState::Completed,

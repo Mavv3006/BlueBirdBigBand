@@ -57,7 +57,7 @@ jobs:
           DB_USERNAME: user
           DB_PASSWORD: secret
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-        run: vendor/bin/phpunit --testsuite Unit --dont-report-useless-tests --testdox --testdox-summary
+        run: vendor/bin/phpunit --testsuite Unit
 
       - name: Execute feature tests via PHPUnit
         env:
@@ -65,7 +65,7 @@ jobs:
           DB_USERNAME: user
           DB_PASSWORD: secret
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-        run: vendor/bin/phpunit --testsuite Feature --dont-report-useless-tests --testdox --testdox-summary
+        run: vendor/bin/phpunit --testsuite Feature
 
       - name: Execute inertia tests via PHPUnit
         env:
@@ -73,4 +73,4 @@ jobs:
           DB_USERNAME: user
           DB_PASSWORD: secret
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
-        run: vendor/bin/phpunit --testsuite Inertia --dont-report-useless-tests --testdox --testdox-summary
+        run: vendor/bin/phpunit --testsuite Inertia

@@ -14,7 +14,7 @@ class HomeTest extends TestCase
         $this->actingAs($this->createUserForInternalRoutes());
     }
 
-    public function test_route_redirects()
+    public function testRouteRedirects()
     {
         $this->get('/intern')
             ->assertStatus(301)
