@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    public function test_login_screen_can_be_rendered(): void
+    public function testLoginScreenCanBeRendered(): void
     {
         $this->get(route('login'))
             ->assertSuccessful()
@@ -22,7 +22,7 @@ class AuthenticationTest extends TestCase
             );
     }
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    public function testUsersCanAuthenticateUsingTheLoginScreen(): void
     {
         $user = User::factory()->create(['status' => UserStates::Activated]);
 
@@ -35,7 +35,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(RouteServiceProvider::HOME);
     }
 
-    public function test_users_can_not_authenticate_with_invalid_password(): void
+    public function testUsersCanNotAuthenticateWithInvalidPassword(): void
     {
         $user = User::factory()->create();
 
@@ -47,7 +47,7 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
     }
 
-    public function test_try_login_user_which_does_not_exist(): void
+    public function testTryLoginUserWhichDoesNotExist(): void
     {
         $this->assertDatabaseCount(User::class, 0);
 

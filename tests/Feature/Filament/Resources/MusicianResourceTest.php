@@ -13,7 +13,7 @@ class MusicianResourceTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function test_rendering_resource_page()
+    public function testRenderingResourcePage()
     {
 
         $this->get(MusicianResource::getUrl())

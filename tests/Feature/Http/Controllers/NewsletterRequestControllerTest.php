@@ -25,7 +25,7 @@ class NewsletterRequestControllerTest extends TestCase
         ]);
     }
 
-    public function test_adding_request()
+    public function testAddingRequest()
     {
         $this->assertDatabaseCount(NewsletterRequest::class, 0);
 
@@ -50,7 +50,7 @@ class NewsletterRequestControllerTest extends TestCase
         $this->assertEquals(NewsletterState::Requested, $request->status);
     }
 
-    public function test_removing_request()
+    public function testRemovingRequest()
     {
         $this->assertDatabaseCount(NewsletterRequest::class, 0);
 

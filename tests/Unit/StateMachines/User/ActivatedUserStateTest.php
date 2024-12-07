@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class ActivatedUserStateTest extends TestCase
 {
-    public function test_activate()
+    public function testActivate()
     {
         $user = User::factory()->create(['status' => UserStates::Activated]);
 

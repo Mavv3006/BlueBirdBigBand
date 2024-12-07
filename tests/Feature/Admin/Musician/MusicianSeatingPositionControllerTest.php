@@ -19,7 +19,7 @@ class MusicianSeatingPositionControllerTest extends TestCase
             ->create();
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         $this->get('admin/musicians/seating-position')
             ->assertSuccessful()
@@ -42,7 +42,7 @@ class MusicianSeatingPositionControllerTest extends TestCase
             );
     }
 
-    public function test_update_route()
+    public function testUpdateRoute()
     {
         $musicians = Musician::all();
         $firstMusician = $musicians[0];

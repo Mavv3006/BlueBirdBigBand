@@ -15,7 +15,7 @@ class MusicianTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function test_index_route()
+    public function testIndexRoute()
     {
         Musician::factory()
             ->count(3)
@@ -53,7 +53,7 @@ class MusicianTest extends TestCase
             );
     }
 
-    public function test_create_route()
+    public function testCreateRoute()
     {
         Instrument::factory()->create(['name' => 'test']);
 
@@ -75,7 +75,7 @@ class MusicianTest extends TestCase
             );
     }
 
-    public function test_store_route()
+    public function testStoreRoute()
     {
         $instrument_id = Instrument::factory()->create(['name' => 'test'])->id;
         $response = $this->post('admin/musicians', [
@@ -95,7 +95,7 @@ class MusicianTest extends TestCase
         $this->assertNull($musician->picture_filepath);
     }
 
-    public function test_show_route()
+    public function testShowRoute()
     {
         $musician = Musician::factory()
             ->for(
@@ -131,7 +131,7 @@ class MusicianTest extends TestCase
             );
     }
 
-    public function test_edit_route()
+    public function testEditRoute()
     {
         $musician = Musician::factory()
             ->for(
@@ -168,7 +168,7 @@ class MusicianTest extends TestCase
             );
     }
 
-    public function test_update_route()
+    public function testUpdateRoute()
     {
         $instrument = Instrument::factory()->create(['name' => 'test']);
         $databaseMusician = Musician::factory()
@@ -198,7 +198,7 @@ class MusicianTest extends TestCase
         $this->assertNull($musician->picture_filepath);
     }
 
-    public function test_destroy_route()
+    public function testDestroyRoute()
     {
         $musician = Musician::factory()
             ->for(

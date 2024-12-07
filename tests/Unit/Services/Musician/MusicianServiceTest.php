@@ -18,7 +18,7 @@ class MusicianServiceTest extends TestCase
         $this->service = new MusicianService;
     }
 
-    public function test_amount_of_active_musicians()
+    public function testAmountOfActiveMusicians()
     {
         $instrument = Instrument::factory()->create([
             'name' => 'test',
@@ -35,7 +35,7 @@ class MusicianServiceTest extends TestCase
         $this->assertCount(3, $result[0]['musicians']);
     }
 
-    public function test_format_of_active_musicians()
+    public function testFormatOfActiveMusicians()
     {
         $instrument = Instrument::factory()->create([
             'name' => 'test',
@@ -54,7 +54,7 @@ class MusicianServiceTest extends TestCase
         $this->verifyArrayStructure($result[0]);
     }
 
-    public function test_active_musicians_with_seeder()
+    public function testActiveMusiciansWithSeeder()
     {
         $this->seed(InstrumentSeeder::class);
         $instrument = Instrument::first();
@@ -70,7 +70,7 @@ class MusicianServiceTest extends TestCase
         $this->verifyArrayStructure($result[0]);
     }
 
-    public function test_active_musicians_dont_show_inactive_musicians()
+    public function testActiveMusiciansDontShowInactiveMusicians()
     {
         $instrument = Instrument::factory()->create([
             'name' => 'test',
@@ -88,7 +88,7 @@ class MusicianServiceTest extends TestCase
         $this->assertCount(0, $result[0]['musicians']);
     }
 
-    public function test_all_order_by()
+    public function testAllOrderBy()
     {
         $firstInstrument = Instrument::factory()->create(['name' => 'test1']);
         $secondInstrument = Instrument::factory()->create(['name' => 'test2']);
