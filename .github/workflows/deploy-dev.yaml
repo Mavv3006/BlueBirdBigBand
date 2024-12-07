@@ -40,6 +40,7 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: ${{ secrets.dev_dir }}
+          log-level: verbose
           exclude: |
             **/.git*
             **/.git*/**
