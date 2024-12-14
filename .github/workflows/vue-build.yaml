@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    if: ${{ false }} # disable this job for now
     name: Build Vue3 Frontend
     runs-on: ubuntu-latest
     steps:

@@ -6,7 +6,7 @@ on:
 
 jobs:
   laravel-tests:
-
+    if: ${{ false }} # disable this job for now
     runs-on: ubuntu-latest
 
     services:

@@ -6,6 +6,7 @@ on:
 
 jobs:
   deploy:
+    if: ${{ false }} # disable this job for now
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
