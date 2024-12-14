@@ -29,12 +29,7 @@ jobs:
           MARIADB_PASSWORD: ${{ env.DB_PASSWORD }}  # Verwendet die Umgebungsvariable
           MARIADB_ROOT_PASSWORD: ${{ env.DB_ROOT_PASSWORD }}  # Verwendet die Umgebungsvariable
         ports:
-          - 3306
-        options: >
-          --health-cmd="mysql -u user -p secret -e 'SELECT 1'"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+          - 3306:3306
 
     steps:
       # setup steps
