@@ -22,12 +22,6 @@ jobs:
         with:
           node-version: "22"
 
-      - name: print npm version
-        run: npm --version
-
-      - name: print node version
-        run: node --version
-
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
