@@ -22,13 +22,20 @@ jobs:
         with:
           node-version: "22"
 
+      - name: print npm version
+        run: npm --version
+
+      - name: print node version
+        run: node --version
+
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-      - name: Install Dependencies
+      - name: Install PHP Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
+      - name: Install NPM Dependencies
+        run: npm ci
+
       - name: build project
-        run: |
-          npm ci
-          npm run build
+        run: npm run build
