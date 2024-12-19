@@ -18,6 +18,9 @@ jobs:
       - name: get code
         uses: actions/checkout@v3
 
+      - name: 🔎 Check IP
+        run: curl https://api.ipify.org
+
       - name: install backend dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
