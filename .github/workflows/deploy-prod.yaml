@@ -104,6 +104,7 @@ jobs:
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           server-dir: ${{ secrets.prod_dir }}
+          passive: true  # Aktiviert den passiven Modus
           exclude: |
             **/.git*
             **/.git*/**
