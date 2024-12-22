@@ -105,7 +105,7 @@ jobs:
           password: ${{ secrets.ftp_password }}
           server-dir: ${{ secrets.prod_dir }}
           log-level: minimal
-          protocol: ftps
+          protocol: ftp
           exclude: |
             **/.git*
             **/.git*/**
