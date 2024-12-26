@@ -14,5 +14,4 @@ jobs:
       - name: Assign Reviewer
         uses: kentaro-m/auto-assign-action@v2.0.0
         with:
-          reviewers: |
-            Mavv3006
+          configuration-path: '.github/auto_assign.yml'
