@@ -54,6 +54,7 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
             submenu: [
                 {link: '/kontakt', linkName: 'Kontakt'},
                 {link: '/impressum', linkName: 'Impressum'},
+                {link: '/datenschutz', linkName: 'Datenschutzerklärung'},
             ],
         },
     ];

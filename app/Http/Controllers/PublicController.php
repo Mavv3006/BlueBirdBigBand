@@ -119,4 +119,14 @@ class PublicController extends Controller
 
         return Inertia::render('Contact/Newsletter');
     }
+
+    public function dataPrivacy()
+    {
+        SeoMetaService::setSeoMetaDto(new SeoMetaDto(
+            title: 'Datenschutzerklärung',
+            description: 'Homepage der Blue Bird Big Band - hier finden sie Infos und die aktuellen Veranstaltungstermine der Blue Bird Bigband der Musikschule Speyer'
+        ));
+
+        return Inertia::render('Contact/DataPrivacyPage');
+    }
 }
