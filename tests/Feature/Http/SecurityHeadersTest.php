@@ -7,21 +7,21 @@ use Tests\TestCase;
 
 class SecurityHeadersTest extends TestCase
 {
-    public function testSecurityHeadersOnLandingPage(): void
+    public function test_security_headers_on_landing_page(): void
     {
         $response = $this->get('/');
 
         $this->checkHeaders($response);
     }
 
-    public function testSecurityHeadersOnAboutUs(): void
+    public function test_security_headers_on_about_us(): void
     {
         $response = $this->get('/about-us');
 
         $this->checkHeaders($response);
     }
 
-    public function testSecurityHeadersOnPressInfo(): void
+    public function test_security_headers_on_press_info(): void
     {
         $response = $this->get('/presse');
 

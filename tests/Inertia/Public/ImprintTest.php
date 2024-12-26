@@ -7,13 +7,13 @@ use Tests\TestCase;
 
 class ImprintTest extends TestCase
 {
-    public function testRouteReturnsSuccessful()
+    public function test_route_returns_successful()
     {
         $this->get('/impressum')
             ->assertSuccessful();
     }
 
-    public function testCorrectView()
+    public function test_correct_view()
     {
         $this->get('/impressum')
             ->assertInertia(

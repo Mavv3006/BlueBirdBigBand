@@ -13,7 +13,7 @@ class UserResourceTest extends TestCase
         $this->setupAdmin();
     }
 
-    public function testRenderingResourcePage()
+    public function test_rendering_resource_page()
     {
 
         $this->get(UserResource::getUrl())
