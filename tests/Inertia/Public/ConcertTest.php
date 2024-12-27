@@ -32,13 +32,13 @@ class ConcertTest extends TestCase
             ->create();
     }
 
-    public function testRouteReturnsSuccessful()
+    public function test_route_returns_successful()
     {
         $this->get('/auftritte')
             ->assertSuccessful();
     }
 
-    public function testCorrectView()
+    public function test_correct_view()
     {
         $this->get('/auftritte')
             ->assertSuccessful()
@@ -48,7 +48,7 @@ class ConcertTest extends TestCase
             );
     }
 
-    public function testCorrectValuesAsViewArguments()
+    public function test_correct_values_as_view_arguments()
     {
         $this->assertDatabaseCount('concerts', 5);
 
@@ -76,7 +76,7 @@ class ConcertTest extends TestCase
             );
     }
 
-    public function testOrderOfConcerts()
+    public function test_order_of_concerts()
     {
         $this->get('/auftritte')
             ->assertInertia(

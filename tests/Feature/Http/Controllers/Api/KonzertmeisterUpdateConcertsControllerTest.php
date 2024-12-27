@@ -28,19 +28,19 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
     }
 
-    public function testValidatingApiKey()
+    public function test_validating_api_key()
     {
         $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
             ->assertBadRequest();
     }
 
-    public function testValidatingBandName()
+    public function test_validating_band_name()
     {
         $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
             ->assertBadRequest();
     }
 
-    public function testValidatingAllParameters()
+    public function test_validating_all_parameters()
     {
         $this->get(route('api.concerts.pull'))
             ->assertBadRequest();

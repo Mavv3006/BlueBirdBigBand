@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class FeatureFlagTest extends TestCase
 {
-    public function testStateOff()
+    public function test_state_off()
     {
         $feature = FeatureFlag::factory()->create([
             'name' => FeatureFlagName::DesignV2,
@@ -20,7 +20,7 @@ class FeatureFlagTest extends TestCase
         $this->assertInstanceOf(OffFeatureFlagState::class, $feature->state());
     }
 
-    public function testStateOn()
+    public function test_state_on()
     {
         $feature = FeatureFlag::factory()->create([
             'name' => FeatureFlagName::DesignV2,
