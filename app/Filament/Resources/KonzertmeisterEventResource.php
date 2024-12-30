@@ -6,7 +6,6 @@ use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Filament\Resources\KonzertmeisterEventResource\Pages;
 use App\Models\KonzertmeisterEvent;
-use Exception;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
