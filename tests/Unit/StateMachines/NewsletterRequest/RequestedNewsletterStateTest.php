@@ -12,7 +12,7 @@ class RequestedNewsletterStateTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testConfirm()
+    public function test_confirm()
     {
         $request = NewsletterRequest::factory()->create([
             'status' => NewsletterState::Requested,
@@ -28,7 +28,7 @@ class RequestedNewsletterStateTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testComplete()
+    public function test_complete()
     {
         $request = NewsletterRequest::factory()->create([
             'status' => NewsletterState::Requested,

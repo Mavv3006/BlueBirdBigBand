@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class FeatureFlagServiceTest extends TestCase
 {
-    public function testGetStateWhenEntryInDatabase()
+    public function test_get_state_when_entry_in_database()
     {
         FeatureFlag::factory()->create(['name' => FeatureFlagName::DesignV2, 'status' => FeatureFlagState::On]);
 
@@ -19,14 +19,14 @@ class FeatureFlagServiceTest extends TestCase
         $this->assertEquals(FeatureFlagState::On, $result);
     }
 
-    public function testGetStateWhenEntryMissingDatabase()
+    public function test_get_state_when_entry_missing_database()
     {
         $result = FeatureFlagService::getState(FeatureFlagName::DesignV2);
 
         $this->assertEquals(FeatureFlagState::Off, $result);
     }
 
-    public function testDeactivateWhenEntryInDatabase()
+    public function test_deactivate_when_entry_in_database()
     {
         FeatureFlag::factory()->create(['name' => FeatureFlagName::DesignV2, 'status' => FeatureFlagState::On]);
 
@@ -37,14 +37,14 @@ class FeatureFlagServiceTest extends TestCase
         $this->assertEquals(FeatureFlagState::Off, $status);
     }
 
-    public function testDeactivateWhenEntryMissingDatabase()
+    public function test_deactivate_when_entry_missing_database()
     {
         $result = FeatureFlagService::deactivate(FeatureFlagName::DesignV2);
 
         $this->assertFalse($result);
     }
 
-    public function testDeactivateWhenStateIsAlreadyOff()
+    public function test_deactivate_when_state_is_already_off()
     {
         FeatureFlag::factory()->create(['name' => FeatureFlagName::DesignV2, 'status' => FeatureFlagState::Off]);
 
@@ -55,7 +55,7 @@ class FeatureFlagServiceTest extends TestCase
         $this->assertEquals(FeatureFlagState::Off, $status);
     }
 
-    public function testActivateWhenEntryInDatabase()
+    public function test_activate_when_entry_in_database()
     {
         FeatureFlag::factory()->create(['name' => FeatureFlagName::DesignV2, 'status' => FeatureFlagState::Off]);
 
@@ -66,14 +66,14 @@ class FeatureFlagServiceTest extends TestCase
         $this->assertEquals(FeatureFlagState::On, $status);
     }
 
-    public function testActivateWhenEntryMissingDatabase()
+    public function test_activate_when_entry_missing_database()
     {
         $result = FeatureFlagService::activate(FeatureFlagName::DesignV2);
 
         $this->assertFalse($result);
     }
 
-    public function testActivateWhenStateIsAlreadyOn()
+    public function test_activate_when_state_is_already_on()
     {
         FeatureFlag::factory()->create(['name' => FeatureFlagName::DesignV2, 'status' => FeatureFlagState::On]);
 

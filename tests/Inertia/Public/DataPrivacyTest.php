@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\Inertia\Public;
+namespace Public;
 
 use Inertia\Testing\AssertableInertia;
 use Tests\TestCase;
 
-class PressInfoTest extends TestCase
+class DataPrivacyTest extends TestCase
 {
     public function test_route_returns_successful()
     {
-        $this->get('/presse')
+        $this->get('/datenschutz')
             ->assertSuccessful();
     }
 
     public function test_correct_view()
     {
-        $this->get('/presse')
+        $this->get('/datenschutz')
             ->assertInertia(
                 fn (AssertableInertia $page) => $page
-                    ->component('LatestInfos/PressInfoPage')
+                    ->component('Contact/DataPrivacyPage')
             );
     }
 }

@@ -1,0 +1,119 @@
+name: Deployment Production
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  web-deploy:
+    name: Deploy Fullstack Application
+    runs-on: ubuntu-latest
+
+    env:
+      PHP_VERSION: 8.3        # PHP-Version an einer zentralen Stelle definieren
+      NODE_VERSION: 22        # Node.js-Version an einer zentralen Stelle definieren
+      DB_DATABASE: test_db    # Datenbankname
+      DB_USER: user           # Datenbankbenutzer
+      DB_PASSWORD: secret     # Datenbankpasswort
+      DB_PORT: 3306           # Datenbank-Port
+      DB_ROOT_PASSWORD: secretroot  # Root-Passwort der Datenbank
+
+    services:
+      mysql:
+        image: mariadb:10.11
+        env:
+          MARIADB_DATABASE: ${{ env.DB_DATABASE }}  # Verwendet die Umgebungsvariable
+          MARIADB_USER: ${{ env.DB_USER }}          # Verwendet die Umgebungsvariable
+          MARIADB_PASSWORD: ${{ env.DB_PASSWORD }}  # Verwendet die Umgebungsvariable
+          MARIADB_ROOT_PASSWORD: ${{ env.DB_ROOT_PASSWORD }}  # Verwendet die Umgebungsvariable
+        ports:
+          - 3306:3306
+
+    concurrency:
+      group: production-deployment-${{ github.ref }}
+      cancel-in-progress: false  # Andere Instanzen werden nicht abgebrochen
+
+    steps:
+      # setup steps
+      - name: setup php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: print versions
+        run: |
+          echo "PHP version: $(php -v | head -n 1)"
+          echo ""  # Leerzeile
+          echo "Composer version: $(composer -V)"
+          echo ""  # Leerzeile
+          echo "Node.js version: $(node -v)"
+          echo ""  # Leerzeile
+          echo "NPM version: $(npm -v)"
+          echo ""  # Leerzeile
+
+      - name: get code
+        uses: actions/checkout@v4
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      # Composer Cache
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor  # Composer erstellt die Abhängigkeiten im "vendor"-Verzeichnis
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
+
+      # NPM Cache
+      - name: Cache NPM dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: npm list
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      # Build frontend
+      - name: setup frontend
+        run: |
+          npm run build
+
+      - name: push files to server
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ftp_server }}
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          server-dir: ${{ secrets.prod_dir }}
+          log-level: minimal
+          protocol: ftp
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            .idea/**
+            database/**
+            **/node_modules/**
+            tests/**
+            .env**
+            phpunit*
+            docker-compose.yml
