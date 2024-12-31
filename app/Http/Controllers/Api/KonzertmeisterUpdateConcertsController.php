@@ -94,7 +94,7 @@ class KonzertmeisterUpdateConcertsController
             'location' => $event->location,
             'dtstart' => Carbon::parse($event->dtstart),
             'dtend' => Carbon::parse($event->dtend),
-            'description' => $event->description,
+            'description' => KonzertmeisterEvent::shortenDescription($event->description),
             'band_id' => $band->id,
             'type' => $this->getEventType($event),
         ];
