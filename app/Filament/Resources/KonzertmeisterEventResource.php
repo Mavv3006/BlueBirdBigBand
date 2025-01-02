@@ -67,13 +67,13 @@ class KonzertmeisterEventResource extends Resource
                     ->preload()
                     ->multiple()
                     ->options(self::getTypeFilterOptions()),
-//                    ->default([KonzertmeisterEventType::Sonstiges->value])
+                //                    ->default([KonzertmeisterEventType::Sonstiges->value])
                 Tables\Filters\SelectFilter::make('conversion_state')
                     ->label('Status')
                     ->preload()
                     ->multiple()
                     ->options(self::getConversionStateFilterOptions()),
-//                    ->default([KonzertmeisterEventConversionState::Open->value]),
+                //                    ->default([KonzertmeisterEventConversionState::Open->value]),
             ])
             ->actions([
                 Tables\Actions\Action::make('convert')
