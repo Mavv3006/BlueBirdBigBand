@@ -5,6 +5,9 @@ namespace App\Filament\Resources;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Filament\Resources\KonzertmeisterEventResource\Pages;
+use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventConversionStateDistribution;
+use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventOverview;
+use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventTypeDistribution;
 use App\Models\KonzertmeisterEvent;
 use Closure;
 use Filament\Resources\Resource;
@@ -62,13 +65,15 @@ class KonzertmeisterEventResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->label('Type')
                     ->preload()
+                    ->multiple()
                     ->options(self::getTypeFilterOptions())
-                    ->default(KonzertmeisterEventType::Auftritt->value),
+                    ->default([KonzertmeisterEventType::Auftritt->value]),
                 Tables\Filters\SelectFilter::make('conversion_state')
                     ->label('Status')
                     ->preload()
+                    ->multiple()
                     ->options(self::getConversionStateFilterOptions())
-                    ->default(KonzertmeisterEventConversionState::Open->value),
+                    ->default([KonzertmeisterEventConversionState::Open->value]),
             ])
             ->actions([
                 Tables\Actions\Action::make('convert')
@@ -83,14 +88,7 @@ class KonzertmeisterEventResource extends Resource
                     ->label('Ablehnen')
                     ->requiresConfirmation()
                     ->deselectRecordsAfterCompletion()
-                    ->action(function (Collection $collection) {
-                        /** @var KonzertmeisterEvent $event */
-                        foreach ($collection as $event) {
-                            if ($event->conversion_state == KonzertmeisterEventConversionState::Open) {
-                                $event->state()->reject();
-                            }
-                        }
-                    }),
+                    ->action(self::getRejectBulkAction()),
             ])
             ->checkIfRecordIsSelectableUsing(fn (KonzertmeisterEvent $record): bool => $record->conversion_state == KonzertmeisterEventConversionState::Open)
             ->defaultSort('dtstart');
@@ -100,6 +98,15 @@ class KonzertmeisterEventResource extends Resource
     {
         return [
             'index' => Pages\ListKonzertmeisterEvents::route('/'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            KonzertmeisterEventOverview::class,
+            KonzertmeisterEventTypeDistribution::class,
+            KonzertmeisterEventConversionStateDistribution::class,
         ];
     }
 
@@ -120,6 +127,17 @@ class KonzertmeisterEventResource extends Resource
             $values = array_map(fn ($case) => $case->name, KonzertmeisterEventConversionState::cases());
 
             return array_combine($keys, $values);
+        };
+    }
+
+    public static function getRejectBulkAction(): Closure
+    {
+        return function (Collection $collection) {
+            $collection->each(function (KonzertmeisterEvent $record) {
+                if ($record->conversion_state == KonzertmeisterEventConversionState::Open) {
+                    $record->state()->reject();
+                }
+            });
         };
     }
 }
