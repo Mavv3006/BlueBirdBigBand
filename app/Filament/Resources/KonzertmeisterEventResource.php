@@ -46,9 +46,9 @@ class KonzertmeisterEventResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->icon(fn (KonzertmeisterEventType $state): string => match ($state) {
-                        KonzertmeisterEventType::Probe => 'mdi-movie-open',
+                        KonzertmeisterEventType::Probe => 'icon-movie-open',
                         KonzertmeisterEventType::Auftritt => 'icon-performance',
-                        KonzertmeisterEventType::Sonstiges => '',
+                        KonzertmeisterEventType::Sonstiges => 'icon-tag-question-mark-16',
                     }),
                 TextColumn::make('conversion_state')
                     ->label('Status')
@@ -66,14 +66,14 @@ class KonzertmeisterEventResource extends Resource
                     ->label('Type')
                     ->preload()
                     ->multiple()
-                    ->options(self::getTypeFilterOptions())
-                    ->default([KonzertmeisterEventType::Auftritt->value]),
+                    ->options(self::getTypeFilterOptions()),
+//                    ->default([KonzertmeisterEventType::Sonstiges->value])
                 Tables\Filters\SelectFilter::make('conversion_state')
                     ->label('Status')
                     ->preload()
                     ->multiple()
-                    ->options(self::getConversionStateFilterOptions())
-                    ->default([KonzertmeisterEventConversionState::Open->value]),
+                    ->options(self::getConversionStateFilterOptions()),
+//                    ->default([KonzertmeisterEventConversionState::Open->value]),
             ])
             ->actions([
                 Tables\Actions\Action::make('convert')
