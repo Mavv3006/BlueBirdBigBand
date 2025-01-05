@@ -28,7 +28,11 @@ class KonzertmeisterEventConversionStateDistribution extends BaseWidget
                 $rawValue = KonzertmeisterEvent::query()
                     ->where('conversion_state', $case->name)
                     ->count();
-                $percentageValue = round($rawValue / $totalCount, 3) * 100;
+                if ($totalCount == 0) {
+                    $percentageValue = 0;
+                } else {
+                    $percentageValue = round($rawValue / $totalCount, 3) * 100;
+                }
 
                 return Stat::make($case->name, $percentageValue.' %')
                     ->description($rawValue.' sind im Status '.$case->name.'.');
