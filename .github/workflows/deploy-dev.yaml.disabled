@@ -34,22 +34,22 @@ jobs:
         run: |
           npm run build
 
+      - name: delete non-deployable files
+        run: |
+          rm -rf .git
+          rm -rf .github
+          rm -rf  database
+          rm -rf  tests
+          rm -rf  phpunit*
+          rm -rf  docker-compose.yml
+          rm -rf  .env*
+          rm -rf  node_modules
+          rm -rf  .idea
+
       - name: push files to server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: airvzxf/ftp-deployment-action@latest
         with:
           server: ${{ secrets.ftp_server }}
-          username: ${{ secrets.ftp_username }}
+          user: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
-          server-dir: ${{ secrets.dev_dir }}
-          log-level: verbose
-          exclude: |
-            **/.git*
-            **/.git*/**
-            .github/**
-            .idea/**
-            database/**
-            **/node_modules/**
-            tests/**
-            .env**
-            phpunit*
-            docker-compose.yml
+          remote_dir: ${{ secrets.dev_dir }}
