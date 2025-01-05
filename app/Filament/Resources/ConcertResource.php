@@ -20,7 +20,7 @@ class ConcertResource extends Resource
 {
     protected static ?string $model = Concert::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-microphone';
+    protected static ?string $navigationIcon = 'icon-performance';
 
     protected static ?string $navigationLabel = 'Auftritte';
 
