@@ -106,7 +106,7 @@ class KonzertmeisterEventResource extends Resource
                             ->schema([
                                 Grid::make([
                                     'default' => 1,
-                                    'md' => 2,])
+                                    'md' => 2, ])
                                     ->schema([
                                         TextInput::make('prefilled-location')
                                             ->placeholder('n/a')
@@ -139,7 +139,7 @@ class KonzertmeisterEventResource extends Resource
                                 ]),
                             ]),
                     ])
-                    ->fillForm(fn(KonzertmeisterEvent $record) => [
+                    ->fillForm(fn (KonzertmeisterEvent $record) => [
                         'event_description' => $record->summary,
                         'prefilled-location' => $record->location,
                     ])
