@@ -36,12 +36,12 @@ class ListKonzertmeisterEvents extends ListRecords
                         ->helperText('Für welche Band sollen die nächsten Events geholt werden?')
                         ->native(false)
                         ->options(Band::query()
-                            ->whereIn('name', array_map(fn($bandName) => $bandName->value, BandName::cases()))
+                            ->whereIn('name', array_map(fn ($bandName) => $bandName->value, BandName::cases()))
                             ->pluck('name', 'id')),
                 ])
                 ->requiresConfirmation()
                 ->modalDescription('Hole die neuesten Events aus Konzertmeister. Bist du sicher, dass du das tun möchtest?')
-                ->action(fn(array $data) => KonzertmeisterIntegrationService::pullNewData(Band::find($data['band_name']))),
+                ->action(fn (array $data) => KonzertmeisterIntegrationService::pullNewData(Band::find($data['band_name']))),
         ];
     }
 
