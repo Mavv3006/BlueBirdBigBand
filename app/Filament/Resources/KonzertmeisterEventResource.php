@@ -8,6 +8,7 @@ use App\Filament\Resources\KonzertmeisterEventResource\Pages;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventConversionStateDistribution;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventOverview;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventTypeDistribution;
+use App\Models\Concert;
 use App\Models\KonzertmeisterEvent;
 use Closure;
 use Filament\Resources\Resource;
@@ -67,19 +68,26 @@ class KonzertmeisterEventResource extends Resource
                     ->preload()
                     ->multiple()
                     ->options(self::getTypeFilterOptions()),
-                //                    ->default([KonzertmeisterEventType::Sonstiges->value])
                 Tables\Filters\SelectFilter::make('conversion_state')
                     ->label('Status')
                     ->preload()
                     ->multiple()
                     ->options(self::getConversionStateFilterOptions()),
-                //                    ->default([KonzertmeisterEventConversionState::Open->value]),
             ])
             ->actions([
                 Tables\Actions\Action::make('convert')
-                    // TODO: konvertieren ermöglichen -> https://bluebirdbigband.youtrack.cloud/issue/BBBB-26/Konzertmeister-Events-in-Auftritte-konvertieren
                     ->label('Konvertieren')
                     ->hidden(fn (KonzertmeisterEvent $record) => $record->conversion_state != KonzertmeisterEventConversionState::Open)
+                    ->form([
+
+                    ])
+                    ->action(function (array $data, KonzertmeisterEvent $record) {
+                        Concert::create([
+                            'date' => $record->dtstart,
+                            'start_time' => $record->dtstart,
+                            'end_time' => $record->dtend,
+                        ]);
+                    })
                     ->disabled(),
             ])
             ->deferFilters()
