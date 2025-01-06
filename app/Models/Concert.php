@@ -28,7 +28,7 @@ class Concert extends Model
         'band_id',
         'date',
         'venue_plz',
-        'konzertmeister_event_id'
+        'konzertmeister_event_id',
     ];
 
     protected $hidden = [
