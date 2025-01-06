@@ -10,12 +10,18 @@ use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEve
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventTypeDistribution;
 use App\Models\Concert;
 use App\Models\KonzertmeisterEvent;
+use App\Models\Venue;
 use Closure;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class KonzertmeisterEventResource extends Resource
 {
@@ -41,6 +47,9 @@ class KonzertmeisterEventResource extends Resource
                     ->label('Beschreibung'),
                 TextColumn::make('band.name')
                     ->label('Band')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('location')
+                    ->label('Ort')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('type')
                     ->label('Typ')
@@ -79,16 +88,62 @@ class KonzertmeisterEventResource extends Resource
                     ->label('Konvertieren')
                     ->hidden(fn (KonzertmeisterEvent $record) => $record->conversion_state != KonzertmeisterEventConversionState::Open)
                     ->form([
-
+                        Section::make('Beschreibungen')
+                            ->columns([
+                                'default' => 1,
+                                'lg' => 2,
+                            ])
+                            ->schema([
+                                TextInput::make('event_description')
+                                    ->label('Beschreibung')
+                                    ->required(),
+                                TextInput::make('venue_description')
+                                    ->label('Name der Location')
+                                    ->required(),
+                            ]),
+                        Section::make('Adresse')
+                            ->description('An welcher Adresse wird die Band spielen?')
+                            ->schema([
+                                Grid::make([
+                                    'default' => 1,
+                                    'md' => 2,])
+                                    ->schema([
+                                        TextInput::make('prefilled-location')
+                                            ->placeholder('n/a')
+                                            ->disabled(),
+                                    ]),
+                                Grid::make([
+                                    'default' => 1,
+                                    'md' => 2,
+                                ])->schema([
+                                    TextInput::make('venue_street')
+                                        ->required()
+                                        ->label('Straßenname'),
+                                    TextInput::make('venue_street_number')
+                                        ->required()
+                                        ->label('Hausnummer'),
+                                ]),
+                                Grid::make([
+                                    'default' => 1,
+                                    'md' => 2,
+                                ])->schema([
+                                    TextInput::make('venue_plz')
+                                        ->label('Postleitzahl (PLZ)')
+                                        ->minValue(10000)
+                                        ->maxValue(99999)
+                                        ->required()
+                                        ->numeric(),
+                                    TextInput::make('venue_name')
+                                        ->required()
+                                        ->label('Ort'),
+                                ]),
+                            ]),
                     ])
-                    ->action(function (array $data, KonzertmeisterEvent $record) {
-                        Concert::create([
-                            'date' => $record->dtstart,
-                            'start_time' => $record->dtstart,
-                            'end_time' => $record->dtend,
-                        ]);
-                    })
-                    ->disabled(),
+                    ->fillForm(fn(KonzertmeisterEvent $record) => [
+                        'event_description' => $record->summary,
+                        'prefilled-location' => $record->location,
+                    ])
+                    ->action(self::getConvertTableRowAction()),
             ])
             ->deferFilters()
             ->bulkActions([
@@ -146,6 +201,46 @@ class KonzertmeisterEventResource extends Resource
                     $record->state()->reject();
                 }
             });
+        };
+    }
+
+    public static function getConvertTableRowAction(): Closure
+    {
+        return function (array $data, KonzertmeisterEvent $record) {
+            // Start database transaction
+            DB::beginTransaction();
+
+            // search for venue, create if not exist
+            $venue = Venue::createOrFirst([
+                'plz' => $data['venue_plz'],
+                'name' => $data['venue_name'],
+            ]);
+
+            // create concert record
+            Concert::create([
+                'date' => $record->dtstart,
+                'start_time' => $record->dtstart,
+                'end_time' => $record->dtend,
+                'band_id' => $record->band_id,
+                'konzertmeister_event_id' => $record->id,
+                'event_description' => $data['event_description'],
+                'venue_plz' => $venue->plz,
+                'venue_description' => $data['venue_description'],
+                'venue_street' => $data['venue_street'],
+                'venue_street_number' => $data['venue_street_number'],
+            ]);
+
+            // Update record conversion status
+            $record->state()->convert();
+
+            // commit database changes
+            DB::commit();
+
+            // Send notification about status of transaction
+            Notification::make()
+                ->title('Konvertierung erfolgreich')
+                ->success()
+                ->send();
         };
     }
 }

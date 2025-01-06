@@ -14,7 +14,7 @@ class CreateConcertFromKonzertmeisterEventTest extends TestCase
 {
     public function test_create_concert_from_konzertmeister_event_test()
     {
-        $event = KonzertmeisterEvent::create([
+        KonzertmeisterEvent::create([
             'id' => 2029880,
             'band_id' => Band::factory()->create()->id,
             'dtstart' => '2025-03-14 18:00:00',
@@ -26,7 +26,7 @@ class CreateConcertFromKonzertmeisterEventTest extends TestCase
             'conversion_state' => KonzertmeisterEventConversionState::Open,
         ]);
 
-        $venue = Venue::factory()->create();
+        $event = KonzertmeisterEvent::first();
 
         $concert = Concert::create([
             'date' => $event->dtstart,
@@ -37,10 +37,12 @@ class CreateConcertFromKonzertmeisterEventTest extends TestCase
             'venue_description' => '<<>>', // << manuell erfassen >>
             'venue_street' => '<<>>', // << manuell erfassen >>
             'venue_street_number' => '<<>>', // << manuell erfassen >>
-            'venue_plz' => $venue->plz, // << manuell erfassen >>
+            'venue_plz' => Venue::factory()->create()->plz, // << manuell erfassen >>
             'konzertmeister_event_id' => $event->id,
         ]);
 
         $this->assertDatabaseCount(Concert::class, 1);
+        $this->assertEquals(2029880, $event->id);
+        $this->assertEquals($event->id, $concert->konzertmeister_event_id);
     }
 }
