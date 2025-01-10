@@ -12,20 +12,28 @@ use Carbon\Carbon;
 use ICal\Event;
 use ICal\ICal;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 use UnhandledMatchError;
 
 class KonzertmeisterIntegrationService
 {
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function pullNewData(Band $band): void
     {
-        Log::info('KonzertmeisterIntegrationService - starting to pull new Konzertmeister events for band "'.$band->name.'" ('.$band->id.')');
+        $konzertmeisterUrl = config('app.konzertmeister_url');
+        if ($konzertmeisterUrl === null) {
+            Log::error('KonzertmeisterIntegrationService - config key "app.konzertmeister_url" is missing. Pulling new event data is not possible.');
+            throw new InvalidArgumentException('Pulling new event data is not possible. Please check your log file for more information.');
+        }
 
-        $calendar = new ICal(config('app.konzertmeister_url'), [
+        $calendar = new ICal($konzertmeisterUrl, [
             'defaultTimeZone' => 'Europe/Berlin',
             // 'filterDaysBefore' => Carbon::now(),
         ]);
 
-        Log::debug('KonzertmeisterIntegrationService', [
+        Log::debug('KonzertmeisterIntegrationService - information about new events', [
             'event count' => count($calendar->events()),
             'events' => $calendar->events(),
         ]);
@@ -38,10 +46,12 @@ class KonzertmeisterIntegrationService
 
         self::upsertAllEvents($mappedCalendarEvents);
 
-        Log::debug('KonzertmeisterIntegrationService', [
+        Log::debug('KonzertmeisterIntegrationService - information about all events in database', [
             'konzertmeister count' => KonzertmeisterEvent::all()->count(),
             'konzertmeister events' => KonzertmeisterEvent::query()->orderBy('dtstart')->get(),
         ]);
+
+        Log::info('KonzertmeisterIntegrationService - pulling new data completed');
     }
 
     protected static function mapCalendarEvents(Event $event, Band $band): array
