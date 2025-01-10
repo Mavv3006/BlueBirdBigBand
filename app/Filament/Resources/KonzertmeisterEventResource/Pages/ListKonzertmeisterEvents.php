@@ -9,9 +9,13 @@ use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEve
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventTypeDistribution;
 use App\Models\Band;
 use App\Services\KonzertmeisterIntegration\KonzertmeisterIntegrationService;
+use Artisan;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\App;
+use InvalidArgumentException;
 
 class ListKonzertmeisterEvents extends ListRecords
 {
@@ -41,7 +45,24 @@ class ListKonzertmeisterEvents extends ListRecords
                 ])
                 ->requiresConfirmation()
                 ->modalDescription('Hole die neuesten Events aus Konzertmeister. Bist du sicher, dass du das tun möchtest?')
-                ->action(fn (array $data) => KonzertmeisterIntegrationService::pullNewData(Band::find($data['band_name']))),
+                ->action(function (array $data) {
+                    try {
+                        KonzertmeisterIntegrationService::pullNewData(Band::find($data['band_name']));
+                    } catch (InvalidArgumentException $e) {
+                        report($e);
+                        Notification::make()
+                            ->title('Konzertmeister Integration')
+                            ->body($e->getMessage())
+                            ->danger()
+                            ->send();
+                    }
+                }),
+            Action::make('seed')
+                ->label('Run Seeder')
+                ->action(function () {
+                    Artisan::call('db:seed', ['--class' => 'KonzertmeisterEventSeeder']);
+                })
+                ->hidden(App::isProduction()),
         ];
     }
 

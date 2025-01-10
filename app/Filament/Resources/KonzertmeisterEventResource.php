@@ -15,6 +15,7 @@ use Closure;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -86,7 +87,12 @@ class KonzertmeisterEventResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('convert')
                     ->label('Konvertieren')
-                    ->hidden(fn (KonzertmeisterEvent $record) => $record->conversion_state != KonzertmeisterEventConversionState::Open)
+                    ->hidden(function (KonzertmeisterEvent $record): bool {
+                        $isNotOpen = $record->conversion_state != KonzertmeisterEventConversionState::Open;
+                        $concertExists = self::checkIfConcertForDateExists($record);
+
+                        return $isNotOpen || $concertExists;
+                    })
                     ->form([
                         Section::make('Beschreibungen')
                             ->columns([
@@ -204,9 +210,15 @@ class KonzertmeisterEventResource extends Resource
         };
     }
 
+    public static function checkIfConcertForDateExists(KonzertmeisterEvent $record): bool
+    {
+        return Concert::where('date', $record->dtstart->format('Y-m-d'))->exists();
+    }
+
     public static function getConvertTableRowAction(): Closure
     {
         return function (array $data, KonzertmeisterEvent $record) {
+
             // Start database transaction
             DB::beginTransaction();
 
@@ -217,7 +229,7 @@ class KonzertmeisterEventResource extends Resource
             ]);
 
             // create concert record
-            Concert::create([
+            $concert = Concert::create([
                 'date' => $record->dtstart,
                 'start_time' => $record->dtstart,
                 'end_time' => $record->dtend,
@@ -240,6 +252,13 @@ class KonzertmeisterEventResource extends Resource
             Notification::make()
                 ->title('Konvertierung erfolgreich')
                 ->success()
+                ->actions([
+                    Action::make('open concert')
+                        ->label('öffne Auftritt')
+                        ->url(route('filament.admin.resources.concerts.view', $concert), shouldOpenInNewTab: true)
+                        ->button()
+                        ->close(),
+                ])
                 ->send();
         };
     }
