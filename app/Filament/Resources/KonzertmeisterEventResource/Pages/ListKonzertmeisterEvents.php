@@ -16,7 +16,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\App;
 use InvalidArgumentException;
-use Log;
 
 class ListKonzertmeisterEvents extends ListRecords
 {
