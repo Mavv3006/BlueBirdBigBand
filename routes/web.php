@@ -63,7 +63,6 @@ Route::prefix('newsletter')->group(function () {
         ->name('newsletter.confirm');
 });
 
-
 Route::middleware('auth')
     ->get('download/song/{song}', DownloadSongController::class)
     ->name('download-song');
