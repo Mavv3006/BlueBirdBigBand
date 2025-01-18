@@ -22,7 +22,7 @@
     "@tailwindcss/forms": "^0.5.10",
     "@vitejs/plugin-vue": "^5.1.5",
     "autoprefixer": "^10.4.20",
-    "axios": "^1.7.7",
+    "axios": "^1.7.9",
     "concurrently": "^9.1.2",
     "laravel-vite-plugin": "^1.1.1",
     "lodash": "^4.17.21",
