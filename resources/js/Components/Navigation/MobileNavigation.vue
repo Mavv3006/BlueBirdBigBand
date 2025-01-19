@@ -48,6 +48,12 @@
                     <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
                         <Link href="/impressum">Impressum</Link>
                     </p>
+                    <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
+                        <Link href="/datenschutz">Datenschutzerklärung</Link>
+                    </p>
+                    <p class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white">
+                        <Link href="/newsletter">Newsletter</Link>
+                    </p>
                 </MobileNavbarElement>
 
                 <MobileNavbarElement

@@ -12,6 +12,19 @@
             <section>
                 <SubHeading>Eintragen</SubHeading>
 
+                <p class="mb-6">Erhalten Sie die neuesten Updates direkt in Ihrem Posteingang.</p>
+
+                <Accordion title="Wie funktioniert der Anmeldeprozess?">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Geben Sie Ihre E-Mail-Adresse im Formular unten ein</li>
+                            <li>Sie erhalten eine Bestätigungs-E-Mail</li>
+                            <li>Klicken Sie auf den Verifizierungslink in der E-Mail, um Ihre Adresse zu bestätigen</li>
+                            <li>Unser Team prüft und fügt Sie der Newsletter-Liste hinzu</li>
+                        </ol>
+                    </div>
+                </Accordion>
+
                 <form @submit.prevent="submitAddingForm">
                     <div>
                         <InputLabel for="addingEmail" value="E-Mail Adresse"/>
@@ -40,6 +53,19 @@
 
             <section>
                 <SubHeading>Austragen</SubHeading>
+
+                <p class="mb-6">Es tut uns leid, dass Sie gehen. Geben Sie Ihre E-Mail-Adresse ein, um sich abzumelden.</p>
+
+                <Accordion title="Wie funktioniert der Abmeldeprozess?">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Geben Sie Ihre E-Mail-Adresse im Formular unten ein</li>
+                            <li>Sie werden sofort vom Newsletter abgemeldet</li>
+                            <li>Sie erhalten eine Bestätigungs-E-Mail über Ihre Abmeldung</li>
+                            <li>Sie können sich jederzeit wieder anmelden</li>
+                        </ol>
+                    </div>
+                </Accordion>
 
                 <form @submit.prevent="submitRemovingForm">
                     <div>
@@ -79,8 +105,8 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {add} from "lodash";
 import InputSuccesss from "@/Components/InputSuccesss.vue";
+import Accordion from "@/Components/Accordion/Accordion.vue";
 
 type NewsletterRequestType = {
     email: string,
