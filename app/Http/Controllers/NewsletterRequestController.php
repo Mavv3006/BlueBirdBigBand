@@ -13,8 +13,6 @@ class NewsletterRequestController extends Controller
     public function request(NewsletterRequestingRequest $request)
     {
         NewsletterRequestService::createNew($request);
-
-        return redirect(route('newsletter'));
     }
 
     public function confirm(NewsletterRequest $newsletterRequest)
@@ -24,7 +22,12 @@ class NewsletterRequestController extends Controller
         return redirect(route('newsletter.confirm.success'));
     }
 
-    public function confirmSuccess(Request $request)
+    public function subscribe()
+    {
+        return Inertia::render('Newsletter/SubscribePage');
+    }
+
+    public function confirmSuccess()
     {
         return Inertia::render('Newsletter/ConfirmSuccess');
     }

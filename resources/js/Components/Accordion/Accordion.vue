@@ -1,6 +1,6 @@
 <template>
     <div class="mb-6 border-b">
-        <button v-on:click="toggle">
+        <button v-on:click="toggle" class="flex justify-between w-full font-bold">
             {{ props.title }}
             <svg
                 class="h-4 w-4 transition-transform duration-200"

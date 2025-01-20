@@ -13,7 +13,5 @@ class RequestedNewsletterState extends BaseNewsletterState
             'status' => NewsletterState::Confirmed,
             'confirmed_at' => Carbon::now(),
         ]);
-
-        // TODO: send notification to admins
     }
 }

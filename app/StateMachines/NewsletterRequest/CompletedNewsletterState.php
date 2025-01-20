@@ -2,4 +2,12 @@
 
 namespace App\StateMachines\NewsletterRequest;
 
-class CompletedNewsletterState extends BaseNewsletterState {}
+use Exception;
+
+class CompletedNewsletterState extends BaseNewsletterState
+{
+    public function confirm(): void
+    {
+        throw new Exception;
+    }
+}
