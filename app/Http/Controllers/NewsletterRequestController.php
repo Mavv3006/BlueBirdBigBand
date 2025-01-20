@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewsletterRequestingRequest;
 use App\Models\NewsletterRequest;
 use App\Services\NewsletterRequest\NewsletterRequestService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class NewsletterRequestController extends Controller
