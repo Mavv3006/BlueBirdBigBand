@@ -56,7 +56,7 @@ Route::prefix('newsletter')->group(function () {
     Route::get('/', [PublicController::class, 'newsletter'])
         ->name('newsletter');
     Route::get('/subscribe', [NewsletterRequestController::class, 'subscribe'])
-    ->name('newsletter.subscribe');
+        ->name('newsletter.subscribe');
     Route::post('/request', [NewsletterRequestController::class, 'request'])
         ->name('newsletter.request');
     Route::get('/confirm/success', [NewsletterRequestController::class, 'confirmSuccess'])
