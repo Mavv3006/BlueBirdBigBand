@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "althinect/filament-spatie-roles-permissions",
-            "version": "v2.2.38",
+            "version": "v2.2.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Althinect/filament-spatie-roles-permissions.git",
-                "reference": "c8a2593a31966908d53a2a75605c7732cedfdc2d"
+                "reference": "f0c2e6f2ff1bac777bde1e5c71f8cdd9bbe73ba4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/c8a2593a31966908d53a2a75605c7732cedfdc2d",
-                "reference": "c8a2593a31966908d53a2a75605c7732cedfdc2d",
+                "url": "https://api.github.com/repos/Althinect/filament-spatie-roles-permissions/zipball/f0c2e6f2ff1bac777bde1e5c71f8cdd9bbe73ba4",
+                "reference": "f0c2e6f2ff1bac777bde1e5c71f8cdd9bbe73ba4",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Althinect/filament-spatie-roles-permissions/issues",
-                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.38"
+                "source": "https://github.com/Althinect/filament-spatie-roles-permissions/tree/v2.2.39"
             },
-            "time": "2024-11-19T15:55:36+00:00"
+            "time": "2025-01-20T14:44:22+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
@@ -5100,16 +5100,16 @@
         },
         {
             "name": "spatie/laravel-package-tools",
-            "version": "1.18.0",
+            "version": "1.18.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "8332205b90d17164913244f4a8e13ab7e6761d29"
+                "reference": "d41c44a7eab604c3eb0cad93210612d4c1429c20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/8332205b90d17164913244f4a8e13ab7e6761d29",
-                "reference": "8332205b90d17164913244f4a8e13ab7e6761d29",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/d41c44a7eab604c3eb0cad93210612d4c1429c20",
+                "reference": "d41c44a7eab604c3eb0cad93210612d4c1429c20",
                 "shasum": ""
             },
             "require": {
@@ -5148,7 +5148,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.18.0"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.18.2"
             },
             "funding": [
                 {
@@ -5156,7 +5156,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-12-30T13:13:39+00:00"
+            "time": "2025-01-20T14:14:17+00:00"
         },
         {
             "name": "spatie/laravel-permission",
