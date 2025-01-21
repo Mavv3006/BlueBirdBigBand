@@ -40,6 +40,9 @@ class NewsletterAdminNotificationMail extends Mailable
     {
         return new Content(
             markdown: 'mail.newsletter-admin-notification-mail',
+            with: [
+                'newsletterRequest' => $this->newsletterRequest,
+            ]
         );
     }
 

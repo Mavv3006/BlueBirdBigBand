@@ -3,6 +3,7 @@
 namespace Tests\Unit\StateMachines\NewsletterRequest;
 
 use App\Enums\StateMachines\NewsletterState;
+use App\Exceptions\InvalidStateTransitionException;
 use App\Models\NewsletterRequest;
 use App\StateMachines\NewsletterRequest\ConfirmedNewsletterState;
 use Exception;
@@ -16,7 +17,7 @@ class ConfirmedNewsletterStateTest extends TestCase
             'status' => NewsletterState::Confirmed,
         ]);
 
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidStateTransitionException::class);
         $request->state()->confirm();
 
         $this->assertNull($request->confirmed_at);

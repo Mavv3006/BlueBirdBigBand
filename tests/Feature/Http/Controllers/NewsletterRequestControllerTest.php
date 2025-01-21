@@ -9,6 +9,7 @@ use App\Enums\StateMachines\NewsletterState;
 use App\Mail\NewsletterConfirmationMail;
 use App\Models\FeatureFlag;
 use App\Models\NewsletterRequest;
+use App\StateMachines\NewsletterRequest\ConfirmedNewsletterState;
 use App\StateMachines\NewsletterRequest\RequestedNewsletterState;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
@@ -35,7 +36,7 @@ class NewsletterRequestControllerTest extends TestCase
             'type' => NewsletterType::Adding->value,
         ]);
 
-        $response->assertRedirectToRoute('newsletter');
+        $response->assertOk();
         $this->assertDatabaseCount(NewsletterRequest::class, 1);
 
         Mail::assertSent(NewsletterConfirmationMail::class);
@@ -60,17 +61,17 @@ class NewsletterRequestControllerTest extends TestCase
             'type' => NewsletterType::Removing->value,
         ]);
 
-        $response->assertRedirectToRoute('newsletter');
+        $response->assertOk();
         $this->assertDatabaseCount(NewsletterRequest::class, 1);
 
         $request = NewsletterRequest::first();
-        $this->assertInstanceOf(RequestedNewsletterState::class, $request->state());
-        $this->assertNull($request->confirmed_at);
+        $this->assertInstanceOf(ConfirmedNewsletterState::class, $request->state());
         $this->assertNull($request->completed_at);
+        $this->assertNotNull($request->confirmed_at);
         $this->assertNotNull($request->created_at);
         $this->assertNotNull($request->updated_at);
         $this->assertEquals($email, $request->email);
         $this->assertEquals(NewsletterType::Removing, $request->type);
-        $this->assertEquals(NewsletterState::Requested, $request->status);
+        $this->assertEquals(NewsletterState::Confirmed, $request->status);
     }
 }

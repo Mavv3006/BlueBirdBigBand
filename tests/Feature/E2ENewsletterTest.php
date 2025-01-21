@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Enums\FeatureFlagName;
 use App\Enums\NewsletterType;
+use App\Enums\StateMachines\FeatureFlagState;
 use App\Enums\StateMachines\NewsletterState;
 use App\Mail\NewsletterAdminNotificationMail;
 use App\Mail\NewsletterConfirmationMail;
+use App\Models\FeatureFlag;
 use App\Models\NewsletterRequest;
 use App\Services\NewsletterRequest\NewsletterRequestService;
 use Exception;
@@ -14,6 +17,15 @@ use Tests\TestCase;
 
 class E2ENewsletterTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Mail::fake();
+        FeatureFlag::factory()->create([
+            'name' => FeatureFlagName::Newsletter,
+            'status' => FeatureFlagState::On,
+        ]);
+    }
     public function test_register_for_newsletter()
     {
         /*
@@ -25,7 +37,6 @@ class E2ENewsletterTest extends TestCase
          * */
 
         // 0) Setup
-        Mail::fake();
         $email = 'test@example.com';
 
         // 1) User goes to /newsletter
@@ -79,7 +90,6 @@ class E2ENewsletterTest extends TestCase
          * */
 
         // 0) Setup
-        Mail::fake();
         $email = 'test@example.com';
 
         // 1) User goes to /newsletter
@@ -126,7 +136,6 @@ class E2ENewsletterTest extends TestCase
          * */
 
         // 0) Setup
-        Mail::fake();
         $email = 'test@example.com';
 
         // 1) User goes to /newsletter

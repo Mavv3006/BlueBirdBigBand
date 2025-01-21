@@ -4,7 +4,7 @@ namespace App\Services\NewsletterRequest;
 
 use App\Enums\NewsletterType;
 use App\Enums\StateMachines\NewsletterState;
-use App\Mail\NewsletterAdminNotificationMail;
+use App\Exceptions\InvalidStateTransitionException;
 use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
 use Illuminate\Support\Facades\Log;
@@ -17,28 +17,19 @@ class NewsletterRequestService
         $newsletterRequest = NewsletterRequest::create([
             'email' => $email,
             'type' => $type,
-            'status' => match ($type) {
-                NewsletterType::Adding => NewsletterState::Requested,
-                NewsletterType::Removing => NewsletterState::Confirmed,
-            },
+            'status' => NewsletterState::Requested,
         ]);
         Log::info('Created a new newsletter request', [$newsletterRequest]);
 
-        self::sendNotificationEmails($newsletterRequest);
+        self::performPostCreationTasks($newsletterRequest);
     }
 
     public static function confirm(NewsletterRequest $newsletterRequest): void
     {
         try {
-            $newsletterRequest
-                ->state()
-                ->confirm();
-            Log::info('Confirmed a newsletter request', [$newsletterRequest]);
-
-            Mail::send(new NewsletterAdminNotificationMail($newsletterRequest));
-            Log::info('Sent a newsletter admin notification mail', [$newsletterRequest]);
-        } catch (\Exception) {
-            // ignore exception
+            $newsletterRequest->state()->confirm();
+        } catch (InvalidStateTransitionException $e) {
+            Log::error($e->getMessage());
         }
     }
 
@@ -47,16 +38,14 @@ class NewsletterRequestService
         return route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
     }
 
-    public static function sendNotificationEmails(NewsletterRequest $newsletterRequest): void
+    public static function performPostCreationTasks(NewsletterRequest $newsletterRequest): void
     {
-        switch ($newsletterRequest->type) {
-            case NewsletterType::Adding:
-                Mail::to($newsletterRequest->email)->send(new NewsletterConfirmationMail($newsletterRequest));
-                Log::info('Sent a newsletter confirmation mail', [$newsletterRequest]);
-                break;
-            case NewsletterType::Removing:
-                Mail::send(new NewsletterAdminNotificationMail($newsletterRequest));
-                Log::info('Sent a newsletter admin notification mail', [$newsletterRequest]);
+        if ($newsletterRequest->type == NewsletterType::Removing) {
+            self::confirm($newsletterRequest);
+            return;
         }
+
+        Mail::to($newsletterRequest->email)->send(new NewsletterConfirmationMail($newsletterRequest));
+        Log::info('Sent a newsletter confirmation mail', [$newsletterRequest]);
     }
 }
