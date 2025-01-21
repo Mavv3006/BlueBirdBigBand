@@ -2,9 +2,7 @@
 
 namespace App\StateMachines\NewsletterRequest;
 
-use App\Enums\StateMachines\NewsletterState;
 use App\Models\NewsletterRequest;
-use Carbon\Carbon;
 use Exception;
 
 abstract class BaseNewsletterState
@@ -24,9 +22,6 @@ abstract class BaseNewsletterState
      */
     public function complete(): void
     {
-        $this->newsletterRequest->update([
-            'status' => NewsletterState::Completed,
-            'completed_at' => Carbon::now(),
-        ]);
+        throw new Exception;
     }
 }

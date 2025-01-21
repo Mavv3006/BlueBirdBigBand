@@ -14,11 +14,6 @@ use Tests\TestCase;
 
 class E2ENewsletterTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function test_register_for_newsletter()
     {
         /*
@@ -101,7 +96,7 @@ class E2ENewsletterTest extends TestCase
         $newsletterAddingRequest = NewsletterRequest::first();
         $this->assertEquals($email, $newsletterAddingRequest->email);
         $this->assertEquals(NewsletterType::Removing, $newsletterAddingRequest->type);
-        $this->assertEquals(NewsletterState::Requested, $newsletterAddingRequest->status);
+        $this->assertEquals(NewsletterState::Confirmed, $newsletterAddingRequest->status);
 
         // 3) Admin receives notification email
         Mail::assertSent(NewsletterAdminNotificationMail::class);

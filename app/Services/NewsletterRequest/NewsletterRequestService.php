@@ -3,7 +3,7 @@
 namespace App\Services\NewsletterRequest;
 
 use App\Enums\NewsletterType;
-use App\Http\Requests\NewsletterRequestingRequest;
+use App\Enums\StateMachines\NewsletterState;
 use App\Mail\NewsletterAdminNotificationMail;
 use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
@@ -12,12 +12,15 @@ use Illuminate\Support\Facades\Mail;
 
 class NewsletterRequestService
 {
-    public static function createNew(NewsletterRequestingRequest $request): void
+    public static function createNew(string $email, NewsletterType $type): void
     {
-        $data = $request->validated();
         $newsletterRequest = NewsletterRequest::create([
-            'email' => $data['email'],
-            'type' => $data['type'],
+            'email' => $email,
+            'type' => $type,
+            'status' => match ($type) {
+                NewsletterType::Adding => NewsletterState::Requested,
+                NewsletterType::Removing => NewsletterState::Confirmed,
+            },
         ]);
         Log::info('Created a new newsletter request', [$newsletterRequest]);
 
