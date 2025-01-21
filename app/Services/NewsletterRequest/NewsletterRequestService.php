@@ -42,6 +42,7 @@ class NewsletterRequestService
     {
         if ($newsletterRequest->type == NewsletterType::Removing) {
             self::confirm($newsletterRequest);
+
             return;
         }
 

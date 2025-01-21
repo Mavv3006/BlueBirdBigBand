@@ -19,7 +19,6 @@ class RequestedNewsletterState extends BaseNewsletterState
         ]);
         Log::info('Confirmed a newsletter request', [$this->newsletterRequest]);
 
-
         Mail::send(new NewsletterAdminNotificationMail($this->newsletterRequest));
         Log::info('Sent a newsletter admin notification mail', [$this->newsletterRequest]);
     }

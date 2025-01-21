@@ -26,6 +26,7 @@ class E2ENewsletterTest extends TestCase
             'status' => FeatureFlagState::On,
         ]);
     }
+
     public function test_register_for_newsletter()
     {
         /*
