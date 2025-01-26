@@ -1,6 +1,6 @@
 <template>
     <li v-if="element.link && !element.submenu">
-        <Link v-if="element.link" :href="element.link">{{ element.linkName }}</Link>
+        <Link v-if="element.link" :href="element.link" :method="elementMethod">{{ element.linkName }}</Link>
     </li>
     <li v-if="!element.link && element.submenu"
         class="nav-container">
@@ -23,6 +23,8 @@ const props = defineProps<{ element: Route }>();
 if (props.element.link !== undefined && props.element.submenu !== undefined) {
     throw TypeError('both link and submenu are not supported');
 }
+
+const elementMethod = props.element.linkName == 'Logout' ? 'post' : 'get';
 </script>
 
 <style scoped>

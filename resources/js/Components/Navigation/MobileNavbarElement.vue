@@ -1,55 +1,43 @@
 <template>
-    <li ref="container" :style="{'z-index': zIndex ?? 'unset'}" class="text-white">
-        <div v-if="link === undefined" class="container">{{ container_title }}</div>
-        <div v-if="link !== undefined" class="container">
-            <Link :as="as" :href="link" :method="method">{{ container_title }}</Link>
+    <li class="text-white">
+        <div v-if="element.link === undefined" class="container">{{ element.linkName }}</div>
+        <div v-if="element.link !== undefined" class="container">
+            <Link v-if="element.linkName === 'Logout'" :href="element.link" :onSuccess="onSuccess" as="button"
+                  method="post">
+                {{ element.linkName }}
+            </Link>
+
+            <Link v-else :href="element.link">
+                {{ element.linkName }}
+            </Link>
+
         </div>
-        <button v-if="hasChildren" :class="{'open-submenu-bg-color': isOpenRef}"
-                @click="toggle_submenu">
+        <button v-if="(submenu === null ? 0 : submenu.childElementCount) > 0"
+                :class="{'open-submenu-bg-color': isOpenRef}"
+                @click="isOpenRef = !isOpenRef">
             <font-awesome-icon v-if="isOpenRef" icon="fa-solid fa-minus"/>
             <font-awesome-icon v-if="!isOpenRef" icon="fa-solid fa-plus"/>
         </button>
     </li>
     <li ref="submenu" :class="{'open-submenu':isOpenRef}" class="submenu">
-        <slot/>
+        <p v-for="submenu in element.submenu" :key="submenu.linkName"
+           class="p-[14px] pl-[34px] text-[14px] tracking-[1px] bg-[#d61000] text-white submenu-element">
+            <Link :href="submenu.link">{{ submenu.linkName }}</Link>
+        </p>
     </li>
 </template>
 
 <script lang="ts" setup>
-import {computed, defineProps, ref} from 'vue';
+import {defineProps, ref} from 'vue';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {Link} from '@inertiajs/vue3';
+import {Route} from "@/Composables/useRoutes";
 
-interface Props {
-    container_title: string,
-    link?: string,
-    zIndex?: string,
-    method?: string,
-    as?: string
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    container_title: '',
-    method: undefined,
-    as: undefined
-});
-const emits = defineEmits<{
-    (e: 'update:isOpen', isOpen: boolean): void
-}>();
-
+const props = defineProps<{ element: Route }>();
 const isOpenRef = ref<boolean>(false);
-const container = ref<HTMLLIElement | null>(null);
 const submenu = ref<HTMLLIElement | null>(null);
 
-const submenu_children_count = () => {
-    return submenu.value === null ? 0 : submenu.value.childElementCount;
-};
-
-const hasChildren = computed<boolean>(() => submenu_children_count() > 0);
-
-const toggle_submenu = () => {
-    isOpenRef.value = !isOpenRef.value;
-};
+const onSuccess = () => window.location.reload();
 </script>
 
 <style scoped>
