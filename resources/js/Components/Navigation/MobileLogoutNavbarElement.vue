@@ -2,9 +2,9 @@
     <li class="text-white">
         <div v-if="element.link === undefined" class="container">{{ element.linkName }}</div>
         <div v-if="element.link !== undefined" class="container">
-            <Link :href="element.link" ref="loginLink">
+            <button class="w-full text-left" @click="$emit('logout')">
                 {{ element.linkName }}
-            </Link>
+            </button>
         </div>
         <button v-if="(submenu === null ? 0 : submenu.childElementCount) > 0"
                 :class="{'open-submenu-bg-color': isOpenRef}"
