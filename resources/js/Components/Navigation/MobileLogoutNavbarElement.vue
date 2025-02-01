@@ -2,7 +2,7 @@
     <li class="text-white">
         <div v-if="element.link === undefined" class="container">{{ element.linkName }}</div>
         <div v-if="element.link !== undefined" class="container">
-            <button @click="$emit('logout')">
+            <button class="w-full text-left" @click="$emit('logout')">
                 {{ element.linkName }}
             </button>
         </div>
