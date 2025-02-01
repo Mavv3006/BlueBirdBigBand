@@ -34,7 +34,7 @@ export type FeatureFlags = {
 /**
  * Call this function with this parameter: `usePage().props.auth.can`.
  */
-export function useRoutes(isLoggedIn: boolean, gates?: Gates, feature_flags?: FeatureFlags | unknown): (TopLevelRoute | DropdownRoute)[] {
+export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown): (TopLevelRoute | DropdownRoute)[] {
     let routes: Route[] = [
         {link: '/', linkName: 'Home'},
         {
@@ -69,7 +69,7 @@ export function useRoutes(isLoggedIn: boolean, gates?: Gates, feature_flags?: Fe
         routes.push({
             linkName: 'Intern',
             submenu: [
-                {link: '/intern/emails', linkName: 'E-mail Verteiler'},
+                {link: '/intern/emails', linkName: 'E-Mail Verteiler'},
                 {link: '/intern/songs', linkName: 'Songs'}
             ],
         })
@@ -77,10 +77,9 @@ export function useRoutes(isLoggedIn: boolean, gates?: Gates, feature_flags?: Fe
     if (gates["route.access-admin"]) {
         routes.push({link: '/admin', linkName: 'Admin'});
     }
-    if (isLoggedIn) {
-        routes.push({link: '/logout', linkName: 'Logout'});
-    } else {
-        routes.push({link: '/login', linkName: 'Login'})
-    }
+
+    routes.push({link: '/logout', linkName: 'Logout'});
+    routes.push({link: '/login', linkName: 'Login'});
+
     return routes;
 }
