@@ -1,6 +1,6 @@
 <template>
     <li v-if="element.link && !element.submenu">
-        <Link v-if="element.link" :href="element.link">{{ element.linkName }}</Link>
+        <button v-if="element.link" @click="$emit('logout')">{{ element.linkName }}</button>
     </li>
     <li v-if="!element.link && element.submenu"
         class="nav-container">
