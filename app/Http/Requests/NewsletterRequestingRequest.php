@@ -27,6 +27,7 @@ class NewsletterRequestingRequest extends FormRequest
         return [
             'email' => ['string', 'required', 'email'],
             'type' => ['required', 'string', Rule::enum(NewsletterType::class)],
+            'data_privacy_consent' => ['boolean', 'required'],
         ];
     }
 }

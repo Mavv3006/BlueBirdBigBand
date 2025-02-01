@@ -31,6 +31,17 @@
                 <InputSuccess v-if="showAddingSuccess" message="Eintragen beantragt." class="mt-2"/>
             </div>
 
+            <div class="flex gap-x-2 flex-row mt-4">
+                <input
+                    class="border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB] rounded-[5px] shadow-sm disabled:text-gray-500"
+                    type="checkbox" name="data-privacy-consent" id="data-privacy-consent" required>
+                <InputLabel for="data-privacy-consent">
+                    Ich habe die
+                    <NavLink href='/datenschutz'>Datenschutzerklärung</NavLink>
+                    gelesen und stimme der Verarbeitung meiner Daten gemäß dieser zu. Ich erhalte den Newsletter mit
+                    Informationen zu unseren kommenden Auftritten.
+                </InputLabel>
+            </div>
 
             <div class="flex items-center justify-center mt-4">
                 <PrimaryButton :class="{ 'opacity-25': addingForm.processing }"
@@ -43,15 +54,16 @@
 </template>
 
 <script setup lang="ts">
+import {useForm} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputSuccess from "@/Components/InputSuccess.vue";
 import Accordion from "@/Components/Accordion/Accordion.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
-import {useForm} from "@inertiajs/vue3";
 import {NewsletterRequestType} from "@/types/newsletter";
 import SubHeading from "@/Components/SubHeading.vue";
+import NavLink from "@/Components/Link/NavLink.vue";
 
 defineProps<{
     title: string,
@@ -59,7 +71,8 @@ defineProps<{
 
 const addingForm = useForm<NewsletterRequestType>({
     email: null,
-    type: "adding"
+    type: "adding",
+    data_privacy_consent: false,
 });
 
 let showAddingSuccess = false;
