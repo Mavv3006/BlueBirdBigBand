@@ -14,7 +14,7 @@ class NewsletterRequestService
 {
     public static function createNew(NewsletterRequestDto $dto): void
     {
-        $newsletterRequest = NewsletterRequest::create((array)$dto);
+        $newsletterRequest = NewsletterRequest::create((array) $dto);
         Log::info('Created a new newsletter request', [$newsletterRequest]);
 
         self::performPostCreationTasks($newsletterRequest);
