@@ -52,16 +52,20 @@ Route::get('/test', function () {
         ->send(new NewsletterMail(Concert::first()));
 });
 
-Route::middleware([
-    'feature:'.FeatureFlagName::Newsletter->value,
-])->group(function () {
-    Route::get('/newsletter', [PublicController::class, 'newsletter'])
-        ->name('newsletter');
-    Route::post('newsletter/request', [NewsletterRequestController::class, 'request'])
-        ->name('newsletter.request');
-    Route::get('newsletter/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
-        ->name('newsletter.confirm');
-});
+Route::prefix('newsletter')
+    ->middleware(['feature:'.FeatureFlagName::Newsletter->value])
+    ->group(function () {
+        Route::get('/', [PublicController::class, 'newsletter'])
+            ->name('newsletter');
+        Route::get('/subscribe', [NewsletterRequestController::class, 'subscribe'])
+            ->name('newsletter.subscribe');
+        Route::post('/request', [NewsletterRequestController::class, 'request'])
+            ->name('newsletter.request');
+        Route::get('/confirm/success', [NewsletterRequestController::class, 'confirmSuccess'])
+            ->name('newsletter.confirm.success');
+        Route::get('/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
+            ->name('newsletter.confirm');
+    });
 
 Route::middleware('auth')
     ->get('download/song/{song}', DownloadSongController::class)
