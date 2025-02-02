@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Enums\NewsletterType;
 use App\Models\NewsletterRequest;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -29,7 +30,10 @@ class NewsletterAdminNotificationMail extends Mailable
     {
         return new Envelope(
             to: 'webadmin@bluebirdbigband.com',
-            subject: '[BBBB] Neue Newsletter-Anfrage'
+            subject: match ($this->newsletterRequest->type) {
+                NewsletterType::Adding => '[BBBB] Neue Newsletter-Anfrage - Hinzufügen',
+                NewsletterType::Removing => '[BBBB] Neue Newsletter-Anfrage - Entfernen',
+            }
         );
     }
 
@@ -39,7 +43,10 @@ class NewsletterAdminNotificationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.newsletter-admin-notification-mail',
+            markdown: match ($this->newsletterRequest->type) {
+                NewsletterType::Adding => 'mail.newsletter-admin-notification-mail-adding',
+                NewsletterType::Removing => 'mail.newsletter-admin-notification-mail-removing',
+            },
             with: [
                 'newsletterRequest' => $this->newsletterRequest,
             ]

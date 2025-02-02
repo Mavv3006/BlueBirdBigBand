@@ -35,7 +35,7 @@
                 <input
                     id="data-privacy-consent"
                     class="border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB] rounded-[5px] shadow-sm disabled:text-gray-500"
-                    name="data-privacy-consent" required type="checkbox">
+                    name="data-privacy-consent" required type="checkbox" v-model="addingForm.data_privacy_consent">
                 <InputLabel for="data-privacy-consent">Ich habe die
                     <NavLink href='/datenschutz'>Datenschutzerklärung</NavLink>
                     gelesen und stimme der Verarbeitung meiner Daten gemäß dieser zu. Ich erhalte den Newsletter mit
@@ -79,12 +79,12 @@ const addingForm = useForm<NewsletterRequestType>({
 let showAddingSuccess = false;
 
 let submitAddingForm = () => {
-    console.log('submitting adding form', addingForm.data())
     addingForm.post('/newsletter/request', {
         preserveScroll: true,
         onSuccess: () => {
             showAddingSuccess = true;
             addingForm.reset('email')
+            addingForm.reset('data_privacy_consent')
         },
         onStart: () => {
             showAddingSuccess = false;
@@ -92,6 +92,3 @@ let submitAddingForm = () => {
     });
 }
 </script>
-
-<style scoped>
-</style>

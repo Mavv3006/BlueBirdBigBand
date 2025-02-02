@@ -54,12 +54,13 @@ import SubHeading from "@/Components/SubHeading.vue";
 
 const removingForm = useForm<NewsletterRequestType>({
     email: null,
-    type: "removing"
+    type: "removing",
+    data_privacy_consent: null,
+    data_privacy_consent_text: null,
 });
 
 let showRemovingSuccess = false;
 let submitRemovingForm = () => {
-    console.log('submitting adding form', removingForm.data())
     removingForm.post('/newsletter/request', {
         preserveScroll: true,
         onSuccess: () => {
@@ -68,10 +69,7 @@ let submitRemovingForm = () => {
         },
         onStart: () => {
             showRemovingSuccess = false;
-        }
+        },
     });
 }
 </script>
-
-<style scoped>
-</style>
