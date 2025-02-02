@@ -48,6 +48,8 @@ class E2ENewsletterTest extends TestCase
         $this->post(route('newsletter.request'), data: [
             'email' => $email,
             'type' => NewsletterType::Adding->value,
+            'data_privacy_consent' => true,
+            'data_privacy_consent_text' => 'test',
         ]);
 
         $this->assertDatabaseCount(NewsletterRequest::class, 1);
@@ -147,6 +149,8 @@ class E2ENewsletterTest extends TestCase
         $this->post(route('newsletter.request'), data: [
             'email' => $email,
             'type' => NewsletterType::Adding->value,
+            'data_privacy_consent' => true,
+            'data_privacy_consent_text' => 'test',
         ]);
 
         $this->assertDatabaseCount(NewsletterRequest::class, 1);

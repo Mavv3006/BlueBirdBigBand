@@ -34,6 +34,8 @@ class NewsletterRequestControllerTest extends TestCase
         $response = $this->post(route('newsletter.request'), [
             'email' => $email,
             'type' => NewsletterType::Adding->value,
+            'data_privacy_consent' => true,
+            'data_privacy_consent_text' => 'test',
         ]);
 
         $response->assertOk();
@@ -46,13 +48,17 @@ class NewsletterRequestControllerTest extends TestCase
         $this->assertNull($request->completed_at);
         $this->assertNotNull($request->created_at);
         $this->assertNotNull($request->updated_at);
+        $this->assertNotNull($request->ip_address);
         $this->assertEquals($email, $request->email);
+        $this->assertTrue($request->data_privacy_consent);
+        $this->assertEquals('test', $request->data_privacy_consent_text);
         $this->assertEquals(NewsletterType::Adding, $request->type);
         $this->assertEquals(NewsletterState::Requested, $request->status);
     }
 
     public function test_removing_request()
     {
+        $this->withoutExceptionHandling();
         $this->assertDatabaseCount(NewsletterRequest::class, 0);
 
         $email = 'test@example.com';
@@ -67,9 +73,12 @@ class NewsletterRequestControllerTest extends TestCase
         $request = NewsletterRequest::first();
         $this->assertInstanceOf(ConfirmedNewsletterState::class, $request->state());
         $this->assertNull($request->completed_at);
+        $this->assertNull($request->data_privacy_consent);
+        $this->assertNull($request->data_privacy_consent_text);
         $this->assertNotNull($request->confirmed_at);
         $this->assertNotNull($request->created_at);
         $this->assertNotNull($request->updated_at);
+        $this->assertNotNull($request->ip_address);
         $this->assertEquals($email, $request->email);
         $this->assertEquals(NewsletterType::Removing, $request->type);
         $this->assertEquals(NewsletterState::Confirmed, $request->status);

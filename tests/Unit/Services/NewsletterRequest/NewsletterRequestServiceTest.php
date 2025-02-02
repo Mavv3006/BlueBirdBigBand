@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services\NewsletterRequest;
 
+use App\DataTransferObjects\NewsletterRequestDto;
 use App\Enums\NewsletterType;
 use App\Enums\StateMachines\NewsletterState;
 use App\Models\NewsletterRequest;
@@ -23,10 +24,16 @@ class NewsletterRequestServiceTest extends TestCase
     public function test_create_adding_request()
     {
         Mail::fake();
-        $email = 'test@test.test';
-        $type = NewsletterType::Adding;
 
-        NewsletterRequestService::createNew($email, $type);
+        $dto = new NewsletterRequestDto(
+            email: 'test@test.test',
+            type: NewsletterType::Adding,
+            data_privacy_consent: true,
+            data_privacy_consent_text: 'asödlkjflkasdjf',
+            ip_address: 'askdjfhalsf',
+            status: NewsletterState::Requested,
+        );
+        NewsletterRequestService::createNew($dto);
 
         $this->assertDatabaseCount(NewsletterRequest::class, 1);
         $newsletterAddingRequest = NewsletterRequest::first();
@@ -37,10 +44,15 @@ class NewsletterRequestServiceTest extends TestCase
     public function test_create_removing_request()
     {
         Mail::fake();
-        $email = 'test@test.test';
-        $type = NewsletterType::Removing;
-
-        NewsletterRequestService::createNew($email, $type);
+        $dto = new NewsletterRequestDto(
+            email: 'test@test.test',
+            type: NewsletterType::Removing,
+            data_privacy_consent: null,
+            data_privacy_consent_text: null,
+            ip_address: 'askdjfhalsf',
+            status: NewsletterState::Requested,
+        );
+        NewsletterRequestService::createNew($dto);
 
         $this->assertDatabaseCount(NewsletterRequest::class, 1);
         $newsletterAddingRequest = NewsletterRequest::first();

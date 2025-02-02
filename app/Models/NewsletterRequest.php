@@ -21,11 +21,15 @@ class NewsletterRequest extends Model
         'confirmed_at',
         'email',
         'type',
+        'data_privacy_consent',
+        'data_privacy_consent_text',
+        'ip_address',
     ];
 
     protected $casts = [
         'status' => NewsletterState::class,
         'type' => NewsletterType::class,
+        'data_privacy_consent' => 'boolean',
     ];
 
     public function state(): BaseNewsletterState

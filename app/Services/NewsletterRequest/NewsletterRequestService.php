@@ -2,8 +2,8 @@
 
 namespace App\Services\NewsletterRequest;
 
+use App\DataTransferObjects\NewsletterRequestDto;
 use App\Enums\NewsletterType;
-use App\Enums\StateMachines\NewsletterState;
 use App\Exceptions\InvalidStateTransitionException;
 use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
@@ -12,13 +12,9 @@ use Illuminate\Support\Facades\Mail;
 
 class NewsletterRequestService
 {
-    public static function createNew(string $email, NewsletterType $type): void
+    public static function createNew(NewsletterRequestDto $dto): void
     {
-        $newsletterRequest = NewsletterRequest::create([
-            'email' => $email,
-            'type' => $type,
-            'status' => NewsletterState::Requested,
-        ]);
+        $newsletterRequest = NewsletterRequest::create((array)$dto);
         Log::info('Created a new newsletter request', [$newsletterRequest]);
 
         self::performPostCreationTasks($newsletterRequest);

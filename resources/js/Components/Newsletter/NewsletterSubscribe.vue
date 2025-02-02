@@ -28,15 +28,15 @@
                 />
 
                 <InputError :message="addingForm.errors.email" class="mt-2"/>
-                <InputSuccess v-if="showAddingSuccess" message="Eintragen beantragt." class="mt-2"/>
+                <InputSuccess v-if="showAddingSuccess" class="mt-2" message="Eintragen beantragt."/>
             </div>
 
             <div class="flex gap-x-2 flex-row mt-4">
                 <input
+                    id="data-privacy-consent"
                     class="border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB] rounded-[5px] shadow-sm disabled:text-gray-500"
-                    type="checkbox" name="data-privacy-consent" id="data-privacy-consent" required>
-                <InputLabel for="data-privacy-consent">
-                    Ich habe die
+                    name="data-privacy-consent" required type="checkbox">
+                <InputLabel for="data-privacy-consent">Ich habe die
                     <NavLink href='/datenschutz'>Datenschutzerklärung</NavLink>
                     gelesen und stimme der Verarbeitung meiner Daten gemäß dieser zu. Ich erhalte den Newsletter mit
                     Informationen zu unseren kommenden Auftritten.
@@ -53,7 +53,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useForm} from "@inertiajs/vue3";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
@@ -73,6 +73,7 @@ const addingForm = useForm<NewsletterRequestType>({
     email: null,
     type: "adding",
     data_privacy_consent: false,
+    data_privacy_consent_text: "Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Daten gemäß dieser zu. Ich erhalte den Newsletter mit Informationen zu unseren kommenden Auftritten.",
 });
 
 let showAddingSuccess = false;
