@@ -29,7 +29,7 @@ class NewsletterAdminNotificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: 'webadmin@bluebirdbigband.de',
+            to: config('mail.admin_address'),
             subject: match ($this->newsletterRequest->type) {
                 NewsletterType::Adding => '[BBBB] Neue Newsletter-Anfrage - Hinzufügen',
                 NewsletterType::Removing => '[BBBB] Neue Newsletter-Anfrage - Entfernen',
