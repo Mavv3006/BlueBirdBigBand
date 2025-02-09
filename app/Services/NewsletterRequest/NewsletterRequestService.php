@@ -9,6 +9,7 @@ use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class NewsletterRequestService
 {
@@ -31,7 +32,8 @@ class NewsletterRequestService
 
     public static function confirmationLink(NewsletterRequest $newsletterRequest): string
     {
-        return route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
+        return URL::signedRoute('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
+        // return route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
     }
 
     public static function performPostCreationTasks(NewsletterRequest $newsletterRequest): void
