@@ -64,6 +64,7 @@ Route::prefix('newsletter')
         Route::get('/confirm/success', [NewsletterRequestController::class, 'confirmSuccess'])
             ->name('newsletter.confirm.success');
         Route::get('/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
+            ->middleware('signed')
             ->name('newsletter.confirm');
     });
 
