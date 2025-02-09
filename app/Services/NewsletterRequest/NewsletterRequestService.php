@@ -36,7 +36,7 @@ class NewsletterRequestService
         return URL::signedRoute(
             name: 'newsletter.confirm',
             parameters: ['newsletterRequest' => $newsletterRequest],
-            expiration: Carbon::now()->addSecond(), // Carbon::now()->addDay(),
+            expiration: Carbon::now()->addDay(),
         );
     }
 
