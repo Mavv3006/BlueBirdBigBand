@@ -5,6 +5,7 @@ on:
     branches:
       - '*'
       - '!main'
+      - '!dependency-updates'
 jobs:
   Pint:
     runs-on: ubuntu-latest

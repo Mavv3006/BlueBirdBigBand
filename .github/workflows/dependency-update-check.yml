@@ -13,7 +13,6 @@ jobs:
     env:
       PHP_VERSION: 8.3        # PHP-Version an einer zentralen Stelle definieren
       NODE_VERSION: 22        # Node.js-Version an einer zentralen Stelle definieren
-      DB_VERSION: 10.11       # MariaDB Version
       DB_DATABASE: test_db    # Datenbankname
       DB_USER: user           # Datenbankbenutzer
       DB_PASSWORD: secret     # Datenbankpasswort
@@ -22,7 +21,7 @@ jobs:
 
     services:
       mysql:
-        image: mariadb:${{ env.DB_VERSION }}
+        image: mariadb:10.11
         env:
           MARIADB_DATABASE: ${{ env.DB_DATABASE }}  # Verwendet die Umgebungsvariable
           MARIADB_USER: ${{ env.DB_USER }}          # Verwendet die Umgebungsvariable

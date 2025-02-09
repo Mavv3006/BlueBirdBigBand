@@ -29,11 +29,18 @@ class NewsletterRequestFactory extends Factory
             '1' => NewsletterState::Confirmed,
             '2' => NewsletterState::Completed
         };
+        $ip_address = match (Random::generate(length: 1, charlist: '0-1')) {
+            '0' => $this->faker->ipv4,
+            '1' => $this->faker->ipv6
+        };
 
         return [
             'email' => $this->faker->email,
             'type' => $type,
             'status' => $status,
+            'ip_address' => $ip_address,
+            'data_privacy_consent_text' => $this->faker->words(5, true),
+            'data_privacy_consent' => $this->faker->boolean,
         ];
     }
 }

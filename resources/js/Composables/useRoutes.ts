@@ -27,10 +27,14 @@ export type Gates = {
     'route.access-intern': boolean,
 }
 
+export type FeatureFlags = {
+    'newsletter': boolean,
+}
+
 /**
  * Call this function with this parameter: `usePage().props.auth.can`.
  */
-export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
+export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown): (TopLevelRoute | DropdownRoute)[] {
     let routes: Route[] = [
         {link: '/', linkName: 'Home'},
         {
@@ -58,11 +62,14 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
             ],
         },
     ];
+    if (feature_flags && feature_flags['newsletter']) {
+        routes[3].submenu.push({link: '/newsletter', linkName: 'Newsletter'})
+    }
     if (gates["route.access-intern"]) {
         routes.push({
             linkName: 'Intern',
             submenu: [
-                {link: '/intern/emails', linkName: 'E-mail Verteiler'},
+                {link: '/intern/emails', linkName: 'E-Mail Verteiler'},
                 {link: '/intern/songs', linkName: 'Songs'}
             ],
         })
@@ -70,5 +77,9 @@ export function useRoutes(gates?: Gates): (TopLevelRoute | DropdownRoute)[] {
     if (gates["route.access-admin"]) {
         routes.push({link: '/admin', linkName: 'Admin'});
     }
+
+    routes.push({link: '/logout', linkName: 'Logout'});
+    routes.push({link: '/login', linkName: 'Login'});
+
     return routes;
 }

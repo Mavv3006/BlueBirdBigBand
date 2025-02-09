@@ -8,12 +8,14 @@ use App\StateMachines\NewsletterRequest\BaseNewsletterState;
 use App\StateMachines\NewsletterRequest\CompletedNewsletterState;
 use App\StateMachines\NewsletterRequest\ConfirmedNewsletterState;
 use App\StateMachines\NewsletterRequest\RequestedNewsletterState;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class NewsletterRequest extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     protected $fillable = [
         'status',
@@ -21,11 +23,15 @@ class NewsletterRequest extends Model
         'confirmed_at',
         'email',
         'type',
+        'data_privacy_consent',
+        'data_privacy_consent_text',
+        'ip_address',
     ];
 
     protected $casts = [
         'status' => NewsletterState::class,
         'type' => NewsletterType::class,
+        'data_privacy_consent' => 'boolean',
     ];
 
     public function state(): BaseNewsletterState

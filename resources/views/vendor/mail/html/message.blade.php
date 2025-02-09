@@ -20,6 +20,8 @@
     <x-slot:footer>
         <x-mail::footer>
             © {{ date('Y') }} {{ config('app.name') }}. @lang('All rights reserved.')
+            <br>
+            <a href="{{ url('/newsletter#austragen') }}">Aus Newsletter austragen</a>
         </x-mail::footer>
     </x-slot:footer>
 </x-mail::layout>
