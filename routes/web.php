@@ -21,8 +21,6 @@ use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
-use App\Mail\NewsletterMail;
-use App\Models\Concert;
 use Illuminate\Support\Facades\Route;
 
 /*
