@@ -7,6 +7,7 @@ use App\Enums\NewsletterType;
 use App\Exceptions\InvalidStateTransitionException;
 use App\Mail\NewsletterConfirmationMail;
 use App\Models\NewsletterRequest;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
@@ -32,8 +33,11 @@ class NewsletterRequestService
 
     public static function confirmationLink(NewsletterRequest $newsletterRequest): string
     {
-        return URL::signedRoute('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
-        // return route('newsletter.confirm', ['newsletterRequest' => $newsletterRequest]);
+        return URL::signedRoute(
+            name: 'newsletter.confirm',
+            parameters: ['newsletterRequest' => $newsletterRequest],
+            expiration: Carbon::now()->addSecond(), //Carbon::now()->addDay(),
+        );
     }
 
     public static function performPostCreationTasks(NewsletterRequest $newsletterRequest): void
