@@ -13,8 +13,6 @@ class KonzertmeisterEventOverview extends BaseWidget
 {
     protected static bool $isLazy = false;
 
-    protected static ?string $pollingInterval = null;
-
     protected function getHeading(): ?string
     {
         return 'Übersicht über alle offene KonzertmeisterEvents';

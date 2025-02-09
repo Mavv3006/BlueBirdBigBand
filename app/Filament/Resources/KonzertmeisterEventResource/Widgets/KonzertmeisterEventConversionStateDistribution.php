@@ -17,8 +17,6 @@ class KonzertmeisterEventConversionStateDistribution extends BaseWidget
 
     protected static bool $isLazy = false;
 
-    protected static ?string $pollingInterval = null;
-
     protected function getStats(): array
     {
         $totalCount = KonzertmeisterEventsCountSingleton::getInstance()->getCount();
