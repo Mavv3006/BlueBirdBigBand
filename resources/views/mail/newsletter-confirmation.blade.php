@@ -1,4 +1,4 @@
-@component('mail::message')
+<x-mail::message>
 Sehr geehrte/r Abonnent/in,
 
 vielen Dank für Ihre Anmeldung zu unserem Newsletter! Bevor wir Ihnen regelmäßig spannende Neuigkeiten, exklusive
@@ -7,7 +7,9 @@ möchten.
 
 Um Ihre Anmeldung abzuschließen, klicken Sie bitte auf den untenstehenden Link:
 
-[{{ $confirmationUrl }}]({{ $confirmationUrl }})
+<x-mail::button :url="$confirmationUrl">
+    E-Mail Adresse bestätigen
+</x-mail::button>
 
 Durch Klicken auf den Link bestätigen Sie, dass Sie unseren Newsletter erhalten möchten. Sollten Sie sich nicht für
 unseren Newsletter angemeldet haben oder diese E-Mail versehentlich erhalten haben, können Sie sie einfach ignorieren.
@@ -17,4 +19,4 @@ Laufenden zu halten.
 
 Vielen Dank und herzliche Grüße,<br>
 Blue Bird Big Band
-@endcomponent
+</x-mail::message>>
