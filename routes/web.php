@@ -47,11 +47,6 @@ Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
 Route::get('/datenschutz', [PublicController::class, 'dataPrivacy']);
 
-Route::get('/test', function () {
-    \Illuminate\Support\Facades\Mail::to('test@example.com')
-        ->send(new NewsletterMail(Concert::first()));
-});
-
 Route::prefix('newsletter')
     ->middleware(['feature:'.FeatureFlagName::Newsletter->value])
     ->group(function () {
