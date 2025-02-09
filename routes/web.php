@@ -21,8 +21,6 @@ use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
-use App\Mail\NewsletterMail;
-use App\Models\Concert;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,11 +45,6 @@ Route::get('/musiker', [PublicController::class, 'musicians']);
 Route::get('/presse', [PublicController::class, 'pressInfo']);
 Route::get('/datenschutz', [PublicController::class, 'dataPrivacy']);
 
-Route::get('/test', function () {
-    \Illuminate\Support\Facades\Mail::to('test@example.com')
-        ->send(new NewsletterMail(Concert::first()));
-});
-
 Route::prefix('newsletter')
     ->middleware(['feature:'.FeatureFlagName::Newsletter->value])
     ->group(function () {
@@ -64,6 +57,7 @@ Route::prefix('newsletter')
         Route::get('/confirm/success', [NewsletterRequestController::class, 'confirmSuccess'])
             ->name('newsletter.confirm.success');
         Route::get('/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
+            ->middleware('signed')
             ->name('newsletter.confirm');
     });
 
