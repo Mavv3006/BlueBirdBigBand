@@ -56,6 +56,15 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'db_logging' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/db_logging.log'),
+            'level' => 'info',
+            'ignore_exceptions' => true,
+            'bubble' => false,
+            'days' => 20,
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
