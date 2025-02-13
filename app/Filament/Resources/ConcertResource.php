@@ -6,11 +6,11 @@ use App\Filament\Resources\ConcertResource\Pages;
 use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -60,24 +60,14 @@ class ConcertResource extends Resource
                             ->closeOnDateSelection()
                             ->required()
                             ->minDate(now()),
-                        DateTimePicker::make('start_time')
+                        TimePicker::make('start_time')
                             ->label('Startzeit')
-                            ->native(false)
                             ->seconds(false)
-                            ->weekStartsOnMonday()
-                            ->closeOnDateSelection()
-                            ->required()
-                            ->minDate(now())
-                            ->displayFormat(' H:i'),
-                        DateTimePicker::make('end_time')
+                            ->required(),
+                        TimePicker::make('end_time')
                             ->label('Endzeit')
-                            ->native(false)
                             ->seconds(false)
-                            ->weekStartsOnMonday()
-                            ->closeOnDateSelection()
-                            ->required()
-                            ->minDate(now())
-                            ->displayFormat('H:i'),
+                            ->required(),
                     ]),
                 Section::make('Beschreibungen')
                     ->columns([
