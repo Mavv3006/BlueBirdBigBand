@@ -13,7 +13,3 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {bold_name: false})
 </script>
-
-<style scoped>
-
-</style>

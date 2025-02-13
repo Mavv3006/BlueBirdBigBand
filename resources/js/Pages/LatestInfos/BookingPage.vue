@@ -42,6 +42,7 @@ import ContactManagement from "@/Components/Contact/ContactManagement.vue";
 import {Head} from '@inertiajs/vue3';</script>
 
 <style scoped>
+@reference "tailwindcss";
 p {
     @apply font-semibold;
 }

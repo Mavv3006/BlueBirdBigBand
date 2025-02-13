@@ -59,6 +59,7 @@ const props = defineProps<{
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 h2 {
     @apply text-2xl
 }

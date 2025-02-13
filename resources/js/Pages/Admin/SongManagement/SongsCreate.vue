@@ -71,7 +71,3 @@ const submitForm = () => {
     form.post(`/admin/songs/`);
 }
 </script>
-
-<style scoped>
-
-</style>
