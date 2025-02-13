@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\FeatureFlagName;
+use App\Enums\StateMachines\FeatureFlagState;
 use App\Enums\StateMachines\UserStates;
+use App\Models\FeatureFlag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -23,7 +26,10 @@ class DatabaseSeeder extends Seeder
             ->call(DefaultAuthorizationSeeder::class)
             ->call(SongSeeder::class)
             ->call(SetlistEntrySeeder::class)
-            ->call(NewsletterRequestSeeder::class);
+            ->call(NewsletterRequestSeeder::class)
+            ->call(KonzertmeisterEventSeeder::class);
+
+        FeatureFlag::create(['name' => FeatureFlagName::Newsletter, 'status' => FeatureFlagState::On]);
 
         User::factory()
             ->create(['name' => 'admin', 'status' => UserStates::Activated])

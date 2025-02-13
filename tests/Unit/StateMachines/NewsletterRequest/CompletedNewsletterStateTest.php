@@ -3,6 +3,7 @@
 namespace Tests\Unit\StateMachines\NewsletterRequest;
 
 use App\Enums\StateMachines\NewsletterState;
+use App\Exceptions\InvalidStateTransitionException;
 use App\Models\NewsletterRequest;
 use App\StateMachines\NewsletterRequest\CompletedNewsletterState;
 use Exception;
@@ -31,7 +32,7 @@ class CompletedNewsletterStateTest extends TestCase
             'status' => NewsletterState::Completed,
         ]);
 
-        $this->expectException(Exception::class);
+        $this->expectException(InvalidStateTransitionException::class);
         $request->state()->complete();
 
         $this->assertNull($request->completed_at);

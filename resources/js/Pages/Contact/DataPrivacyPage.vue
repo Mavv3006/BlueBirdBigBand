@@ -609,9 +609,7 @@
                     <p>
                         <strong>Inhalte:</strong>
                     </p>
-                    <p>
-                        Informationen zu uns, unseren Leistungen, Aktionen und Angeboten.
-                    </p>
+                    <p>Informationen zu unseren kommenden Auftritten.</p>
                 </div>
 
                 <ul class="m-elements">

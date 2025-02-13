@@ -23,6 +23,11 @@ class KonzertmeisterEvent extends Model
         'band_id',
         'description',
         'conversion_state',
+        'dtstart',
+        'dtend',
+        'summary',
+        'type',
+        'location',
     ];
 
     protected $casts = [

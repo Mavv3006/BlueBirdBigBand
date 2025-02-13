@@ -7,7 +7,6 @@ use App\Enums\StateMachines\NewsletterState;
 use App\Filament\Resources\NewsletterRequestResource\Pages;
 use App\Models\NewsletterRequest;
 use Exception;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -16,15 +15,7 @@ class NewsletterRequestResource extends Resource
 {
     protected static ?string $model = NewsletterRequest::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-            ]);
-    }
+    protected static ?string $navigationIcon = 'heroicon-o-envelope';
 
     /**
      * @throws Exception
@@ -74,7 +65,6 @@ class NewsletterRequestResource extends Resource
                 Tables\Filters\SelectFilter::make('type')
                     ->label('Type')
                     ->options([
-                        // TODO: translate name via language file
                         NewsletterType::Removing->value => NewsletterType::Removing->name,
                         NewsletterType::Adding->value => NewsletterType::Adding->name,
                     ]),
@@ -82,7 +72,6 @@ class NewsletterRequestResource extends Resource
                     ->label('Status')
                     ->default(NewsletterState::Confirmed->value)
                     ->options([
-                        // TODO: translate name via language file
                         NewsletterState::Requested->value => NewsletterState::Requested->name,
                         NewsletterState::Confirmed->value => NewsletterState::Confirmed->name,
                         NewsletterState::Completed->value => NewsletterState::Completed->name,
@@ -95,14 +84,8 @@ class NewsletterRequestResource extends Resource
                     ->action(fn (NewsletterRequest $request) => $request->state()->complete())
                     ->visible(fn (NewsletterRequest $request) => $request->status == NewsletterState::Confirmed),
             ])
+            ->deferFilters()
             ->defaultSort('confirmed_at', 'desc');
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
