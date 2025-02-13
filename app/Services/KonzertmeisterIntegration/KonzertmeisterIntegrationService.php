@@ -8,7 +8,6 @@ use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
-use Carbon\Carbon;
 use ICal\Event;
 use ICal\ICal;
 use Illuminate\Support\Facades\Log;
@@ -39,7 +38,11 @@ class KonzertmeisterIntegrationService
         ]);
 
         $mappedCalendarEvents = array_map(
-            callback: fn (Event $event) => self::mapCalendarEvents($event, $band),
+            callback: fn (Event $event) => CalendarEventMapping::fromICalEvent($event)
+                ->setType(self::getEventType($event))
+                ->setBand($band)
+                ->splitLocation()
+                ->toArray(),
             array: $calendar->events());
 
         Log::debug('KonzertmeisterIntegrationService', ['mapped events' => $mappedCalendarEvents]);
@@ -54,28 +57,6 @@ class KonzertmeisterIntegrationService
         Log::info('KonzertmeisterIntegrationService - pulling new data completed');
     }
 
-    protected static function mapCalendarEvents(Event $event, Band $band): array
-    {
-        // TODO: add splitting location for events
-        // if ($event->location != null && str_contains($event->location, ' ') && str_contains($event->location, ',')) {
-        //     [$street_name, $house_number, $plz, $city_name] = array_map(
-        //         fn ($location) => explode(' ', trim($location)),
-        //         explode(',', $event->location)
-        //     );
-        // }
-
-        return [
-            'id' => $event->uid,
-            'summary' => $event->summary,
-            'location' => $event->location,
-            'dtstart' => Carbon::parse($event->dtstart),
-            'dtend' => Carbon::parse($event->dtend),
-            'description' => KonzertmeisterEvent::shortenDescription($event->description),
-            'band_id' => $band->id,
-            'type' => self::getEventType($event),
-        ];
-    }
-
     protected static function getEventType(Event $event): ?KonzertmeisterEventType
     {
         try {
@@ -83,7 +64,8 @@ class KonzertmeisterIntegrationService
         } catch (UnhandledMatchError) {
             Log::notice(
                 message: 'KonzertmeisterIntegrationService - cannot get correct type from description - setting to default',
-                context: ['event_id' => $event->id, 'description' => $event->description]);
+                context: ['event_id' => $event->id, 'description' => $event->description]
+            );
 
             return KonzertmeisterEventType::Sonstiges;
         }
@@ -98,7 +80,7 @@ class KonzertmeisterIntegrationService
             }
 
             KonzertmeisterEvent::upsert(
-                $event,
+                values: $event,
                 uniqueBy: ['id'],
                 update: ['summary', 'description', 'dtstart', 'dtend', 'location', 'type', 'band_id'],
             );
