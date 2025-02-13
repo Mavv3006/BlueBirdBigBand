@@ -60,7 +60,3 @@ const picture = computed<string>(() => {
     return `/storage/${props.musician.picture_filepath}`;
 });
 </script>
-
-<style scoped>
-
-</style>

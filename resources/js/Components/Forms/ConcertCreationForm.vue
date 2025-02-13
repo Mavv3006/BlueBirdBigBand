@@ -40,7 +40,7 @@
                     name="band"
                     v-model="form.band_id"
                     id="band"
-                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-xs"
                     required
                 >
                     <option
@@ -89,7 +89,7 @@
                             id="available_venues"
                             :disabled="form.venue.create_new_venue"
                             v-model="form.venue.selected_plz"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-xs"
                             required
                         >
                             <option
@@ -186,6 +186,7 @@ const submit = () => form.submit(
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 .grid-container {
     @apply grid gap-y-4 gap-x-4 md:gap-x-8;
 }

@@ -34,7 +34,7 @@
             <div class="flex gap-x-2 flex-row mt-4">
                 <input
                     id="data-privacy-consent"
-                    class="border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB] rounded-[5px] shadow-sm disabled:text-gray-500"
+                    class="border-gray-300 focus:border-[#2563EB] focus:ring-[#2563EB] rounded-[5px] shadow-xs disabled:text-gray-500"
                     name="data-privacy-consent" required type="checkbox" v-model="addingForm.data_privacy_consent">
                 <InputLabel for="data-privacy-consent">Ich habe die
                     <NavLink href='/datenschutz'>Datenschutzerklärung</NavLink>

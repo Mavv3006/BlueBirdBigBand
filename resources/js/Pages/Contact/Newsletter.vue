@@ -29,7 +29,3 @@ import Heading from "@/Components/Heading.vue";
 import NewsletterSubscribe from "@/Components/Newsletter/NewsletterSubscribe.vue";
 import NewsletterUnsubscribe from "@/Components/Newsletter/NewsletterUnsubscribe.vue";
 </script>
-
-<style scoped>
-
-</style>

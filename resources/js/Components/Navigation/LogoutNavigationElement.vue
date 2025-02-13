@@ -26,6 +26,7 @@ if (props.element.link !== undefined && props.element.submenu !== undefined) {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 li {
     @apply relative px-4 leading-[3em] cursor-pointer font-semibold tracking-[1px] rounded-md whitespace-nowrap;
 }

@@ -57,6 +57,7 @@ const props = defineProps<{
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 table {
     border-collapse: collapse;
     @apply w-full;
