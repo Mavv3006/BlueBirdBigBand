@@ -17,12 +17,6 @@
   --font-open_sans:
     Open Sans, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-
-  --color-primary: #041286;
-
-  --max-height-1\/4: 25vh;
-  --max-height-1\/2: 50vh;
-  --max-height-3\/4: 75vh;
 }
 
 /*
