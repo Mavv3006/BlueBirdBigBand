@@ -81,6 +81,7 @@ import NavLink from "@/Components/Link/NavLink.vue";
 import {Head} from '@inertiajs/vue3';</script>
 
 <style scoped>
+@reference "tailwindcss";
 p {
     @apply text-justify;
 }

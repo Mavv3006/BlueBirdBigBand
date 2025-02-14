@@ -18,7 +18,7 @@
                             :checked="role.assigned"
                             :name="role.id"
                             :value="role.name"
-                            class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                            class="rounded-sm border-gray-300 text-indigo-600 shadow-xs focus:ring-indigo-500"
                             type="checkbox"
                         />
                         <label :for="role.id" class="ml-2">{{ role.name }}</label>
@@ -70,7 +70,3 @@ const submit = () => {
 }
 
 </script>
-
-<style scoped>
-
-</style>
