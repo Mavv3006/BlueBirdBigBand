@@ -772,6 +772,7 @@ import {Head} from "@inertiajs/vue3";
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 h2 {
     font-weight: bold;
     font-size: 1.5rem;
@@ -806,6 +807,6 @@ ul li + li {
 }
 
 a {
-    @apply border-b-2 border-transparent text-blue-900 hover:border-blue-900 focus:outline-none focus:text-blue-900 focus:border-blue-900 transition duration-150 ease-in-out;
+    @apply border-b-2 border-transparent text-blue-900 hover:border-blue-900 focus:outline-hidden focus:text-blue-900 focus:border-blue-900 transition duration-150 ease-in-out;
 }
 </style>

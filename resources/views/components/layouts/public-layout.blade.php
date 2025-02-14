@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div style="flex-shrink: 0" class="mt-16">
+    <div style="shrink: 0" class="mt-16">
         <x-layouts.footer/>
     </div>
 </div>

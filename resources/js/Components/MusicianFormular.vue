@@ -34,7 +34,7 @@
                         <select
                             id="instrument"
                             v-model="form.instrument_id"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-xs"
                             name="instrument"
                             required>
                             <option
@@ -161,6 +161,7 @@ const hasPicture = computed<boolean>(() => {
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 img {
     @apply h-36;
     max-width: 100%;

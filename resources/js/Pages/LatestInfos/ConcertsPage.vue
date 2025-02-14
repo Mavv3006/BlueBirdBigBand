@@ -28,7 +28,3 @@ const props = defineProps<{
 const hasConcerts = computed<boolean>(() => props.concerts.length > 0)
 
 </script>
-
-<style scoped>
-
-</style>

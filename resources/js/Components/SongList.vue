@@ -91,6 +91,7 @@ const closeModal = () => showModal.value = false;
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 table {
     border-collapse: collapse;
     @apply w-full;

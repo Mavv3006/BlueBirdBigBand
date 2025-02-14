@@ -39,7 +39,3 @@ const submit = () => {
     form.get('/admin/assign-roles');
 }
 </script>
-
-<style scoped>
-
-</style>

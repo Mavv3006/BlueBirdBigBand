@@ -23,7 +23,3 @@ import {Link} from "@inertiajs/vue3";
 
 const props = defineProps<{ concerts: ConcertType[] }>();
 </script>
-
-<style scoped>
-
-</style>

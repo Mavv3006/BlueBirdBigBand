@@ -20,7 +20,3 @@ const props = defineProps<{
     concert: Concert
 }>();
 </script>
-
-<style scoped>
-
-</style>

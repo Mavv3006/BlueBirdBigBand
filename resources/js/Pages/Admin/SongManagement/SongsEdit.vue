@@ -77,7 +77,3 @@ const form = useForm({
 const submit = () => form.post(`/admin/songs/${props.song.id}`);
 
 </script>
-
-<style scoped>
-
-</style>

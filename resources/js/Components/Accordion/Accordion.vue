@@ -31,6 +31,3 @@ const toggle = () => {
     isOpen.value = !isOpen.value;
 }
 </script>
-
-<style scoped>
-</style>

@@ -122,7 +122,3 @@ const save = () => {
     );
 }
 </script>
-
-<style scoped>
-
-</style>

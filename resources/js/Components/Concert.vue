@@ -27,7 +27,3 @@ const address = `${venueDescription} ${streetNumber} ${props.concert.address.plz
 const day = useFormatDate(props.concert.date);
 
 </script>
-
-<style scoped>
-
-</style>

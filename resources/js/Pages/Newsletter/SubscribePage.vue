@@ -13,6 +13,3 @@ import NewsletterLayout from "@/Layouts/NewsletterLayout.vue";
 import {Head} from "@inertiajs/vue3";
 import NewsletterSubscribe from "@/Components/Newsletter/NewsletterSubscribe.vue";
 </script>
-
-<style scoped>
-</style>

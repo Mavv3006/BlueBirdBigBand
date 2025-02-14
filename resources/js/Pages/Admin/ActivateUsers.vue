@@ -44,6 +44,7 @@ console.debug(props.users);
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 td, th {
     border-bottom: 1px solid #999;
     @apply text-center py-2;

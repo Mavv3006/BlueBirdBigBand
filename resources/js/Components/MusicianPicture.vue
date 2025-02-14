@@ -12,6 +12,7 @@ const props = defineProps<{
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 img {
     @apply h-36;
     max-width: 100%;

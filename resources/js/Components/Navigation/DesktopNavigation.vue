@@ -24,6 +24,7 @@ const otherRoutes = routes.filter(route => route.linkName !== 'Login' && route.l
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 ul > li {
     @apply relative px-4 leading-[3em] cursor-pointer font-semibold tracking-[1px] rounded-md whitespace-nowrap;
 }
