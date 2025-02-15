@@ -18,8 +18,8 @@ class CalendarEventMapping
         public readonly ?string $id,
         public readonly ?string $summary,
         public readonly ?string $location,
-        public readonly Carbon  $dtstart,
-        public readonly Carbon  $dtend,
+        public readonly Carbon $dtstart,
+        public readonly Carbon $dtend,
         public readonly ?string $description,
     ) {}
 
