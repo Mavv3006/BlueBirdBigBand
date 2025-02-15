@@ -15,18 +15,18 @@ class CalendarEventMapping
     private ?KonzertmeisterEventType $type;
 
     public function __construct(
-        public readonly ?string $uid,
+        public readonly ?string $id,
         public readonly ?string $summary,
         public readonly ?string $location,
-        public readonly Carbon $dtstart,
-        public readonly Carbon $dtend,
+        public readonly Carbon  $dtstart,
+        public readonly Carbon  $dtend,
         public readonly ?string $description,
     ) {}
 
     public static function fromICalEvent(Event $event): self
     {
         return new self(
-            uid: $event->uid,
+            id: $event->uid,
             summary: $event->summary,
             location: $event->location,
             dtstart: Carbon::parse($event->dtstart),
@@ -62,7 +62,7 @@ class CalendarEventMapping
     public function toArray(): array
     {
         return [
-            'uid' => $this->uid,
+            'id' => $this->id,
             'summary' => $this->summary,
             'location' => $this->location,
             'dtstart' => $this->dtstart,
