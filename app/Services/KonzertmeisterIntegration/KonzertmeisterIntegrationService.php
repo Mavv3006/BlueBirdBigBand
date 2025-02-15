@@ -64,7 +64,7 @@ class KonzertmeisterIntegrationService
         } catch (UnhandledMatchError) {
             Log::notice(
                 message: 'KonzertmeisterIntegrationService - cannot get correct type from description - setting to default',
-                context: ['event_id' => $event->id, 'description' => $event->description]
+                context: ['event_id' => $event->uid, 'description' => $event->description]
             );
 
             return KonzertmeisterEventType::Sonstiges;
