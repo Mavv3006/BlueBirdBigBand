@@ -12,7 +12,7 @@ class CalendarEventMapping
 {
     private Band $band;
 
-    private KonzertmeisterEventType $type;
+    private ?KonzertmeisterEventType $type;
 
     public function __construct(
         public readonly ?string $uid,
@@ -47,6 +47,18 @@ class CalendarEventMapping
         return $this;
     }
 
+    /**
+     * @return array{
+     *     uid: null|string,
+     *     summary: null|string,
+     *     location: null|string,
+     *     dtstart: Carbon,
+     *     dtend: Carbon,
+     *     description: null|string,
+     *     band_id: int,
+     *     type: KonzertmeisterEventType|null
+     * }
+     */
     public function toArray(): array
     {
         return [
@@ -68,7 +80,7 @@ class CalendarEventMapping
         return $this;
     }
 
-    public function setType(KonzertmeisterEventType $type): CalendarEventMapping
+    public function setType(?KonzertmeisterEventType $type): CalendarEventMapping
     {
         $this->type = $type;
 
