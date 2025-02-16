@@ -17,7 +17,3 @@ const props = defineProps<{
     concert: ConcertType
 }>();
 </script>
-
-<style scoped>
-
-</style>

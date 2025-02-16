@@ -23,6 +23,7 @@ defineProps<{ pageTitle: string }>();
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 .wrapper {
     @apply flex flex-col h-screen;
 }
@@ -32,6 +33,6 @@ defineProps<{ pageTitle: string }>();
 }
 
 .footer {
-    flex-shrink: 0;
+    shrink: 0;
 }
 </style>

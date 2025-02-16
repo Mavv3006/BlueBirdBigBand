@@ -34,6 +34,7 @@ const props = defineProps<{
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 h2 {
     @apply text-[1em] leading-normal text-center w-full inline-block mb-[0.5em] text-[#3d4449] font-bold md:text-[1.25em] md:text-left lg:text-[1.5em] 2xl:font-[2175em] 2xl:leading-snug;
 }

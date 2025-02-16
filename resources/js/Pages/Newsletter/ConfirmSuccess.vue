@@ -28,7 +28,3 @@
 import NewsletterLayout from "@/Layouts/NewsletterLayout.vue";
 import {Head} from "@inertiajs/vue3";
 </script>
-
-<style scoped>
-
-</style>

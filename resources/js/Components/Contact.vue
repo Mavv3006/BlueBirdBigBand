@@ -27,7 +27,3 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 </script>
-
-<style scoped>
-
-</style>

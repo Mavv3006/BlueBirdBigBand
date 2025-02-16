@@ -31,6 +31,7 @@ import NavLink from "@/Components/Link/NavLink.vue";
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 p {
     @apply text-justify
 }

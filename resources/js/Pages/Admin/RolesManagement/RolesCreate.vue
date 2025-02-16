@@ -43,7 +43,3 @@ const submit = () => {
     form.post(route('roles.store'));
 };
 </script>
-
-<style scoped>
-
-</style>

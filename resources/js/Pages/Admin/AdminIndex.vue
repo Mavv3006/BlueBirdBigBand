@@ -57,6 +57,7 @@ import NavLink from "@/Components/Link/NavLink.vue";
 </script>
 
 <style scoped>
+@reference "tailwindcss";
 .grid-container {
     @apply grid-cols-1 gap-y-2 gap-x-8 grid mt-2 sm:grid-cols-2 md:grid-cols-3 md:gap-12 lg:gap-16;
 }
