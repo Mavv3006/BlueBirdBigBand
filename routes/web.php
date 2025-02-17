@@ -6,10 +6,10 @@ use App\Http\Controllers\Admin\ConcertManagement\ConcertsController;
 use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
 use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
 use App\Http\Controllers\Admin\RolesManagement\RolesController;
-use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
 use App\Http\Controllers\Admin\SongManagement\SongsController;
 use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
 use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
+use App\Http\Controllers\Internal\DownloadSongController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
@@ -19,7 +19,6 @@ use App\Http\Controllers\v2\ConcertsPageController;
 use App\Http\Controllers\v2\ContactPageController;
 use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
-use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use Illuminate\Support\Facades\Route;
 
@@ -72,38 +71,6 @@ Route::prefix('intern')
         Route::get('/emails', [InternController::class, 'emails']);
         Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
     });
-
-//Route::prefix('admin')
-//    ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
-//    ->group(function () {
-//        Route::get('/', [AdminController::class, 'index']);
-//
-//        Route::get('activate-users', [ActivateUsersController::class, 'show']);
-//        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
-//
-//        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
-//            ->name('musicians.seating-position');
-//        Route::match(
-//            ['put', 'patch'],
-//            'musicians/seating-position',
-//            [MusicianSeatingPositionController::class, 'update']
-//        );
-//        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
-//        Route::resources([
-//            'roles' => RolesController::class,
-//            'musicians' => MusiciansController::class,
-//        ]);
-//
-//        Route::resource('concerts', ConcertsController::class)->except('show');
-//
-//        Route::resource('songs', SongsController::class)
-//            ->except('show');
-//
-//        Route::prefix('assign-roles')->group(function () {
-//            Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
-//            Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
-//        });
-//    });
 
 Route::prefix('v2')
     ->middleware(['feature:'.FeatureFlagName::DesignV2->value, 'auth'])
