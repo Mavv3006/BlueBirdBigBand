@@ -73,37 +73,37 @@ Route::prefix('intern')
         Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
     });
 
-Route::prefix('admin')
-    ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
-    ->group(function () {
-        Route::get('/', [AdminController::class, 'index']);
-
-        Route::get('activate-users', [ActivateUsersController::class, 'show']);
-        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
-
-        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
-            ->name('musicians.seating-position');
-        Route::match(
-            ['put', 'patch'],
-            'musicians/seating-position',
-            [MusicianSeatingPositionController::class, 'update']
-        );
-        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
-        Route::resources([
-            'roles' => RolesController::class,
-            'musicians' => MusiciansController::class,
-        ]);
-
-        Route::resource('concerts', ConcertsController::class)->except('show');
-
-        Route::resource('songs', SongsController::class)
-            ->except('show');
-
-        Route::prefix('assign-roles')->group(function () {
-            Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
-            Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
-        });
-    });
+//Route::prefix('admin')
+//    ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
+//    ->group(function () {
+//        Route::get('/', [AdminController::class, 'index']);
+//
+//        Route::get('activate-users', [ActivateUsersController::class, 'show']);
+//        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
+//
+//        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
+//            ->name('musicians.seating-position');
+//        Route::match(
+//            ['put', 'patch'],
+//            'musicians/seating-position',
+//            [MusicianSeatingPositionController::class, 'update']
+//        );
+//        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
+//        Route::resources([
+//            'roles' => RolesController::class,
+//            'musicians' => MusiciansController::class,
+//        ]);
+//
+//        Route::resource('concerts', ConcertsController::class)->except('show');
+//
+//        Route::resource('songs', SongsController::class)
+//            ->except('show');
+//
+//        Route::prefix('assign-roles')->group(function () {
+//            Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
+//            Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
+//        });
+//    });
 
 Route::prefix('v2')
     ->middleware(['feature:'.FeatureFlagName::DesignV2->value, 'auth'])
