@@ -42,7 +42,7 @@
 
         <img
             alt="Gruppenbild der Blue Bird Big Band"
-            class="w-[80%] block mx-auto my-4"
+            class="w-[90%] md:w-[80%] lg:w-[70%] block mx-auto my-4"
             src="assets/grouppictures/2023-05-07-mini.jpg"
         >
     </public-layout>
