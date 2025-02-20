@@ -20,8 +20,11 @@ class CalendarEventMappingTest extends TestCase
             Carbon::now(),
             null
         );
+        $mapping->setBand(Band::factory()->create());
+        $mapping->setType(null);
 
-        $this->assertNull($mapping->description);
+        $description = $mapping->toArray()['description'];
+        $this->assertNull($description);
     }
 
     public function test_description_non_null()
@@ -34,9 +37,12 @@ class CalendarEventMappingTest extends TestCase
             Carbon::now(),
             'sdlfhwsf'
         );
+        $mapping->setBand(Band::factory()->create());
+        $mapping->setType(null);
 
-        $this->assertNotNull($mapping->description);
-        $this->assertEquals('sdlfhwsf', $mapping->description);
+        $description = $mapping->toArray()['description'];
+        $this->assertNotNull($description);
+        $this->assertEquals('sdlfhwsf', $description);
     }
 
     public function test_having_all_null()
