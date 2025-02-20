@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'home'])->name('home');
 Route::get('/about-us', [PublicController::class, 'aboutUs']);
 Route::get('/anfahrt', [PublicController::class, 'arrival']);
-Route::get('/auftritte', [PublicController::class, 'concerts']);
+Route::get('/auftritte', [PublicController::class, 'concerts'])->name('concerts');
 Route::get('/buchung', [PublicController::class, 'booking']);
 Route::get('/impressum', [PublicController::class, 'imprint']);
 Route::get('/kontakt', [PublicController::class, 'contact']);
