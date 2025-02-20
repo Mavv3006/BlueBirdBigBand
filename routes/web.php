@@ -29,7 +29,7 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/about-us', 'aboutUs');
     Route::get('/anfahrt', 'arrival');
-    Route::get('/auftritte', 'concerts');
+    Route::get('/auftritte', 'concerts')->name('concerts');
     Route::get('/buchung', 'booking');
     Route::get('/impressum', 'imprint');
     Route::get('/kontakt', 'contact');
