@@ -14,14 +14,18 @@ class CalendarEventMapping
 
     private ?KonzertmeisterEventType $type;
 
+    protected ?string $description = null;
+
     public function __construct(
         public readonly ?string $id,
         public readonly ?string $summary,
         public readonly ?string $location,
         public readonly Carbon $dtstart,
         public readonly Carbon $dtend,
-        public readonly ?string $description,
-    ) {}
+        ?string $description,
+    ) {
+        $this->description = $description;
+    }
 
     public static function fromICalEvent(Event $event): self
     {
@@ -31,8 +35,26 @@ class CalendarEventMapping
             location: $event->location,
             dtstart: Carbon::parse($event->dtstart),
             dtend: Carbon::parse($event->dtend),
-            description: $event->description == null ? null : KonzertmeisterEvent::shortenDescription($event->description),
+            description: $event->description,
         );
+    }
+
+    public function shortenDescription(): self
+    {
+        if ($this->description != null) {
+            $this->description = KonzertmeisterEvent::shortenDescription($this->description);
+        }
+
+        return $this;
+    }
+
+    public function trimDescription(): self
+    {
+        if (str_starts_with($this->description, '(')) {
+            $this->description = substr($this->description, 4);
+        }
+
+        return $this;
     }
 
     public function splitLocation(): self
