@@ -3,7 +3,6 @@
 namespace KonzertmeisterIntegration;
 
 use App\Models\Band;
-use App\Models\KonzertmeisterEvent;
 use App\Services\KonzertmeisterIntegration\CalendarEventMapping;
 use Carbon\Carbon;
 use ICal\Event;
@@ -123,7 +122,6 @@ class CalendarEventMappingTest extends TestCase
         $this->assertEquals('TP: *BBBB Golfclub Dackenheim  25. Jubiläum', $array['summary']);
     }
 
-
     public function test_long_description()
     {
         $mapping = new CalendarEventMapping(
@@ -139,7 +137,6 @@ class CalendarEventMappingTest extends TestCase
             ->setType(null)
             ->shortenDescription()
             ->toArray()['description'];
-
 
         $this->assertStringEndsWith('...', $description);
         $this->assertLessThanOrEqual(125, strlen($description));
@@ -160,7 +157,6 @@ class CalendarEventMappingTest extends TestCase
             ->setType(null)
             ->shortenDescription()
             ->toArray()['description'];
-
 
         $this->assertStringEndsNotWith('...', $description);
         $this->assertLessThanOrEqual(125, strlen($description));
