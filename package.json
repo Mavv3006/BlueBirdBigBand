@@ -13,7 +13,10 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "export-changes-win": "powershell -Command \"echo 'Status,Alter Dateiname,Neuer Dateiname' | Out-File changes.csv -Encoding utf8; git diff --name-status origin/main...origin/dev | ForEach-Object { $fields = $_ -split '\\s+', 3; if ($fields[0] -match '^R') { \\\"$($fields[0]),$($fields[1]),$($fields[2])\\\" } else { \\\"$($fields[0]),$($fields[1]),\\\" } } | Out-File changes.csv -Encoding utf8 -Append\"",
+    "export-changes-mac": "bash -c \"(echo 'Status,Alter Dateiname,Neuer Dateiname' && git diff --name-status origin/main...origin/dev | awk '{if ($1 ~ /^R/) print $1\",\"$2\",\"$3; else print $1\",\"$2\",\"}' ) > changes.csv\"",
+    "export-changes": "bun run ./bin/detect-platform.js"
   },
   "type": "module",
   "devDependencies": {
