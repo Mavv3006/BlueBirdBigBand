@@ -15,6 +15,7 @@
     </testsuites>
     <coverage/>
     <php>
+        <ini name="auto_prepend_file" value="tests/Helpers/functions.php"/>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
