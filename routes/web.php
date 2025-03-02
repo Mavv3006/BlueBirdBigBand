@@ -1,15 +1,7 @@
 <?php
 
 use App\Enums\FeatureFlagName;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\ConcertManagement\ConcertsController;
-use App\Http\Controllers\Admin\MusicianManagement\MusiciansController;
-use App\Http\Controllers\Admin\MusicianManagement\MusicianSeatingPositionController;
-use App\Http\Controllers\Admin\RolesManagement\RolesController;
-use App\Http\Controllers\Admin\SongManagement\DownloadSongController;
-use App\Http\Controllers\Admin\SongManagement\SongsController;
-use App\Http\Controllers\Admin\UserManagement\ActivateUsersController;
-use App\Http\Controllers\Admin\UserManagement\AssignRolesToUserController;
+use App\Http\Controllers\Internal\DownloadSongController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
@@ -19,7 +11,6 @@ use App\Http\Controllers\v2\ConcertsPageController;
 use App\Http\Controllers\v2\ContactPageController;
 use App\Http\Controllers\v2\ImprintController;
 use App\Http\Controllers\v2\IndexController;
-use App\Http\Middleware\HasPermissionToAccessAdminRoutes;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use Illuminate\Support\Facades\Route;
 
@@ -34,31 +25,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PublicController::class, 'home'])->name('home');
-Route::get('/about-us', [PublicController::class, 'aboutUs']);
-Route::get('/anfahrt', [PublicController::class, 'arrival']);
-Route::get('/auftritte', [PublicController::class, 'concerts']);
-Route::get('/buchung', [PublicController::class, 'booking']);
-Route::get('/impressum', [PublicController::class, 'imprint']);
-Route::get('/kontakt', [PublicController::class, 'contact']);
-Route::get('/musiker', [PublicController::class, 'musicians']);
-Route::get('/presse', [PublicController::class, 'pressInfo']);
-Route::get('/datenschutz', [PublicController::class, 'dataPrivacy']);
+Route::controller(PublicController::class)->group(function () {
+    Route::get('/', 'home')->name('home');
+    Route::get('/about-us', 'aboutUs');
+    Route::get('/anfahrt', 'arrival');
+    Route::get('/auftritte', 'concerts')->name('concerts');
+    Route::get('/buchung', 'booking');
+    Route::get('/impressum', 'imprint');
+    Route::get('/kontakt', 'contact');
+    Route::get('/musiker', 'musicians');
+    Route::get('/presse', 'pressInfo');
+    Route::get('/datenschutz', 'dataPrivacy');
+});
 
 Route::prefix('newsletter')
     ->middleware(['feature:'.FeatureFlagName::Newsletter->value])
     ->group(function () {
-        Route::get('/', [PublicController::class, 'newsletter'])
-            ->name('newsletter');
-        Route::get('/subscribe', [NewsletterRequestController::class, 'subscribe'])
-            ->name('newsletter.subscribe');
-        Route::post('/request', [NewsletterRequestController::class, 'request'])
-            ->name('newsletter.request');
-        Route::get('/confirm/success', [NewsletterRequestController::class, 'confirmSuccess'])
-            ->name('newsletter.confirm.success');
-        Route::get('/confirm/{newsletterRequest}', [NewsletterRequestController::class, 'confirm'])
-            ->middleware('signed')
-            ->name('newsletter.confirm');
+        Route::get('/', [PublicController::class, 'newsletter'])->name('newsletter');
+        Route::controller(NewsletterRequestController::class)
+            ->name('newsletter.')
+            ->group(function () {
+                Route::get('/subscribe', 'subscribe')->name('subscribe');
+                Route::post('/request', 'request')->name('request');
+                Route::get('/confirm/success', 'confirmSuccess')->name('confirm.success');
+                Route::get('/confirm/{newsletterRequest}', 'confirm')
+                    ->middleware('signed')
+                    ->name('confirm');
+            });
     });
 
 Route::middleware('auth')
@@ -66,43 +59,12 @@ Route::middleware('auth')
     ->name('download-song');
 
 Route::prefix('intern')
+    ->controller(InternController::class)
     ->middleware(['auth', HasPermissionToAccessInternalRoutes::class])
     ->group(function () {
-        Route::get('/', [InternController::class, 'index']);
-        Route::get('/emails', [InternController::class, 'emails']);
-        Route::get('/songs', [InternController::class, 'songs'])->name('intern.songs');
-    });
-
-Route::prefix('admin')
-    ->middleware(['auth', HasPermissionToAccessAdminRoutes::class])
-    ->group(function () {
-        Route::get('/', [AdminController::class, 'index']);
-
-        Route::get('activate-users', [ActivateUsersController::class, 'show']);
-        Route::patch('activate-users/{user}', [ActivateUsersController::class, 'update']);
-
-        Route::get('musicians/seating-position', [MusicianSeatingPositionController::class, 'show'])
-            ->name('musicians.seating-position');
-        Route::match(
-            ['put', 'patch'],
-            'musicians/seating-position',
-            [MusicianSeatingPositionController::class, 'update']
-        );
-        Route::delete('musicians/{musician}/picture', [MusiciansController::class, 'deletePicture']);
-        Route::resources([
-            'roles' => RolesController::class,
-            'musicians' => MusiciansController::class,
-        ]);
-
-        Route::resource('concerts', ConcertsController::class)->except('show');
-
-        Route::resource('songs', SongsController::class)
-            ->except('show');
-
-        Route::prefix('assign-roles')->group(function () {
-            Route::get('/', [AssignRolesToUserController::class, 'showSearchForm']);
-            Route::put('user/{user}', [AssignRolesToUserController::class, 'syncRoles']);
-        });
+        Route::get('/', 'index');
+        Route::get('/emails', 'emails');
+        Route::get('/songs', 'songs')->name('intern.songs');
     });
 
 Route::prefix('v2')

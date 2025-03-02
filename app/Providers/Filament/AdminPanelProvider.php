@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->brandName('Blue Bird Big Band Admin')
             ->id('admin')
-            ->path('admin/filament')
+            ->path('/admin')
             ->colors([
                 'primary' => Color::Amber,
             ])

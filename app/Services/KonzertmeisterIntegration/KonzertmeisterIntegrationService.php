@@ -42,6 +42,8 @@ class KonzertmeisterIntegrationService
                 ->setType(self::getEventType($event))
                 ->setBand($band)
                 ->splitLocation()
+                ->trimDescription()
+                ->shortenDescription()
                 ->toArray(),
             array: $calendar->events());
 

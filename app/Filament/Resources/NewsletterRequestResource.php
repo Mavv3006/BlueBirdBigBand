@@ -27,6 +27,7 @@ class NewsletterRequestResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->label('E-Mail')
                     ->icon('heroicon-m-envelope')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
                     ->badge()

@@ -1,6 +1,7 @@
 <template>
     <li v-if="element.link && !element.submenu">
-        <Link v-if="element.link" :href="element.link">{{ element.linkName }}</Link>
+        <Link v-if="element.link && element.isInertia" :href="element.link">{{ element.linkName }}</Link>
+        <a v-if="element.link && !element.isInertia" :href="element.link">{{ element.linkName }}</a>
     </li>
     <li v-if="!element.link && element.submenu"
         class="nav-container">

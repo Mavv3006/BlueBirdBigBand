@@ -18,8 +18,8 @@ const routes = useRoutes(
     usePage().props.feature_flags
 );
 const isLoggedIn = usePage().props.auth.user !== null;
-const loginRoute = routes.find(route => route.linkName === 'Login') as TopLevelRoute;
-const logoutRoute = routes.find(route => route.linkName === 'Logout') as TopLevelRoute;
+const loginRoute = routes.find(route => route.linkName === 'Login');
+const logoutRoute = routes.find(route => route.linkName === 'Logout');
 const otherRoutes = routes.filter(route => route.linkName !== 'Login' && route.linkName !== 'Logout');
 </script>
 
