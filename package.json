@@ -40,6 +40,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
-    "@tailwindcss/vite": "^4.0.7"
+    "@tailwindcss/vite": "^4.0.15"
   }
 }
