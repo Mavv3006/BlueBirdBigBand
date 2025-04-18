@@ -1,15 +1,15 @@
 <template>
-    <footer class="flex flex-col p-8 text-neutral-600 gap-8 lg:flex-row">
-        <div class="flex gap-8 sm:max-w-xl md:mx-auto lg:flex-wrap xl:flex-nowrap">
-            <div class="basis-lg lg:basis-md">
-                <img alt="Logo der Blue Bird Big Band" class="lg:w-[50%] xl:w-auto" src="/assets/logos/intrologo.gif">
+    <footer class="flex flex-col p-8 text-neutral-600 gap-8 lg:flex-wrap lg:flex-row xl:flex-nowrap">
+        <div class="flex gap-8 sm:max-w-xl md:mx-auto lg:min-w-[400px]">
+            <div class="basis-lg">
+                <img alt="Logo der Blue Bird Big Band"
+                     class="w-[110px] md:w-[125px] lg:w-[140px] xl:max-w-[180px] xl:w-auto"
+                     src="/assets/logos/intrologo.gif">
             </div>
-            <div>
-                <p>
-                    Wir sind die Blue Bird Big Band der Städtischen Musikschule Speyer.
-                    Aktuell suchen wir noch Musiker/innen, die Posaune spielen.
-                </p>
-            </div>
+            <p class="content-center xl:content-normal">
+                Wir sind die Blue Bird Big Band der Städtischen Musikschule Speyer.
+                Aktuell suchen wir noch Musiker/innen, die Posaune spielen.
+            </p>
         </div>
         <div class="flex px-2 sm:max-w-xl md:min-w-lg md:mx-auto">
             <div class="w-1/3">
