@@ -38,6 +38,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "security-updates"
     labels:
       - "security"
     allow:
@@ -47,6 +48,7 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    target-branch: "security-updates"
     labels:
       - "security"
     allow:
