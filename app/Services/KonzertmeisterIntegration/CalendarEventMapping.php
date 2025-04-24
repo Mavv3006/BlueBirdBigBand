@@ -12,27 +12,49 @@ class CalendarEventMapping
 {
     private Band $band;
 
-    private KonzertmeisterEventType $type;
+    private ?KonzertmeisterEventType $type;
+
+    protected ?string $description = null;
 
     public function __construct(
-        public readonly ?string $uid,
+        public readonly ?string $id,
         public readonly ?string $summary,
         public readonly ?string $location,
         public readonly Carbon $dtstart,
         public readonly Carbon $dtend,
-        public readonly ?string $description,
-    ) {}
+        ?string $description,
+    ) {
+        $this->description = $description;
+    }
 
     public static function fromICalEvent(Event $event): self
     {
         return new self(
-            uid: $event->uid,
+            id: $event->uid,
             summary: $event->summary,
             location: $event->location,
             dtstart: Carbon::parse($event->dtstart),
             dtend: Carbon::parse($event->dtend),
-            description: $event->description == null ? null : KonzertmeisterEvent::shortenDescription($event->description),
+            description: $event->description,
         );
+    }
+
+    public function shortenDescription(): self
+    {
+        if ($this->description != null) {
+            $this->description = KonzertmeisterEvent::shortenDescription($this->description);
+        }
+
+        return $this;
+    }
+
+    public function trimDescription(): self
+    {
+        if (str_starts_with($this->description, '(')) {
+            $this->description = substr($this->description, 4);
+        }
+
+        return $this;
     }
 
     public function splitLocation(): self
@@ -47,10 +69,22 @@ class CalendarEventMapping
         return $this;
     }
 
+    /**
+     * @return array{
+     *     uid: null|string,
+     *     summary: null|string,
+     *     location: null|string,
+     *     dtstart: Carbon,
+     *     dtend: Carbon,
+     *     description: null|string,
+     *     band_id: int,
+     *     type: KonzertmeisterEventType|null
+     * }
+     */
     public function toArray(): array
     {
         return [
-            'uid' => $this->uid,
+            'id' => $this->id,
             'summary' => $this->summary,
             'location' => $this->location,
             'dtstart' => $this->dtstart,
@@ -68,7 +102,7 @@ class CalendarEventMapping
         return $this;
     }
 
-    public function setType(KonzertmeisterEventType $type): CalendarEventMapping
+    public function setType(?KonzertmeisterEventType $type): CalendarEventMapping
     {
         $this->type = $type;
 

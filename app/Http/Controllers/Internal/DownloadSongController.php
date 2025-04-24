@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\SongManagement;
+namespace App\Http\Controllers\Internal;
 
 use App\Http\Controllers\Controller;
 use App\Models\Song;
