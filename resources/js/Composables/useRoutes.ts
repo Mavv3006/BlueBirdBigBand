@@ -1,25 +1,11 @@
 export type Route = {
     link?: string,
+    isInertia: boolean,
     linkName: string,
     submenu?: {
         link: string,
         linkName: string,
     }[],
-}
-
-export type BaseRoute = {
-    linkName: string,
-}
-
-export type TopLevelRoute = BaseRoute & {
-    link: string,
-}
-
-export type DropdownRoute = BaseRoute & {
-    submenu?: {
-        link: string,
-        linkName: string,
-    }[]
 }
 
 export type Gates = {
@@ -34,11 +20,12 @@ export type FeatureFlags = {
 /**
  * Call this function with this parameter: `usePage().props.auth.can`.
  */
-export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown): (TopLevelRoute | DropdownRoute)[] {
+export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown): Route[] {
     let routes: Route[] = [
-        {link: '/', linkName: 'Home'},
+        {link: '/', linkName: 'Home', isInertia: true},
         {
             linkName: 'Aktuelles',
+            isInertia: true,
             submenu: [
                 {link: '/auftritte', linkName: 'Auftritte'},
                 {link: '/presse', linkName: 'Presseinfos'},
@@ -47,6 +34,7 @@ export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown)
         },
         {
             linkName: 'Band',
+            isInertia: true,
             submenu: [
                 {link: '/about-us', linkName: 'Über uns'},
                 {link: '/musiker', linkName: 'Musiker'},
@@ -55,6 +43,7 @@ export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown)
         },
         {
             linkName: 'Kontakt',
+            isInertia: true,
             submenu: [
                 {link: '/kontakt', linkName: 'Kontakt'},
                 {link: '/impressum', linkName: 'Impressum'},
@@ -68,6 +57,7 @@ export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown)
     if (gates["route.access-intern"]) {
         routes.push({
             linkName: 'Intern',
+            isInertia: true,
             submenu: [
                 {link: '/intern/emails', linkName: 'E-Mail Verteiler'},
                 {link: '/intern/songs', linkName: 'Songs'}
@@ -75,11 +65,11 @@ export function useRoutes(gates?: Gates, feature_flags?: FeatureFlags | unknown)
         })
     }
     if (gates["route.access-admin"]) {
-        routes.push({link: '/admin', linkName: 'Admin'});
+        routes.push({link: '/admin', linkName: 'Admin', isInertia: false});
     }
 
-    routes.push({link: '/logout', linkName: 'Logout'});
-    routes.push({link: '/login', linkName: 'Login'});
+    routes.push({link: '/logout', linkName: 'Logout', isInertia: true});
+    routes.push({link: '/login', linkName: 'Login', isInertia: true});
 
     return routes;
 }

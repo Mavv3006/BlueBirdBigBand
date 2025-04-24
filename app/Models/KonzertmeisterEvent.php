@@ -59,8 +59,8 @@ class KonzertmeisterEvent extends Model
     protected function description(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => $value,
-            set: fn (string $value) => self::shortenDescription($value),
+            get: fn (?string $value) => $value,
+            set: fn (?string $value) => $value === null ? null : self::shortenDescription($value),
         );
     }
 
