@@ -71,6 +71,9 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
 
+      - name: Show installed Composer Dependencies
+        run: composer show
+
       # NPM Cache
       - name: Cache NPM dependencies
         uses: actions/cache@v4
