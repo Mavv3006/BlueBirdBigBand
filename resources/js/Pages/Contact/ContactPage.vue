@@ -15,8 +15,7 @@
 
             <div class="inline-flex items-center justify-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
                 <p class="text-right font-bold w-1/2">Management und Buchung:</p>
-                <Contact class="w-1/2" email="buchung@bluebirdbigband.de" name="Rudi Kolbinger"
-                         telephon="06232 621915"/>
+                <Contact class="w-1/2" email="buchung@bluebirdbigband.de"  name="Buchung"/>
             </div>
 
             <div class="inline-flex items-center justify-center gap-8 lg:gap-12 xl:gap-16 2xl:gap-20">
