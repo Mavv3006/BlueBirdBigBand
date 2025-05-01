@@ -2,6 +2,7 @@ name: Testing Laravel
 
 on:
   pull_request:
+    types: [opened]
     branches: [ main, dev ]
 
 jobs:

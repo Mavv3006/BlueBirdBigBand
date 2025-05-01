@@ -69,7 +69,7 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --no-dev
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Show installed Composer Dependencies
         run: composer show
@@ -110,4 +110,4 @@ jobs:
           DB_PASSWORD: ${{ env.DB_PASSWORD }}       # Verwendet die Umgebungsvariable
           DB_PORT: ${{ env.DB_PORT }}               # Verwendet die Umgebungsvariable
         run: vendor/bin/phpunit
-  
+
