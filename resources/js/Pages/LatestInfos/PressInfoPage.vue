@@ -75,16 +75,6 @@
                 </div>
             </div>
         </div>
-
-        <footer
-            class="border-t border-gray-400 flex flex-col justify-center gap-2 pt-2 md:justify-around md:flex-row md:gap-0">
-            <div class="text-center md:w-1/2">
-                <NavLink href="">Diese Seite als Word-Dokument</NavLink>
-            </div>
-            <div class="text-center md:w-1/2">
-                <NavLink href="">Diese Seite als PDF-Datei</NavLink>
-            </div>
-        </footer>
     </public-layout>
 </template>
 
