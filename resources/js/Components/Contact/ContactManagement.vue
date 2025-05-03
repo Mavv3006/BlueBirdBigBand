@@ -1,6 +1,5 @@
 <template>
-    <Contact class="w-1/2" email="buchung@bluebirdbigband.de" name="Rudi Kolbinger"
-             telephon="06232 621915" :bold_name="bold_name"/>
+    <Contact class="w-1/2" email="buchung@bluebirdbigband.de" name="Buchung" :bold_name="bold_name"/>
 </template>
 
 <script setup lang="ts">
