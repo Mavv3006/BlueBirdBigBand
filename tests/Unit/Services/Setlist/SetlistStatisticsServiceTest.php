@@ -24,30 +24,30 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->song2 = Song::factory()->create();
         $band = Band::factory()->create();
         $venue = Venue::factory()->create();
-        $concert1 = Concert::factory()
-            ->for($band)
-            ->for($venue)
-            ->create();
+        $concerts = collect([
+            date('Y-m-d', strtotime('+3 days')),
+            date('Y-m-d', strtotime('+6 days')),
+            date('Y-m-d', strtotime('+9 days')),
+        ])
+            ->map(fn ($date) => Concert::factory()
+                ->for($band)
+                ->for($venue)
+                ->create(['date' => $date])
+            );
         SetlistEntry::factory()
-            ->for($concert1)
+            ->for($concerts[0])
             ->for($this->song1)
             ->create();
         SetlistEntry::factory()
-            ->for($concert1)
+            ->for($concerts[0])
             ->for($this->song2)
             ->create();
         SetlistEntry::factory()
-            ->for(Concert::factory()
-                ->for($band)
-                ->for($venue)
-                ->create())
+            ->for($concerts[1])
             ->for($this->song1)
             ->create();
         SetlistEntry::factory()
-            ->for(Concert::factory()
-                ->for($band)
-                ->for($venue)
-                ->create())
+            ->for($concerts[2])
             ->for($this->song1)
             ->create();
     }
