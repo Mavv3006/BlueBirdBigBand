@@ -24,12 +24,11 @@ class SetlistStatisticsServiceTest extends TestCase
         $this->song2 = Song::factory()->create();
         $band = Band::factory()->create();
         $venue = Venue::factory()->create();
-        $concertDates = [
+        $concerts = collect([
             date('Y-m-d', strtotime('+3 days')),
             date('Y-m-d', strtotime('+6 days')),
             date('Y-m-d', strtotime('+9 days')),
-        ];
-        $concerts = collect($concertDates)
+        ])
             ->map(fn ($date) => Concert::factory()
                 ->for($band)
                 ->for($venue)
