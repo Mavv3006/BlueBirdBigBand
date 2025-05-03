@@ -2,9 +2,10 @@ name: Dependency Update Check
 
 on:
   pull_request:
-    types: [opened]
     branches:
       - dependency-updates
+      - main
+      - dev
 
 jobs:
   laravel_dev:
