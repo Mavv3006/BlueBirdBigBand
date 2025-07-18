@@ -1,6 +1,6 @@
 <template>
-    <footer class="flex flex-col p-8 text-neutral-600 gap-8 lg:flex-wrap lg:flex-row xl:flex-nowrap">
-        <div class="flex gap-8 sm:max-w-xl md:mx-auto lg:min-w-[400px]">
+    <footer class="flex  flex-col p-8 text-neutral-600 gap-8 lg:flex-wrap lg:flex-row xl:flex-nowrap">
+        <div class="flex flex-wrap sm:flex-nowrap gap-8 sm:max-w-xl md:mx-auto lg:min-w-[400px]">
             <div class="basis-lg">
                 <img alt="Logo der Blue Bird Big Band"
                      class="w-[110px] md:w-[125px] lg:w-[140px] xl:max-w-[180px] xl:w-auto"
@@ -11,8 +11,8 @@
                 Aktuell suchen wir noch Musiker/innen, die Posaune spielen.
             </p>
         </div>
-        <div class="flex px-2 sm:max-w-xl md:min-w-lg md:mx-auto">
-            <div class="w-1/3">
+        <div class="flex flex-wrap px-2 gap-4 sm:gap-0 sm:max-w-xl md:flex-nowrap md:min-w-lg md:mx-auto">
+            <div class="sm:w-1/3">
                 <p class="font-bold text-black pb-1">Navigation</p>
                 <ul class="flex flex-col gap-1.5">
                     <li>
@@ -41,7 +41,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="w-2/3">
+            <div class="sm:w-2/3">
                 <p class="font-bold text-black pb-1">Kontakt</p>
                 <ul class="flex flex-col gap-1.5">
                     <li>
