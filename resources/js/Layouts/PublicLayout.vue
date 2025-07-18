@@ -39,9 +39,12 @@
     </header>
 
     <main
-        class="w-[85vw] mt-3 mb-3 mx-auto bg-white rounded-2xl p-4 pt-6 transition-all duration-300 md:pt-8 md:w-[88vw] lg:w-[85vw] xl:w-[80vw] 2xl:w-[75vw]">
+        class="w-[85vw] mt-3 mx-auto bg-white rounded-t-2xl p-4 pt-6 transition-all duration-300 md:pt-8 md:w-[88vw] lg:w-[85vw] xl:w-[80vw] 2xl:w-[75vw]">
         <slot/>
     </main>
+
+        <Footer
+            class="w-[85vw] mb-3 mx-auto bg-[#f0f0f0] rounded-b-2xl transition-all duration-300 md:pt-8 md:w-[88vw] lg:w-[85vw] xl:w-[80vw] 2xl:w-[75vw]"/>
 </template>
 
 <script lang="ts" setup>
@@ -50,6 +53,7 @@ import {computed, ref} from 'vue';
 import DesktopNavigation from "@/Components/Navigation/DesktopNavigation.vue";
 import MobileNavigation from "@/Components/Navigation/MobileNavigation.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import Footer from "@/Components/Footer.vue"
 
 const mobileNavIsOpen = ref<boolean>(false);
 
