@@ -64,7 +64,7 @@ const mobileNavIsOpen = ref<boolean>(false);
 
 const logoURL = computed<string>(() => `${window.location.protocol}//${window.location.host}/assets/logos/logo-header.gif`);
 
-const showFooter = ref<boolean>(false);
+const showFooter = ref<boolean>(true);
 
 const toggleMobileMenu = () => {
     mobileNavIsOpen.value = !mobileNavIsOpen.value;
