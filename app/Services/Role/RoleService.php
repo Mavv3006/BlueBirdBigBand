@@ -34,33 +34,6 @@ class RoleService
             ->first();
     }
 
-    public function getPermissionsOfRole(Role $role): Collection
-    {
-        return $role
-            ->permissions()
-            ->select('id', 'name')
-            ->orderBy('id')
-            ->get();
-    }
-
-    public function getUsersOfRole(Role $role): Collection
-    {
-        return $role
-            ->users()
-            ->select('id', 'name', 'status')
-            ->orderBy('id')
-            ->get();
-    }
-
-    public function getPermissionsNotInRole(Role $role): Collection
-    {
-        return Permission::select('id')
-            ->diff($role
-                ->permissions()
-                ->select('id')
-                ->get());
-    }
-
     public function update(RoleUpdateDto $dto): void
     {
         $role = $this->getById($dto->role_id);
