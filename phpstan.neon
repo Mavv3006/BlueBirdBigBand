@@ -4,9 +4,11 @@ parameters:
     universalObjectCratesClasses:
         - Illuminate\Http\Resources\Json\JsonResource
     paths:
-        - app/
-        - tests/
-        - database/
-    level: 1
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    level: 2
     ignoreErrors:
     excludePaths:
