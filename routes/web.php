@@ -67,20 +67,4 @@ Route::prefix('intern')
         Route::get('/songs', 'songs')->name('intern.songs');
     });
 
-Route::prefix('v2')
-    ->middleware(['feature:'.FeatureFlagName::DesignV2->value, 'auth'])
-    ->group(function () {
-        Route::get('/', IndexController::class);
-        Route::get('/auftritt/{concert}', ConcertDetailsPageController::class)
-            ->name('concert-details-page');
-        Route::get('/auftritte', ConcertsPageController::class)
-            ->name('concerts-page');
-        Route::get('/kontakt', ContactPageController::class)
-            ->name('contact-page');
-        Route::get('/impressum', ImprintController::class)
-            ->name('imprint');
-        Route::get('band', BandController::class)
-            ->name('band');
-    });
-
 require __DIR__.'/auth.php';
