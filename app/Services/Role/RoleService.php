@@ -5,7 +5,6 @@ namespace App\Services\Role;
 use App\DataTransferObjects\IdDto;
 use App\DataTransferObjects\Roles\RoleUpdateDto;
 use App\Http\Requests\StoreRoleRequest;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
