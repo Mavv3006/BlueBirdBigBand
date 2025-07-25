@@ -21,11 +21,6 @@ class User extends Authenticatable implements FilamentUser
     use HasRoles;
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'password',
@@ -40,11 +35,6 @@ class User extends Authenticatable implements FilamentUser
         'status' => UserStates::Registered,
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
