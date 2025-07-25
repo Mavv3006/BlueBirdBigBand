@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class MusicianServiceTest extends TestCase
 {
-    private readonly MusicianService $service;
+    private MusicianService $service;
 
     protected function setUp(): void
     {
