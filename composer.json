@@ -33,6 +33,7 @@
         "barryvdh/laravel-debugbar": "^3.9",
         "fakerphp/faker": "^1.22.0",
         "friendsofphp/php-cs-fixer": "^v3.17.0",
+        "larastan/larastan": "^3",
         "laravel/breeze": "^2.0",
         "laravel/pint": "^v1.10.0",
         "mockery/mockery": "^1.4.4",
@@ -68,7 +69,8 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "php-cs-fixer": "php-cs-fixer"
+        "php-cs-fixer": "php-cs-fixer",
+        "phpstan": "./vendor/bin/phpstan analyse"
     },
     "extra": {
         "laravel": {
