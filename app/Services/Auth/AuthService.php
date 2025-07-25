@@ -3,7 +3,6 @@
 namespace App\Services\Auth;
 
 use App\DataTransferObjects\AuthenticateDto;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;

@@ -9,7 +9,6 @@ use App\Models\Musician;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use JetBrains\PhpStorm\ArrayShape;
 
 class MusicianService
 {
