@@ -36,11 +36,13 @@ class Concert extends Model
         'updated_at',
     ];
 
+    /** @return BelongsTo<Band, $this> */
     public function band(): BelongsTo
     {
         return $this->belongsTo(Band::class, 'band_id', 'id');
     }
 
+    /** @return BelongsTo<Venue, $this> */
     public function venue(): BelongsTo
     {
         return $this->belongsTo(Venue::class, 'venue_plz', 'plz');
