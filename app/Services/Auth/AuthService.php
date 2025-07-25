@@ -24,12 +24,6 @@ class AuthService
 
         $this->ensureIsNotRateLimited();
 
-        $user = User::where('name', $dto->name)->first();
-
-        if (!$user->activated) {
-            throw ValidationException::withMessages(['name' => trans('auth.activated')]);
-        }
-
         $isAuthenticated = Auth::attempt([
             'name' => $dto->name,
             'password' => $dto->password,
