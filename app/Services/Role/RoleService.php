@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleService
 {
-    public function getAll(): Collection
+    public function getAll(): Role
     {
         return Role::select(['id', 'name', 'guard_name'])
             ->orderBy('id')
@@ -55,7 +55,6 @@ class RoleService
     public function getPermissionsNotInRole(Role $role): Collection
     {
         return Permission::select('id')
-            ->get()
             ->diff($role
                 ->permissions()
                 ->select('id')
