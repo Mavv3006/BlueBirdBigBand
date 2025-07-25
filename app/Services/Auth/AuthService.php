@@ -11,6 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
+    private string $username;
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -18,6 +20,8 @@ class AuthService
      */
     public function authenticate(AuthenticateDto $dto): void
     {
+        $this->username = $dto->name;
+
         $this->ensureIsNotRateLimited();
 
         $user = User::where('name', $dto->name)->first();
@@ -61,6 +65,6 @@ class AuthService
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('name')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->username).'|'.request()->ip());
     }
 }
