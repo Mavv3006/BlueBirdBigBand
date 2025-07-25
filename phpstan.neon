@@ -5,8 +5,8 @@ parameters:
         - Illuminate\Http\Resources\Json\JsonResource
     paths:
         - app/
-        # - tests/
+        - tests/
         - database/
-    level: 0
+    level: 1
     ignoreErrors:
     excludePaths:
