@@ -9,49 +9,31 @@ use App\Models\Musician;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use JetBrains\PhpStorm\ArrayShape;
 
 class MusicianService
 {
     /**
      * @return array{
-     *     instrument: array {
+     *     instrument: array{
      *         name: string,
      *         id: numeric,
      *         filepath: string,
      *     },
-     *     musicians: array { string }
+     *     musicians: array<string>
      * }
      */
     public function activeMusicians(): array
     {
         $instruments = Instrument::with('musicians')
             ->whereNotNull('order')
-//            ->select('id', 'name', 'default_picture_filepath')
             ->orderBy('order')
             ->get();
 
         $return = [];
 
-        //        foreach ($instruments as $instrument) {
-        //            $instrumentObject = [
-        //                'name' => $instrument->name,
-        //                'id' => $instrument->id,
-        //                'filepath' => $instrument->default_picture_filepath,
-        //            ];
-        //
-        //            $musiciansArray = [];
-        //
-        //            foreach ($instrument->musicians as $musician) {
-        //                $musiciansArray[] = "$musician->firstname $musician->lastname";
-        //            }
-        //
-        //            $return[] = [
-        //                'instrument' => $instrumentObject,
-        //                'musicians' => $musiciansArray,
-        //            ];
-        //        }
-
         foreach ($instruments as $instrument) {
+            /** @var Instrument $instrument */
             $instrumentObject = [
                 'id' => $instrument->id,
                 'name' => $instrument->name,
@@ -63,6 +45,7 @@ class MusicianService
             $musiciansObject = [];
 
             foreach ($instrument->musicians as $musician) {
+                /** @var Musician $musician */
                 if (!$musician->isActive) {
                     continue;
                 }
