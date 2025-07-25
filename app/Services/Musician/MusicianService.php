@@ -16,10 +16,19 @@ class MusicianService
      * @return array{
      *     instrument: array{
      *         name: string,
-     *         id: numeric,
-     *         filepath: string,
+     *         id: int,
+     *         order: int,
+     *         default_picture_filepath: string,
+     *         tux_filepath: string,
      *     },
-     *     musicians: array<string>
+     *     musicians: array{
+     *         id: int,
+     *         instrument_id: int,
+     *         firstname: string,
+     *         lastname: string,
+     *         seating_position: int,
+     *         picture_filepath: string|null
+     *     }
      * }
      */
     public function activeMusicians(): array
@@ -29,48 +38,19 @@ class MusicianService
             ->orderBy('order')
             ->get();
 
-        $return = [];
-
-        foreach ($instruments as $instrument) {
-            /** @var Instrument $instrument */
-            $instrumentObject = [
-                'id' => $instrument->id,
-                'name' => $instrument->name,
-                'default_picture_filepath' => $instrument->default_picture_filepath,
-                'order' => $instrument->order,
-                'tux_filepath' => $instrument->tux_filepath,
-            ];
-
-            $musiciansObject = [];
-
-            foreach ($instrument->musicians as $musician) {
-                /** @var Musician $musician */
-                if (!$musician->isActive) {
-                    continue;
-                }
-
-                $musiciansObject[] = [
-                    'id' => $musician->id,
-                    'instrument_id' => $musician->instrument_id,
-                    'firstname' => $musician->firstname,
-                    'lastname' => $musician->lastname,
-                    'seating_position' => $musician->seating_position,
-                    'picture_filepath' => $musician->picture_filepath,
-                ];
-            }
-
-            $musiciansObject = collect($musiciansObject)
-                ->sortBy('firstname')
-                ->values()
-                ->all();
-
-            $return[] = [
-                'instrument' => $instrumentObject,
-                'musicians' => $musiciansObject,
-            ];
-        }
-
-        return $return;
+        return collect($instruments)
+            ->map(fn (Instrument $instrument) => [
+                'instrument' => [
+                    'id' => $instrument->id,
+                    'name' => $instrument->name,
+                    'default_picture_filepath' => $instrument->default_picture_filepath,
+                    'order' => $instrument->order,
+                    'tux_filepath' => $instrument->tux_filepath,
+                ],
+                'musicians' => $this->getMusiciansForInstrument($instrument),
+            ])
+            ->values()
+            ->toArray();
     }
 
     public function all(): Collection
@@ -141,5 +121,32 @@ class MusicianService
         }
 
         return $data;
+    }
+
+    /**
+     * @return array{
+     *     id: int,
+     *     instrument_id: int,
+     *     firstname: string,
+     *     lastname: string,
+     *     seating_position: int,
+     *     picture_filepath: string|null
+     * }
+     */
+    protected function getMusiciansForInstrument(Instrument $instrument): array
+    {
+        return collect($instrument->musicians)
+            ->filter(fn (Musician $musician) => $musician->isActive)
+            ->map(fn (Musician $musician) => [
+                'id' => $musician->id,
+                'instrument_id' => $musician->instrument_id,
+                'firstname' => $musician->firstname,
+                'lastname' => $musician->lastname,
+                'seating_position' => $musician->seating_position,
+                'picture_filepath' => $musician->picture_filepath,
+            ])
+            ->sortBy('firstname')
+            ->values()
+            ->toArray();
     }
 }
