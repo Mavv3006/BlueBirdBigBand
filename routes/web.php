@@ -5,12 +5,6 @@ use App\Http\Controllers\Internal\DownloadSongController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\v2\BandController;
-use App\Http\Controllers\v2\ConcertDetailsPageController;
-use App\Http\Controllers\v2\ConcertsPageController;
-use App\Http\Controllers\v2\ContactPageController;
-use App\Http\Controllers\v2\ImprintController;
-use App\Http\Controllers\v2\IndexController;
 use App\Http\Middleware\HasPermissionToAccessInternalRoutes;
 use Illuminate\Support\Facades\Route;
 
