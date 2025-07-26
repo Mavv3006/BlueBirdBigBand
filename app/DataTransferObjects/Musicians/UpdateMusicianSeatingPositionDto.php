@@ -4,13 +4,13 @@ namespace App\DataTransferObjects\Musicians;
 
 use App\Http\Requests\MusicianSeatingPositionRequest;
 
-class UpdateMusicianSeatingPositionDto
+readonly class UpdateMusicianSeatingPositionDto
 {
     /**
      * @param MusicianSeatingPositionDto[] $data
      */
     public function __construct(
-        public readonly array $data,
+        public array $data,
     ) {}
 
     public static function fromRequest(MusicianSeatingPositionRequest $request): self
