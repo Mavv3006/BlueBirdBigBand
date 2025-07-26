@@ -19,6 +19,7 @@ class RoleUpdateDtoTest extends TestCase
         $this->assertEquals([1, 2, 3], $dto->permission_ids);
         $this->assertNotInstanceOf(IdDto::class, $dto->permission_ids[0]);
     }
+
     public function test_construct()
     {
         $dto = new RoleUpdateDto(
