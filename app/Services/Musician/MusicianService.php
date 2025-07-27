@@ -32,12 +32,10 @@ class MusicianService
      */
     public function activeMusicians(): array
     {
-        $instruments = Instrument::with('musicians')
+        return Instrument::with('musicians')
             ->whereNotNull('order')
             ->orderBy('order')
-            ->get();
-
-        return collect($instruments)
+            ->get()
             ->map(fn (Instrument $instrument) => [
                 'instrument' => [
                     'id' => $instrument->id,
