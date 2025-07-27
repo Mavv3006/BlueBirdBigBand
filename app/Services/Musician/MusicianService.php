@@ -2,7 +2,6 @@
 
 namespace App\Services\Musician;
 
-use App\DataTransferObjects\Musicians\UpdateMusicianSeatingPositionDto;
 use App\Http\Requests\MusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
