@@ -9,7 +9,6 @@ use App\Enums\StateMachines\FeatureFlagState;
 use App\Enums\StateMachines\NewsletterState;
 use App\Models\FeatureFlag;
 use App\Models\NewsletterRequest;
-use App\Services\FeatureFlag\FeatureFlagService;
 use App\Services\NewsletterRequest\NewsletterRequestService;
 use Mail;
 use Tests\TestCase;
