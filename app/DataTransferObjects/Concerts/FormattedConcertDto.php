@@ -4,16 +4,16 @@ namespace App\DataTransferObjects\Concerts;
 
 use Carbon\Carbon;
 
-class FormattedConcertDto
+readonly class FormattedConcertDto
 {
     public function __construct(
-        public readonly int $id,
-        public readonly Carbon $date,
-        public readonly Carbon $start_time,
-        public readonly Carbon $end_time,
-        public readonly string $band,
-        public readonly ConcertDescriptionDto $description,
-        public readonly ConcertAddressDto $address,
+        public int $id,
+        public Carbon $date,
+        public Carbon $start_time,
+        public Carbon $end_time,
+        public string $band,
+        public ConcertDescriptionDto $description,
+        public ConcertAddressDto $address,
     ) {}
 
     public function toArray(): array

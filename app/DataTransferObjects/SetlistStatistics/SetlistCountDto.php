@@ -2,12 +2,12 @@
 
 namespace App\DataTransferObjects\SetlistStatistics;
 
-class SetlistCountDto
+readonly class SetlistCountDto
 {
     public function __construct(
-        public readonly int $id,
-        public readonly string $arranger,
-        public readonly string $title,
-        public readonly int $count
+        public int    $id,
+        public string $arranger,
+        public string $title,
+        public int    $count
     ) {}
 }

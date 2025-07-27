@@ -9,7 +9,7 @@ parameters:
         - database
         - routes
         - tests
-    level: 3
+    level: 2
     ignoreErrors:
     excludePaths:
         - database/migrations

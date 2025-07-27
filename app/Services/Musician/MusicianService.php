@@ -71,20 +71,6 @@ class MusicianService
         return $musician->delete();
     }
 
-    public function updateSeatingPosition(UpdateMusicianSeatingPositionDto $dto): void
-    {
-        foreach ($dto->data as $instrument) {
-            $musicians = $instrument['musicians'];
-            for ($i = 0; $i < count($musicians); $i++) {
-                $musician = Musician::find($musicians[$i]['id']);
-                if ($musician->seating_position == $i) {
-                    continue;
-                }
-                $musician->update(['seating_position' => $i]);
-            }
-        }
-    }
-
     public function store(MusicianRequest $request): Musician
     {
         $musician = Musician::create($this->getMusicianData($request));
