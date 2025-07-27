@@ -70,7 +70,7 @@
             "@php artisan key:generate --ansi"
         ],
         "php-cs-fixer": "php-cs-fixer",
-        "phpstan": "./vendor/bin/phpstan analyse",
+        "phpstan": "./vendor/bin/phpstan analyse -c ./phpstan.neon",
         "test": "php artisan test --coverage"
     },
     "extra": {
