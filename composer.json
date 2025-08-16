@@ -68,7 +68,15 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "php-cs-fixer": "php-cs-fixer"
+        "php-cs-fixer": "php-cs-fixer",
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan serve\" \"npm run dev\" \"docker compose up\" --names=server,vite,database --kill-others"
+        ],
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@php artisan test"
+        ]
     },
     "extra": {
         "laravel": {
