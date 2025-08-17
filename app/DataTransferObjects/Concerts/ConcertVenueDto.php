@@ -4,11 +4,11 @@ namespace App\DataTransferObjects\Concerts;
 
 use App\Models\Venue;
 
-class ConcertVenueDto
+readonly class ConcertVenueDto
 {
     public function __construct(
-        public readonly string $street,
-        public readonly string $house_number,
-        public readonly Venue $venue,
+        public string $street,
+        public string $house_number,
+        public Venue $venue,
     ) {}
 }

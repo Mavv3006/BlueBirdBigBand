@@ -4,12 +4,12 @@ namespace App\DataTransferObjects\SetlistStatistics;
 
 use Carbon\Carbon;
 
-class LastTimePlayedDto
+readonly class LastTimePlayedDto
 {
     public function __construct(
-        public readonly int $id,
-        public readonly string $arranger,
-        public readonly string $title,
-        public readonly Carbon $lastPlayedDate,
+        public int $id,
+        public string $arranger,
+        public string $title,
+        public Carbon $lastPlayedDate,
     ) {}
 }
