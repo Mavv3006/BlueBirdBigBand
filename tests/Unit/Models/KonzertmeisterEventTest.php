@@ -20,7 +20,7 @@ class KonzertmeisterEventTest extends TestCase
         ]);
 
         $this->assertDatabaseCount('konzertmeister_events', 1);
-        $event = KonzertmeisterEvent::query()->find(2344446);
+        $event = KonzertmeisterEvent::whereId(2344446)->firstOrFail();
         $this->assertStringEndsWith('...', $event->description);
         $this->assertLessThanOrEqual(125, strlen($event->description));
     }
@@ -37,7 +37,7 @@ class KonzertmeisterEventTest extends TestCase
         ]);
 
         $this->assertDatabaseCount('konzertmeister_events', 1);
-        $event = KonzertmeisterEvent::query()->find(2344446);
+        $event = KonzertmeisterEvent::whereId(2344446)->firstOrFail();
         $this->assertStringEndsNotWith('...', $event->description);
         $this->assertLessThanOrEqual(125, strlen($event->description));
     }
@@ -59,7 +59,7 @@ class KonzertmeisterEventTest extends TestCase
         $created->update(['description' => $description]);
 
         $this->assertDatabaseCount('konzertmeister_events', 1);
-        $event = KonzertmeisterEvent::query()->find(2344446);
+        $event = KonzertmeisterEvent::whereId(2344446)->firstOrFail();
         $this->assertStringStartsWith('Auftritt - ', $event->description);
         $this->assertStringEndsWith('...', $event->description);
         $this->assertLessThanOrEqual(125, strlen($event->description));

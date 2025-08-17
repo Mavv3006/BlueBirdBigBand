@@ -2,7 +2,6 @@
 
 namespace App\Services\Musician;
 
-use App\DataTransferObjects\Musicians\UpdateMusicianSeatingPositionDto;
 use App\Http\Requests\MusicianRequest;
 use App\Models\Instrument;
 use App\Models\Musician;
@@ -14,81 +13,41 @@ class MusicianService
 {
     /**
      * @return array{
-     *     instrument: array {
+     *     instrument: array{
      *         name: string,
-     *         id: numeric,
-     *         filepath: string,
+     *         id: int,
+     *         order: int,
+     *         default_picture_filepath: string,
+     *         tux_filepath: string,
      *     },
-     *     musicians: array { string }
+     *     musicians: array{
+     *         id: int,
+     *         instrument_id: int,
+     *         firstname: string,
+     *         lastname: string,
+     *         seating_position: int,
+     *         picture_filepath: string|null
+     *     }
      * }
      */
     public function activeMusicians(): array
     {
-        $instruments = Instrument::with('musicians')
+        return Instrument::with('musicians')
             ->whereNotNull('order')
-//            ->select('id', 'name', 'default_picture_filepath')
             ->orderBy('order')
-            ->get();
-
-        $return = [];
-
-        //        foreach ($instruments as $instrument) {
-        //            $instrumentObject = [
-        //                'name' => $instrument->name,
-        //                'id' => $instrument->id,
-        //                'filepath' => $instrument->default_picture_filepath,
-        //            ];
-        //
-        //            $musiciansArray = [];
-        //
-        //            foreach ($instrument->musicians as $musician) {
-        //                $musiciansArray[] = "$musician->firstname $musician->lastname";
-        //            }
-        //
-        //            $return[] = [
-        //                'instrument' => $instrumentObject,
-        //                'musicians' => $musiciansArray,
-        //            ];
-        //        }
-
-        foreach ($instruments as $instrument) {
-            $instrumentObject = [
-                'id' => $instrument->id,
-                'name' => $instrument->name,
-                'default_picture_filepath' => $instrument->default_picture_filepath,
-                'order' => $instrument->order,
-                'tux_filepath' => $instrument->tux_filepath,
-            ];
-
-            $musiciansObject = [];
-
-            foreach ($instrument->musicians as $musician) {
-                if (!$musician->isActive) {
-                    continue;
-                }
-
-                $musiciansObject[] = [
-                    'id' => $musician->id,
-                    'instrument_id' => $musician->instrument_id,
-                    'firstname' => $musician->firstname,
-                    'lastname' => $musician->lastname,
-                    'seating_position' => $musician->seating_position,
-                    'picture_filepath' => $musician->picture_filepath,
-                ];
-            }
-
-            $musiciansObject = collect($musiciansObject)
-                ->sortBy('firstname')
-                ->values()
-                ->all();
-
-            $return[] = [
-                'instrument' => $instrumentObject,
-                'musicians' => $musiciansObject,
-            ];
-        }
-
-        return $return;
+            ->get()
+            ->map(fn (Instrument $instrument) => [
+                'instrument' => [
+                    'id' => $instrument->id,
+                    'name' => $instrument->name,
+                    'default_picture_filepath' => $instrument->default_picture_filepath,
+                    'order' => $instrument->order,
+                    'tux_filepath' => $instrument->tux_filepath,
+                ],
+                'musicians' => $this->getMusiciansForInstrument($instrument),
+            ])
+            ->values()
+            ->toArray();
     }
 
     public function all(): Collection
@@ -107,20 +66,6 @@ class MusicianService
         Log::info('Deleting musician', [$musician]);
 
         return $musician->delete();
-    }
-
-    public function updateSeatingPosition(UpdateMusicianSeatingPositionDto $dto): void
-    {
-        foreach ($dto->data as $instrument) {
-            $musicians = $instrument['musicians'];
-            for ($i = 0; $i < count($musicians); $i++) {
-                $musician = Musician::find($musicians[$i]['id']);
-                if ($musician->seating_position == $i) {
-                    continue;
-                }
-                $musician->update(['seating_position' => $i]);
-            }
-        }
     }
 
     public function store(MusicianRequest $request): Musician
@@ -159,5 +104,32 @@ class MusicianService
         }
 
         return $data;
+    }
+
+    /**
+     * @return array{
+     *     id: int,
+     *     instrument_id: int,
+     *     firstname: string,
+     *     lastname: string,
+     *     seating_position: int,
+     *     picture_filepath: string|null
+     * }
+     */
+    protected function getMusiciansForInstrument(Instrument $instrument): array
+    {
+        return collect($instrument->musicians)
+            ->filter(fn (Musician $musician) => $musician->isActive)
+            ->map(fn (Musician $musician) => [
+                'id' => $musician->id,
+                'instrument_id' => $musician->instrument_id,
+                'firstname' => $musician->firstname,
+                'lastname' => $musician->lastname,
+                'seating_position' => $musician->seating_position,
+                'picture_filepath' => $musician->picture_filepath,
+            ])
+            ->sortBy('firstname')
+            ->values()
+            ->toArray();
     }
 }

@@ -13,7 +13,11 @@
             <directory suffix="Test.php">./tests/Inertia</directory>
         </testsuite>
     </testsuites>
-    <coverage/>
+    <coverage>
+        <report>
+            <html outputDirectory="coverage"/>
+        </report>
+    </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>

@@ -2,12 +2,12 @@
 
 namespace App\DataTransferObjects;
 
-class UserRoleDto
+readonly class UserRoleDto
 {
     public function __construct(
-        public readonly int $id,
-        public readonly string $name,
-        public readonly bool $assigned
+        public int $id,
+        public string $name,
+        public bool $assigned
     ) {}
 
     public function toArray(): array

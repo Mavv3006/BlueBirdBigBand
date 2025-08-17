@@ -2,12 +2,12 @@
 
 namespace App\DataTransferObjects\Concerts;
 
-class ConcertAddressDto
+readonly class ConcertAddressDto
 {
     public function __construct(
-        public readonly string $street,
-        public readonly string $number,
-        public readonly int $plz,
-        public readonly string $city,
+        public string $street,
+        public string $number,
+        public int $plz,
+        public string $city,
     ) {}
 }

@@ -21,12 +21,12 @@ class VenueFactory extends Factory
         try {
             return [
                 'plz' => random_int(10000, 99999),
-                'name' => $this->faker->city,
+                'name' => fake()->city(),
             ];
         } catch (Exception) {
             return [
                 'plz' => 12345,
-                'name' => $this->faker->city,
+                'name' => fake()->city(),
             ];
         }
     }

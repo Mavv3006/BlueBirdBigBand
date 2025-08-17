@@ -33,6 +33,7 @@
         "barryvdh/laravel-debugbar": "^3.9",
         "fakerphp/faker": "^1.22.0",
         "friendsofphp/php-cs-fixer": "^v3.17.0",
+        "larastan/larastan": "^3",
         "laravel/breeze": "^2.0",
         "laravel/pint": "^v1.10.0",
         "mockery/mockery": "^1.4.4",
@@ -73,10 +74,8 @@
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan serve\" \"npm run dev\" \"docker compose up\" --names=server,vite,database --kill-others"
         ],
-        "test": [
-            "@php artisan config:clear --ansi",
-            "@php artisan test"
-        ]
+        "phpstan": "./vendor/bin/phpstan analyse -c ./phpstan.neon",
+        "test": "php artisan test --coverage"
     },
     "extra": {
         "laravel": {

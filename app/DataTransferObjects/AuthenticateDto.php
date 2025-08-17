@@ -2,10 +2,10 @@
 
 namespace App\DataTransferObjects;
 
-class AuthenticateDto
+readonly class AuthenticateDto
 {
     public function __construct(
-        public readonly string $name,
-        public readonly string $password,
+        public string $name,
+        public string $password,
     ) {}
 }

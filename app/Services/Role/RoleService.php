@@ -5,14 +5,13 @@ namespace App\Services\Role;
 use App\DataTransferObjects\IdDto;
 use App\DataTransferObjects\Roles\RoleUpdateDto;
 use App\Http\Requests\StoreRoleRequest;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleService
 {
-    public function getAll(): Collection
+    public function getAll(): Role
     {
         return Role::select(['id', 'name', 'guard_name'])
             ->orderBy('id')
@@ -32,34 +31,6 @@ class RoleService
         return Role::where('id', $id)
             ->select(['id', 'name', 'guard_name'])
             ->first();
-    }
-
-    public function getPermissionsOfRole(Role $role): Collection
-    {
-        return $role
-            ->permissions()
-            ->select('id', 'name')
-            ->orderBy('id')
-            ->get();
-    }
-
-    public function getUsersOfRole(Role $role): Collection
-    {
-        return $role
-            ->users()
-            ->select('id', 'name', 'status')
-            ->orderBy('id')
-            ->get();
-    }
-
-    public function getPermissionsNotInRole(Role $role): Collection
-    {
-        return Permission::select('id')
-            ->get()
-            ->diff($role
-                ->permissions()
-                ->select('id')
-                ->get());
     }
 
     public function update(RoleUpdateDto $dto): void
