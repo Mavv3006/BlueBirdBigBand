@@ -1,6 +1,6 @@
 <?php
 
-namespace KonzertmeisterIntegration;
+namespace Tests\Unit\KonzertmeisterIntegration;
 
 use App\Models\Band;
 use App\Services\KonzertmeisterIntegration\CalendarEventMapping;
