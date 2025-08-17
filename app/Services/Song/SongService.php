@@ -5,18 +5,19 @@ namespace App\Services\Song;
 use App\Http\Requests\SongStoreRequest;
 use App\Http\Requests\SongUpdateRequest;
 use App\Models\Song;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SongService
 {
-    public function all(): Collection
+    /** @returns Song[] */
+    public function all(): array
     {
         return Song::select(['id', 'title', 'arranger', 'genre', 'author', 'file_path'])
             ->orderBy('title')
-            ->get();
+            ->get()
+            ->toArray();
     }
 
     public function update(SongUpdateRequest $request, Song $song): bool

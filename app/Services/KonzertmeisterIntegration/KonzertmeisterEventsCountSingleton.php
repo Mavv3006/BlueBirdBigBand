@@ -4,7 +4,7 @@ namespace App\Services\KonzertmeisterIntegration;
 
 use App\Models\KonzertmeisterEvent;
 
-class KonzertmeisterEventsCountSingleton
+final class KonzertmeisterEventsCountSingleton
 {
     private ?int $count = null;
 
@@ -21,10 +21,10 @@ class KonzertmeisterEventsCountSingleton
 
     protected function __construct() {}
 
-    public static function getInstance(): static
+    public static function getInstance(): self
     {
         if (self::$instance === null) {
-            self::$instance = new static;
+            self::$instance = new self;
         }
 
         return self::$instance;

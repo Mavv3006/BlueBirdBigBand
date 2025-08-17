@@ -3,7 +3,6 @@
 namespace App\Services\Auth;
 
 use App\DataTransferObjects\AuthenticateDto;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -11,6 +10,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
+    private string $username;
+
     /**
      * Attempt to authenticate the request's credentials.
      *
@@ -18,13 +19,9 @@ class AuthService
      */
     public function authenticate(AuthenticateDto $dto): void
     {
+        $this->username = $dto->name;
+
         $this->ensureIsNotRateLimited();
-
-        $user = User::where('name', $dto->name)->first();
-
-        if (!$user->activated) {
-            throw ValidationException::withMessages(['name' => trans('auth.activated')]);
-        }
 
         $isAuthenticated = Auth::attempt([
             'name' => $dto->name,
@@ -61,6 +58,6 @@ class AuthService
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('name')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->username).'|'.request()->ip());
     }
 }
