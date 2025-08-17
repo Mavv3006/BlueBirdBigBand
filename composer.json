@@ -70,6 +70,10 @@
             "@php artisan key:generate --ansi"
         ],
         "php-cs-fixer": "php-cs-fixer",
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185\" \"php artisan serve\" \"npm run dev\" \"docker compose up\" --names=server,vite,database --kill-others"
+        ],
         "phpstan": "./vendor/bin/phpstan analyse -c ./phpstan.neon",
         "test": "php artisan test --coverage"
     },
