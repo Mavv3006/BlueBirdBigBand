@@ -4,13 +4,13 @@ namespace App\DataTransferObjects\Musicians;
 
 use App\DataTransferObjects\IdDto;
 
-class MusicianSeatingPositionDto
+readonly class MusicianSeatingPositionDto
 {
     /**
      * @param IdDto[] $musicians
      */
     public function __construct(
-        public readonly int $instrument_id,
-        public readonly array $musicians
+        public int $instrument_id,
+        public array $musicians
     ) {}
 }

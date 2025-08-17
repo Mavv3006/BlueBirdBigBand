@@ -2,7 +2,7 @@
 
 namespace App\DataTransferObjects;
 
-class IdDto
+readonly class IdDto
 {
-    public function __construct(public readonly int $id) {}
+    public function __construct(public int $id) {}
 }

@@ -3,8 +3,11 @@
 namespace Tests\Unit\Services\NewsletterRequest;
 
 use App\DataTransferObjects\NewsletterRequestDto;
+use App\Enums\FeatureFlagName;
 use App\Enums\NewsletterType;
+use App\Enums\StateMachines\FeatureFlagState;
 use App\Enums\StateMachines\NewsletterState;
+use App\Models\FeatureFlag;
 use App\Models\NewsletterRequest;
 use App\Services\NewsletterRequest\NewsletterRequestService;
 use Mail;
@@ -12,6 +15,12 @@ use Tests\TestCase;
 
 class NewsletterRequestServiceTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        FeatureFlag::factory()->create(['name' => FeatureFlagName::Newsletter, 'status' => FeatureFlagState::On]);
+    }
+
     public function test_confirmation_link()
     {
         $newsletterRequest = NewsletterRequest::factory()->create();
@@ -19,6 +28,21 @@ class NewsletterRequestServiceTest extends TestCase
         $url = NewsletterRequestService::confirmationLink($newsletterRequest);
 
         $this->assertEquals("/newsletter/confirm/$newsletterRequest->id", parse_url($url)['path']);
+    }
+
+    public function test_redirect_after_following_confirmation_link()
+    {
+        $newsletterRequest = NewsletterRequest::factory()->create(['status' => NewsletterState::Requested]);
+        $url = NewsletterRequestService::confirmationLink($newsletterRequest);
+
+        $response = $this->get($url);
+
+        $response->assertRedirectToRoute('newsletter.confirm.success');
+    }
+
+    public function test_access_success_route()
+    {
+        $this->get(route('newsletter.confirm.success'))->assertSuccessful();
     }
 
     public function test_create_adding_request()

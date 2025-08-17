@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ConcertResource\RelationManagers;
 
+use App\Models\Concert;
 use App\Models\Song;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -35,9 +36,11 @@ class SetlistRelationManager extends RelationManager
                         modifyQueryUsing: fn (EloquentBuilder $query) => $query
                             ->select('id', 'title', 'arranger')
                             ->whereNotIn('id', function (QueryBuilder $query) {
+                                /** @var Concert $entry */
+                                $entry = $this->ownerRecord;
                                 $query->select('song_id')
                                     ->from('setlist_entries')
-                                    ->where('concert_id', $this->ownerRecord->id);
+                                    ->where('concert_id', $entry->id);
                             })
                             ->orderBy('title'))
                     ->native(false),

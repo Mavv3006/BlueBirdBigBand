@@ -56,6 +56,7 @@ class KonzertmeisterEvent extends Model
         };
     }
 
+    /** @return Attribute<string[], string[]> */
     protected function description(): Attribute
     {
         return Attribute::make(

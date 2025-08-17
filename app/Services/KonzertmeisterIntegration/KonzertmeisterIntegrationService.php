@@ -52,7 +52,7 @@ class KonzertmeisterIntegrationService
         self::upsertAllEvents($mappedCalendarEvents);
 
         Log::debug('KonzertmeisterIntegrationService - information about all events in database', [
-            'konzertmeister count' => KonzertmeisterEvent::all()->count(),
+            'konzertmeister count' => KonzertmeisterEvent::count(),
             'konzertmeister events' => KonzertmeisterEvent::query()->orderBy('dtstart')->get(),
         ]);
 
