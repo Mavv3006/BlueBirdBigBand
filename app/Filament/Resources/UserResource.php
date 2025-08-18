@@ -80,7 +80,7 @@ class UserResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('Aktivieren')
                         ->requiresConfirmation()
-                        ->action(fn (Collection $collection) => $collection->each(function ($item) {
+                        ->action(action: fn (Collection $collection) => $collection->each(function (User $item) {
                             if ($item->status == UserStates::Activated) {
                                 return;
                             }

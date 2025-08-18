@@ -2,10 +2,10 @@
 
 namespace App\DataTransferObjects\Concerts;
 
-class ConcertDescriptionDto
+readonly class ConcertDescriptionDto
 {
     public function __construct(
-        public readonly string $event,
-        public readonly string $venue,
+        public string $event,
+        public string $venue,
     ) {}
 }

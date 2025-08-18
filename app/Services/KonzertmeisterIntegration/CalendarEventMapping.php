@@ -71,7 +71,7 @@ class CalendarEventMapping
 
     /**
      * @return array{
-     *     uid: null|string,
+     *     id: null|string,
      *     summary: null|string,
      *     location: null|string,
      *     dtstart: Carbon,

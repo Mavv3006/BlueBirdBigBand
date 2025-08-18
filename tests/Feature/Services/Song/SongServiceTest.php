@@ -30,10 +30,10 @@ class SongServiceTest extends TestCase
 
         $songs = $this->songService->all();
 
-        $this->assertEquals('aaa', $songs[0]->title);
-        $this->assertEquals('bbb', $songs[1]->title);
-        $this->assertEquals('cer', $songs[2]->title);
-        $this->assertEquals('zte', $songs[3]->title);
+        $this->assertEquals('aaa', $songs[0]['title']);
+        $this->assertEquals('bbb', $songs[1]['title']);
+        $this->assertEquals('cer', $songs[2]['title']);
+        $this->assertEquals('zte', $songs[3]['title']);
 
     }
 }
