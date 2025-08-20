@@ -179,6 +179,16 @@ class ConcertResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(function (): array {
+                        $keys = array_map(fn ($case) => $case->value, ConcertStatus::cases());
+                        $values = array_map(fn ($case) => $case->name, ConcertStatus::cases());
+
+                        return array_combine($keys, $values);
+                    }),
+            ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ])
