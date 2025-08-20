@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ConcertStatus;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
@@ -38,6 +39,7 @@ class ConcertFactory extends Factory
             'event_description' => $this->faker->text(25),
             'band_id' => Band::all()->random(1)->first(),
             'venue_plz' => Venue::all()->random(1)->first(),
+            'status' => $this->faker->randomElement(ConcertStatus::cases()),
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ConcertStatus;
 use App\Filament\Resources\ConcertResource\Pages;
 use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
@@ -15,6 +16,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 
 class ConcertResource extends Resource
 {
@@ -151,6 +153,15 @@ class ConcertResource extends Resource
                     ->label('Auftrittsort')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (ConcertStatus $state): string => match ($state) {
+                        ConcertStatus::Draft => 'gray',
+                        ConcertStatus::Public => 'success',
+                    })
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -158,8 +169,25 @@ class ConcertResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('set_public')
+                        ->label('Veröffentlichen')
+                        ->deselectRecordsAfterCompletion()
+                        ->action(fn (Collection $records) => $records
+                            ->filter(fn (Concert $record) => $record->status == ConcertStatus::Draft)
+                            ->each(fn (Concert $record) => $record->setPublic())
+                        ),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options(function (): array {
+                        $keys = array_map(fn ($case) => $case->value, ConcertStatus::cases());
+                        $values = array_map(fn ($case) => $case->name, ConcertStatus::cases());
+
+                        return array_combine($keys, $values);
+                    }),
             ])
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
