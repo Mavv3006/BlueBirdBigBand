@@ -4,7 +4,8 @@ namespace App\Filament\Resources\ConcertResource\Pages;
 
 use App\Filament\Resources\ConcertResource;
 use App\Models\Concert;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewConcert extends ViewRecord
@@ -14,8 +15,8 @@ class ViewConcert extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
-            Actions\DeleteAction::make()
+            EditAction::make(),
+            DeleteAction::make()
                 ->hidden($this->concertIsPlayed()),
         ];
     }

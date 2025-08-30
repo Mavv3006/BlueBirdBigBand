@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\InstrumentResource\Pages;
 
 use App\Filament\Resources\InstrumentResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListInstruments extends ListRecords
@@ -13,7 +13,7 @@ class ListInstruments extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

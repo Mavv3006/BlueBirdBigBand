@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Exceptions\UnauthorizedException;
@@ -12,9 +13,9 @@ class HasPermissionToAccessInternalRoutes
     /**
      * Handle an incoming request.
      *
-     * @param \Closure(Request): (Response) $next
+     * @param Closure(Request):Response $next
      */
-    public function handle(Request $request, \Closure $next): Response
+    public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()->hasPermissionTo('route.access-intern')) {
             throw UnauthorizedException::forPermissions(['route.access-intern']);

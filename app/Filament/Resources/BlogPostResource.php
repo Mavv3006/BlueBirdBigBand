@@ -2,30 +2,40 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BlogPostResource\Pages;
+use App\Filament\Resources\BlogPostResource\Pages\CreateBlogPost;
+use App\Filament\Resources\BlogPostResource\Pages\EditBlogPost;
+use App\Filament\Resources\BlogPostResource\Pages\ListBlogPosts;
+use App\Filament\Resources\BlogPostResource\Pages\ViewBlogPost;
 use App\Models\BlogPost;
-use Filament\Forms;
-use Filament\Forms\Form;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Grid::make(1)->schema([
+        return $schema
+            ->components([
+                Grid::make(1)->schema([
 
-                    Forms\Components\TextInput::make('title')
+                    TextInput::make('title')
                         ->label('Titel des Posts')
                         ->required(),
-                    Forms\Components\RichEditor::make('content')
+                    RichEditor::make('content')
                         ->label('Post Inhalt')
                         ->fileAttachmentsDisk('public')
                         ->fileAttachmentsDirectory('blog-post/images')
@@ -38,24 +48,24 @@ class BlogPostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->label('ID'),
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Titel'),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->label('Erstelldatum')
                     ->dateTime(),
             ])
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -70,10 +80,10 @@ class BlogPostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBlogPosts::route('/'),
-            'create' => Pages\CreateBlogPost::route('/create'),
-            'edit' => Pages\EditBlogPost::route('/{record}/edit'),
-            'view' => Pages\ViewBlogPost::route('/{record}'),
+            'index' => ListBlogPosts::route('/'),
+            'create' => CreateBlogPost::route('/create'),
+            'edit' => EditBlogPost::route('/{record}/edit'),
+            'view' => ViewBlogPost::route('/{record}'),
         ];
     }
 }

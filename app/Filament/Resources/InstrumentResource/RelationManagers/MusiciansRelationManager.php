@@ -2,10 +2,20 @@
 
 namespace App\Filament\Resources\InstrumentResource\RelationManagers;
 
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -13,23 +23,23 @@ class MusiciansRelationManager extends RelationManager
 {
     protected static string $relationship = 'musicians';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('firstname')
+        return $schema
+            ->components([
+                TextInput::make('firstname')
                     ->required()
                     ->string()
                     ->autofocus(),
-                Forms\Components\TextInput::make('lastname')
+                TextInput::make('lastname')
                     ->required()
                     ->string(),
-                Forms\Components\Select::make('instrument_id')
+                Select::make('instrument_id')
                     ->relationship('instrument', 'name')
                     ->preload()
                     ->required()
                     ->searchable(),
-                Forms\Components\Checkbox::make('isActive')
+                Checkbox::make('isActive')
                     ->label('Aktiv?')
                     ->inline(false),
             ]);
@@ -40,43 +50,43 @@ class MusiciansRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->numeric(),
-                Tables\Columns\TextColumn::make('firstname')
+                TextColumn::make('firstname')
                     ->label('Vorname'),
-                Tables\Columns\TextColumn::make('lastname')
+                TextColumn::make('lastname')
                     ->label('Nachname'),
-                Tables\Columns\CheckboxColumn::make('isActive')
+                CheckboxColumn::make('isActive')
                     ->label('Aktiv?')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\Filter::make('isActive')
+                Filter::make('isActive')
                     ->query(fn (Builder $query): Builder => $query->where('isActive', '=', true))
                     ->label('Musiker aktiv?')
                     ->indicator('Aktive Musiker'),
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 }

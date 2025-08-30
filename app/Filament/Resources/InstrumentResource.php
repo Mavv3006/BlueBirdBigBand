@@ -2,50 +2,63 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\InstrumentResource\Pages;
+use App\Filament\Resources\InstrumentResource\Pages\CreateInstrument;
+use App\Filament\Resources\InstrumentResource\Pages\EditInstrument;
+use App\Filament\Resources\InstrumentResource\Pages\ListInstruments;
+use App\Filament\Resources\InstrumentResource\Pages\ViewInstrument;
 use App\Filament\Resources\InstrumentResource\RelationManagers\MusiciansRelationManager;
 use App\Models\Instrument;
+use BackedEnum;
 use Exception;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\BulkAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use UnitEnum;
 
 class InstrumentResource extends Resource
 {
     protected static ?string $model = Instrument::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Instrumente';
 
-    protected static ?string $navigationGroup = 'Band';
+    protected static string | UnitEnum | null $navigationGroup = 'Band';
 
     protected static ?string $pluralModelLabel = 'Instrumente';
 
     protected static ?string $modelLabel = 'Instrument';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('name')
+        return $schema
+            ->components([
+                TextInput::make('name')
                     ->required()
                     ->string()
                     ->autofocus(),
-                Forms\Components\TextInput::make('order')
+                TextInput::make('order')
                     ->label('Reihenfolge')
                     ->integer()
                     ->placeholder('leer')
                     ->unique('instruments'),
-                Forms\Components\TextInput::make('default_picture_filepath')
+                TextInput::make('default_picture_filepath')
                     ->label('Pfad zum Bild')
                     ->required()
                     ->string(),
-                Forms\Components\TextInput::make('tux_filepath')
+                TextInput::make('tux_filepath')
                     ->label('Pfad zum Tux Bild')
                     ->required()
                     ->string(),
@@ -59,51 +72,51 @@ class InstrumentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('order')
+                TextColumn::make('order')
                     ->label('Reihenfolge')
                     ->sortable()
                     ->default('leer'),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('musicians_count')
+                TextColumn::make('musicians_count')
                     ->label('Anzahl der Musiker')
                     ->counts([
                         'musicians' => fn (Builder $query) => $query->where('isActive', '=', true),
                     ]),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime('d M Y H:i:s')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\Filter::make('order not null')
+                Filter::make('order not null')
                     ->query(fn (Builder $query): Builder => $query->whereNotNull('order'))
                     ->label('Aktiv')
                     ->indicator('Aktive Instrumente')
                     ->default(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\BulkAction::make('deactivate')
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                    BulkAction::make('deactivate')
                         ->requiresConfirmation()
                         ->action(fn (Collection $collection) => $collection->each->update(['order' => null]))
                         ->label('Deaktivieren'),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
             ->defaultSort('order');
     }
@@ -118,10 +131,10 @@ class InstrumentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListInstruments::route('/'),
-            'create' => Pages\CreateInstrument::route('/create'),
-            'edit' => Pages\EditInstrument::route('/{record}/edit'),
-            'view' => Pages\ViewInstrument::route('/{record}'),
+            'index' => ListInstruments::route('/'),
+            'create' => CreateInstrument::route('/create'),
+            'edit' => EditInstrument::route('/{record}/edit'),
+            'view' => ViewInstrument::route('/{record}'),
         ];
     }
 

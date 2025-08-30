@@ -31,7 +31,7 @@ class ListKonzertmeisterEvents extends ListRecords
         return [
             Action::make('pull')
                 ->label('Neue Konzertmeister Events holen')
-                ->form([
+                ->schema([
                     Select::make('band_name')
                         ->label('Band')
                         ->required()

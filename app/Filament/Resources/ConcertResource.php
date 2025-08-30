@@ -2,38 +2,48 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ConcertResource\Pages;
+use App\Filament\Resources\ConcertResource\Pages\CreateConcert;
+use App\Filament\Resources\ConcertResource\Pages\EditConcert;
+use App\Filament\Resources\ConcertResource\Pages\ListConcerts;
+use App\Filament\Resources\ConcertResource\Pages\ViewConcert;
 use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ConcertResource extends Resource
 {
     protected static ?string $model = Concert::class;
 
-    protected static ?string $navigationIcon = 'icon-performance';
+    protected static string | BackedEnum | null $navigationIcon = 'icon-performance';
 
     protected static ?string $navigationLabel = 'Auftritte';
 
-    protected static ?string $navigationGroup = 'Auftritte';
+    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
 
     protected static ?string $pluralModelLabel = 'Auftritte';
 
     protected static ?string $modelLabel = 'Auftritt';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('Band')
                     ->description('Wähle aus welche Band den Auftritt spielt.')
                     ->schema([
@@ -129,40 +139,40 @@ class ConcertResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('date')
+                TextColumn::make('date')
                     ->date('l d M Y')
                     ->label('Datum')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('start_time')
+                TextColumn::make('start_time')
                     ->dateTime('H:i')
                     ->label('Startzeit')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('end_time')
+                TextColumn::make('end_time')
                     ->dateTime('H:i')
                     ->label('Endzeit')
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('event_description')
+                TextColumn::make('event_description')
                     ->label('Beschreibung')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('venue_description')
+                TextColumn::make('venue_description')
                     ->label('Name der Location')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('venue.name')
+                TextColumn::make('venue.name')
                     ->label('Auftrittsort')
                     ->searchable()
                     ->sortable(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
             ->defaultSort('date');
     }
@@ -177,10 +187,10 @@ class ConcertResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListConcerts::route('/'),
-            'create' => Pages\CreateConcert::route('/create'),
-            'edit' => Pages\EditConcert::route('/{record}/edit'),
-            'view' => Pages\ViewConcert::route('/{record}'),
+            'index' => ListConcerts::route('/'),
+            'create' => CreateConcert::route('/create'),
+            'edit' => EditConcert::route('/{record}/edit'),
+            'view' => ViewConcert::route('/{record}'),
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ConcertResource\Pages;
 
 use App\Filament\Resources\ConcertResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditConcert extends EditRecord
@@ -13,7 +13,7 @@ class EditConcert extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

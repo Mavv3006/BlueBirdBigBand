@@ -4,10 +4,16 @@ namespace App\Filament\Resources\ConcertResource\RelationManagers;
 
 use App\Models\Concert;
 use App\Models\Song;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -20,11 +26,11 @@ class SetlistRelationManager extends RelationManager
 
     protected static ?string $pluralLabel = 'Setlist Einträge';
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('song_id')
+        return $schema
+            ->components([
+                Select::make('song_id')
                     ->required()
                     ->label('Song - Test')
                     ->getOptionLabelFromRecordUsing(fn (Song $song): string => "$song->title, arr. $song->arranger")
@@ -44,7 +50,7 @@ class SetlistRelationManager extends RelationManager
                             })
                             ->orderBy('title'))
                     ->native(false),
-                Forms\Components\TextInput::make('sequence_number')
+                TextInput::make('sequence_number')
                     ->label('Reihenfolgen-Nummer')
                     ->required()
                     ->integer()
@@ -57,32 +63,32 @@ class SetlistRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('sequence_number')
+                TextColumn::make('sequence_number')
                     ->label('Reihenfolgen-Nummer')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('song.title')
+                TextColumn::make('song.title')
                     ->label('Titel')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('song.author')
+                TextColumn::make('song.author')
                     ->label('Komponist'),
-                Tables\Columns\TextColumn::make('song.arranger')
+                TextColumn::make('song.arranger')
                     ->label('Arrangeur'),
-                Tables\Columns\TextColumn::make('song.genre')
+                TextColumn::make('song.genre')
                     ->label('Genre'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->defaultSort('sequence_number');

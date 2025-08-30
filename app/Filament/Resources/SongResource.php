@@ -2,32 +2,41 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SongResource\Pages;
+use App\Filament\Resources\SongResource\Pages\CreateSong;
+use App\Filament\Resources\SongResource\Pages\EditSong;
+use App\Filament\Resources\SongResource\Pages\ListSongs;
 use App\Models\Song;
 use App\Rules\StartsWithUppercaseLetterRule;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SongResource extends Resource
 {
     protected static ?string $model = Song::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-musical-note';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-musical-note';
 
-    protected static ?string $navigationGroup = 'Auftritte';
+    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
 
     protected static ?string $pluralModelLabel = 'Songs';
 
     protected static ?string $modelLabel = 'Song';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('title')
                     ->required()
                     ->label('Titel')
@@ -51,18 +60,18 @@ class SongResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('title')
                     ->label('Titel')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('arranger')
+                TextColumn::make('arranger')
                     ->label('Arrangeur')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('author')
+                TextColumn::make('author')
                     ->label('Komponist')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('genre')
+                TextColumn::make('genre')
                     ->label('Genre')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -70,17 +79,17 @@ class SongResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ])
             ->defaultSort('title');
     }
@@ -95,9 +104,9 @@ class SongResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSongs::route('/'),
-            'create' => Pages\CreateSong::route('/create'),
-            'edit' => Pages\EditSong::route('/{record}/edit'),
+            'index' => ListSongs::route('/'),
+            'create' => CreateSong::route('/create'),
+            'edit' => EditSong::route('/{record}/edit'),
         ];
     }
 }

@@ -5,15 +5,16 @@ namespace App\Filament\Resources\ConcertResource\Pages;
 use App\Filament\Resources\ConcertResource;
 use App\Services\Concert\ImportSetlistService;
 use Carbon\Carbon;
-use Filament\Actions;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Wizard\Step;
-use Filament\Forms\Set;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Wizard\Step;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListConcerts extends ListRecords
@@ -23,8 +24,8 @@ class ListConcerts extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
-            Actions\Action::make('Import Setlist')
+            CreateAction::make(),
+            Action::make('Import Setlist')
                 ->action(function (array $data, ImportSetlistService $service) {
                     $setlist = $data['setlist'];
                     $concert = $service->findConcert($data['forScoreData']);

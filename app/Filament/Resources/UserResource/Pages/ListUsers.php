@@ -4,7 +4,8 @@ namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
 use App\Mail\TestMail;
-use Filament\Actions;
+use Filament\Actions\Action;
+use Filament\Actions\CreateAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Mail;
@@ -16,10 +17,10 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
-            Actions\Action::make('email')
+            CreateAction::make(),
+            Action::make('email')
                 ->label('E-Mail')
-                ->form([
+                ->schema([
                     TextInput::make('email')
                         ->label('E-Mail Adresse')
                         ->email()

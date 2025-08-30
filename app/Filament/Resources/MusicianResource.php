@@ -2,47 +2,61 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MusicianResource\Pages;
+use App\Filament\Resources\MusicianResource\Pages\CreateMusician;
+use App\Filament\Resources\MusicianResource\Pages\EditMusician;
+use App\Filament\Resources\MusicianResource\Pages\ListMusicians;
 use App\Models\Musician;
+use BackedEnum;
 use Exception;
-use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\CheckboxColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use UnitEnum;
 
 class MusicianResource extends Resource
 {
     protected static ?string $model = Musician::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Musiker';
 
-    protected static ?string $navigationGroup = 'Band';
+    protected static string | UnitEnum | null $navigationGroup = 'Band';
 
     protected static ?string $pluralModelLabel = 'Musiker';
 
     protected static ?string $modelLabel = 'Musiker';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('firstname')
+        return $schema
+            ->components([
+                TextInput::make('firstname')
                     ->required()
                     ->string()
                     ->autofocus(),
-                Forms\Components\TextInput::make('lastname')
+                TextInput::make('lastname')
                     ->required()
                     ->string(),
-                Forms\Components\Select::make('instrument_id')
+                Select::make('instrument_id')
                     ->relationship('instrument', 'name')
                     ->preload()
                     ->required()
                     ->searchable(),
-                Forms\Components\Checkbox::make('isActive')
+                Checkbox::make('isActive')
                     ->label('Aktiv?')
                     ->inline(false)
                     ->default(true),
@@ -56,52 +70,52 @@ class MusicianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
+                TextColumn::make('id')
                     ->numeric()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('firstname')
+                TextColumn::make('firstname')
                     ->label('Vorname')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lastname')
+                TextColumn::make('lastname')
                     ->label('Nachname')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('instrument.name')
+                TextColumn::make('instrument.name')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\CheckboxColumn::make('isActive')
+                CheckboxColumn::make('isActive')
                     ->label('Aktiv?')
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime('d M Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime('d M Y H:i:s')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\Filter::make('isActive')
+                Filter::make('isActive')
                     ->query(fn (Builder $query): Builder => $query->where('isActive', '=', true))
                     ->label('Musiker aktiv?')
                     ->indicator('Aktive Musiker')
                     ->default(),
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
-                Tables\Actions\CreateAction::make(),
+                CreateAction::make(),
             ]);
     }
 
@@ -115,9 +129,9 @@ class MusicianResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMusicians::route('/'),
-            'create' => Pages\CreateMusician::route('/create'),
-            'edit' => Pages\EditMusician::route('/{record}/edit'),
+            'index' => ListMusicians::route('/'),
+            'create' => CreateMusician::route('/create'),
+            'edit' => EditMusician::route('/{record}/edit'),
         ];
     }
 }

@@ -4,33 +4,36 @@ namespace App\Filament\Resources;
 
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
-use App\Filament\Resources\KonzertmeisterEventResource\Pages;
+use App\Filament\Resources\KonzertmeisterEventResource\Pages\ListKonzertmeisterEvents;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventConversionStateDistribution;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventOverview;
 use App\Filament\Resources\KonzertmeisterEventResource\Widgets\KonzertmeisterEventTypeDistribution;
 use App\Models\Concert;
 use App\Models\KonzertmeisterEvent;
 use App\Models\Venue;
+use BackedEnum;
 use Closure;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
+use Filament\Actions\Action;
+use Filament\Actions\BulkAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use UnitEnum;
 
 class KonzertmeisterEventResource extends Resource
 {
     protected static ?string $model = KonzertmeisterEvent::class;
 
-    protected static ?string $navigationIcon = 'icon-event-o';
+    protected static string | BackedEnum | null $navigationIcon = 'icon-event-o';
 
-    protected static ?string $navigationGroup = 'Auftritte';
+    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
 
     public static function table(Table $table): Table
     {
@@ -73,19 +76,19 @@ class KonzertmeisterEventResource extends Resource
                     }),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('type')
+                SelectFilter::make('type')
                     ->label('Type')
                     ->preload()
                     ->multiple()
                     ->options(self::getTypeFilterOptions()),
-                Tables\Filters\SelectFilter::make('conversion_state')
+                SelectFilter::make('conversion_state')
                     ->label('Status')
                     ->preload()
                     ->multiple()
                     ->options(self::getConversionStateFilterOptions()),
             ])
-            ->actions([
-                Tables\Actions\Action::make('convert')
+            ->recordActions([
+                Action::make('convert')
                     ->label('Konvertieren')
                     ->hidden(function (KonzertmeisterEvent $record): bool {
                         $isNotOpen = $record->conversion_state != KonzertmeisterEventConversionState::Open;
@@ -93,7 +96,7 @@ class KonzertmeisterEventResource extends Resource
 
                         return $isNotOpen || $concertExists;
                     })
-                    ->form([
+                    ->schema([
                         Section::make('Beschreibungen')
                             ->columns([
                                 'default' => 1,
@@ -152,8 +155,8 @@ class KonzertmeisterEventResource extends Resource
                     ->action(self::getConvertTableRowAction()),
             ])
             ->deferFilters()
-            ->bulkActions([
-                Tables\Actions\BulkAction::make('reject')
+            ->toolbarActions([
+                BulkAction::make('reject')
                     ->label('Ablehnen')
                     ->requiresConfirmation()
                     ->deselectRecordsAfterCompletion()
@@ -166,7 +169,7 @@ class KonzertmeisterEventResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListKonzertmeisterEvents::route('/'),
+            'index' => ListKonzertmeisterEvents::route('/'),
         ];
     }
 
