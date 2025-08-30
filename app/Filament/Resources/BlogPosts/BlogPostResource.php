@@ -24,23 +24,24 @@ class BlogPostResource extends Resource
 {
     protected static ?string $model = BlogPost::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Grid::make(1)->schema([
-
-                    TextInput::make('title')
-                        ->label('Titel des Posts')
-                        ->required(),
-                    RichEditor::make('content')
-                        ->label('Post Inhalt')
-                        ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('blog-post/images')
-                        ->required(),
-                ]),
+                Grid::make(1)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextInput::make('title')
+                            ->label('Titel des Posts')
+                            ->required(),
+                        RichEditor::make('content')
+                            ->label('Post Inhalt')
+                            ->fileAttachmentsDirectory('blog-post/images')
+                            ->required()
+                        ->json(),
+                    ]),
             ]);
     }
 

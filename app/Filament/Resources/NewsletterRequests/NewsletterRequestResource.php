@@ -88,7 +88,6 @@ class NewsletterRequestResource extends Resource
                     ->action(fn (NewsletterRequest $request) => $request->state()->complete())
                     ->visible(fn (NewsletterRequest $request) => $request->status == NewsletterState::Confirmed),
             ])
-            ->deferFilters()
             ->defaultSort('confirmed_at', 'desc');
     }
 

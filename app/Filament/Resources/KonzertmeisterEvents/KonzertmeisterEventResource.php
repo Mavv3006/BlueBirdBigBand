@@ -154,7 +154,6 @@ class KonzertmeisterEventResource extends Resource
                     ])
                     ->action(self::getConvertTableRowAction()),
             ])
-            ->deferFilters()
             ->toolbarActions([
                 BulkAction::make('reject')
                     ->label('Ablehnen')
