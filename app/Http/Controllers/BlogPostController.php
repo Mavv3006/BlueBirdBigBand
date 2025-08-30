@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use Inertia\Inertia;
 
 class BlogPostController extends Controller
 {
@@ -10,6 +11,6 @@ class BlogPostController extends Controller
 
     public function show(BlogPost $blog)
     {
-        return $blog->renderRichContent('content');
+        return Inertia::render('LatestInfos/BlogIndexPage', ['content' => $blog->renderRichContent('content')]);
     }
 }
