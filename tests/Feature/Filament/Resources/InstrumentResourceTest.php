@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\InstrumentResource;
+use App\Filament\Resources\Instruments\InstrumentResource;
 use Tests\TestCase;
 
 class InstrumentResourceTest extends TestCase

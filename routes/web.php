@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\FeatureFlagName;
+use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\Internal\DownloadSongController;
 use App\Http\Controllers\Internal\InternController;
 use App\Http\Controllers\NewsletterRequestController;
@@ -30,6 +31,8 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/musiker', 'musicians');
     Route::get('/presse', 'pressInfo');
     Route::get('/datenschutz', 'dataPrivacy');
+    Route::resource('blog', BlogPostController::class)
+        ->only(['index', 'show']);
 });
 
 Route::prefix('newsletter')

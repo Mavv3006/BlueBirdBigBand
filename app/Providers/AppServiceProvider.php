@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Filament\Forms\Components\FileUpload;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -32,5 +35,14 @@ class AppServiceProvider extends ServiceProvider
                 'time' => $query->time,
             ]);
         });
+
+        FileUpload::configureUsing(fn (FileUpload $fileUpload) => $fileUpload
+            ->visibility('public'));
+
+        ImageColumn::configureUsing(fn (ImageColumn $imageColumn) => $imageColumn
+            ->visibility('public'));
+
+        ImageEntry::configureUsing(fn (ImageEntry $imageEntry) => $imageEntry
+            ->visibility('public'));
     }
 }
