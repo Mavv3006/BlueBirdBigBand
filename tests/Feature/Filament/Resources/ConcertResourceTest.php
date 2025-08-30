@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\ConcertResource;
+use App\Filament\Resources\Concerts\ConcertResource;
 use Tests\TestCase;
 
 class ConcertResourceTest extends TestCase

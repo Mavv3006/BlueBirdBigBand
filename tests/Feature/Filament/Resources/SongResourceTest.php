@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Filament\Resources;
 
-use App\Filament\Resources\SongResource;
+use App\Filament\Resources\Songs\SongResource;
 use Tests\TestCase;
 
 class SongResourceTest extends TestCase
