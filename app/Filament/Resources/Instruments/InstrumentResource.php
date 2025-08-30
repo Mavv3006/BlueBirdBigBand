@@ -31,11 +31,11 @@ class InstrumentResource extends Resource
 {
     protected static ?string $model = Instrument::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Instrumente';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Band';
+    protected static string|UnitEnum|null $navigationGroup = 'Band';
 
     protected static ?string $pluralModelLabel = 'Instrumente';
 

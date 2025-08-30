@@ -30,11 +30,11 @@ class MusicianResource extends Resource
 {
     protected static ?string $model = Musician::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationLabel = 'Musiker';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Band';
+    protected static string|UnitEnum|null $navigationGroup = 'Band';
 
     protected static ?string $pluralModelLabel = 'Musiker';
 

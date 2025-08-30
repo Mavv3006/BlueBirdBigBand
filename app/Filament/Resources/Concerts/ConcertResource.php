@@ -30,11 +30,11 @@ class ConcertResource extends Resource
 {
     protected static ?string $model = Concert::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'icon-performance';
+    protected static string|BackedEnum|null $navigationIcon = 'icon-performance';
 
     protected static ?string $navigationLabel = 'Auftritte';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
+    protected static string|UnitEnum|null $navigationGroup = 'Auftritte';
 
     protected static ?string $pluralModelLabel = 'Auftritte';
 

@@ -31,9 +31,9 @@ class KonzertmeisterEventResource extends Resource
 {
     protected static ?string $model = KonzertmeisterEvent::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'icon-event-o';
+    protected static string|BackedEnum|null $navigationIcon = 'icon-event-o';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
+    protected static string|UnitEnum|null $navigationGroup = 'Auftritte';
 
     public static function table(Table $table): Table
     {

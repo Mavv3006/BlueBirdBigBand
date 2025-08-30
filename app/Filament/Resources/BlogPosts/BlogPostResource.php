@@ -40,7 +40,7 @@ class BlogPostResource extends Resource
                             ->label('Post Inhalt')
                             ->fileAttachmentsDirectory('blog-post/images')
                             ->required()
-                        ->json(),
+                            ->json(),
                     ]),
             ]);
     }

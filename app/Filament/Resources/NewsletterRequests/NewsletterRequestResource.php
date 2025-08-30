@@ -18,7 +18,7 @@ class NewsletterRequestResource extends Resource
 {
     protected static ?string $model = NewsletterRequest::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-envelope';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-envelope';
 
     /**
      * @throws Exception

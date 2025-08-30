@@ -25,9 +25,9 @@ class SongResource extends Resource
 {
     protected static ?string $model = Song::class;
 
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-musical-note';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-musical-note';
 
-    protected static string | UnitEnum | null $navigationGroup = 'Auftritte';
+    protected static string|UnitEnum|null $navigationGroup = 'Auftritte';
 
     protected static ?string $pluralModelLabel = 'Songs';
 
