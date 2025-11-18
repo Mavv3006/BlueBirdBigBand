@@ -1,0 +1,134 @@
+name: 🚀 Deploy Laravel to FTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Erlaubt manuelles Starten per Button
+
+# WICHTIG: Concurrency Control
+# Verhindert, dass zwei Deployments gleichzeitig laufen und sich gegenseitig
+# Dateien löschen/überschreiben.
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: 🏗️ Build & 🚢 Ship
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Code auschecken
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. PHP Setup
+      - name: 🔧 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # An deine Server-Version anpassen!
+
+      # 3. Node.js Setup
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm' # Aktiviert NPM Caching automatisch
+
+      # 4. Composer Cache (Manuell konfiguriert)
+      # Das spart Minuten bei jedem Deployment!
+      - name: 💾 Cache Composer dependencies
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      # 5. Install PHP Dependencies
+      # --no-dev: Wichtig für Produktion (spart Speicher und erhöht Sicherheit)
+      - name: 📦 Install PHP Dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction --no-progress
+
+      # 6. Frontend Build (Vite/Mix)
+      - name: 🎨 Build Frontend Assets
+        run: |
+          npm ci
+          npm run build
+
+      # 7. LFTP installieren (Das Tool gegen ECONNRESET)
+      - name: 🔧 Install LFTP
+        run: sudo apt-get install -y lftp
+
+      # 8. DEPLOYMENT (Der "Smart Wrapper")
+      - name: 🚀 Deploy via LFTP
+        env:
+          FTP_HOST: ${{ secrets.ftp_server }}
+          FTP_USER: ${{ secrets.ftp_username }}
+          FTP_PASS: ${{ secrets.ftp_password }}
+          REMOTE_PATH: ${{ secrets.prod_dir }}
+        run: |
+          echo "Starte Deployment Prozess..."
+
+          # Wir nutzen lftp im Skript-Modus (-c)
+          lftp -c "
+            # --- CONFIG: Robustheit gegen Verbindungsabbrüche ---
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force yes;
+            set ssl:verify-certificate yes;
+            set net:timeout 30;
+            set net:max-retries 10;
+            set net:reconnect-interval-base 5;
+            set ftp:passive-mode on;
+            set cmd:trace yes;
+
+            # --- CONNECT ---
+            open '$FTP_HOST' -u '$FTP_USER','$FTP_PASS';
+
+            # --- SCHRITT A: Wartungsmodus aktivieren (Safe Mode) ---
+            # Wir laden die lokale '.github/deploy/maintenance.php' hoch.
+            # Auf dem Server wird sie als 'maintenance.php' im Framework-Ordner gespeichert.
+            # Laravel prüft beim Start zuerst auf diese Datei.
+            echo '>> Aktiviere Wartungsmodus (Pre-Rendered)...';
+            put -O $REMOTE_PATH/storage/framework/ .github/deploy/maintenance.php -o maintenance.php;
+
+            # --- SCHRITT B: Sync (Mirror) ---
+            # -R: Reverse (Lokal -> Server)
+            # --delete: Löscht verwaiste Dateien auf dem Server (WICHTIG für sauberen Vendor-Ordner)
+            # --parallel=10: Nutzt 10 Verbindungen gleichzeitig -> Schnell & Robust
+            # --only-newer: Delta-Upload basierend auf Zeitstempel/Größe
+            # Excludes schützen deine Secrets und unnötige Dateien.
+            echo '>> Synchronisiere Dateien (Mirroring)...';
+            mirror -R \
+              --delete \
+              --parallel=10 \
+              --only-newer \
+              --exclude-glob .git/ \
+              --exclude-glob .github/ \
+              --exclude-glob .env \
+              --exclude-glob node_modules/ \
+              --exclude-glob tests/ \
+              --exclude-glob storage/logs/ \
+              --exclude-glob storage/framework/sessions/ \
+              --verbose \
+              ./ $REMOTE_PATH;
+
+            # --- SCHRITT C: Cache Busting (Der No-SSH Hack) ---
+            # Da wir 'php artisan config:cache' nicht ausführen können, löschen wir die Dateien.
+            # Laravel generiert sie beim nächsten Aufruf automatisch neu.
+            echo '>> Leere Laravel Caches (File Deletion)...';
+            rm -f $REMOTE_PATH/bootstrap/cache/config.php;
+            rm -f $REMOTE_PATH/bootstrap/cache/routes.php;
+            rm -f $REMOTE_PATH/bootstrap/cache/packages.php;
+            rm -f $REMOTE_PATH/bootstrap/cache/services.php;
+
+            # --- SCHRITT D: Wartungsmodus deaktivieren ---
+            # Sobald diese Datei weg ist, ist die Seite wieder live.
+            echo '>> Deaktiviere Wartungsmodus...';
+            rm -f $REMOTE_PATH/storage/framework/maintenance.php;
+
+            echo '>> Deployment erfolgreich beendet!';
+            bye;
+          "
