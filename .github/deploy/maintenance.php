@@ -81,7 +81,7 @@ header('Retry-After: 60');
 <div class="card">
     <div class="spinner"></div>
     <h1>System-Update</h1>
-    <p>Wir aktualisieren gerade unsere Anwendung, um Ihnen neue Funktionen bereitzustellen. Dies dauert normalerweise weniger als eine Minute.</p>
+    <p>Wir aktualisieren gerade unsere Anwendung, um Ihnen neue Funktionen bereitzustellen.</p>
     <div class="timer">Seite lädt automatisch neu...</div>
 </div>
 </body>
