@@ -60,7 +60,7 @@ jobs:
           echo ""  # Leerzeile
 
       - name: get code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
