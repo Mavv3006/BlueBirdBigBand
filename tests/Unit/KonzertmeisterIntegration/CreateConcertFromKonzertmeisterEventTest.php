@@ -1,6 +1,6 @@
 <?php
 
-namespace KonzertmeisterIntegration;
+namespace Tests\Unit\KonzertmeisterIntegration;
 
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;

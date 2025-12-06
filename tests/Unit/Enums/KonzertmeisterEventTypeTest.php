@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Enums;
+namespace Tests\Unit\Enums;
 
 use App\Enums\KonzertmeisterEventType;
 use Tests\TestCase;
