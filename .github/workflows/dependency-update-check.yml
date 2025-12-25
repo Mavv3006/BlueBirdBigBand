@@ -44,7 +44,7 @@ jobs:
           php-version: ${{ env.PHP_VERSION }}
 
       - name: setup node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
 
@@ -60,14 +60,14 @@ jobs:
           echo ""  # Leerzeile
 
       - name: get code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       # Composer Dependencies
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: vendor  # Composer erstellt die Abhängigkeiten im "vendor"-Verzeichnis
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -79,7 +79,7 @@ jobs:
 
       # NPM Dependencies
       - name: Cache NPM dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}

@@ -1,0 +1,146 @@
+name: 🚀 Deploy Laravel to FTP
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '🔍 Dry Run? (Nur Simulation, kein Upload)'
+        required: false
+        type: boolean
+        default: false
+
+# WICHTIG: Concurrency Control
+# Verhindert, dass zwei Deployments gleichzeitig laufen und sich gegenseitig
+# Dateien löschen/überschreiben.
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: 🏗️ Build & 🚢 Ship
+    runs-on: ubuntu-latest
+
+    env:
+      PHP_VERSION: 8.3        # PHP-Version an einer zentralen Stelle definieren
+      NODE_VERSION: 22        # Node.js-Version an einer zentralen Stelle definieren
+
+    steps:
+      # 1. Code auschecken
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v6
+
+      # 2. PHP Setup
+      - name: 🔧 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+
+      # 3. Node.js Setup
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # 4. Composer Cache (Manuell konfiguriert)
+      # Das spart Minuten bei jedem Deployment!
+      - name: 💾 Cache Composer dependencies
+        id: composer-cache
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      # 5. Install PHP Dependencies
+      # --no-dev: Wichtig für Produktion (spart Speicher und erhöht Sicherheit)
+      - name: 📦 Install PHP Dependencies
+        run: composer install --prefer-dist --no-dev --optimize-autoloader --no-interaction --no-progress
+
+      # 6. Frontend Build (Vite/Mix)
+      - name: 🎨 Build Frontend Assets
+        run: |
+          npm ci
+          npm run build
+
+      # 7. LFTP installieren (Das Tool gegen ECONNRESET)
+      - name: 🔧 Install LFTP
+        run: sudo apt-get install -y lftp
+
+      # 8. DEPLOYMENT (Der "Smart Wrapper")
+      - name: 🚀 Deploy via LFTP
+        env:
+          FTP_HOST: ${{ secrets.ftp_server }}
+          FTP_USER: ${{ secrets.ftp_username }}
+          FTP_PASS: ${{ secrets.ftp_password }}
+
+          # DYNAMISCHE PFAD-WAHL
+          # Syntax: Bedingung && Wert_Wahr || Wert_Falsch
+          # Wenn Branch == 'main' -> Nimm PROD Pfad
+          # Sonst (also 'dev')    -> Nimm DEV Pfad
+          REMOTE_PATH: ${{ github.ref == 'refs/heads/main' && secrets.prod_dir || secrets.dev_dir }}
+
+        run: |
+          # Info-Ausgabe
+          echo "Starte Deployment für Branch: ${{ github.ref_name }}"
+          echo "Zielpfad (Maskiert): $REMOTE_PATH"
+          echo "Modus: $([ "$DRY_RUN" == "true" ] && echo '🔍 DRY RUN (Simulation)' || echo '🚀 LIVE DEPLOY')"
+
+          # --- CONFIG (Wiederverwendbar) ---
+          LFTP_INIT="
+            set ftp:passive-mode on;
+            set ftp:ssl-allow yes;
+            set ftp:ssl-force yes;
+            set ssl:verify-certificate no;
+            set net:timeout 30;
+            set net:max-retries 10;
+            set net:reconnect-interval-base 5;
+            set cmd:trace yes;
+            open '$FTP_HOST' -u '$FTP_USER','$FTP_PASS';
+          "
+
+          # Excludes Variable definieren, um Code-Duplizierung zu vermeiden
+          EXCLUDES="--exclude-glob .git/ --exclude-glob .github/ --exclude-glob .env --exclude-glob node_modules/ --exclude-glob tests/ --exclude-glob storage/logs/ --exclude-glob storage/framework/sessions/"
+
+          # --- LOGIK WEICHE ---
+          if [ "$DRY_RUN" == "true" ]; then
+            # === DRY RUN MODUS ===
+            # Nur Mirroring simulieren, keine Dateien löschen/hochladen, kein Wartungsmodus.
+            echo "---------------------------------------------------"
+            echo "🚧 DRY RUN AKTIV: Keine Änderungen am Server!"
+            echo "---------------------------------------------------"
+
+            lftp -c "$LFTP_INIT
+              echo '>> Prüfe Datei-Differenzen (Dry Run)...';
+              # --dry-run: Zeigt nur an, was passieren WÜRDE
+              mirror -R --dry-run --verbose --delete --only-newer $EXCLUDES ./ $REMOTE_PATH;
+              bye;
+            "
+          else
+            # === LIVE MODUS ===
+            lftp -c "$LFTP_INIT
+              echo '>> Aktiviere Wartungsmodus (Pre-Rendered)...';
+              put -O $REMOTE_PATH/storage/framework/ .github/deploy/maintenance.php -o maintenance.php;
+
+              echo '>> Synchronisiere Dateien (Mirroring)...';
+              mirror -R --delete --parallel=10 --only-newer --verbose $EXCLUDES ./ $REMOTE_PATH;
+
+              echo '>> Leere Laravel Caches (File Deletion)...';
+              rm -f $REMOTE_PATH/bootstrap/cache/config.php;
+              rm -f $REMOTE_PATH/bootstrap/cache/routes.php;
+              rm -f $REMOTE_PATH/bootstrap/cache/packages.php;
+              rm -f $REMOTE_PATH/bootstrap/cache/services.php;
+
+              echo '>> Deaktiviere Wartungsmodus...';
+              rm -f $REMOTE_PATH/storage/framework/maintenance.php;
+
+              echo '>> Deployment erfolgreich beendet!';
+              bye;
+            "
+          fi
