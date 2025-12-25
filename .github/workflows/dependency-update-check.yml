@@ -67,7 +67,7 @@ jobs:
 
       # Composer Dependencies
       - name: Cache Composer dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: vendor  # Composer erstellt die Abhängigkeiten im "vendor"-Verzeichnis
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -79,7 +79,7 @@ jobs:
 
       # NPM Dependencies
       - name: Cache NPM dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
