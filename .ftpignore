@@ -3,7 +3,6 @@
 database/
 tests/
 node_modules/
-vendor/
 
 storage/*.key
 storage/framework/cache/*
