@@ -2,6 +2,13 @@
 .github/
 database/
 tests/
+node_modules/
+vendor/
+
+storage/*.key
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
 
 docker-compose.yml
 jsconfig.json
@@ -12,3 +19,6 @@ tsconfig.json
 vite.config.js
 .editorconfig
 .env*
+.gitignore
+.gitattributes
+.ftpignore
