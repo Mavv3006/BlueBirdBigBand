@@ -4,10 +4,5 @@ database/
 tests/
 node_modules/
 
-storage/*.key
-storage/framework/cache/*
-storage/framework/sessions/*
-storage/framework/views/*
-
 .env*
 .ftpignore
