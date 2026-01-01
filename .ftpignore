@@ -1,8 +1,23 @@
-.git/
-.github/
-database/
-tests/
-node_modules/
+# Versionskontrolle & CI
+/.git/
+/.github/
 
-.env*
-.ftpignore
+# Laravel Spezifika
+/database/
+/tests/
+/node_modules/
+/storage/**/*
+!/storage/**/.gitignore
+
+# Konfiguration & Filter
+/.editorconfig
+/.env*
+/.ftpignore
+/bun.lockb
+/docker-compose.yml
+/jsconfig.json
+/phpstan.neon
+/phpunit.*
+/pint.json
+/tsconfig.json
+/vite.config.js
