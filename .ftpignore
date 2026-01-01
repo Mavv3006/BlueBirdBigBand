@@ -9,15 +9,5 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 
-docker-compose.yml
-jsconfig.json
-phpstan.neon
-phpunit.*
-pint.json
-tsconfig.json
-vite.config.js
-.editorconfig
 .env*
-.gitignore
-.gitattributes
 .ftpignore
