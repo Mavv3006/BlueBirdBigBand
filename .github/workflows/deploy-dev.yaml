@@ -51,6 +51,5 @@ jobs:
             --parallel=5 \
             --exclude-glob-from=.ftpignore \
             ./ /
-          put vendor.zip -o vendor.zip
           quit
           EOF
