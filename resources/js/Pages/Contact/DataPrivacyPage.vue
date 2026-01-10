@@ -753,7 +753,7 @@
                     </li>
                 </ul>
 
-                <p class="seal">
+                <p>
                     <a href="https://datenschutz-generator.de/"
                        rel="noopener noreferrer nofollow" target="_blank"
                        title="Rechtstext von Dr. Schwenke - für weitere Informationen bitte anklicken.">

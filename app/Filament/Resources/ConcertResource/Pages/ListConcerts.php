@@ -24,7 +24,8 @@ class ListConcerts extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\Action::make('Import Setlist')
+            Actions\Action::make('import_setlist')
+                ->label('Setlist Importieren')
                 ->action(function (array $data, ImportSetlistService $service) {
                     $setlist = $data['setlist'];
                     $concert = $service->findConcert($data['forScoreData']);
