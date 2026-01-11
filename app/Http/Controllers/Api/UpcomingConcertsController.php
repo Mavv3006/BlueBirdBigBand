@@ -7,9 +7,7 @@ use App\Services\Concert\ConcertService;
 
 class UpcomingConcertsController extends Controller
 {
-
-    public function __construct(public ConcertService $service )
-    {    }
+    public function __construct(public ConcertService $service) {}
 
     public function __invoke()
     {
