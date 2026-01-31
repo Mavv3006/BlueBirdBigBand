@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PHP_VERSION: 8.3               # PHP-Version an einer zentralen Stelle definieren
+      PHP_VERSION: 8.4               # PHP-Version an einer zentralen Stelle definieren
       NODE_VERSION: 22               # Node.js-Version an einer zentralen Stelle definieren
       DB_DATABASE: test_db           # Datenbankname
       DB_USER: user                  # Datenbankbenutzer

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ConcertStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Concert extends Model
         'date' => 'datetime',
         'start_time' => 'datetime',
         'end_time' => 'datetime',
+        'status' => ConcertStatus::class,
     ];
 
     protected $fillable = [
@@ -29,6 +31,7 @@ class Concert extends Model
         'date',
         'venue_plz',
         'konzertmeister_event_id',
+        'status',
     ];
 
     protected $hidden = [
@@ -66,5 +69,10 @@ class Concert extends Model
     public function konzertmeisterEvent(): BelongsTo
     {
         return $this->belongsTo(KonzertmeisterEvent::class);
+    }
+
+    public function setPublic(): void
+    {
+        $this->update(['status' => ConcertStatus::Public]);
     }
 }

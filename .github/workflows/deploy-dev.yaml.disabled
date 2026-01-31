@@ -10,46 +10,46 @@ jobs:
     name: Deploy Fullstack Application
     runs-on: ubuntu-latest
     steps:
-      - name: setup php
+      - name: 🚚 Checkout Code
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
+          extensions: intl, mbstring, xml, curl
 
-      - name: get code
-        uses: actions/checkout@v3
-
-      - name: install backend dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: 📦 Install Composer Dependencies
+        run: composer install --no-dev --no-scripts --prefer-dist --no-interaction
 
       - name: setup node.js
         uses: actions/setup-node@v3
         with:
           node-version: "22"
 
-      - name: install frontend dependencies
+      - name: 🏗️ Install NPM Dependencies & Build
         run: |
-          npm ci
-
-      - name: setup frontend
-        run: |
+          npm ci --no-audit --no-fund
           npm run build
 
-      - name: delete non-deployable files
+      - name: 🏗 Install LFTP
         run: |
-          rm -rf .git
-          rm -rf .github
-          rm -rf  database
-          rm -rf  tests
-          rm -rf  phpunit*
-          rm -rf  docker-compose.yml
-          rm -rf  .env*
-          rm -rf  node_modules
-          rm -rf  .idea
+          sudo apt-get update
+          sudo apt-get install -y lftp
 
-      - name: push files to server
-        uses: airvzxf/ftp-deployment-action@latest
-        with:
-          server: ${{ secrets.ftp_server }}
-          user: ${{ secrets.ftp_username }}
-          password: ${{ secrets.ftp_password }}
-          remote_dir: ${{ secrets.dev_dir }}
+      - name: 🚀 FTP Mirror (lftp)
+        env:
+          FTP_USER: ${{ secrets.ftp_username }}
+          FTP_PASS: ${{ secrets.ftp_password }}
+          FTP_HOST: ${{ secrets.ftp_server }}
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
+          set ftp:passive-mode true
+          set ftp:list-options -a
+          mirror -R \
+            --delete \
+            --parallel=5 \
+            --exclude-glob-from=.ftpignore \
+            ./ /
+          quit
+          EOF
