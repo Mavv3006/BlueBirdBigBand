@@ -2094,16 +2094,16 @@
         },
         {
             "name": "johngrogg/ics-parser",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/u01jmg3/ics-parser.git",
-                "reference": "bb2df8b114a1adc31ef248eef54243eb2db471b3"
+                "reference": "c622b4b29bce99ec63535ec6ad96c8cbea95abf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/bb2df8b114a1adc31ef248eef54243eb2db471b3",
-                "reference": "bb2df8b114a1adc31ef248eef54243eb2db471b3",
+                "url": "https://api.github.com/repos/u01jmg3/ics-parser/zipball/c622b4b29bce99ec63535ec6ad96c8cbea95abf2",
+                "reference": "c622b4b29bce99ec63535ec6ad96c8cbea95abf2",
                 "shasum": ""
             },
             "require": {
@@ -2146,7 +2146,7 @@
             ],
             "support": {
                 "issues": "https://github.com/u01jmg3/ics-parser/issues",
-                "source": "https://github.com/u01jmg3/ics-parser/tree/v3.5.0"
+                "source": "https://github.com/u01jmg3/ics-parser/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -2154,7 +2154,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-25T13:58:20+00:00"
+            "time": "2026-01-23T13:01:48+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -12236,12 +12236,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.4"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
