@@ -71,12 +71,6 @@ const toggleMobileMenu = () => {
 }
 </script>
 
-<style>
-body {
-    background-color: #041286;
-}
-</style>
-
 <style scoped>
 @media (min-width: 768px ) {
     img {
