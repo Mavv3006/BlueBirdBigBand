@@ -1,0 +1,71 @@
+openapi: 3.1.0
+
+info:
+  title: Blue Bird Big Band API
+  version: v0.0.1
+
+servers:
+  - url: https://{environment}.api.bluebirdbigband.de
+    variables:
+      environment:
+        default: prod
+        enum:
+          - prod
+          - dev
+paths:
+  /musicians:
+    get:
+      summary: Get currently active musicians
+      description: Get currently active musicians
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Musician'
+  /concerts:
+    get:
+      summary: Get the upcoming concerts
+      description: Get the upcoming concerts
+      responses:
+        '200':
+          description: Retrieve concerts sorted by date (asc)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Concert'
+
+components:
+  schemas:
+
+    Concert:
+      type: object
+      properties:
+        date:
+          type: string
+        adress:
+          type: string
+        description:
+          type: string
+
+    Musician:
+      type: object
+      properties:
+        instruments:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              image_path:
+                type: string
+              musicians:
+                type: array
+                items:
+                  type: string
