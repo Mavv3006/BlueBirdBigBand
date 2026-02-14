@@ -21,18 +21,11 @@ class ConcertFactory extends Factory
      */
     public function definition(): array
     {
-        $start_time = Carbon::instance(
-            $this->faker->dateTimeBetween('-3 years', '+3 years')
-        );
-        $end_time = Carbon::createFromFormat('Y-m-d H:i:s', $start_time)
-            ->addHours(2);
-        $date = $this->faker
-            ->dateTimeInInterval('now', '+12 months');
+        $start = now()->addDays(rand(1, 100))->setTime(20, 0);
 
         return [
-            'date' => $date,
-            'start_time' => $start_time,
-            'end_time' => $end_time,
+            'start_at' => $start,
+            'end_at' => (clone $start)->addHours(2),
             'venue_street' => $this->faker->streetName,
             'venue_street_number' => $this->faker->buildingNumber,
             'venue_description' => $this->faker->text(25),

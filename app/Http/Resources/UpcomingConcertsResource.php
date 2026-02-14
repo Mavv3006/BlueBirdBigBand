@@ -11,20 +11,19 @@ class UpcomingConcertsResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-
-        //        dd($this);
-
         return [
             'id' => $this->id,
-            'date' => $this->date,
-            'start_time' => $this->start_time,
-            'end_time' => $this->end_time,
-            'venue_street' => $this->venue_street,
-            'venue_street_number' => $this->venue_street_number,
-            'venue_description' => $this->venue_description,
-            'event_description' => $this->event_description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'start_at' => $this->start_at->toIso8601String(),
+            'end_at' => $this->end_at->toIso8601String(),
+            'address' => [
+                'street' => $this->venue_street,
+                'house_number' => $this->venue_street_number,
+                'zip_code' => $this->venue_plz,
+                'city' => $this->venue->name,
+                'full_address' => "$this->venue_street $this->venue_street_number, $this->venue_plz {$this->venue->name}",
+            ],
+            'location_name' => $this->venue_description,
+            'description' => $this->event_description,
         ];
     }
 }

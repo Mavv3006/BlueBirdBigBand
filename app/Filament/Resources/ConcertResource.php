@@ -6,12 +6,11 @@ use App\Enums\ConcertStatus;
 use App\Filament\Resources\ConcertResource\Pages;
 use App\Filament\Resources\ConcertResource\RelationManagers\SetlistRelationManager;
 use App\Models\Concert;
-use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -51,25 +50,25 @@ class ConcertResource extends Resource
                     ->description('Beschreibt an welchem Datum und von wann bis wann der Auftritt stattfindet.')
                     ->columns([
                         'default' => 1,
-                        'sm' => 3,
+                        'sm' => 2,
                     ])
                     ->schema([
-                        DatePicker::make('date')
-                            ->label('Datum')
-                            ->displayFormat('d M Y')
-                            ->native(false)
-                            ->weekStartsOnMonday()
-                            ->closeOnDateSelection()
-                            ->required()
-                            ->minDate(now()),
-                        TimePicker::make('start_time')
+                        DateTimePicker::make('start_at')
                             ->label('Startzeit')
                             ->seconds(false)
-                            ->required(),
-                        TimePicker::make('end_time')
+                            ->required()
+                            ->weekStartsOnMonday()
+                            ->closeOnDateSelection()
+                            ->native(false)
+                            ->minDate(now()),
+                        DateTimePicker::make('end_at')
                             ->label('Endzeit')
                             ->seconds(false)
-                            ->required(),
+                            ->required()
+                            ->weekStartsOnMonday()
+                            ->closeOnDateSelection()
+                            ->native(false)
+                            ->minDate(now()),
                     ]),
                 Section::make('Beschreibungen')
                     ->columns([
@@ -131,17 +130,13 @@ class ConcertResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('date')
-                    ->date('l d M Y')
-                    ->label('Datum')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('start_time')
-                    ->dateTime('H:i')
+                Tables\Columns\TextColumn::make('start_at')
                     ->label('Startzeit')
+                    ->sortable()
                     ->toggleable(),
-                Tables\Columns\TextColumn::make('end_time')
-                    ->dateTime('H:i')
+                Tables\Columns\TextColumn::make('end_at')
                     ->label('Endzeit')
+                    ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('event_description')
                     ->label('Beschreibung')
@@ -192,7 +187,7 @@ class ConcertResource extends Resource
             ->emptyStateActions([
                 Tables\Actions\CreateAction::make(),
             ])
-            ->defaultSort('date');
+            ->defaultSort('start_at');
     }
 
     public static function getRelations(): array

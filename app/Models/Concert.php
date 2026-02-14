@@ -14,15 +14,14 @@ class Concert extends Model
     use HasFactory;
 
     protected $casts = [
-        'date' => 'datetime',
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
         'status' => ConcertStatus::class,
     ];
 
     protected $fillable = [
-        'start_time',
-        'end_time',
+        'start_at',
+        'end_at',
         'venue_street',
         'venue_street_number',
         'event_description',
@@ -58,12 +57,12 @@ class Concert extends Model
 
     public function isUpcoming(): bool
     {
-        return $this->date >= Carbon::today()->toDateString();
+        return $this->start_at >= Carbon::now();
     }
 
     public function isPlayed(): bool
     {
-        return $this->date < Carbon::today()->toDateString();
+        return $this->end_at < Carbon::now();
     }
 
     public function konzertmeisterEvent(): BelongsTo

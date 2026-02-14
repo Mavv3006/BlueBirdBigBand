@@ -15,7 +15,6 @@ class ConcertResourceTest extends TestCase
 
     public function test_rendering_resource_page()
     {
-
         $this->get(ConcertResource::getUrl())
             ->assertSuccessful();
     }
