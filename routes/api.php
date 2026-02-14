@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\MusiciansGroupedByInstrumentController;
 use App\Http\Controllers\Api\KonzertmeisterUpdateConcertsController;
+use App\Http\Controllers\Api\MusiciansGroupedByInstrumentController;
 use App\Http\Controllers\Api\UpcomingConcertsController;
 use Illuminate\Support\Facades\Route;
 

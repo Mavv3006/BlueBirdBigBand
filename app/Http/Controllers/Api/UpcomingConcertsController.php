@@ -10,9 +10,7 @@ use Carbon\Carbon;
 
 class UpcomingConcertsController extends Controller
 {
-    public function __construct(public ConcertService $service)
-    {
-    }
+    public function __construct(public ConcertService $service) {}
 
     public function __invoke()
     {

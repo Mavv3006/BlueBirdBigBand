@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\InstrumentResource;
 use App\Models\Instrument;
-use App\Services\Musician\MusicianService;
 
 class MusiciansGroupedByInstrumentController extends Controller
 {
