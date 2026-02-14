@@ -59,7 +59,6 @@ class UpcomingConcertsControllerTest extends TestCase
             )
         );
 
-
         $response_concert = $response->json('0');
         $this->assertEquals('Stadthalle Speyer', $response_concert['location_name']);
         $this->assertEquals('Test213', $response_concert['description']);

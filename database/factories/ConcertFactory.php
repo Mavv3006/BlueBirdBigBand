@@ -6,7 +6,6 @@ use App\Enums\ConcertStatus;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

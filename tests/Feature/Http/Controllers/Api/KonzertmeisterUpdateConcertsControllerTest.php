@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 {
-
     /* Zu testen:
      * Authentifizierung:
      * - 401: ohne API Key
