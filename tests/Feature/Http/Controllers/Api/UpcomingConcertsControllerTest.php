@@ -9,6 +9,14 @@ use Tests\TestCase;
 
 class UpcomingConcertsControllerTest extends TestCase
 {
+    /* Zu testen:
+     * Erfolgsfall (200 OK)
+     * - JSON Struktur muss passen
+     * - Sortierung muss passsen
+     * - Nur zukünftige Konzerte sollten in Liste sein
+     * - Wenn keine zukünftigen Konzerte, soll Liste leer sein
+     * */
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -19,7 +27,9 @@ class UpcomingConcertsControllerTest extends TestCase
     public function test_single_concert()
     {
         Concert::factory()->create();
-
         $this->assertCount(1, Concert::all());
+
+
+        $this->get()
     }
 }

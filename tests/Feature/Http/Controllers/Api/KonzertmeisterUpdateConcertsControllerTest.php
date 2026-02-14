@@ -13,6 +13,16 @@ use Tests\TestCase;
 
 class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 {
+
+    /* Zu testen:
+     * Authentifizierung:
+     * - 401: ohne API Key
+     * - 204: Daten holen erfolgreich
+     * - 502: Konzertmeister nicht erreichbar
+     * funktional:
+     * - keine Dupletten bei mehrfacher Ausführung
+     * */
+
     protected string $apiKey = 'apiKey';
 
     protected Band $band;

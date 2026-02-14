@@ -43,6 +43,6 @@ class KonzertmeisterUpdateConcertsController
 
         KonzertmeisterIntegrationService::pullNewData($band);
 
-        return response(null, SymfonyResponse::HTTP_ACCEPTED);
+        return response(null, SymfonyResponse::HTTP_NO_CONTENT);
     }
 }
