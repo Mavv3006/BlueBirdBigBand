@@ -83,11 +83,11 @@ oiuzrqowiuerz Schifferstadt
 “In The Stone - Tpt 2”
 “Straighten Up And Fly Right - Tpt 2”
 “The_Girl From Ipanema - Tpt 1” von Roger Holmes';
-        $concert = Concert::factory()->create(['date' => '2025-08-01']);
+        $concert = Concert::factory()->create(['start_at' => '2025-08-01']);
 
         $result = (new ImportSetlistService)->findConcert($text);
 
-        $this->assertEquals($concert->date, $result->date);
+        $this->assertEquals($concert->start_at, $result->start_at);
     }
 
     public function test_extracting_correct_concert_no_concert_found()
@@ -101,7 +101,7 @@ oiuzrqowiuerz Schifferstadt
 “In The Stone - Tpt 2”
 “Straighten Up And Fly Right - Tpt 2”
 “The_Girl From Ipanema - Tpt 1” von Roger Holmes';
-        Concert::factory()->create(['date' => '2025-09-01']);
+        Concert::factory()->create(['start_at' => '2025-09-01']);
 
         $this->assertThrows(
             fn () => (new ImportSetlistService)->findConcert($text),
@@ -116,7 +116,7 @@ oiuzrqowiuerz Schifferstadt
 
 “Cute - Tpt 1”
 “Sway - Tpt 2”';
-        Concert::factory()->create(['date' => '2025-08-01']);
+        Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 2],
             ['title' => 'Sway', 'id' => 5],
@@ -138,7 +138,7 @@ oiuzrqowiuerz Schifferstadt
 
 “Cute - Tpt 1” von Neal Hefti
 “Sway - Tpt 2” von Mark Taylor';
-        Concert::factory()->create(['date' => '2025-08-01']);
+        Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 2, 'arranger' => 'Neal Hefti'],
             ['title' => 'Sway', 'id' => 5, 'arranger' => 'Mark Taylor'],
@@ -186,7 +186,7 @@ oiuzrqowiuerz Schifferstadt
 
     public function test_saving_setlist()
     {
-        $concert = Concert::factory()->create(['date' => '2025-08-01']);
+        $concert = Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 3],
             ['title' => 'Sway', 'id' => 4],
@@ -224,7 +224,7 @@ oiuzrqowiuerz Schifferstadt
 “Straighten Up And Fly Right - Tpt 2”
 “+++ Zugabe +++”
 “The_Girl From Ipanema - Tpt 1” von Roger Holmes';
-        Concert::factory()->create(['date' => '2025-08-01']);
+        Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 2, 'arranger' => 'Neal Hefti'],
             ['title' => 'Sway', 'id' => 5, 'arranger' => 'Mark Taylor'],
@@ -315,7 +315,7 @@ oiuzrqowiuerz Schifferstadt
 
     public function test_saving_with_no_songs()
     {
-        $concert = Concert::factory()->create(['date' => '2025-08-01']);
+        $concert = Concert::factory()->create(['start_at' => '2025-08-01']);
         $setlist = [];
 
         (new ImportSetlistService)->saveSetlist($setlist, $concert);
@@ -325,7 +325,7 @@ oiuzrqowiuerz Schifferstadt
 
     public function test_saving_with_incorrect_format()
     {
-        $concert = Concert::factory()->create(['date' => '2025-08-01']);
+        $concert = Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 3],
             ['title' => 'Sway', 'id' => 4],
@@ -346,7 +346,7 @@ oiuzrqowiuerz Schifferstadt
 
     public function test_save_song_multiple_times()
     {
-        $concert = Concert::factory()->create(['date' => '2025-08-01']);
+        $concert = Concert::factory()->create(['start_at' => '2025-08-01']);
         Song::factory()->createMany([
             ['title' => 'Cute', 'id' => 3],
             ['title' => 'Sway', 'id' => 4],

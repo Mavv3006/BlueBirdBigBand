@@ -37,9 +37,8 @@ class ListConcerts extends ListRecords
                             $forScoreData = $state['forScoreData'];
 
                             $concert = $service->findConcert($forScoreData);
-                            $set('concert_date', $concert->date->format('d.m.Y'));
-                            $set('start_time', $concert->start_time->format('H:i'));
-                            $set('end_time', $concert->end_time->format('H:i'));
+                            $set('start_at', $concert->start_at);
+                            $set('end_at', $concert->end_at);
                             $set('concert_city', $concert->venue->name);
                             $set('event_description', $concert->event_description);
                             $set('venue_description', $concert->venue_description);
@@ -64,13 +63,10 @@ class ListConcerts extends ListRecords
                                     'sm' => 3,
                                 ])
                                 ->schema([
-                                    TextInput::make('concert_date')
-                                        ->label('Datum')
-                                        ->disabled(),
-                                    TextInput::make('start_time')
+                                    TextInput::make('start_at')
                                         ->label('Startzeit')
                                         ->disabled(),
-                                    TextInput::make('end_time')
+                                    TextInput::make('end_at')
                                         ->label('Endezeit')
                                         ->disabled(),
                                 ]),
@@ -116,9 +112,9 @@ class ListConcerts extends ListRecords
     {
         return [
             'upcoming' => Tab::make('zukünftige')
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereDate('date', '>=', Carbon::today()->toDateString())),
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereDate('start_at', '>=', Carbon::today()->toDateString())),
             'past' => Tab::make('gespielte')
-                ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereDate('date', '<', Carbon::today()->toDateString())),
+                ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereDate('end_at', '<', Carbon::today()->toDateString())),
         ];
     }
 }

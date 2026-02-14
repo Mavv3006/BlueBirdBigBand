@@ -32,7 +32,7 @@ class SetlistStatisticsServiceTest extends TestCase
             ->map(fn ($date) => Concert::factory()
                 ->for($band)
                 ->for($venue)
-                ->create(['date' => $date])
+                ->create(['start_at' => $date])
             );
         SetlistEntry::factory()
             ->for($concerts[0])
@@ -96,13 +96,13 @@ class SetlistStatisticsServiceTest extends TestCase
             ->for($band)
             ->for($venue)
             ->create([
-                'date' => $date1,
+                'start_at' => $date1,
             ]);
         $concert2 = Concert::factory()
             ->for($band)
             ->for($venue)
             ->create([
-                'date' => $date2,
+                'start_at' => $date2,
             ]);
         SetlistEntry::factory()
             ->for($concert1)

@@ -11,6 +11,7 @@ use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 
@@ -21,9 +22,9 @@ class ConcertService
      */
     public function query(string $dateComparisonOperator, ?int $limit = null, bool $returnDtoFlag = false): Collection|array
     {
-        $queryBuilder = Concert::with('band', 'venue')
-            ->whereDate('date', $dateComparisonOperator, Carbon::today()->toDateString())
-            ->orderBy('date');
+        $queryBuilder = Concert::with(['band', 'venue'])
+            ->whereDate('start_at', $dateComparisonOperator, Carbon::now())
+            ->orderBy('start_at');
 
         if ($limit) {
             $queryBuilder->limit($limit);
@@ -53,9 +54,8 @@ class ConcertService
     {
         return new FormattedConcertDto(
             id: $concert->id,
-            date: $concert->date,
-            start_time: $concert->start_time,
-            end_time: $concert->end_time,
+            start_at: $concert->start_at,
+            end_at: $concert->end_at,
             band: $concert->band->name,
             description: new ConcertDescriptionDto(
                 event: $concert->event_description,
@@ -68,11 +68,6 @@ class ConcertService
                 city: $concert->venue->name
             ),
         );
-    }
-
-    public function allBands(): Collection
-    {
-        return Band::select(['id', 'name'])->get();
     }
 
     public function store(ConcertDto $dto): Concert
@@ -106,7 +101,7 @@ class ConcertService
         );
     }
 
-    public function getRequestVenue(array $data): Venue
+    public function getRequestVenue(array $data): Model
     {
         if ($data['venue']['create_new_venue']) {
             return Venue::firstOrCreate(

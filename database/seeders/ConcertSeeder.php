@@ -27,11 +27,18 @@ class ConcertSeeder extends Seeder
      */
     protected function createConcerts(string $sign, int $num): void
     {
-        $delta = 0;
+        $currentDelta = 0;
+
         for ($i = 0; $i < $num; $i++) {
-            $delta = $delta + rand(10, 30);
-            $date = date('Y-m-d', strtotime("$sign$delta days"));
-            Concert::factory()->create(['date' => $date]);
+            $currentDelta += rand(10, 30);
+            $referenceDate = $sign === '+'
+                ? now()->addDays($currentDelta)
+                : now()->subDays($currentDelta);
+            $startAt = $referenceDate->setTime(rand(18, 21), 0, 0);
+            Concert::factory()->create([
+                'start_at' => $startAt,
+                'end_at' => (clone $startAt)->addHours(rand(2, 4)),
+            ]);
         }
     }
 }
