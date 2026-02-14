@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\ActiveMusiciansController;
+use App\Http\Controllers\Api\MusiciansGroupedByInstrumentController;
 use App\Http\Controllers\Api\KonzertmeisterUpdateConcertsController;
 use App\Http\Controllers\Api\UpcomingConcertsController;
 use Illuminate\Support\Facades\Route;
@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('concerts/pull', KonzertmeisterUpdateConcertsController::class)->name('api.concerts.pull');
+Route::get('concerts/pull', KonzertmeisterUpdateConcertsController::class)
+    ->name('api.concerts.pull');
 
-Route::get('concerts/upcoming', UpcomingConcertsController::class);
+Route::get('concerts/upcoming', UpcomingConcertsController::class)
+    ->name('api.concerts.upcoming');
 
-Route::get('musicians/active', ActiveMusiciansController::class);
+Route::get('musicians/grouped-by-instrument', MusiciansGroupedByInstrumentController::class)
+    ->name('api.musicians.grouped-by-instrument');
