@@ -1,0 +1,148 @@
+name: Deploy Laravel App via lftp
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Zielumgebung (nur relevant bei manuellem Start)'
+        required: true
+        default: 'test'
+        type: choice
+        options:
+          - prod
+          - test
+
+jobs:
+  deploy:
+    # Zeigt im Dashboard sofort, welcher Branch gerade gebaut wird
+    name: Build & Deploy (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+
+    steps:
+      # ==========================================
+      # 1. SETUP
+      # ==========================================
+      - name: 📥 Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: ⚙️ PHP Setup
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: 🗄️ Composer Cache-Verzeichnis ermitteln
+        id: composer-cache-dir
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: 🗄️ Composer Dependencies cachen
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache-dir.outputs.dir }}
+          # Der Cache-Key ändert sich nur, wenn sich die composer.lock ändert
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: ⚙️ Node.js Setup (inkl. NPM Caching)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 lftp installieren
+        run: |
+          set -e
+          echo "=> Installiere lftp auf dem Runner..."
+          sudo apt-get update -yq
+          sudo apt-get install -yq lftp
+
+      # ==========================================
+      # 2. VALIDATION & ROUTING
+      # ==========================================
+      - name: "🔍 Routing: Branch zu Umgebung"
+        id: validate
+        run: |
+          set -e
+          echo "=> Bestimme Deployment-Ziel..."
+
+          if [[ "${{ github.ref_name }}" == "main" ]]; then
+            echo "MODE=PROD" >> $GITHUB_ENV
+            echo "=> Branch 'main' erkannt. Route zu PROD."
+          elif [[ "${{ github.ref_name }}" == "dev" ]]; then
+            echo "MODE=TEST" >> $GITHUB_ENV
+            echo "=> Branch 'dev' erkannt. Route zu TEST."
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            if [[ "${{ github.event.inputs.target_env }}" == "prod" ]]; then
+              echo "MODE=PROD" >> $GITHUB_ENV
+              echo "=> Manuelles Deployment: Route zu PROD."
+            else
+              echo "MODE=TEST" >> $GITHUB_ENV
+              echo "=> Manuelles Deployment: Route zu TEST."
+            fi
+          else
+            echo "FEHLER: Unerwarteter Branch oder Trigger (${{ github.ref_name }})." >&2
+            exit 1
+          fi
+
+      # ==========================================
+      # 3. BUILD
+      # ==========================================
+      - name: 🏗️ Laravel & Frontend Build
+        run: |
+          set -e
+          echo "=> Starte Composer Install..."
+          composer install --no-dev --no-scripts --prefer-dist --no-interaction
+
+          echo "=> Starte NPM Install & Build..."
+          npm ci --no-audit --no-fund
+          npm run build
+
+      # ==========================================
+      # 4. DEPLOYMENT
+      # ==========================================
+      - name: 🚀 Upload via lftp
+        env:
+          FTP_HOST: ${{ env.MODE == 'PROD' && secrets.PROD_HOST || secrets.TEST_HOST }}
+          FTP_USER: ${{ env.MODE == 'PROD' && secrets.PROD_USER || secrets.TEST_USER }}
+          FTP_PASS: ${{ env.MODE == 'PROD' && secrets.PROD_PASSWORD || secrets.TEST_PASSWORD }}
+          REMOTE_DIR: ${{ env.MODE == 'PROD' && secrets.PROD_FOLDER || secrets.TEST_FOLDER }}
+        run: |
+          set -e
+
+          # Sicherheits-Check: Fehlen Secrets?
+          if [[ -z "$FTP_HOST" || -z "$FTP_USER" || -z "$FTP_PASS" ]]; then
+            echo "FEHLER: Mindestens ein FTP-Secret für den Modus $MODE fehlt!" >&2
+            exit 1
+          fi
+
+          echo "=> Starte Deployment auf Host: $FTP_HOST"
+
+          if [[ -f "./.ftpignore" ]]; then
+            echo "=> .ftpignore gefunden."
+          else
+            echo "=> WARNUNG: Keine .ftpignore im Root-Verzeichnis gefunden."
+          fi
+
+          echo "=> Verbinde via lftp und starte Mirroring..."
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
+          set ftp:ssl-force true
+          set ssl:verify-certificate true
+          set ftp:passive-mode true
+          set ftp:list-options -a
+
+          $( [[ -n "$REMOTE_DIR" ]] && echo "cd ./$REMOTE_DIR" )
+
+          mirror -R \
+            --verbose=1 \
+            --delete \
+            --parallel=5 \
+            --exclude-glob-from=./.ftpignore \
+            ./ ./
+          quit
+          EOF
+
+          echo "=> ✅ Deployment in die Umgebung $MODE erfolgreich!"
