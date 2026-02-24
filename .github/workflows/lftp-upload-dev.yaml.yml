@@ -16,6 +16,10 @@ on:
           - prod
           - test
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     # Zeigt im Dashboard sofort, welcher Branch gerade gebaut wird
