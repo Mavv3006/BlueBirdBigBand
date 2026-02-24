@@ -119,7 +119,7 @@ jobs:
             exit 1
           fi
 
-          echo "=> Starte Deployment auf Host: $FTP_HOST"
+          echo "=> Starte Deployment."
 
           if [[ -f "./.ftpignore" ]]; then
             echo "=> .ftpignore gefunden."
