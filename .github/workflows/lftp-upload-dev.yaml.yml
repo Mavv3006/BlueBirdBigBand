@@ -32,7 +32,7 @@ jobs:
       - name: ⚙️ PHP Setup
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
 
       - name: 🗄️ Composer Cache-Verzeichnis ermitteln
         id: composer-cache-dir
@@ -50,7 +50,7 @@ jobs:
       - name: ⚙️ Node.js Setup (inkl. NPM Caching)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: 📦 lftp installieren
