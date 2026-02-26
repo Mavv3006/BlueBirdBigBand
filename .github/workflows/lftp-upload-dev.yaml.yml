@@ -143,6 +143,7 @@ jobs:
           mirror -R \
             --verbose=1 \
             --delete \
+            --overwrite \
             --parallel=5 \
             --exclude-glob-from=./.ftpignore \
             ./ ./
