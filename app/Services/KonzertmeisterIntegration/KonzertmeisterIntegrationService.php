@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\KonzertmeisterIntegration;
 
+use App\Enums\BandName;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
@@ -19,7 +20,7 @@ class KonzertmeisterIntegrationService
     /**
      * @throws InvalidArgumentException
      */
-    public static function pullNewData(Band $band): void
+    public static function pullNewData(): void
     {
         $konzertmeisterUrl = config('app.konzertmeister_url');
         if ($konzertmeisterUrl === null) {
@@ -33,6 +34,7 @@ class KonzertmeisterIntegrationService
         ]);
 
         Log::debug('KonzertmeisterIntegrationService - information about new events', [
+            'has events' => $calendar->hasEvents(),
             'event count' => count($calendar->events()),
             'events' => $calendar->events(),
         ]);
@@ -40,7 +42,7 @@ class KonzertmeisterIntegrationService
         $mappedCalendarEvents = array_map(
             callback: fn (Event $event) => CalendarEventMapping::fromICalEvent($event)
                 ->setType(self::getEventType($event))
-                ->setBand($band)
+                ->setBand(Band::whereName(BandName::BlueBird->value)->firstOrFail())
                 ->splitLocation()
                 ->trimDescription()
                 ->shortenDescription()
