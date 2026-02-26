@@ -6,11 +6,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Services\KonzertmeisterIntegration\KonzertmeisterIntegrationService;
 use Exception;
-use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class KonzertmeisterUpdateConcertsController
