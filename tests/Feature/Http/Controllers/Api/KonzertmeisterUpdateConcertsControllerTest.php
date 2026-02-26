@@ -2,29 +2,26 @@
 
 namespace Tests\Feature\Http\Controllers\Api;
 
-use App\Enums\BandName;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use Database\Seeders\DefaultBandSeeder;
+use Illuminate\Support\Facades\Http;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Tests\TestCase;
 
 class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 {
     /* Zu testen:
      * Authentifizierung:
-     * - 401: ohne API Key
+     * - 401: ohne API-Key
      * - 204: Daten holen erfolgreich
      * - 502: Konzertmeister nicht erreichbar
      * funktional:
-     * - keine Dupletten bei mehrfacher Ausführung
+     * - keine Duplicate bei mehrfacher Ausführung
      * */
-
-    protected string $apiKey = 'apiKey';
-
-    protected Band $band;
 
     protected array $params;
 
@@ -33,29 +30,35 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         parent::setUp();
 
         $this->seed(DefaultBandSeeder::class);
-        $this->band = Band::whereName(BandName::BlueBird->value)->firstOrFail();
-        $this->params = ['apiKey' => $this->apiKey, 'band_name' => BandName::BlueBird];
+        $this->params = ['apiKey' => config('app.konzertmeister_api_key')];
     }
 
     public function test_validating_api_key()
     {
-        $this->get(route('api.concerts.pull', ['band_name' => BandName::BlueBird]))
-            ->assertBadRequest();
+        $response = $this->get(route('api.concerts.pull'))
+            ->assertUnauthorized();
+
+        $response->assertJsonValidationErrors('apiKey');
     }
 
-    public function test_validating_band_name()
+    public function test_it_can_parse_concerts_from_external_ical()
     {
-        $this->get(route('api.concerts.pull', ['apiKey' => $this->apiKey]))
-            ->assertBadRequest();
+        $this->withoutExceptionHandling();
+        //        $mockIcsPath = base_path('tests/Fixtures/ical/mockEvents.ics');
+        $mockIcsPath = base_path('tests/Fixtures/ical/single_rehearsal.ics');
+        $mockIcsContent = file_get_contents($mockIcsPath);
+
+        Http::fake([
+            config('app.konzertmeister_url') => Http::response($mockIcsContent, SymfonyResponse::HTTP_ACCEPTED),
+        ]);
+
+        $this->get(route('api.concerts.pull', $this->params))
+            ->assertAccepted();
+
+        $this->assertDatabaseCount(KonzertmeisterEvent::class, 1);
     }
 
-    public function test_validating_all_parameters()
-    {
-        $this->get(route('api.concerts.pull'))
-            ->assertBadRequest();
-    }
-    //
-    //    public function testContentOfCreatedEvent()
+    //    public function test_content_of_created_event()
     //    {
     //        $this->withoutExceptionHandling();
     //

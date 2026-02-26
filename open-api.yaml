@@ -35,6 +35,10 @@ paths:
       responses:
         '204':
           description: Indicating fetching was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
         '401':
           description: "Validierungsfehler - Die übergebenen Daten sind ungültig."
           content:
@@ -146,6 +150,13 @@ components:
             type: array
             items:
               type: string
+
+    Success:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "The operation was performed successfully."
 
   securitySchemes:
     ApiKeyAuth:
