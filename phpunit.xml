@@ -32,6 +32,7 @@
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="KONZERTMEISTER_API_KEY" value="apiKey"/>
+        <env name="KONZERTMEISTER_URL" value="url"/>
     </php>
     <source>
         <include>

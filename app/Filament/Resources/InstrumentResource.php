@@ -26,7 +26,7 @@ class InstrumentResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Instrumente';
 
-    protected static ?string $modelLabel = 'Instrument';
+    protected static ?string $modelLabel = 'InstrumentResource';
 
     public static function form(Form $form): Form
     {

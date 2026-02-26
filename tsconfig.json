@@ -5,7 +5,8 @@
             "@/*": [
                 "js/*"
             ]
-        }
+        },
+      "allowSyntheticDefaultImports": true
     },
     "include": [
         "env.d.ts",

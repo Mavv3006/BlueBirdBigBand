@@ -38,11 +38,4 @@ abstract class TestCase extends BaseTestCase
         $this->seed(DefaultAuthorizationSeeder::class);
         $this->actingAs($this->createUserForAdminRoutes());
     }
-
-    protected function setUp(): void
-    {
-        $_ENV['KONZERTMEISTER_URL'] = __DIR__.'\Feature\Http\Controllers\api\mockEvents.ics';
-
-        parent::setUp();
-    }
 }
