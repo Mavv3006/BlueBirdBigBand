@@ -21,6 +21,7 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
      * */
 
     protected array $params;
+
     protected string $url;
 
     protected string $singleEvent = 'tests/Fixtures/ical/single_rehearsal.ics';
@@ -98,111 +99,117 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
         $this->assertEquals(KonzertmeisterEventConversionState::Open, $event->conversion_state);
     }
-    //
-    //    public function testVerifyIdsOfAllEvents()
-    //    {
-    //        $this->get(route('api.concerts.pull', $this->params));
-    //
-    //        $events = KonzertmeisterEvent::query()->get();
-    //        for ($i = 0; $i < count($events); $i++) {
-    //            $this->assertEquals(
-    //                expected: [2036713, 2036716, 2036717, 2036720][$i],
-    //                actual: $events[$i]->id);
-    //        }
-    //    }
-    //
-    //    public function testUpdateOpenEvents()
-    //    {
-    //        KonzertmeisterEvent::factory()->create([
-    //            'band_id' => $this->band->id,
-    //            'dtstart' => Carbon::parse('20220904T180000Z'),
-    //            'dtend' => Carbon::parse('20220904T200000Z'),
-    //            'summary' => 'Probe',
-    //            'description' => 'hi hi hi',
-    //            'location' => 'Deutschland',
-    //            'type' => KonzertmeisterEventType::Auftritt,
-    //            'id' => 2036713,
-    //            'conversion_state' => KonzertmeisterEventConversionState::Open,
-    //        ]);
-    //
-    //        $this->get(route('api.concerts.pull', $this->params));
-    //
-    //        $event = KonzertmeisterEvent::first();
-    //        $this->assertequals(2036713, $event->id);
-    //        $this->assertequals('Probe', $event->description);
-    //        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
-    //        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
-    //        $this->assertEquals(2024, $event->dtstart->year);
-    //        $this->assertEquals(2024, $event->dtend->year);
-    //        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
-    //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
-    //        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
-    //    }
-    //
-    //    public function testUpdateConvertedEvents()
-    //    {
-    //        KonzertmeisterEvent::factory()->create([
-    //            'band_id' => $this->band->id,
-    //            'dtstart' => Carbon::parse('20220904T180000Z'),
-    //            'dtend' => Carbon::parse('20220904T200000Z'),
-    //            'summary' => 'Probe',
-    //            'description' => 'hi hi hi',
-    //            'location' => 'Deutschland',
-    //            'type' => KonzertmeisterEventType::Auftritt,
-    //            'id' => 2036713,
-    //            'conversion_state' => KonzertmeisterEventConversionState::Converted,
-    //        ]);
-    //
-    //        $this->get(route('api.concerts.pull', $this->params));
-    //
-    //        $event = KonzertmeisterEvent::first();
-    //        $this->assertequals(2036713, $event->id);
-    //        $this->assertequals('Probe', $event->description);
-    //        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
-    //        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
-    //        $this->assertEquals(2024, $event->dtstart->year);
-    //        $this->assertEquals(2024, $event->dtend->year);
-    //        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
-    //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
-    //        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
-    //    }
-    //
-    //    public function testDoNotUpdateRejectedEvents()
-    //    {
-    //        $summary = 'Probe';
-    //        $description = 'hi hi hi';
-    //        $location = 'Deutschland';
-    //        KonzertmeisterEvent::factory()->create([
-    //            'band_id' => $this->band->id,
-    //            'dtstart' => Carbon::parse('20220904T180000Z'),
-    //            'dtend' => Carbon::parse('20220904T200000Z'),
-    //            'summary' => $summary,
-    //            'description' => $description,
-    //            'location' => $location,
-    //            'id' => 2036713,
-    //            'conversion_state' => KonzertmeisterEventConversionState::Rejected,
-    //        ]);
-    //
-    //        $this->get(route('api.concerts.pull', $this->params));
-    //
-    //        $event = KonzertmeisterEvent::first();
-    //        $this->assertequals(2036713, $event->id);
-    //        $this->assertequals($description, $event->description);
-    //        $this->assertequals($summary, $event->summary);
-    //        $this->assertequals($location, $event->location);
-    //        $this->assertEquals(2022, $event->dtstart->year);
-    //        $this->assertEquals(2022, $event->dtend->year);
-    //        $this->assertEquals(Carbon::parse('20220904T180000Z'), $event->dtstart);
-    //        $this->assertEquals(Carbon::parse('20220904T200000Z'), $event->dtend);
-    //    }
-    //
-    //    public function testWithFaultyDescription()
-    //    {
-    //        $this->get(route('api.concerts.pull', $this->params))->assertAccepted();
-    //
-    //        $event = KonzertmeisterEvent::find(2036720);
-    //        $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
-    //    }
+
+    public function test_verify_ids_of_all_events()
+    {
+        $this->setupMultipleEvents();
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $events = KonzertmeisterEvent::query()->get();
+        for ($i = 0; $i < count($events); $i++) {
+            $this->assertEquals(
+                expected: [2036713, 2036716, 2036717, 2036720][$i],
+                actual: $events[$i]->id);
+        }
+    }
+
+    public function test_update_open_events()
+    {
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => Band::factory()->create()->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => 'Probe',
+            'description' => 'hi hi hi',
+            'location' => 'Deutschland',
+            'type' => KonzertmeisterEventType::Auftritt,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Open,
+        ]);
+
+        $this->setUpMultipleEvents();
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals('Probe', $event->description);
+        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
+        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
+        $this->assertEquals(2024, $event->dtstart->year);
+        $this->assertEquals(2024, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+    }
+
+    public function test_update_converted_events()
+    {
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => Band::factory()->create()->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => 'Probe',
+            'description' => 'hi hi hi',
+            'location' => 'Deutschland',
+            'type' => KonzertmeisterEventType::Auftritt,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Converted,
+        ]);
+
+        $this->setUpMultipleEvents();
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals('Probe', $event->description);
+        $this->assertequals('BBBB Probe (BlueBirdBigBand)', $event->summary);
+        $this->assertequals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
+        $this->assertEquals(2024, $event->dtstart->year);
+        $this->assertEquals(2024, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+    }
+
+    public function test_do_not_update_rejected_events()
+    {
+        $summary = 'Probe';
+        $description = 'hi hi hi';
+        $location = 'Deutschland';
+        KonzertmeisterEvent::factory()->create([
+            'band_id' => Band::factory()->create()->id,
+            'dtstart' => Carbon::parse('20220904T180000Z'),
+            'dtend' => Carbon::parse('20220904T200000Z'),
+            'summary' => $summary,
+            'description' => $description,
+            'location' => $location,
+            'id' => 2036713,
+            'conversion_state' => KonzertmeisterEventConversionState::Rejected,
+        ]);
+
+        $this->setUpMultipleEvents();
+        $this->get(route('api.concerts.pull', $this->params));
+
+        $event = KonzertmeisterEvent::first();
+        $this->assertequals(2036713, $event->id);
+        $this->assertequals($description, $event->description);
+        $this->assertequals($summary, $event->summary);
+        $this->assertequals($location, $event->location);
+        $this->assertEquals(2022, $event->dtstart->year);
+        $this->assertEquals(2022, $event->dtend->year);
+        $this->assertEquals(Carbon::parse('20220904T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20220904T200000Z'), $event->dtend);
+    }
+
+    public function test_with_faulty_description()
+    {
+        $this->setUpMultipleEvents();
+        $this->get(route('api.concerts.pull', $this->params))
+            ->assertAccepted();
+
+        $event = KonzertmeisterEvent::find(2036720);
+        $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
+    }
 
     protected function setUpSingleEvent()
     {
