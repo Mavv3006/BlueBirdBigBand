@@ -16,14 +16,16 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 {
     /* Zu testen:
      * Authentifizierung:
-     * - 401: ohne API-Key
-     * - 204: Daten holen erfolgreich
-     * - 502: Konzertmeister nicht erreichbar
      * funktional:
      * - keine Duplicate bei mehrfacher Ausführung
      * */
 
     protected array $params;
+    protected string $url;
+
+    protected string $singleEvent = 'tests/Fixtures/ical/single_rehearsal.ics';
+
+    protected string $multipleEvents = 'tests/Fixtures/ical/mockEvents.ics';
 
     protected function setUp(): void
     {
@@ -31,26 +33,30 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
 
         $this->seed(DefaultBandSeeder::class);
         $this->params = ['apiKey' => config('app.konzertmeister_api_key')];
+        $this->url = config('app.konzertmeister_url');
     }
 
     public function test_validating_api_key()
     {
-        $response = $this->get(route('api.concerts.pull'))
-            ->assertUnauthorized();
+        $this->get(route('api.concerts.pull'))
+            ->assertUnauthorized()
+            ->assertJsonStructure(['message', 'error']);
+    }
 
-        $response->assertJsonValidationErrors('apiKey');
+    public function test_external_server_not_reachable()
+    {
+        Http::fake([
+            $this->url => Http::response('Internal Server Error', 500),
+        ]);
+
+        $this->get(route('api.concerts.pull', $this->params))
+            ->assertStatus(SymfonyResponse::HTTP_BAD_GATEWAY)
+            ->assertJsonStructure(['message', 'error']);
     }
 
     public function test_it_can_parse_concerts_from_external_ical()
     {
-        $this->withoutExceptionHandling();
-        //        $mockIcsPath = base_path('tests/Fixtures/ical/mockEvents.ics');
-        $mockIcsPath = base_path('tests/Fixtures/ical/single_rehearsal.ics');
-        $mockIcsContent = file_get_contents($mockIcsPath);
-
-        Http::fake([
-            config('app.konzertmeister_url') => Http::response($mockIcsContent, SymfonyResponse::HTTP_ACCEPTED),
-        ]);
+        $this->setUpSingleEvent();
 
         $this->get(route('api.concerts.pull', $this->params))
             ->assertAccepted();
@@ -58,40 +64,40 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
         $this->assertDatabaseCount(KonzertmeisterEvent::class, 1);
     }
 
-    //    public function test_content_of_created_event()
-    //    {
-    //        $this->withoutExceptionHandling();
-    //
-    //        $this->get(route('api.concerts.pull', $this->params))
-    //            ->assertAccepted();
-    //
-    //        $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
-    //        $event = KonzertmeisterEvent::first();
-    //
-    //        $this->assertnotnull($event->id);
-    //        $this->assertnotnull($event->band);
-    //        $this->assertnotnull($event->dtstart);
-    //        $this->assertnotnull($event->dtend);
-    //        $this->assertnotnull($event->summary);
-    //        $this->assertnotnull($event->description);
-    //        $this->assertnotnull($event->type);
-    //        $this->assertnotnull($event->location);
-    //        $this->assertnotnull($event->conversion_state);
-    //
-    //        $this->assertEquals($this->band->id, $event->band->id);
-    //        $this->assertEquals(2036713, $event->id);
-    //        $this->assertEquals('BBBB Probe (BlueBirdBigBand)', $event->summary);
-    //        $this->assertEquals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
-    //        $this->assertEquals('Probe', $event->description);
-    //        $this->assertInstanceOf(KonzertmeisterEventType::class, $event->type);
-    //        $this->assertInstanceOf(KonzertmeisterEventConversionState::class, $event->conversion_state);
-    //        $this->assertInstanceOf(Carbon::class, $event->dtstart);
-    //        $this->assertInstanceOf(Carbon::class, $event->dtend);
-    //        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
-    //        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
-    //        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
-    //        $this->assertEquals(KonzertmeisterEventConversionState::Open, $event->conversion_state);
-    //    }
+    public function test_content_of_created_event()
+    {
+        $this->withoutExceptionHandling();
+        $this->setUpMultipleEvents();
+
+        $this->get(route('api.concerts.pull', $this->params))
+            ->assertAccepted();
+
+        $this->assertDatabaseCount(KonzertmeisterEvent::class, 4);
+        $event = KonzertmeisterEvent::first();
+
+        $this->assertnotnull($event->id);
+        $this->assertnotnull($event->band);
+        $this->assertnotnull($event->dtstart);
+        $this->assertnotnull($event->dtend);
+        $this->assertnotnull($event->summary);
+        $this->assertnotnull($event->description);
+        $this->assertnotnull($event->type);
+        $this->assertnotnull($event->location);
+        $this->assertnotnull($event->conversion_state);
+
+        $this->assertEquals(2036713, $event->id);
+        $this->assertEquals('BBBB Probe (BlueBirdBigBand)', $event->summary);
+        $this->assertEquals('Mausbergweg 144, 67346 Speyer, Deutschland', $event->location);
+        $this->assertEquals('Probe', $event->description);
+        $this->assertInstanceOf(KonzertmeisterEventType::class, $event->type);
+        $this->assertInstanceOf(KonzertmeisterEventConversionState::class, $event->conversion_state);
+        $this->assertInstanceOf(Carbon::class, $event->dtstart);
+        $this->assertInstanceOf(Carbon::class, $event->dtend);
+        $this->assertEquals(Carbon::parse('20240828T180000Z'), $event->dtstart);
+        $this->assertEquals(Carbon::parse('20240828T200000Z'), $event->dtend);
+        $this->assertEquals(KonzertmeisterEventType::Probe, $event->type);
+        $this->assertEquals(KonzertmeisterEventConversionState::Open, $event->conversion_state);
+    }
     //
     //    public function testVerifyIdsOfAllEvents()
     //    {
@@ -197,4 +203,24 @@ class KonzertmeisterUpdateConcertsControllerTest extends TestCase
     //        $event = KonzertmeisterEvent::find(2036720);
     //        $this->assertEquals(KonzertmeisterEventType::Sonstiges, $event->type);
     //    }
+
+    protected function setUpSingleEvent()
+    {
+        $mockIcsPath = base_path($this->singleEvent);
+        $mockIcsContent = file_get_contents($mockIcsPath);
+
+        Http::fake([
+            $this->url => Http::response($mockIcsContent, SymfonyResponse::HTTP_ACCEPTED),
+        ]);
+    }
+
+    protected function setUpMultipleEvents()
+    {
+        $mockIcsPath = base_path($this->multipleEvents);
+        $mockIcsContent = file_get_contents($mockIcsPath);
+
+        Http::fake([
+            $this->url => Http::response($mockIcsContent, SymfonyResponse::HTTP_ACCEPTED),
+        ]);
+    }
 }

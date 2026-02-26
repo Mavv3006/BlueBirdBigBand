@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Services\KonzertmeisterIntegration\KonzertmeisterIntegrationService;
+use Exception;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class KonzertmeisterUpdateConcertsController
@@ -25,11 +28,18 @@ class KonzertmeisterUpdateConcertsController
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'The given data was invalid.',
-                'errors' => $validator->errors(),
+                'error' => $validator->errors(),
             ], SymfonyResponse::HTTP_UNAUTHORIZED);
         }
 
-        KonzertmeisterIntegrationService::pullNewData();
+        try {
+            KonzertmeisterIntegrationService::pullNewData();
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => 'Fetching new data failed.',
+                'error' => $e->getMessage(),
+            ], SymfonyResponse::HTTP_BAD_GATEWAY);
+        }
 
         return response()->json(
             ['message' => 'The operation was performed successfully.'],

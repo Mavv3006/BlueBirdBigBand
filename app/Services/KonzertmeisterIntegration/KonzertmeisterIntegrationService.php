@@ -11,6 +11,8 @@ use App\Models\Band;
 use App\Models\KonzertmeisterEvent;
 use ICal\Event;
 use ICal\ICal;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 use UnhandledMatchError;
@@ -18,17 +20,11 @@ use UnhandledMatchError;
 class KonzertmeisterIntegrationService
 {
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException|ConnectionException
      */
     public static function pullNewData(): void
     {
-        $konzertmeisterUrl = config('app.konzertmeister_url');
-        if ($konzertmeisterUrl === null) {
-            Log::error('KonzertmeisterIntegrationService - config key "app.konzertmeister_url" is missing. Pulling new event data is not possible.');
-            throw new InvalidArgumentException('Pulling new event data is not possible. Please check your log file for more information.');
-        }
-
-        $calendar = new ICal($konzertmeisterUrl, [
+        $calendar = new ICal(self::fetchRawData(), [
             'defaultTimeZone' => 'Europe/Berlin',
             // 'filterDaysBefore' => Carbon::now(),
         ]);
@@ -38,6 +34,12 @@ class KonzertmeisterIntegrationService
             'event count' => count($calendar->events()),
             'events' => $calendar->events(),
         ]);
+
+        if (!$calendar->hasEvents()) {
+            Log::info('KonzertmeisterIntegrationService - there are no new events to fetch. Aborting.');
+
+            return;
+        }
 
         $mappedCalendarEvents = array_map(
             callback: fn (Event $event) => CalendarEventMapping::fromICalEvent($event)
@@ -59,6 +61,27 @@ class KonzertmeisterIntegrationService
         ]);
 
         Log::info('KonzertmeisterIntegrationService - pulling new data completed');
+    }
+
+    /**
+     * @throws InvalidArgumentException|ConnectionException
+     */
+    protected static function fetchRawData(): string
+    {
+        $konzertmeisterUrl = config('app.konzertmeister_url');
+        if ($konzertmeisterUrl === null) {
+            Log::error('KonzertmeisterIntegrationService - config key "app.konzertmeister_url" is missing. Pulling new event data is not possible.');
+            throw new InvalidArgumentException('Pulling new event data is not possible. Please check your log file for more information.');
+        }
+
+        $response = Http::get($konzertmeisterUrl);
+
+        if ($response->failed()) {
+            Log::error('Konzertmeister URL nicht erreichbar', ['url' => $konzertmeisterUrl]);
+            throw new ConnectionException('Konzertmeister URL nicht erreichbar');
+        }
+
+        return $response->body();
     }
 
     protected static function getEventType(Event $event): ?KonzertmeisterEventType
