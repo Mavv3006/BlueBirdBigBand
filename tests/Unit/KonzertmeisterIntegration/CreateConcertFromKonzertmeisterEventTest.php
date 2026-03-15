@@ -29,10 +29,9 @@ class CreateConcertFromKonzertmeisterEventTest extends TestCase
         $event = KonzertmeisterEvent::first();
 
         $concert = Concert::create([
-            'date' => $event->dtstart,
             'band_id' => $event->band_id,
-            'start_time' => $event->dtstart,
-            'end_time' => $event->dtend,
+            'start_at' => $event->dtstart,
+            'end_at' => $event->dtend,
             'event_description' => $event->summary, // << manuell erfassen >> <-- prefill
             'venue_description' => '<<>>', // << manuell erfassen >>
             'venue_street' => '<<>>', // << manuell erfassen >>

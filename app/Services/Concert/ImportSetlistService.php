@@ -59,7 +59,7 @@ class ImportSetlistService
     {
         $date = $this->extractConcertDate($textData);
 
-        return Concert::where('date', $date)->firstOrFail();
+        return Concert::where('start_at', $date)->firstOrFail();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(125);
 
         Model::shouldBeStrict(!App::isProduction());
+
+        JsonResource::withoutWrapping();
 
         DB::listen(function ($query) {
             Log::channel('db_logging')->info('Query executed', [
