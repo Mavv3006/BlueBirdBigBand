@@ -6,6 +6,7 @@ use App\Enums\ConcertStatus;
 use App\Models\Band;
 use App\Models\Concert;
 use App\Models\Venue;
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class ConcertTest extends TestCase
@@ -14,16 +15,17 @@ class ConcertTest extends TestCase
     {
         Band::factory()->create();
         Venue::factory()->create();
-        $concert = Concert::factory()->create(['date' => now()->addDays(2)->toDate()]);
+        $concert = Concert::factory()->create(['start_at' => now()->addDays(2)->toDate()]);
 
         $this->assertTrue($concert->isUpcoming());
     }
 
     public function test_is_played()
     {
+        Carbon::setTestNow(Carbon::create(2026, 2, 14));
         Band::factory()->create();
         Venue::factory()->create();
-        $concert = Concert::factory()->create(['date' => now()->subDays(2)->toDate()]);
+        $concert = Concert::factory()->create(['end_at' => now()->subDays(2)]);
 
         $this->assertTrue($concert->isPlayed());
     }

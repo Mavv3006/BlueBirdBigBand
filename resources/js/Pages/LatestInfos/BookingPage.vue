@@ -24,6 +24,23 @@
                 <li>Schutz vor Sonne und Regen bei Open-Air Veranstaltungen</li>
             </ul>
 
+            <p>Hörbeispiele:</p>
+
+            <ul>
+                <li>
+                    <ExternalLink href="https://www.youtube.com/live/EKkxY2Wl1SQ?si=gpZb96XQ9HrIRG4u">
+                        Neujahrsempfang 2025 der Stadt Speyer
+                    </ExternalLink>
+                    (YouTube)
+                </li>
+                <li>
+                    <ExternalLink href="https://www.youtube.com/live/H2nshmcVG5U?si=mYUrEu4RB0Y5hM15">
+                        Neujahrsempfang 2026 der Stadt Speyer
+                    </ExternalLink>
+                    (YouTube)
+                </li>
+            </ul>
+
             <p>Interessiert Sie unser Angebot? Setzen Sie sich mit uns in Verbindung!</p>
 
             <div>Weitere Infos erhalten Sie bei</div>
@@ -39,7 +56,8 @@ import PublicLayout from "@/Layouts/PublicLayout.vue";
 import Heading from "@/Components/Heading.vue";
 import ContactBandleader from "@/Components/Contact/ContactBandleader.vue";
 import ContactManagement from "@/Components/Contact/ContactManagement.vue";
-import {Head} from '@inertiajs/vue3';</script>
+import {Head} from '@inertiajs/vue3';
+import ExternalLink from "@/Components/Link/ExternalLink.vue";</script>
 
 <style scoped>
 @reference "tailwindcss";

@@ -12,12 +12,12 @@
 
             <button
                 :class="{'open-mobile-toggle':mobileNavIsOpen}"
-                class="h-[48px] w-[60px] absolute top-0 right-0 text-white md:hidden"
+                class="h-12 w-15 absolute top-0 right-0 text-white md:hidden"
                 @click="toggleMobileMenu()"
             >
                 <font-awesome-icon
                     v-if="mobileNavIsOpen"
-                    class="text-2xl translate-y-[2px]"
+                    class="text-2xl translate-y-0.5"
                     icon="fa-solid fa-close"
                 />
                 <font-awesome-icon
@@ -70,12 +70,6 @@ const toggleMobileMenu = () => {
     mobileNavIsOpen.value = !mobileNavIsOpen.value;
 }
 </script>
-
-<style>
-body {
-    background-color: #041286;
-}
-</style>
 
 <style scoped>
 @media (min-width: 768px ) {

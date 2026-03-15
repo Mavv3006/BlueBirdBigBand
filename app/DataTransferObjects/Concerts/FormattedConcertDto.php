@@ -8,9 +8,8 @@ readonly class FormattedConcertDto
 {
     public function __construct(
         public int $id,
-        public Carbon $date,
-        public Carbon $start_time,
-        public Carbon $end_time,
+        public Carbon $start_at,
+        public Carbon $end_at,
         public string $band,
         public ConcertDescriptionDto $description,
         public ConcertAddressDto $address,
@@ -20,9 +19,8 @@ readonly class FormattedConcertDto
     {
         return [
             'id' => $this->id,
-            'date' => $this->date->locale('de')->format('Y-m-d'),
-            'start_time' => $this->start_time->format('H:i'),
-            'end_time' => $this->end_time->format('H:i'),
+            'start_at' => $this->start_at->toIso8601String(),
+            'end_at' => $this->end_at->toIso8601String(),
             'band' => $this->band,
             'description' => [
                 'venue' => $this->description->venue,

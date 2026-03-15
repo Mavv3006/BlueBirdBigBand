@@ -9,15 +9,28 @@ node_modules/
 storage/**/*
 !storage/**/.gitignore
 
-# Konfiguration & Filter
+bootstrap/cache/*.php
+
+# Konfiguration & Environment
 .editorconfig
 .env*
 .ftpignore
-bun.lockb
-docker-compose.yml
-jsconfig.json
-phpstan.neon
 phpunit.*
+phpstan.neon
 pint.json
-tsconfig.json
+
+# Paket-Manager (werden nur im Build-Step benötigt)
+composer.json
+composer.lock
+package.json
+package-lock.json
+bun.lockb
+
+# Frontend-Tooling (Build liegt bereits in /public)
 vite.config.js
+jsconfig.json
+tsconfig.json
+
+# Docker & Meta-Dateien
+docker-compose.yml
+README.md
