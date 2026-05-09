@@ -6,12 +6,13 @@ use App\Enums\BandName;
 use App\Enums\KonzertmeisterEventType;
 use App\Enums\StateMachines\KonzertmeisterEventConversionState;
 use App\Models\Band;
+use App\Models\KonzertmeisterEvent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KonzertmeisterEvent>
+ * @extends Factory<KonzertmeisterEvent>
  */
 class KonzertmeisterEventFactory extends Factory
 {
