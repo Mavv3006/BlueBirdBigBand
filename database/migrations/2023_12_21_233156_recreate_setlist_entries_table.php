@@ -5,6 +5,7 @@ use App\Models\Song;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         try {
-            if (\Illuminate\Support\Facades\DB::table('setlist_entries')->count() == 0) {
+            if (DB::table('setlist_entries')->count() == 0) {
                 $this->dropSetlistEntryTable();
                 $this->createSetlistEntryTable();
 
@@ -54,10 +55,10 @@ return new class extends Migration
 
     private function fillSetlistEntryTable(): void
     {
-        \Illuminate\Support\Facades\DB::transaction(function () {
-            $setlistEntries = \Illuminate\Support\Facades\DB::table('setlist_entries_temp')->get();
+        DB::transaction(function () {
+            $setlistEntries = DB::table('setlist_entries_temp')->get();
             foreach ($setlistEntries as $setlistEntry) {
-                \Illuminate\Support\Facades\DB::table('setlist_entries')->insert([
+                DB::table('setlist_entries')->insert([
                     'song_id' => $setlistEntry['song_id'],
                     'concert_id' => $setlistEntry['concert_id'],
                     'created_at' => $setlistEntry['created_at'],
@@ -84,10 +85,10 @@ return new class extends Migration
 
     private function fillSetlistEntryTempTable(): void
     {
-        \Illuminate\Support\Facades\DB::transaction(function () {
-            $setlistEntries = \Illuminate\Support\Facades\DB::table('setlist_entries')->get();
+        DB::transaction(function () {
+            $setlistEntries = DB::table('setlist_entries')->get();
             foreach ($setlistEntries as $setlistEntry) {
-                \Illuminate\Support\Facades\DB::table('setlist_entries_temp')->insert([
+                DB::table('setlist_entries_temp')->insert([
                     'song_id' => $setlistEntry['song_id'],
                     'concert_id' => $setlistEntry['concert_id'],
                     'created_at' => $setlistEntry['created_at'],
