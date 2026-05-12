@@ -59,6 +59,7 @@ class ConcertResource extends Resource
                             ->required()
                             ->weekStartsOnMonday()
                             ->closeOnDateSelection()
+                            ->timezone('Europe/Berlin')
                             ->native(false)
                             ->minDate(now()),
                         DateTimePicker::make('end_at')
@@ -67,6 +68,7 @@ class ConcertResource extends Resource
                             ->required()
                             ->weekStartsOnMonday()
                             ->closeOnDateSelection()
+                            ->timezone('Europe/Berlin')
                             ->native(false)
                             ->minDate(now()),
                     ]),

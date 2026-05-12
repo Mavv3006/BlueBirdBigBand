@@ -19,7 +19,7 @@ const props = defineProps<{ concert: Concert }>();
 
 const start_time = dayjs(props.concert.start_at).format('HH:mm');
 const end_time = dayjs(props.concert.end_at).format('HH:mm');
-const day = dayjs(props.concert.end_at).format('dddd, DD.MM.YYYY');
+const day = dayjs(props.concert.start_at).format('dddd, DD.MM.YYYY');
 
 const playTime = `${start_time} Uhr - ${end_time} Uhr | ${props.concert.description.event}`;
 
